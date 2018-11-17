@@ -1,0 +1,252 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pyce.pyce &#8212; pyce 0.1.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyce.pyce</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Tue Nov 15 16:29:23 2016</span>
+
+<span class="sd">Description: Outputting scenarios</span>
+
+<span class="sd">Scope: Modelling the Circular Economy in EEIO</span>
+
+<span class="sd">@author:Franco Donati</span>
+<span class="sd">@institution:Leiden University CML</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="k">import</span> <span class="n">platform</span>
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="k">import</span> <span class="n">copyfile</span>
+<span class="kn">from</span> <span class="nn">pyce.save_</span> <span class="k">import</span> <span class="n">Save</span>
+<span class="kn">from</span> <span class="nn">pyce.results</span> <span class="k">import</span> <span class="n">Results</span>
+
+
+<div class="viewcode-block" id="Start"><a class="viewcode-back" href="../../pyce.html#pyce.pyce.Start">[docs]</a><span class="k">class</span> <span class="nc">Start</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    directory = directory in which you want to work and save</span>
+
+<span class="sd">    method = 0 &gt;&gt; Prod X Prod Ind-Tech Assumption Technical Coeff method</span>
+<span class="sd">    method = 1 &gt;&gt; Prod X Prod Ind-Tech Assumption Market Share Coeff method</span>
+
+<span class="sd">    aggregation = &quot;bi-regional&quot; (EU- ROW) or None (multi-regional 49 regions)</span>
+
+<span class="sd">    From start you can launch all the analysis specifications listed under</span>
+<span class="sd">    scenarios.xls</span>
+
+<span class="sd">    All directories and base data are specified in dirs.py</span>
+
+<span class="sd">    Results will be saved in the output folder</span>
+
+<span class="sd">    The programme only considers two regions EU and Rest-Of-World (ROW)</span>
+
+<span class="sd">    Permitted SUT transformation Methods are</span>
+
+<span class="sd">    method = 0 &gt;&gt; Prod X Prod Ind-Tech Assumption Technical Coeff method</span>
+<span class="sd">    method = 1 &gt;&gt; Prod X Prod Ind-Tech Assumption Market Share Coeff method</span>
+
+<span class="sd">    results_only = True &gt;&gt; output only results (spec&#39;d in scenarios.xls)</span>
+<span class="sd">    results_only = False &gt;&gt; output all IOTs and results</span>
+
+<span class="sd">    scen_no = 0 - n (0 = baseline)</span>
+<span class="sd">        n = is number of scenarios specified by sheet in scenarios.xls</span>
+<span class="sd">        &quot;scenario_1&quot; is also allowed for scenarios</span>
+<span class="sd">        None, 0, base and baseline are also accepted for baseline</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">aggregation</span><span class="o">=</span><span class="s2">&quot;bi-regional&quot;</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">method</span><span class="p">)</span>  <span class="c1"># 0 or 1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">directory</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="c1"># here we try to indentify on which platform we are working</span>
+            <span class="c1"># and specifying default folders</span>
+            <span class="k">if</span> <span class="s2">&quot;linux&quot;</span> <span class="ow">in</span> <span class="n">platform</span> <span class="ow">or</span> <span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;darwin&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/Documents/&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;pyCE&quot;</span>
+
+            <span class="k">elif</span> <span class="s2">&quot;win&quot;</span> <span class="ow">in</span> <span class="n">platform</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">platform</span> <span class="o">!=</span> <span class="s2">&quot;darwin&quot;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/Documents/&quot;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;pyCE&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please specify the directory: &quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please specify the directory: &quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+            <span class="c1"># cp your settings to the output folder</span>
+            <span class="n">orig</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span>
+                                                <span class="s2">&quot;scenarios.xls&quot;</span><span class="p">))</span>
+            <span class="n">copyfile</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="s2">&quot;scenarios.xls&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">directory</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>  <span class="c1"># test path contains preset scenarios for test</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;tests/&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">specs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;research&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;institution&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
+                          <span class="p">}</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">research</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Project name:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># e.g. &quot;Modelling the CE&quot;</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Author&#39;s names:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># e.g. &quot;Franco Donati&quot;</span>
+            <span class="n">institution</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Institution:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># e.g. &quot;Leiden Univ. CML&quot;</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">specs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;research&quot;</span><span class="p">:</span> <span class="n">research</span><span class="p">,</span>
+                          <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+                          <span class="s2">&quot;institution&quot;</span><span class="p">:</span> <span class="n">institution</span><span class="p">,</span>
+                          <span class="p">}</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Please open scenarios.xls under &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span>
+                  <span class="s2">&quot; to set your work.</span><span class="se">\n\n</span><span class="s2">Return to this script after you are&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;done setting up your scenarios.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+
+        <span class="c1"># defines a directory for outputs when saving</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/outputs/&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/scenarios.xls&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">aggregation</span> <span class="o">=</span> <span class="n">aggregation</span>  <span class="c1"># biregional or None=multiregional</span>
+
+<div class="viewcode-block" id="Start.run_one_scenario"><a class="viewcode-back" href="../../pyce.html#pyce.pyce.Start.run_one_scenario">[docs]</a>    <span class="k">def</span> <span class="nf">run_one_scenario</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">results_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run to check specific scenario</span>
+
+<span class="sd">        results_only = False, True</span>
+<span class="sd">            - True, output results for analysis</span>
+<span class="sd">            - False, output all tables plus results for analysis</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">init_res</span> <span class="o">=</span> <span class="n">Results</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggregation</span><span class="p">)</span>
+        <span class="n">scenario</span> <span class="o">=</span> <span class="n">init_res</span><span class="o">.</span><span class="n">one_scen</span><span class="p">(</span><span class="n">scen_no</span><span class="p">,</span> <span class="n">results_only</span><span class="p">)</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">scenario</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Start.all_results"><a class="viewcode-back" href="../../pyce.html#pyce.pyce.Start.all_results">[docs]</a>    <span class="k">def</span> <span class="nf">all_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Output all results in a table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">init_res</span> <span class="o">=</span> <span class="n">Results</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggregation</span><span class="p">)</span>
+        <span class="n">results_table</span> <span class="o">=</span> <span class="n">init_res</span><span class="o">.</span><span class="n">table_res</span><span class="p">()</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">results_table</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Start.save_one_scenario"><a class="viewcode-back" href="../../pyce.html#pyce.pyce.Start.save_one_scenario">[docs]</a>    <span class="k">def</span> <span class="nf">save_one_scenario</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">results_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Output all results in a table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">init_save</span> <span class="o">=</span> <span class="n">Save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">specs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">)</span>
+        <span class="n">scenario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_one_scenario</span><span class="p">(</span><span class="n">scen_no</span><span class="p">,</span> <span class="n">results_only</span><span class="p">)</span>
+        <span class="n">init_save</span><span class="o">.</span><span class="n">save_</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Start.save_all_scenarios"><a class="viewcode-back" href="../../pyce.html#pyce.pyce.Start.save_all_scenarios">[docs]</a>    <span class="k">def</span> <span class="nf">save_all_scenarios</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save all results in separate files and sheets</span>
+<span class="sd">        data e.g. all_results.all_tables</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">init_res</span> <span class="o">=</span> <span class="n">Results</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggregation</span><span class="p">)</span>
+        <span class="n">init_save</span> <span class="o">=</span> <span class="n">Save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">specs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">init_res</span><span class="o">.</span><span class="n">table_res</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">init_save</span><span class="o">.</span><span class="n">save_everything</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Start.save_results"><a class="viewcode-back" href="../../pyce.html#pyce.pyce.Start.save_results">[docs]</a>    <span class="k">def</span> <span class="nf">save_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save results</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">init_save</span> <span class="o">=</span> <span class="n">Save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">specs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_results</span><span class="p">()</span>
+        <span class="n">init_save</span><span class="o">.</span><span class="n">save_results</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Start.save_everything"><a class="viewcode-back" href="../../pyce.html#pyce.pyce.Start.save_everything">[docs]</a>    <span class="k">def</span> <span class="nf">save_everything</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save all scenarios and results</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_results</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_all_scenarios</span><span class="p">()</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">Start</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Franco Donati.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

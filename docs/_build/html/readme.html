@@ -1,0 +1,371 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pyce &#8212; pyce 0.1.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="prev" title="Welcome to pyce’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pyce">
+<h1>pyce<a class="headerlink" href="#pyce" title="Permalink to this headline">¶</a></h1>
+<p><em>A software to model policy and technological interventions in Environmentally Extended Input-Output Analysis (EXIOBASE V3.3)</em></p>
+<div class="line-block">
+<div class="line">Free software: GNU General Public License v3</div>
+<div class="line">Documentation: <a class="reference external" href="https://bitbucket.org/CML-IE/pyce/src/master/">https://bitbucket.org/CML-IE/pyce/src/master/</a></div>
+</div>
+<p>A Program for the calculation of Circular Economy and general Environmental Economics policies in Environmentally Extended Input-Output Analysis starting from multi-regional supply-use tables (EXIOBASE V3.3)</p>
+<div class="section" id="installation">
+<h2>1. Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="stable-release">
+<h3>1.1. Stable release<a class="headerlink" href="#stable-release" title="Permalink to this headline">¶</a></h3>
+<p>Run in your terminal:</p>
+<blockquote>
+<div>$ pip install pyce</div></blockquote>
+</div>
+<div class="section" id="from-source">
+<h3>1.2. From source<a class="headerlink" href="#from-source" title="Permalink to this headline">¶</a></h3>
+<p>Clone repository:</p>
+<blockquote>
+<div>$ git clone <a class="reference external" href="https://fdonati&#64;bitbucket.org/CML-IE/pyce.git">https://fdonati&#64;bitbucket.org/CML-IE/pyce.git</a></div></blockquote>
+<p>Once you have a copy of the source, you can install it with:</p>
+<blockquote>
+<div>$ python setup.py install</div></blockquote>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>2. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="import-package">
+<h3>2.1. Import package<a class="headerlink" href="#import-package" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>import pyce</div></blockquote>
+</div>
+<div class="section" id="initialize">
+<h3>2.2. Initialize<a class="headerlink" href="#initialize" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>s = pyce.Start(method, directory, aggregation)</div></blockquote>
+</div>
+<div class="section" id="set-your-scenarios-and-analysis">
+<h3>2.3. set your scenarios and analysis<a class="headerlink" href="#set-your-scenarios-and-analysis" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Open scenarios.xls in the directory that was specified</li>
+<li>From there you can specify interventions and parameters for the analysis</li>
+<li>save and continue to the following steps</li>
+</ol>
+</div>
+<div class="section" id="run-scenarios">
+<h3>2.4. Run scenarios<a class="headerlink" href="#run-scenarios" title="Permalink to this headline">¶</a></h3>
+<p>2.4.1. Run one specific scenario</p>
+<blockquote>
+<div>s.run_one_scenario(scen_no, results_only=[False, True])
+(0 = baseline)</div></blockquote>
+<p>2.4.2. Run all scenarios</p>
+<blockquote>
+<div>s.all_results()</div></blockquote>
+</div>
+<div class="section" id="save-scenarios">
+<h3>2.5. save scenarios<a class="headerlink" href="#save-scenarios" title="Permalink to this headline">¶</a></h3>
+<p>2.5.1. Save one specific scenario</p>
+<blockquote>
+<div>s.save_one_scenario(scen_no, results_only=[False, True])</div></blockquote>
+<p>2.5.2. Save the summary of your results</p>
+<blockquote>
+<div>s.save_results()</div></blockquote>
+<p>2.5.3. Save your entire project</p>
+<blockquote>
+<div>s.save_everything()</div></blockquote>
+<p>2.6. Use from command line</p>
+<p>2.6.1. pyce –help</p>
+<p>Usage: pyce [OPTIONS]</p>
+<p>Console script for pyce. A software to model policy and technological
+interventions in Environmentally Extended Input-Output Analysis (EXIOBASE
+V3.3, 2011)</p>
+<p>Options:</p>
+<p><a href="#id1"><span class="problematic" id="id2">|----------------------------|</span></a>————————————–|</p>
+<div class="line-block">
+<div class="line">-tm, –transf_method TEXT | 0 = PXP ITA_TC; 1 = PXP ITA_MSC      |</div>
+</div>
+<p><a href="#id3"><span class="problematic" id="id4">|----------------------------|</span></a>————————————–|</p>
+<div class="line-block">
+<div class="line">-dr, –directory TEXT     | if left black it will be default     |</div>
+</div>
+<p><a href="#id5"><span class="problematic" id="id6">|----------------------------|</span></a>————————————–|</p>
+<div class="line-block">
+<div class="line">-sc, –scenario TEXT      | all, 1, 2,… accepted - 0=baseline  |</div>
+</div>
+<p><a href="#id7"><span class="problematic" id="id8">|----------------------------|</span></a>————————————–|</p>
+<div class="line-block">
+<div class="line">-s, –save TEXT           | 0=no, [1-n]=scenario, “all”=save all |</div>
+</div>
+<p><a href="#id9"><span class="problematic" id="id10">|----------------------------|</span></a>————————————–|</p>
+<div class="line-block">
+<div class="line">–help                    | Show this message and exit.          |</div>
+</div>
+<p><a href="#id11"><span class="problematic" id="id12">|----------------------------|</span></a>————————————–|</p>
+<p>2.6.2. Command example</p>
+<p>pyce -tm 0 -dr “” -sc “all” -s “all”</p>
+</div>
+</div>
+<div class="section" id="features">
+<h2>3. Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<p>Examples of policies that can be modelled through the software:</p>
+<ul class="simple">
+<li>sharing</li>
+<li>recycling</li>
+<li>life extension</li>
+<li>rebound effects</li>
+<li>substituion</li>
+<li>market and value added changes</li>
+<li>efficiency</li>
+</ul>
+<p>The tables in which it is possible to apply changes:</p>
+<ul class="simple">
+<li>total requirement matrix (A)</li>
+<li>intermediate transactions (S)</li>
+<li>final demand (Y)</li>
+<li>primary inputs coefficients (RE)</li>
+<li>emission intermediate extentions coefficients (RBe)</li>
+<li>material intermediate extensions coefficients (RBm)</li>
+<li>resource intermediate extensions coefficients (RBr)</li>
+<li>emission final demand extension coefficients (RYBe)</li>
+<li>material final demand extension coefficients (RYBm)</li>
+</ul>
+<p>It is possible to specify:</p>
+<ul class="simple">
+<li>region of the intervention</li>
+<li>whether the intervention affects domestic, import transactions or both</li>
+</ul>
+</div>
+<div class="section" id="important-modules">
+<h2>4. Important modules<a class="headerlink" href="#important-modules" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pyce-py">
+<h3>4.1. pyce.py<a class="headerlink" href="#pyce-py" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Initiates the operations to set scenarios and to create IOT from SUT based on prodxprod Industry-Technology assumption both under Market Share Coefficient method and Technical Coefficient method.</li>
+<li>From start you can launch all the analysis specifications listed under scenarios.xls and save everything</li>
+<li>Results will be saved in the output folder</li>
+</ol>
+<p>Permitted SUT transformation Methods:</p>
+<ul class="simple">
+<li>method = 0 &gt;&gt; Prod X Prod Ind-Tech Assumption Technical Coeff method</li>
+<li>method = 1 &gt;&gt; Prod X Prod Ind-Tech Assumption Market Share Coeff method</li>
+<li>results_only = True &gt;&gt; output only results (spec’d in scenarios.xls under analysis)</li>
+<li>results_only = False &gt;&gt; output all IOTs and results</li>
+<li>scen_no = 0 - n (0 = baseline)</li>
+<li>n = is number of scenarios specified by sheet in scenarios.xls</li>
+<li>“scenario_1” is also allowed for scenarios</li>
+<li>None, 0, base and baseline are also accepted for baseline</li>
+<li>aggregation = [“”, “bi-regional”](bi-regional EU-ROW), None (Multi-regional 49 countries)</li>
+</ul>
+</div>
+<div class="section" id="scenarios-xls">
+<h3>4.2. scenarios.xls<a class="headerlink" href="#scenarios-xls" title="Permalink to this headline">¶</a></h3>
+<p>From this .xls file it is possible to set different types of interventions and the analysis to perform:</p>
+<ul class="simple">
+<li>matrix = specifies in which matrix of IOT the changes are applied</li>
+<li>intervention = Primary and ancillary are only used to specify the type of intervention from a conceptual level</li>
+<li>reg_o or reg_d = Regional coordinates (o=origin or row, d=destination or column)</li>
+<li>cat_o  or cat_d = category (e.g. products or extensions ) coordinates (o=origin or row, d=destination or column)</li>
+<li>kt = technical coefficient (max achievable technically); a negative value means reduction; unit = %</li>
+<li>kp = penetration coefficient (level of market penetration of the policy); unit = %</li>
+<li>substitution = tells the software whether it needs to substitute values among specified categories</li>
+<li>swk = Substitution weighing factor (how much of the original transaction should be substituted); allows to simulate difference in prices and physical properties between categories; unit = %</li>
+</ul>
+<p>These can be set for:</p>
+<ul class="simple">
+<li>product category e.g. C_STEL (basic iron), C_PULP (pulp), etc.</li>
+<li>final demand category e.g. F_HOUS (households), F_GOVE (government), etc.</li>
+<li>primary input category e.g. E_HRHS (employment highly skilled), T_TLSA (taxes less subsidies), etc.</li>
+<li>emissions extensions e.g. E_CO2_c (CO2 - combustion)</li>
+<li>material extensions e.g. NI.02 (Nature Inputs: Coking Coal)</li>
+<li>resource extension e.g. L_1.1 (Land use - Arable Land - Rice)</li>
+</ul>
+<p>Furthemore, from the analysis sheet you can set the following variables to be compared in the analysis:</p>
+<ul class="simple">
+<li>product categories</li>
+<li>primary input categories</li>
+<li>emissions extensions</li>
+<li>material extensions</li>
+<li>resource extensions</li>
+<li>region of interest</li>
+</ul>
+</div>
+</div>
+<div class="section" id="other-modules">
+<h2>5. Other modules<a class="headerlink" href="#other-modules" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="results-py">
+<h3>5.1. results.py<a class="headerlink" href="#results-py" title="Permalink to this headline">¶</a></h3>
+<p>Class to assemble results for analysis as specified in scenario.xls analysis sheet:</p>
+<ul class="simple">
+<li>Output product content in other products</li>
+<li>Output results for each scenario</li>
+<li>Output results and all IO tables and extensions</li>
+</ul>
+</div>
+<div class="section" id="save-py">
+<h3>5.2. <a href="#id13"><span class="problematic" id="id14">save_</span></a>.py<a class="headerlink" href="#save-py" title="Permalink to this headline">¶</a></h3>
+<p>Save class:</p>
+<ul class="simple">
+<li>Save one scenario results</li>
+<li>Save one scenario results + IOTs</li>
+<li>Save all scenarios + IOTs</li>
+<li>Save all results</li>
+</ul>
+</div>
+<div class="section" id="apply-policy-py">
+<h3>5.3. apply_policy.py<a class="headerlink" href="#apply-policy-py" title="Permalink to this headline">¶</a></h3>
+<p>Policy interventions class:</p>
+<ul class="simple">
+<li>Recreate any matrix in IOT from policy interventions listed in the scenarios scenarios.xls</li>
+</ul>
+</div>
+<div class="section" id="base-n-scen-py">
+<h3>5.4. base_n_scen.py<a class="headerlink" href="#base-n-scen-py" title="Permalink to this headline">¶</a></h3>
+<p>Calculate IOT for baseline and scenarios from SUTs</p>
+</div>
+<div class="section" id="suttoiot-py">
+<h3>5.5. SUTtoIOT.py<a class="headerlink" href="#suttoiot-py" title="Permalink to this headline">¶</a></h3>
+<p>Assemblying IOTs and Extensions from:</p>
+<ul class="simple">
+<li>Prod x prod industry technology assumption in market share coefficient method</li>
+<li>Prod x prod industry technology assumption in technical coefficient method</li>
+</ul>
+</div>
+<div class="section" id="sutops-py">
+<h3>5.6. SUTops.py<a class="headerlink" href="#sutops-py" title="Permalink to this headline">¶</a></h3>
+<p>Class for fundamental mathematical operations of IOA and SUT</p>
+</div>
+<div class="section" id="labels-py">
+<h3>5.7. labels.py<a class="headerlink" href="#labels-py" title="Permalink to this headline">¶</a></h3>
+<p>General labels for tables</p>
+</div>
+</div>
+<div class="section" id="credits">
+<h2>6. Credits<a class="headerlink" href="#credits" title="Permalink to this headline">¶</a></h2>
+<p>Thanks to dr. Joao Dias Rodriguez, dr. Arjan de Koning and dr. Arnold Tukker for the supervision, MSc.Glenn Auguilar Hernandez and MSc. Bertram de Boer for testing and moral support.</p>
+<p>This package was created with <a class="reference external" href="https://github.com/audreyr/cookiecutter">Cookiecutter</a> and the <a class="reference external" href="https://github.com/audreyr/cookiecutter-pypackage">audreyr/cookiecutter-pypackage</a> project template.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pyce</a><ul>
+<li><a class="reference internal" href="#installation">1. Installation</a><ul>
+<li><a class="reference internal" href="#stable-release">1.1. Stable release</a></li>
+<li><a class="reference internal" href="#from-source">1.2. From source</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage">2. Usage</a><ul>
+<li><a class="reference internal" href="#import-package">2.1. Import package</a></li>
+<li><a class="reference internal" href="#initialize">2.2. Initialize</a></li>
+<li><a class="reference internal" href="#set-your-scenarios-and-analysis">2.3. set your scenarios and analysis</a></li>
+<li><a class="reference internal" href="#run-scenarios">2.4. Run scenarios</a></li>
+<li><a class="reference internal" href="#save-scenarios">2.5. save scenarios</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#features">3. Features</a></li>
+<li><a class="reference internal" href="#important-modules">4. Important modules</a><ul>
+<li><a class="reference internal" href="#pyce-py">4.1. pyce.py</a></li>
+<li><a class="reference internal" href="#scenarios-xls">4.2. scenarios.xls</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-modules">5. Other modules</a><ul>
+<li><a class="reference internal" href="#results-py">5.1. results.py</a></li>
+<li><a class="reference internal" href="#save-py">5.2. save_.py</a></li>
+<li><a class="reference internal" href="#apply-policy-py">5.3. apply_policy.py</a></li>
+<li><a class="reference internal" href="#base-n-scen-py">5.4. base_n_scen.py</a></li>
+<li><a class="reference internal" href="#suttoiot-py">5.5. SUTtoIOT.py</a></li>
+<li><a class="reference internal" href="#sutops-py">5.6. SUTops.py</a></li>
+<li><a class="reference internal" href="#labels-py">5.7. labels.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#credits">6. Credits</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to pyce’s documentation!</a></li>
+      <li>Next: <a href="installation.html" title="next chapter">Installation</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/readme.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Franco Donati.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/readme.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

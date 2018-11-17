@@ -1,0 +1,361 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pyce.apply_policy &#8212; pyce 0.1.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyce.apply_policy</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Fri Nov 25 12:13:29 2016</span>
+
+<span class="sd">Description: Reading policy values and modifying matrices for scenarios</span>
+
+<span class="sd">Scope: Modelling the Circular Economy in EEIO</span>
+
+<span class="sd">@author: Franco Donati</span>
+<span class="sd">@institution: Leiden University CML</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pyce.labels</span> <span class="k">import</span> <span class="n">get_labels</span>
+<span class="kn">from</span> <span class="nn">pyce.labels</span> <span class="k">import</span> <span class="n">positions</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+
+<div class="viewcode-block" id="Apply_policy"><a class="viewcode-back" href="../../pyce.html#pyce.apply_policy.Apply_policy">[docs]</a><span class="k">class</span> <span class="nc">Apply_policy</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Processes policy interventions and returns new matrices</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_file</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span> <span class="o">=</span> <span class="n">scen_file</span>
+
+<div class="viewcode-block" id="Apply_policy.apply_policy"><a class="viewcode-back" href="../../pyce.html#pyce.apply_policy.Apply_policy.apply_policy">[docs]</a>    <span class="k">def</span> <span class="nf">apply_policy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">M_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Separates policy interventions by matrix subject to intervention</span>
+<span class="sd">        and aply policy interventions on specific matrix</span>
+
+<span class="sd">        scen_no = specific scenario e.g &quot;1&quot; or &quot;scenario_1&quot;</span>
+<span class="sd">        M = matrix affected by the policies</span>
+<span class="sd">        M_name = matrix name as diplayed under sheet_name[&quot;matrix&quot;]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">scen_no</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="n">scen_no</span> <span class="o">=</span> <span class="s2">&quot;scenario_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">scen_no</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">scen_no</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;scenario_&quot;</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;only integer or explicit name (scenario_x)&quot;</span> <span class="o">+</span>
+                           <span class="s2">&quot;are allowed&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="n">scen_no</span><span class="p">,</span>
+                                      <span class="n">header</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="p">[</span><span class="s2">&quot;matrix&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="n">matrix</span> <span class="o">=</span> <span class="n">M</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">A scenario sheet was found but no parameters&quot;</span> <span class="o">+</span>
+                          <span class="s2">&quot;were set, please check: </span><span class="se">\n\n</span><span class="s2"> file: scenarios.xls&quot;</span> <span class="o">+</span>
+                          <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> sheet: &quot;</span> <span class="o">+</span> <span class="n">scen_no</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span>
+            <span class="n">fltr_pols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="p">[</span><span class="s1">&#39;matrix&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">M_name</span><span class="p">]</span>
+            <span class="n">matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_new</span><span class="p">(</span><span class="n">fltr_pols</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">M_name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">matrix</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Apply_policy.basic"><a class="viewcode-back" href="../../pyce.html#pyce.apply_policy.Apply_policy.basic">[docs]</a>    <span class="k">def</span> <span class="nf">basic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ide</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">kt</span><span class="p">,</span> <span class="n">kp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Policy intervention:</span>
+<span class="sd">        It may be a primary intervention or an acillary action.</span>
+
+<span class="sd">        a = a supply chain or a point in it subject to policy</span>
+<span class="sd">        kt =  technical coefficient (max achievable technically)</span>
+<span class="sd">        kp = penetration coefficient (level of market penet. of the policy)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">kt</span><span class="p">):</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">kp</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;please specify penetration coefficient for&quot;</span> <span class="o">+</span>
+                             <span class="s2">&quot;technical change -  Policy identifier &quot;</span>
+                             <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ide</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">kt</span> <span class="o">=</span> <span class="n">kt</span> <span class="o">*</span> <span class="mf">1e-2</span>
+            <span class="n">kp</span> <span class="o">=</span> <span class="n">kp</span> <span class="o">*</span> <span class="mf">1e-2</span>
+            <span class="n">totk</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="o">-</span><span class="n">kt</span> <span class="o">*</span> <span class="n">kp</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">totk</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Apply_policy.substitution"><a class="viewcode-back" href="../../pyce.html#pyce.apply_policy.Apply_policy.substitution">[docs]</a>    <span class="k">def</span> <span class="nf">substitution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">fx_kp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Moves the value from one or multiple cells (in the same row or column)</span>
+
+<span class="sd">        Substitution: Material subsitution or certain types of rebound effects</span>
+
+<span class="sd">        d = transaction to expand</span>
+<span class="sd">        c = transaction subject to the direct policy intervention</span>
+<span class="sd">        fx_kp = size of c that is added on the transaction to expand d</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fx_kp</span> <span class="o">=</span> <span class="n">fx_kp</span> <span class="o">*</span> <span class="mf">1e-2</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">*</span> <span class="n">fx_kp</span><span class="p">)</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Apply_policy.policy_engine"><a class="viewcode-back" href="../../pyce.html#pyce.apply_policy.Apply_policy.policy_engine">[docs]</a>    <span class="k">def</span> <span class="nf">policy_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">inter</span><span class="p">,</span> <span class="n">subs</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function allows for the proccessing of the specified interventions</span>
+<span class="sd">        onto a selected matrix. It calls various functions to modify the values</span>
+<span class="sd">        in a specified matrix.</span>
+
+<span class="sd">        M =  matrix of reference</span>
+
+<span class="sd">        inter = contains all specs for the intervention</span>
+
+<span class="sd">        y = index coordinate</span>
+<span class="sd">        x = column coordinate</span>
+<span class="sd">        ide = intervention identification number</span>
+
+<span class="sd">        kt =  technical change coefficient</span>
+<span class="sd">        kp = market penetration coefficient</span>
+
+<span class="sd">        fx_kp = market penetration coeffient applicable to substitution</span>
+
+<span class="sd">        expan = expansion coef. (used only for simple transaction changes)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+<span class="c1">#        name = inter[&quot;inter&quot;]</span>
+        <span class="n">ide</span> <span class="o">=</span> <span class="n">inter</span><span class="p">[</span><span class="s2">&quot;ide&quot;</span><span class="p">]</span>
+
+        <span class="n">y</span> <span class="o">=</span> <span class="n">inter</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">inter</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+<span class="c1">#        test = [M.iloc[y,x]]</span>
+
+        <span class="n">int1</span> <span class="o">=</span> <span class="n">inter</span><span class="p">[</span><span class="s2">&quot;int1&quot;</span><span class="p">]</span>
+        <span class="n">i1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basic</span><span class="p">(</span><span class="n">ide</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">int1</span><span class="p">[</span><span class="s2">&quot;kt&quot;</span><span class="p">],</span> <span class="n">int1</span><span class="p">[</span><span class="s2">&quot;kp&quot;</span><span class="p">])</span>
+
+        <span class="n">int2</span> <span class="o">=</span> <span class="n">inter</span><span class="p">[</span><span class="s2">&quot;int2&quot;</span><span class="p">]</span>
+        <span class="n">i2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basic</span><span class="p">(</span><span class="n">ide</span><span class="p">,</span> <span class="n">i1</span><span class="p">,</span> <span class="n">int2</span><span class="p">[</span><span class="s2">&quot;kt&quot;</span><span class="p">],</span> <span class="n">int1</span><span class="p">[</span><span class="s2">&quot;kp&quot;</span><span class="p">])</span>
+
+        <span class="n">int3</span> <span class="o">=</span> <span class="n">inter</span><span class="p">[</span><span class="s2">&quot;int3&quot;</span><span class="p">]</span>
+        <span class="n">i3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basic</span><span class="p">(</span><span class="n">ide</span><span class="p">,</span> <span class="n">i2</span><span class="p">,</span> <span class="n">int3</span><span class="p">[</span><span class="s2">&quot;kt&quot;</span><span class="p">],</span> <span class="n">int3</span><span class="p">[</span><span class="s2">&quot;kp&quot;</span><span class="p">])</span>
+
+        <span class="n">int4</span> <span class="o">=</span> <span class="n">inter</span><span class="p">[</span><span class="s2">&quot;int4&quot;</span><span class="p">]</span>
+        <span class="n">i4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basic</span><span class="p">(</span><span class="n">ide</span><span class="p">,</span> <span class="n">i3</span><span class="p">,</span> <span class="n">int4</span><span class="p">[</span><span class="s2">&quot;kt&quot;</span><span class="p">],</span> <span class="n">int4</span><span class="p">[</span><span class="s2">&quot;kp&quot;</span><span class="p">])</span>
+        <span class="n">M</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">i4</span>
+
+        <span class="k">if</span> <span class="n">subs</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># Assumption is that subsitution can only happen if</span>
+            <span class="c1"># a transaction is reduced</span>
+            <span class="n">y1</span> <span class="o">=</span> <span class="n">inter</span><span class="p">[</span><span class="s2">&quot;y1&quot;</span><span class="p">]</span>
+            <span class="n">x1</span> <span class="o">=</span> <span class="n">inter</span><span class="p">[</span><span class="s2">&quot;x1&quot;</span><span class="p">]</span>
+
+            <span class="n">sub</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="n">int1</span><span class="p">[</span><span class="s2">&quot;sk&quot;</span><span class="p">],</span>
+                   <span class="s2">&quot;2&quot;</span><span class="p">:</span> <span class="n">int2</span><span class="p">[</span><span class="s2">&quot;sk&quot;</span><span class="p">],</span>
+                   <span class="s2">&quot;3&quot;</span><span class="p">:</span> <span class="n">int3</span><span class="p">[</span><span class="s2">&quot;sk&quot;</span><span class="p">],</span>
+                   <span class="s2">&quot;4&quot;</span><span class="p">:</span> <span class="n">int4</span><span class="p">[</span><span class="s2">&quot;sk&quot;</span><span class="p">]</span>
+                   <span class="p">}</span>
+
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">sub</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="c1"># I am not in love with this statement but it works</span>
+                <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+                        <span class="n">ref</span> <span class="o">=</span> <span class="n">a</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+                        <span class="n">ref</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;i&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+                    <span class="n">c</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">-</span> <span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;i&quot;</span> <span class="o">+</span> <span class="n">key</span><span class="p">)</span>
+                    <span class="n">d</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">y1</span><span class="p">,</span> <span class="n">x1</span><span class="p">]</span>
+                    <span class="n">M</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">y1</span><span class="p">,</span> <span class="n">x1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">inter</span><span class="p">[</span><span class="s2">&quot;swk&quot;</span><span class="p">])</span>
+<span class="c1">#                    something = M.iloc[y1,x1]</span>
+<span class="c1">#                    somethingelse = M.iloc[y,x]</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">M</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Apply_policy.make_new"><a class="viewcode-back" href="../../pyce.html#pyce.apply_policy.Apply_policy.make_new">[docs]</a>    <span class="k">def</span> <span class="nf">make_new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fltr_policies</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">M_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates and reassembles</span>
+<span class="sd">        SUT or IOT matrices based on policy scenarios</span>
+<span class="sd">        policy interventions</span>
+
+<span class="sd">        scenario = is the table with the policy intervations</span>
+
+<span class="sd">        M = matrix on which to implement the policies</span>
+
+<span class="sd">        x = columns (abscissa/horizontal)</span>
+<span class="sd">        y = rows (ordinate/vertical)</span>
+
+<span class="sd">        *x.1 and *y.1  =  coordinates for destination in substitution</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fltr_policies</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">M</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">fltr_policies</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+
+                <span class="n">inter</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;intervention&quot;</span><span class="p">]</span>
+                <span class="n">ide</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;identifier&quot;</span><span class="p">]</span>  <span class="c1"># used during debugging</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1">#                 Collecting the specified coordinates for the intevention</span>
+<span class="c1"># =============================================================================</span>
+
+                <span class="c1"># coordinates for region and category</span>
+                <span class="n">reg_o</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;reg_o&quot;</span><span class="p">]</span>
+                <span class="n">reg_d</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;reg_d&quot;</span><span class="p">]</span>
+
+                <span class="n">cat_o</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;cat_o&quot;</span><span class="p">]</span>
+                <span class="n">cat_d</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;cat_d&quot;</span><span class="p">]</span>
+<span class="c1"># =============================================================================</span>
+<span class="c1">#                Translate coordinates from str to numerical position</span>
+<span class="c1"># =============================================================================</span>
+
+                <span class="c1"># get the labels from the matrix</span>
+                <span class="n">ind_M</span> <span class="o">=</span> <span class="n">get_labels</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># a matrix with all index labels</span>
+                <span class="n">col_M</span> <span class="o">=</span> <span class="n">get_labels</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># matrix with all column labels</span>
+
+                <span class="n">o_pos</span> <span class="o">=</span> <span class="n">positions</span><span class="p">(</span><span class="n">ind_M</span><span class="p">,</span> <span class="n">reg_o</span><span class="p">,</span> <span class="n">cat_o</span><span class="p">)</span>
+                <span class="n">d_pos</span> <span class="o">=</span> <span class="n">positions</span><span class="p">(</span><span class="n">col_M</span><span class="p">,</span> <span class="n">reg_d</span><span class="p">,</span> <span class="n">cat_d</span><span class="p">)</span>
+<span class="c1">#                print(y_pos, x_pos)</span>
+
+                <span class="c1"># make dictionaries of all interventions</span>
+                <span class="n">int1</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;kt&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;kt1&quot;</span><span class="p">],</span> <span class="s2">&quot;kp&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;kp1&quot;</span><span class="p">]}</span>
+                <span class="n">int2</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;kt&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;kt2&quot;</span><span class="p">],</span> <span class="s2">&quot;kp&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;kp2&quot;</span><span class="p">]}</span>
+                <span class="n">int3</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;kt&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;kt3&quot;</span><span class="p">],</span> <span class="s2">&quot;kp&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;kp3&quot;</span><span class="p">]}</span>
+                <span class="n">int4</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;kt&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;kt4&quot;</span><span class="p">],</span> <span class="s2">&quot;kp&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;kp4&quot;</span><span class="p">]}</span>
+
+                <span class="c1"># the following is only relevant for susbtitution</span>
+                <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Sub&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span>
+
+                    <span class="n">ind_M1</span> <span class="o">=</span> <span class="n">get_labels</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># a matrix with all index labels</span>
+                    <span class="n">col_M1</span> <span class="o">=</span> <span class="n">get_labels</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># matrix with all column labels</span>
+
+                    <span class="n">reg_o1</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;reg_o.1&quot;</span><span class="p">]</span>
+                    <span class="n">reg_d1</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;reg_d.1&quot;</span><span class="p">]</span>
+
+                    <span class="n">cat_o1</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;cat_o.1&quot;</span><span class="p">]</span>
+                    <span class="n">cat_d1</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;cat_d.1&quot;</span><span class="p">]</span>
+
+                    <span class="n">o1_pos</span> <span class="o">=</span> <span class="n">positions</span><span class="p">(</span><span class="n">ind_M1</span><span class="p">,</span> <span class="n">reg_o1</span><span class="p">,</span> <span class="n">cat_o1</span><span class="p">)</span>
+                    <span class="n">d1_pos</span> <span class="o">=</span> <span class="n">positions</span><span class="p">(</span><span class="n">col_M1</span><span class="p">,</span> <span class="n">reg_d1</span><span class="p">,</span> <span class="n">cat_d1</span><span class="p">)</span>
+
+                    <span class="n">swk</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;swk&quot;</span><span class="p">]</span>  <span class="c1"># Substitution weighing coefficient</span>
+
+                    <span class="n">int1</span><span class="p">[</span><span class="s2">&quot;sk&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;sk1&quot;</span><span class="p">]</span>
+                    <span class="n">int2</span><span class="p">[</span><span class="s2">&quot;sk&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;sk2&quot;</span><span class="p">]</span>
+                    <span class="n">int3</span><span class="p">[</span><span class="s2">&quot;sk&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;sk3&quot;</span><span class="p">]</span>
+                    <span class="n">int4</span><span class="p">[</span><span class="s2">&quot;sk&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;sk4&quot;</span><span class="p">]</span>
+
+                    <span class="n">intervention</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;inter&quot;</span><span class="p">:</span> <span class="n">inter</span><span class="p">,</span>
+                                    <span class="s2">&quot;ide&quot;</span><span class="p">:</span> <span class="n">ide</span><span class="p">,</span>
+                                    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">o_pos</span><span class="p">,</span>
+                                    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">d_pos</span><span class="p">,</span>
+                                    <span class="s2">&quot;y1&quot;</span><span class="p">:</span> <span class="n">o1_pos</span><span class="p">,</span>
+                                    <span class="s2">&quot;x1&quot;</span><span class="p">:</span> <span class="n">d1_pos</span><span class="p">,</span>
+                                    <span class="s2">&quot;int1&quot;</span><span class="p">:</span> <span class="n">int1</span><span class="p">,</span>
+                                    <span class="s2">&quot;int2&quot;</span><span class="p">:</span> <span class="n">int2</span><span class="p">,</span>
+                                    <span class="s2">&quot;int3&quot;</span><span class="p">:</span> <span class="n">int3</span><span class="p">,</span>
+                                    <span class="s2">&quot;int4&quot;</span><span class="p">:</span> <span class="n">int4</span><span class="p">,</span>
+                                    <span class="s2">&quot;swk&quot;</span><span class="p">:</span> <span class="n">swk</span>
+                                    <span class="p">}</span>
+
+                    <span class="n">substitution</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">intervention</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;inter&quot;</span><span class="p">:</span> <span class="n">inter</span><span class="p">,</span>
+                                    <span class="s2">&quot;ide&quot;</span><span class="p">:</span> <span class="n">ide</span><span class="p">,</span>
+                                    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">o_pos</span><span class="p">,</span>
+                                    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">d_pos</span><span class="p">,</span>
+                                    <span class="s2">&quot;int1&quot;</span><span class="p">:</span> <span class="n">int1</span><span class="p">,</span>
+                                    <span class="s2">&quot;int2&quot;</span><span class="p">:</span> <span class="n">int2</span><span class="p">,</span>
+                                    <span class="s2">&quot;int3&quot;</span><span class="p">:</span> <span class="n">int3</span><span class="p">,</span>
+                                    <span class="s2">&quot;int4&quot;</span><span class="p">:</span> <span class="n">int4</span>
+                                    <span class="p">}</span>
+
+                    <span class="n">substitution</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1">#                print(ide, intervention)</span>
+
+                <span class="n">M</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy_engine</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">intervention</span><span class="p">,</span> <span class="n">substitution</span><span class="p">)</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">M</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Franco Donati.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
