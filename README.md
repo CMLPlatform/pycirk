@@ -2,7 +2,9 @@
 
 _A software to model Circular Economy policy and technological interventions in Environmentally Extended Input-Output Analysis starting from SUTs (EXIOBASE V3.3)_
 
-Free software: GNU General Public License v3
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](resources/docs/CONTRIBUTING.md)
+
 Documentation: https://bitbucket.org/CML-IE/pyce/src/master/
 
 ## Installation
