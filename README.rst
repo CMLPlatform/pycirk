@@ -4,12 +4,10 @@ pyce
 
 
 
-*A software to model policy and technological interventions in Environmentally Extended Input-Output Analysis (EXIOBASE V3.3)*
+*A software to model Circular Economy policy and technological interventions in Environmentally Extended Input-Output Analysis starting from SUTs (EXIOBASE V3.3)*
 
 | Free software: GNU General Public License v3
 | Documentation: https://bitbucket.org/CML-IE/pyce/src/master/
-
-A Program for the calculation of Circular Economy and general Environmental Economics policies in Environmentally Extended Input-Output Analysis starting from multi-regional supply-use tables (EXIOBASE V3.3)
 
 
 
@@ -108,27 +106,13 @@ V3.3, 2011)
     
 Options:
 
+| Command                    | Variables                            |
 |----------------------------|--------------------------------------|
-
 |  -tm, --transf_method TEXT | 0 = PXP ITA_TC; 1 = PXP ITA_MSC      |
-
-|----------------------------|--------------------------------------|
-
 |  -dr, --directory TEXT     | if left black it will be default     |
-
-|----------------------------|--------------------------------------|
-
 |  -sc, --scenario TEXT      | all, 1, 2,... accepted - 0=baseline  |
-
-|----------------------------|--------------------------------------|
-
 |  -s, --save TEXT           | 0=no, [1-n]=scenario, "all"=save all |
-
-|----------------------------|--------------------------------------|
-
 |  --help                    | Show this message and exit.          |
-
-|----------------------------|--------------------------------------|
 
 
 2.6.2. Command example
@@ -232,6 +216,11 @@ Furthemore, from the analysis sheet you can set the following variables to be co
 - resource extensions
 - region of interest
 - impact categories # Please see the data_validation_list sheet in the scenarios.xls file for the comprehensive list
+
+
+### make_secondary.py
+Allows for the modification of secondary material flows in the SUTs so that they are visible in the IO system
+
     
 ================
 5. Other modules
@@ -299,7 +288,9 @@ General labels for tables
 6. Credits
 ==========
 
-Thanks to dr. Joao Dias Rodriguez, dr. Arjan de Koning and dr. Arnold Tukker for the supervision, MSc.Glenn Auguilar Hernandez and MSc. Bertram de Boer for testing and moral support.  
+Thanks to dr. Arnold Tukker, dr. Joao Dias Rodriguez for the supervision 
+dr. Arjan de Koning for knowledge support in exiobase
+MSc. Glenn Auguilar Hernandez for testing
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
