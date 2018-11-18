@@ -6,7 +6,9 @@ pyce
 
 *A software to model Circular Economy policy and technological interventions in Environmentally Extended Input-Output Analysis starting from SUTs (EXIOBASE V3.3)*
 
-| Free software: GNU General Public License v3
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](resources/docs/CONTRIBUTING.md)
+
 | Documentation: https://bitbucket.org/CML-IE/pyce/src/master/
 
 
@@ -19,9 +21,9 @@ pyce
 1.1. Stable release
 -------------------
 
-Run in your terminal:
+Run in your terminal:0
 
-	$ pip install pyce # currently not uploaded to PyPI. It will be there by the end of July 20148 
+	$ pip install pyce
 
 
 1.2. From source
@@ -49,7 +51,7 @@ Once you have a copy of the source, you can install it with:
 2.2. Initialize
 ---------------
     
-    s = pyce.Start(method, directory, aggregation)
+	s = pyce.Start(method, directory, aggregation)
 
 
 2.3. set your scenarios and analysis 
@@ -67,18 +69,17 @@ Once you have a copy of the source, you can install it with:
 
 2.4.1. Run one specific scenario
 
-    s.run_one_scenario(scen_no, results_only=[False, True]) 
-    (0 = baseline)
+	s.run_one_scenario(scen_no, results_only=[False, True]) 
+	(0 = baseline)
 
 
 2.4.2. Run all scenarios
 
-    s.all_results()
-
+	s.all_results()
 
 
 2.5. save scenarios
-------------------
+-------------------
 
 
 2.5.1. Save one specific scenario
@@ -106,18 +107,23 @@ V3.3, 2011)
     
 Options:
 
++----------------------------+--------------------------------------+
 | Command                    | Variables                            |
-|----------------------------|--------------------------------------|
++============================+======================================+
 |  -tm, --transf_method TEXT | 0 = PXP ITA_TC; 1 = PXP ITA_MSC      |
++----------------------------+--------------------------------------+
 |  -dr, --directory TEXT     | if left black it will be default     |
++----------------------------+--------------------------------------+
 |  -sc, --scenario TEXT      | all, 1, 2,... accepted - 0=baseline  |
++----------------------------+--------------------------------------+
 |  -s, --save TEXT           | 0=no, [1-n]=scenario, "all"=save all |
++----------------------------+--------------------------------------+
 |  --help                    | Show this message and exit.          |
-
++----------------------------+--------------------------------------+
 
 2.6.2. Command example
 
-pyce -tm 0 -dr "" -sc "all" -s "all"
+	pyce -tm 0 -dr "" -sc "all" -s "all"
 
 
 
@@ -170,17 +176,22 @@ It is possible to specify:
 3. Results will be saved in the output folder
 
 Permitted SUT transformation Methods:
+	- method = 0 >> Prod X Prod Ind-Tech Assumption Technical Coeff method
+	- method = 1 >> Prod X Prod Ind-Tech Assumption Market Share Coeff method
 
-- method = 0 >> Prod X Prod Ind-Tech Assumption Technical Coeff method
-- method = 1 >> Prod X Prod Ind-Tech Assumption Market Share Coeff method
-- results_only = True >> output only results (spec'd in scenarios.xls under analysis)
-- results_only = False >> output all IOTs and results
-- scen_no = 0 - n (0 = baseline) 
-- n = is number of scenarios specified by sheet in scenarios.xls
-- "scenario_1" is also allowed for scenarios
-- None, 0, base and baseline are also accepted for baseline
-- aggregation = ["", "bi-regional"](bi-regional EU-ROW), None (Multi-regional 49 countries) 
+Results options:
+	- results_only = True >> output only results (spec'd in scenarios.xls under analysis)
+	- results_only = False >> output all IOTs and results
+	- scen_no = 0 - n (0 = baseline) 
+	- n = is number of scenarios specified by sheet in scenarios.xls
+	- "scenario_1" is also allowed for scenarios
+	- None, 0, base and baseline are also accepted for baseline
 
+Aggregation types:
+	- aggregation = ["", "bi-regional"](bi-regional EU-ROW), None (Multi-regional 49 countries)
+
+Availability of secondary raw materials in IO:
+	- make_secondary = False (regular database), True (modifies SUTs so that secondary raw materials are avaialable in IO after transformation)
 
 4.2. scenarios.xls
 ------------------
@@ -192,6 +203,7 @@ From this .xls file it is possible to set different types of interventions and t
 - reg_o or reg_d = Regional coordinates (o=origin or row, d=destination or column)
 - cat_o  or cat_d = category (e.g. products or extensions ) coordinates (o=origin or row, d=destination or column)
 - kt = technical coefficient (max achievable technically); a negative value means reduction; unit = %
+- ka = absolute values for addition
 - kp = penetration coefficient (level of market penetration of the policy); unit = %
 - copy = allows you to copy a specific transation to a different point in the matrices (useful for proxy creation)
 - substitution = tells the software whether it needs to substitute values among specified categories
@@ -280,7 +292,7 @@ Class for fundamental mathematical operations of IOA and SUT
 5.7. labels.py 
 --------------
 
-General labels for tables	
+General label manager for tables	
 
 
 

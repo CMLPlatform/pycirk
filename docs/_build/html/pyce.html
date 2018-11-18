@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>pyce package &#8212; pyce 0.1.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.1.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -31,8 +23,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -55,7 +46,7 @@
 <dl class="class">
 <dt id="pyce.SUTops.SUTops">
 <em class="property">class </em><code class="descclassname">pyce.SUTops.</code><code class="descname">SUTops</code><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Contains all basic operations to transform SUTs into IOTs and verify them
 It contains two subclasses defining two different trasformation methods
 PxP ITA Market share and Technical Coefficient methods
@@ -63,108 +54,108 @@ note: It should be expanded to other transformation methods in the future</p>
 <dl class="class">
 <dt id="pyce.SUTops.SUTops.IOT">
 <em class="property">class </em><code class="descname">IOT</code><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>General IOT operations subclass
 some methods repeat from other subclasses
 but it’s good to have them divided for clarity</p>
 <dl class="method">
 <dt id="pyce.SUTops.SUTops.IOT.A">
-<code class="descname">A</code><span class="sig-paren">(</span><em>S</em>, <em>inv_diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT.A"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT.A" title="Permalink to this definition">¶</a></dt>
+<code class="descname">A</code><span class="sig-paren">(</span><em>inv_diag_x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT.A"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT.A" title="Permalink to this definition">¶</a></dt>
 <dd><p>Technical coefficient matrix
-A = S * inv(diag(q))</p>
+A = S * inv(diag(x))</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyce.SUTops.SUTops.IOT.B">
-<code class="descname">B</code><span class="sig-paren">(</span><em>R</em>, <em>diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT.B"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT.B" title="Permalink to this definition">¶</a></dt>
+<code class="descname">B</code><span class="sig-paren">(</span><em>diag_x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT.B"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT.B" title="Permalink to this definition">¶</a></dt>
 <dd><p>Primary input and intermediates extensions matrix</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyce.SUTops.SUTops.IOT.L">
-<code class="descname">L</code><span class="sig-paren">(</span><em>A</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT.L"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT.L" title="Permalink to this definition">¶</a></dt>
+<code class="descname">L</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT.L"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT.L" title="Permalink to this definition">¶</a></dt>
 <dd><p>Leontief inverse
 L = (I-A)^-1</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyce.SUTops.SUTops.IOT.R">
-<code class="descname">R</code><span class="sig-paren">(</span><em>B</em>, <em>inv_diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT.R"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT.R" title="Permalink to this definition">¶</a></dt>
+<code class="descname">R</code><span class="sig-paren">(</span><em>inv_diag_x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT.R"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT.R" title="Permalink to this definition">¶</a></dt>
 <dd><p>Primary input and intermediates extensions coefficient matrix</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyce.SUTops.SUTops.IOT.S">
-<code class="descname">S</code><span class="sig-paren">(</span><em>A</em>, <em>diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT.S"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT.S" title="Permalink to this definition">¶</a></dt>
+<code class="descname">S</code><span class="sig-paren">(</span><em>diag_x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT.S"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT.S" title="Permalink to this definition">¶</a></dt>
 <dd><p>Total product ouput
-S = A * diag_q</p>
+S = A * diag_x</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.IOT.q">
-<code class="descname">q</code><span class="sig-paren">(</span><em>S</em>, <em>Y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT.q"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT.q" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.IOT.x">
+<code class="descname">x</code><span class="sig-paren">(</span><em>Y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT.x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT.x" title="Permalink to this definition">¶</a></dt>
 <dd><p>total product output s the sum of Si and y</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.IOT.q_IAy">
-<code class="descname">q_IAy</code><span class="sig-paren">(</span><em>L</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT.q_IAy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT.q_IAy" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.IOT.x_IAy">
+<code class="descname">x_IAy</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.IOT.x_IAy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.IOT.x_IAy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Total product ouput
-q = inv(I - A) * yi</p>
+x = inv(I - A) * yi</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="pyce.SUTops.SUTops.MSC_STA">
-<em class="property">class </em><code class="descname">MSC_STA</code><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.MSC_STA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.MSC_STA" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dt id="pyce.SUTops.SUTops.PxP_ITA_MSC">
+<em class="property">class </em><code class="descname">PxP_ITA_MSC</code><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.PxP_ITA_MSC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.PxP_ITA_MSC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Model with Market Share Coef.
 Prod x Prod Industry Technology assumption</p>
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.MSC_STA.A">
-<code class="descname">A</code><span class="sig-paren">(</span><em>Z</em>, <em>D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.MSC_STA.A"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.MSC_STA.A" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.PxP_ITA_MSC.A">
+<code class="descname">A</code><span class="sig-paren">(</span><em>D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.PxP_ITA_MSC.A"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.PxP_ITA_MSC.A" title="Permalink to this definition">¶</a></dt>
 <dd><p>Total requirement multipliers
 A = Z * D</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.MSC_STA.B">
-<code class="descname">B</code><span class="sig-paren">(</span><em>R</em>, <em>diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.MSC_STA.B"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.MSC_STA.B" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.PxP_ITA_MSC.B">
+<code class="descname">B</code><span class="sig-paren">(</span><em>diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.PxP_ITA_MSC.B"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.PxP_ITA_MSC.B" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extensions and primary input for IO tables</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.MSC_STA.D">
-<code class="descname">D</code><span class="sig-paren">(</span><em>V</em>, <em>inv_diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.MSC_STA.D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.MSC_STA.D" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.PxP_ITA_MSC.D">
+<code class="descname">D</code><span class="sig-paren">(</span><em>inv_diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.PxP_ITA_MSC.D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.PxP_ITA_MSC.D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Market share coefficients
 D = V * inv(diag(q))</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.MSC_STA.L">
-<code class="descname">L</code><span class="sig-paren">(</span><em>A</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.MSC_STA.L"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.MSC_STA.L" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.PxP_ITA_MSC.L">
+<code class="descname">L</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.PxP_ITA_MSC.L"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.PxP_ITA_MSC.L" title="Permalink to this definition">¶</a></dt>
 <dd><p>Leontief inverse
 L = (I-A)^-1</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.MSC_STA.R">
-<code class="descname">R</code><span class="sig-paren">(</span><em>B</em>, <em>D</em>, <em>inv_diag_g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.MSC_STA.R"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.MSC_STA.R" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.PxP_ITA_MSC.R">
+<code class="descname">R</code><span class="sig-paren">(</span><em>D</em>, <em>inv_diag_g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.PxP_ITA_MSC.R"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.PxP_ITA_MSC.R" title="Permalink to this definition">¶</a></dt>
 <dd><p>Input coefficients ext_matrix
 R = E * inv(diag(g))</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.MSC_STA.S">
-<code class="descname">S</code><span class="sig-paren">(</span><em>Z</em>, <em>D</em>, <em>diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.MSC_STA.S"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.MSC_STA.S" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.PxP_ITA_MSC.S">
+<code class="descname">S</code><span class="sig-paren">(</span><em>D</em>, <em>diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.PxP_ITA_MSC.S"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.PxP_ITA_MSC.S" title="Permalink to this definition">¶</a></dt>
 <dd><p>Intermediates
 S = Z * D * diag(q)</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.MSC_STA.Z">
-<code class="descname">Z</code><span class="sig-paren">(</span><em>U</em>, <em>inv_diag_g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.MSC_STA.Z"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.MSC_STA.Z" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.PxP_ITA_MSC.Z">
+<code class="descname">Z</code><span class="sig-paren">(</span><em>inv_diag_g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.PxP_ITA_MSC.Z"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.PxP_ITA_MSC.Z" title="Permalink to this definition">¶</a></dt>
 <dd><p>Input requirements
 Z = U * inv(diag(g))</p>
 </dd></dl>
@@ -172,20 +163,20 @@ Z = U * inv(diag(g))</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="pyce.SUTops.SUTops.TC_STA">
-<em class="property">class </em><code class="descname">TC_STA</code><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.TC_STA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.TC_STA" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dt id="pyce.SUTops.SUTops.PxP_ITA_TC">
+<em class="property">class </em><code class="descname">PxP_ITA_TC</code><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.PxP_ITA_TC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.PxP_ITA_TC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Model with Transformation Coefficients
 ProdxProd Industry Technology assumption</p>
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.TC_STA.B">
-<code class="descname">B</code><span class="sig-paren">(</span><em>R</em>, <em>diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.TC_STA.B"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.TC_STA.B" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.PxP_ITA_TC.B">
+<code class="descname">B</code><span class="sig-paren">(</span><em>diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.PxP_ITA_TC.B"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.PxP_ITA_TC.B" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extensions and primary input for IO tables</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.TC_STA.L">
-<code class="descname">L</code><span class="sig-paren">(</span><em>U</em>, <em>T</em>, <em>inv_diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.TC_STA.L"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.TC_STA.L" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.PxP_ITA_TC.L">
+<code class="descname">L</code><span class="sig-paren">(</span><em>T</em>, <em>inv_diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.PxP_ITA_TC.L"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.PxP_ITA_TC.L" title="Permalink to this definition">¶</a></dt>
 <dd><p>Input coefficients intermediates
 A = U * T * inv[diag (q)]</p>
 <p>Multiplier matrix
@@ -193,22 +184,22 @@ L =  (I-A)^-1</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.TC_STA.R">
-<code class="descname">R</code><span class="sig-paren">(</span><em>B</em>, <em>T</em>, <em>inv_diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.TC_STA.R"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.TC_STA.R" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.PxP_ITA_TC.R">
+<code class="descname">R</code><span class="sig-paren">(</span><em>T</em>, <em>inv_diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.PxP_ITA_TC.R"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.PxP_ITA_TC.R" title="Permalink to this definition">¶</a></dt>
 <dd><p>Value added and extension requirement matrix
 R = E * inv(diag(g))</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.TC_STA.S">
-<code class="descname">S</code><span class="sig-paren">(</span><em>T</em>, <em>U</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.TC_STA.S"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.TC_STA.S" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.PxP_ITA_TC.S">
+<code class="descname">S</code><span class="sig-paren">(</span><em>U</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.PxP_ITA_TC.S"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.PxP_ITA_TC.S" title="Permalink to this definition">¶</a></dt>
 <dd><p>Intemediates
 S = U * T</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.TC_STA.T">
-<code class="descname">T</code><span class="sig-paren">(</span><em>V</em>, <em>inv_diag_g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.TC_STA.T"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.TC_STA.T" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.PxP_ITA_TC.T">
+<code class="descname">T</code><span class="sig-paren">(</span><em>inv_diag_g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.PxP_ITA_TC.T"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.PxP_ITA_TC.T" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transformation matrix
 T = inv(diag(g)) * V</p>
 </dd></dl>
@@ -218,19 +209,19 @@ T = inv(diag(g)) * V</p>
 <dl class="class">
 <dt id="pyce.SUTops.SUTops.difference">
 <em class="property">class </em><code class="descname">difference</code><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.difference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.difference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This class is used to calculate the difference between scenarios</p>
 <dl class="method">
 <dt id="pyce.SUTops.SUTops.difference.delta_Y">
-<code class="descname">delta_Y</code><span class="sig-paren">(</span><em>Y</em>, <em>Yalt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.difference.delta_Y"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.difference.delta_Y" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delta_Y</code><span class="sig-paren">(</span><em>Yalt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.difference.delta_Y"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.difference.delta_Y" title="Permalink to this definition">¶</a></dt>
 <dd><p>method to calculate difference in Y
 Y = final demand baseline
 Yalt = final demand scenario</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyce.SUTops.SUTops.difference.delta_q">
-<code class="descname">delta_q</code><span class="sig-paren">(</span><em>L</em>, <em>Lalt</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.difference.delta_q"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.difference.delta_q" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.SUTops.SUTops.difference.delta_x">
+<code class="descname">delta_x</code><span class="sig-paren">(</span><em>Lalt</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.difference.delta_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.difference.delta_x" title="Permalink to this definition">¶</a></dt>
 <dd><p>method to calculate difference in q
 L = Leontief of baseline
 Lalt = Leontief of scenario</p>
@@ -241,10 +232,10 @@ Lalt = Leontief of scenario</p>
 <dl class="class">
 <dt id="pyce.SUTops.SUTops.fdext">
 <em class="property">class </em><code class="descname">fdext</code><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.fdext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.fdext" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="pyce.SUTops.SUTops.fdext.RYB">
-<code class="descname">RYB</code><span class="sig-paren">(</span><em>inv_diag_yj</em>, <em>YB</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.fdext.RYB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.fdext.RYB" title="Permalink to this definition">¶</a></dt>
+<code class="descname">RYB</code><span class="sig-paren">(</span><em>YB</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.fdext.RYB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.fdext.RYB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method for transformation matrix of YB
 (e.g. final demand emissions)
 RB = YB * inv(diag(yj))</p>
@@ -252,7 +243,7 @@ RB = YB * inv(diag(yj))</p>
 
 <dl class="method">
 <dt id="pyce.SUTops.SUTops.fdext.YB">
-<code class="descname">YB</code><span class="sig-paren">(</span><em>YRB</em>, <em>diag_yj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.fdext.YB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.fdext.YB" title="Permalink to this definition">¶</a></dt>
+<code class="descname">YB</code><span class="sig-paren">(</span><em>diag_yj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.fdext.YB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.fdext.YB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extensions and primary input for IO tables</p>
 </dd></dl>
 
@@ -260,7 +251,7 @@ RB = YB * inv(diag(yj))</p>
 
 <dl class="method">
 <dt id="pyce.SUTops.SUTops.inv">
-<code class="descname">inv</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.inv" title="Permalink to this definition">¶</a></dt>
+<code class="descname">inv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.inv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns inverse by dividing by 1 and eliminating inf and nan values</p>
 </dd></dl>
 
@@ -272,7 +263,7 @@ RB = YB * inv(diag(yj))</p>
 
 <dl class="method">
 <dt id="pyce.SUTops.SUTops.verifyIOT">
-<code class="descname">verifyIOT</code><span class="sig-paren">(</span><em>S</em>, <em>Y</em>, <em>E</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.verifyIOT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.verifyIOT" title="Permalink to this definition">¶</a></dt>
+<code class="descname">verifyIOT</code><span class="sig-paren">(</span><em>Y</em>, <em>E</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTops.html#SUTops.verifyIOT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTops.SUTops.verifyIOT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -288,7 +279,7 @@ RB = YB * inv(diag(yj))</p>
 <dl class="class">
 <dt id="pyce.SUTtoIOT.Transform">
 <em class="property">class </em><code class="descclassname">pyce.SUTtoIOT.</code><code class="descname">Transform</code><span class="sig-paren">(</span><em>SUTs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/SUTtoIOT.html#Transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.SUTtoIOT.Transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Transforms SUTs to IOT an calcualate extensions</p>
 <dl class="staticmethod">
 <dt id="pyce.SUTtoIOT.Transform.FD_EXT">
@@ -334,7 +325,7 @@ Technical coef method</p>
 <dl class="class">
 <dt id="pyce.apply_policy.Apply_policy">
 <em class="property">class </em><code class="descclassname">pyce.apply_policy.</code><code class="descname">Apply_policy</code><span class="sig-paren">(</span><em>scen_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/apply_policy.html#Apply_policy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.apply_policy.Apply_policy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Processes policy interventions and returns new matrices</p>
 <dl class="method">
 <dt id="pyce.apply_policy.Apply_policy.apply_policy">
@@ -347,13 +338,28 @@ M_name = matrix name as diplayed under sheet_name[“matrix”]</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyce.apply_policy.Apply_policy.basic">
-<code class="descname">basic</code><span class="sig-paren">(</span><em>ide</em>, <em>a</em>, <em>kt</em>, <em>kp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/apply_policy.html#Apply_policy.basic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.apply_policy.Apply_policy.basic" title="Permalink to this definition">¶</a></dt>
+<dt id="pyce.apply_policy.Apply_policy.basic_add">
+<code class="descname">basic_add</code><span class="sig-paren">(</span><em>ide</em>, <em>a</em>, <em>at</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/apply_policy.html#Apply_policy.basic_add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.apply_policy.Apply_policy.basic_add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyce.apply_policy.Apply_policy.basic_mult">
+<code class="descname">basic_mult</code><span class="sig-paren">(</span><em>ide</em>, <em>a</em>, <em>kt</em>, <em>kp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/apply_policy.html#Apply_policy.basic_mult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.apply_policy.Apply_policy.basic_mult" title="Permalink to this definition">¶</a></dt>
 <dd><p>Policy intervention:
 It may be a primary intervention or an acillary action.</p>
 <p>a = a supply chain or a point in it subject to policy
 kt =  technical coefficient (max achievable technically)
 kp = penetration coefficient (level of market penet. of the policy)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyce.apply_policy.Apply_policy.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><em>d</em>, <em>c</em>, <em>fx_kp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/apply_policy.html#Apply_policy.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.apply_policy.Apply_policy.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves the value from one or multiple cells (in the same row or column)</p>
+<p>Substitution: Material subsitution or certain types of rebound effects</p>
+<p>d = transaction to expand
+c = transaction subject to the direct policy intervention
+fx_kp = size of c that is added on the transaction to expand d</p>
 </dd></dl>
 
 <dl class="method">
@@ -371,7 +377,7 @@ y = rows (ordinate/vertical)</p>
 
 <dl class="method">
 <dt id="pyce.apply_policy.Apply_policy.policy_engine">
-<code class="descname">policy_engine</code><span class="sig-paren">(</span><em>M</em>, <em>inter</em>, <em>subs=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/apply_policy.html#Apply_policy.policy_engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.apply_policy.Apply_policy.policy_engine" title="Permalink to this definition">¶</a></dt>
+<code class="descname">policy_engine</code><span class="sig-paren">(</span><em>M</em>, <em>inter</em>, <em>subs=False</em>, <em>copy=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/apply_policy.html#Apply_policy.policy_engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.apply_policy.Apply_policy.policy_engine" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function allows for the proccessing of the specified interventions
 onto a selected matrix. It calls various functions to modify the values
 in a specified matrix.</p>
@@ -388,11 +394,16 @@ kp = market penetration coefficient</p>
 
 <dl class="method">
 <dt id="pyce.apply_policy.Apply_policy.substitution">
-<code class="descname">substitution</code><span class="sig-paren">(</span><em>d</em>, <em>c</em>, <em>fx_kp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/apply_policy.html#Apply_policy.substitution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.apply_policy.Apply_policy.substitution" title="Permalink to this definition">¶</a></dt>
+<code class="descname">substitution</code><span class="sig-paren">(</span><em>d</em>, <em>s</em>, <em>fx_kp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/apply_policy.html#Apply_policy.substitution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.apply_policy.Apply_policy.substitution" title="Permalink to this definition">¶</a></dt>
 <dd><p>Moves the value from one or multiple cells (in the same row or column)</p>
 <p>Substitution: Material subsitution or certain types of rebound effects</p>
-<p>d = transaction to expand
-c = transaction subject to the direct policy intervention
+<p>If the size of the array of the original value is different from that
+of the destination (substituted), we obtain the total of the value to
+be substituted and the substitution is implemented by dividing the tot
+by the number of elements on the destination array and then added to
+the destination array (equally distributed)</p>
+<p>d = transaction with which we are substituting
+s = transaction that was subject to the direct policy intervention
 fx_kp = size of c that is added on the transaction to expand d</p>
 </dd></dl>
 
@@ -408,8 +419,8 @@ fx_kp = size of c that is added on the transaction to expand d</p>
 &#64;institution: Leiden University CML</p>
 <dl class="class">
 <dt id="pyce.base_n_scen.Base_n_scen">
-<em class="property">class </em><code class="descclassname">pyce.base_n_scen.</code><code class="descname">Base_n_scen</code><span class="sig-paren">(</span><em>method</em>, <em>aggregation='bi-regional'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/base_n_scen.html#Base_n_scen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.base_n_scen.Base_n_scen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">pyce.base_n_scen.</code><code class="descname">Base_n_scen</code><span class="sig-paren">(</span><em>data</em>, <em>method</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/base_n_scen.html#Base_n_scen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.base_n_scen.Base_n_scen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Loads base data and assembles new tables (scenario) from the processed data</p>
 <dl class="method">
 <dt id="pyce.base_n_scen.Base_n_scen.baseIOT">
@@ -473,6 +484,33 @@ cat = category of synonym [C_STEL]</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-pyce.make_secondary_flows">
+<span id="pyce-make-secondary-flows-module"></span><h2>pyce.make_secondary_flows module<a class="headerlink" href="#module-pyce.make_secondary_flows" title="Permalink to this headline">¶</a></h2>
+<p>Created on Mon Jul 16 15:10:19 2018
+Description: Modifying SUT to ensure appearance of secondary material flows in
+IOT</p>
+<p>Scope: Modelling the Circular Economy in EEIO</p>
+<p>&#64;author:Franco Donati
+&#64;institution:Leiden University CML</p>
+<dl class="function">
+<dt id="pyce.make_secondary_flows.allocate_sec_mat">
+<code class="descclassname">pyce.make_secondary_flows.</code><code class="descname">allocate_sec_mat</code><span class="sig-paren">(</span><em>V</em>, <em>U</em>, <em>Y</em>, <em>prod_or</em>, <em>ind_or</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/make_secondary_flows.html#allocate_sec_mat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.make_secondary_flows.allocate_sec_mat" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function allows to move the primary material output from the
+secondary material industries to the secondary material output.
+This allows for the presence of secondary materials in the IOT
+once they are transformed from SUTS.</p>
+<p>prod_or = row position of the primary supplied material
+ind_or = colum pos. of the primary industry supplying primary material</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyce.make_secondary_flows.make_secondary">
+<code class="descclassname">pyce.make_secondary_flows.</code><code class="descname">make_secondary</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/make_secondary_flows.html#make_secondary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.make_secondary_flows.make_secondary" title="Permalink to this definition">¶</a></dt>
+<dd><p>This allows to allign secondary flow in such a way that they then
+appear in the IOT</p>
+</dd></dl>
+
+</div>
 <div class="section" id="module-pyce.pyce">
 <span id="pyce-pyce-module"></span><h2>pyce.pyce module<a class="headerlink" href="#module-pyce.pyce" title="Permalink to this headline">¶</a></h2>
 <p>Created on Tue Nov 15 16:29:23 2016</p>
@@ -482,8 +520,8 @@ cat = category of synonym [C_STEL]</p>
 &#64;institution:Leiden University CML</p>
 <dl class="class">
 <dt id="pyce.pyce.Start">
-<em class="property">class </em><code class="descclassname">pyce.pyce.</code><code class="descname">Start</code><span class="sig-paren">(</span><em>method</em>, <em>directory=''</em>, <em>aggregation='bi-regional'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/pyce.html#Start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.pyce.Start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">pyce.pyce.</code><code class="descname">Start</code><span class="sig-paren">(</span><em>method=0</em>, <em>directory=''</em>, <em>aggregation='bi-regional'</em>, <em>file=None</em>, <em>make_secondary=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/pyce.html#Start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.pyce.Start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>directory = directory in which you want to work and save</p>
 <p>method = 0 &gt;&gt; Prod X Prod Ind-Tech Assumption Technical Coeff method
 method = 1 &gt;&gt; Prod X Prod Ind-Tech Assumption Market Share Coeff method</p>
@@ -508,6 +546,12 @@ None, 0, base and baseline are also accepted for baseline</dd>
 <dt id="pyce.pyce.Start.all_results">
 <code class="descname">all_results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/pyce.html#Start.all_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.pyce.Start.all_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Output all results in a table</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyce.pyce.Start.plot_results">
+<code class="descname">plot_results</code><span class="sig-paren">(</span><em>results</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/pyce.html#Start.plot_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.pyce.Start.plot_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots bar graph of the summary results</p>
 </dd></dl>
 
 <dl class="method">
@@ -564,8 +608,8 @@ data e.g. all_results.all_tables</p>
 &#64;institution:Leiden University CML, TU Delft TPM</p>
 <dl class="class">
 <dt id="pyce.results.GatherResults">
-<em class="property">class </em><code class="descclassname">pyce.results.</code><code class="descname">GatherResults</code><span class="sig-paren">(</span><em>method</em>, <em>scen_file</em>, <em>aggregation='bi-regional'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/results.html#GatherResults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.results.GatherResults" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">pyce.results.</code><code class="descname">GatherResults</code><span class="sig-paren">(</span><em>data</em>, <em>method</em>, <em>scen_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/results.html#GatherResults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.results.GatherResults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Group results for a specific scenario or all scenarios + baseline</p>
 <dl class="method">
 <dt id="pyce.results.GatherResults.iter_thru_for_results">
@@ -589,8 +633,8 @@ scen_no = name of the scenario</p>
 
 <dl class="class">
 <dt id="pyce.results.Results">
-<em class="property">class </em><code class="descclassname">pyce.results.</code><code class="descname">Results</code><span class="sig-paren">(</span><em>scen_file</em>, <em>method=0</em>, <em>aggregation='bi-regional'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/results.html#Results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.results.Results" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">pyce.results.</code><code class="descname">Results</code><span class="sig-paren">(</span><em>data</em>, <em>method</em>, <em>scen_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/results.html#Results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.results.Results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Launches analysis, collects and assembles all results</p>
 <dl class="method">
 <dt id="pyce.results.Results.one_scen">
@@ -618,7 +662,7 @@ and organise them in table</p>
 <dl class="class">
 <dt id="pyce.save_.Save">
 <em class="property">class </em><code class="descclassname">pyce.save_.</code><code class="descname">Save</code><span class="sig-paren">(</span><em>specs</em>, <em>directory</em>, <em>method</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyce/save_.html#Save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyce.save_.Save" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Contains various methods to output results from analysis and modelling</p>
 <dl class="method">
 <dt id="pyce.save_.Save.gen_specs">
@@ -668,6 +712,7 @@ and organise them in table</p>
 <li><a class="reference internal" href="#module-pyce.apply_policy">pyce.apply_policy module</a></li>
 <li><a class="reference internal" href="#module-pyce.base_n_scen">pyce.base_n_scen module</a></li>
 <li><a class="reference internal" href="#module-pyce.labels">pyce.labels module</a></li>
+<li><a class="reference internal" href="#module-pyce.make_secondary_flows">pyce.make_secondary_flows module</a></li>
 <li><a class="reference internal" href="#module-pyce.pyce">pyce.pyce module</a></li>
 <li><a class="reference internal" href="#module-pyce.pyce_cli">pyce.pyce_cli module</a></li>
 <li><a class="reference internal" href="#module-pyce.results">pyce.results module</a></li>
@@ -696,12 +741,14 @@ and organise them in table</p>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -712,7 +759,7 @@ and organise them in table</p>
       &copy;2018, Franco Donati.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

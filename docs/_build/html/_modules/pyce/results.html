@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>pyce.results &#8212; pyce 0.1.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '0.1.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
@@ -29,8 +21,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -63,13 +54,13 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Group results for a specific scenario or all scenarios + baseline</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">scen_file</span><span class="p">,</span> <span class="n">aggregation</span><span class="o">=</span><span class="s2">&quot;bi-regional&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">scen_file</span><span class="p">):</span>
 
         <span class="n">scenarios</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelFile</span><span class="p">(</span><span class="n">scen_file</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
         <span class="n">sheet_names</span> <span class="o">=</span> <span class="n">scenarios</span><span class="o">.</span><span class="n">sheet_names</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sheets</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">sheet_names</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;scenario_&quot;</span><span class="p">)]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bns</span> <span class="o">=</span> <span class="n">Base_n_scen</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">aggregation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bns</span> <span class="o">=</span> <span class="n">Base_n_scen</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bns</span><span class="o">.</span><span class="n">baseIOT</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">analyse</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="s2">&quot;analyse&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span> <span class="o">=</span> <span class="n">scen_file</span>
@@ -83,6 +74,9 @@
 <span class="sd">        spec_row = row in the scenarios sheet specifying settings</span>
 <span class="sd">        scen_no = name of the scenario</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:,.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span>
+
         <span class="n">D</span> <span class="o">=</span> <span class="n">df</span><span class="p">()</span>
 
         <span class="n">M_name</span> <span class="o">=</span> <span class="n">spec_row</span><span class="p">[</span><span class="s2">&quot;matrix&quot;</span><span class="p">]</span>  <span class="c1"># matrix of reference</span>
@@ -90,10 +84,7 @@
         <span class="n">o_r</span> <span class="o">=</span> <span class="n">spec_row</span><span class="p">[</span><span class="s2">&quot;o_r&quot;</span><span class="p">]</span>  <span class="c1"># region of exiobase to analyse (rows)</span>
 
         <span class="n">d_p</span> <span class="o">=</span> <span class="n">spec_row</span><span class="p">[</span><span class="s2">&quot;d_p&quot;</span><span class="p">]</span>  <span class="c1"># baseline cat. for comparison (columns)</span>
-        <span class="n">d_p1</span> <span class="o">=</span> <span class="n">spec_row</span><span class="p">[</span><span class="s2">&quot;d1_p&quot;</span><span class="p">]</span>  <span class="c1"># Scenario cat. to compare to x (columns)</span>
-
         <span class="n">d_r</span> <span class="o">=</span> <span class="n">spec_row</span><span class="p">[</span><span class="s2">&quot;d_r&quot;</span><span class="p">]</span>  <span class="c1"># baseline reg. for comparison (columns)</span>
-        <span class="n">d_r1</span> <span class="o">=</span> <span class="n">spec_row</span><span class="p">[</span><span class="s2">&quot;d1_r&quot;</span><span class="p">]</span>  <span class="c1"># Scenario reg. to compare to x (columns)</span>
 
         <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">o_p</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">o_p</span> <span class="o">=</span> <span class="s2">&quot;All&quot;</span>
@@ -101,17 +92,13 @@
         <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">o_r</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">o_r</span> <span class="o">=</span> <span class="s2">&quot;All&quot;</span>
 
-        <span class="c1"># doing some general checking of the inputs</span>
-        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">d_p</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">d_p1</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;category to compare assummed to be the same&quot;</span> <span class="o">+</span>
-                              <span class="s2">&quot;as origin category - &quot;</span> <span class="o">+</span>
-                              <span class="s2">&quot;Can&#39;t compare a product to a supply chain: &quot;</span>
-                              <span class="o">+</span> <span class="n">scen_no</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="n">M_name</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="n">d_p</span><span class="p">)</span>
-                <span class="n">d_p1</span> <span class="o">=</span> <span class="n">d_p</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">d_p</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">d_p</span> <span class="o">=</span> <span class="s2">&quot;All&quot;</span>
 
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">d_r</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">d_r</span> <span class="o">=</span> <span class="s2">&quot;All&quot;</span>
+
+        <span class="c1"># doing some general checking of the inputs</span>
         <span class="k">if</span> <span class="s2">&quot;Y&quot;</span> <span class="ow">in</span> <span class="n">M_name</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">item</span> <span class="ow">in</span> <span class="n">d_p</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;I_&quot;</span><span class="p">,</span> <span class="s2">&quot;F_&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">d_p</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -121,16 +108,6 @@
                                      <span class="o">+</span> <span class="n">d_p</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">d_p</span> <span class="o">=</span> <span class="s2">&quot;All&quot;</span>
-
-        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">d_r</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">d_r1</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;xr assummed as regA&quot;</span> <span class="o">+</span>
-                              <span class="s2">&quot;Can&#39;t compare a reg against the whole world: &quot;</span>
-                              <span class="o">+</span> <span class="n">scen_no</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="n">M_name</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="n">d_p</span><span class="p">)</span>
-                <span class="n">d_r1</span> <span class="o">=</span> <span class="n">d_r</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">d_r</span> <span class="o">=</span> <span class="s2">&quot;All&quot;</span>
-
         <span class="n">M</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">M_name</span><span class="p">]</span>  <span class="c1"># Call specific matrix from which to select</span>
 
 <span class="c1"># =============================================================================</span>
@@ -141,15 +118,15 @@
         <span class="n">ind</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">col</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">scen_no</span> <span class="o">==</span> <span class="s2">&quot;baseline&quot;</span><span class="p">:</span>
-            <span class="n">o</span> <span class="o">=</span> <span class="n">positions</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="n">o_r</span><span class="p">,</span> <span class="n">o_p</span><span class="p">)</span>  <span class="c1"># finding the positions</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="n">positions</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">d_r</span><span class="p">,</span> <span class="n">d_p</span><span class="p">)</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="p">[</span><span class="n">M_name</span><span class="p">,</span> <span class="n">o_p</span><span class="p">,</span> <span class="n">o_r</span><span class="p">,</span> <span class="n">d_p</span><span class="p">,</span> <span class="n">d_r</span><span class="p">]</span>  <span class="c1"># making labels for results</span>
-
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">o</span> <span class="o">=</span> <span class="n">positions</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="n">o_r</span><span class="p">,</span> <span class="n">o_p</span><span class="p">)</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="n">positions</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">d_r1</span><span class="p">,</span> <span class="n">d_p1</span><span class="p">)</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="p">[</span><span class="n">M_name</span><span class="p">,</span> <span class="n">o_p</span><span class="p">,</span> <span class="n">o_r</span><span class="p">,</span> <span class="n">d_p1</span><span class="p">,</span> <span class="n">d_r1</span><span class="p">]</span>  <span class="c1"># making labels for results</span>
+<span class="c1">#        if scen_no == &quot;baseline&quot;:</span>
+        <span class="n">o</span> <span class="o">=</span> <span class="n">positions</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="n">o_r</span><span class="p">,</span> <span class="n">o_p</span><span class="p">)</span>  <span class="c1"># finding the positions</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">positions</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">d_r</span><span class="p">,</span> <span class="n">d_p</span><span class="p">)</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="p">[</span><span class="n">M_name</span><span class="p">,</span> <span class="n">o_p</span><span class="p">,</span> <span class="n">o_r</span><span class="p">,</span> <span class="n">d_p</span><span class="p">,</span> <span class="n">d_r</span><span class="p">]</span>  <span class="c1"># make labels for results</span>
+<span class="c1">#</span>
+<span class="c1">#        else:</span>
+<span class="c1">#            o = positions(ind, o_r, o_p)</span>
+<span class="c1">#            d = positions(col, d_r1, d_p1)</span>
+<span class="c1">#            key = [M_name, o_p, o_r, d_p1, d_r1]  # making labels for results</span>
 
         <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">select</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">d</span><span class="p">]</span>
@@ -165,25 +142,29 @@
 <span class="c1">#         look through them themselves</span>
 <span class="c1"># =============================================================================</span>
 
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">select</span> <span class="o">=</span> <span class="n">df</span><span class="p">(</span><span class="n">select</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">pass</span>
-
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">select</span> <span class="o">=</span> <span class="n">df</span><span class="p">(</span><span class="n">select</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">pass</span>
+        <span class="n">select</span> <span class="o">=</span> <span class="n">df</span><span class="p">([</span><span class="n">select</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">()])</span>
 
         <span class="c1">#  relabelling</span>
         <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># this is added to make sure that results concerning coefficients</span>
+            <span class="c1"># show the correct unit</span>
+            <span class="c1"># if the unit is not specified then it will place an empty str</span>
             <span class="n">units</span> <span class="o">=</span> <span class="n">ind</span><span class="p">[</span><span class="s2">&quot;unit&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">o</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">key_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;matrix&quot;</span><span class="p">,</span> <span class="s2">&quot;o_category&quot;</span><span class="p">,</span>
-                         <span class="s2">&quot;o_region&quot;</span><span class="p">,</span> <span class="s2">&quot;d_category&quot;</span><span class="p">,</span> <span class="s2">&quot;d_region&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">M_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">units</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                    <span class="n">units</span> <span class="o">=</span> <span class="n">units</span> <span class="o">+</span> <span class="s2">&quot;/M.EUR&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span>
+
             <span class="n">key</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
+
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="n">key_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;matrix&quot;</span><span class="p">,</span> <span class="s2">&quot;o_category&quot;</span><span class="p">,</span>
-                         <span class="s2">&quot;o_region&quot;</span><span class="p">,</span> <span class="s2">&quot;d_category&quot;</span><span class="p">,</span> <span class="s2">&quot;d_region&quot;</span><span class="p">]</span>
+            <span class="n">key</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="n">key_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;matrix&quot;</span><span class="p">,</span> <span class="s2">&quot;o_category&quot;</span><span class="p">,</span> <span class="s2">&quot;o_region&quot;</span><span class="p">,</span> <span class="s2">&quot;d_category&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;d_region&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">]</span>
 
         <span class="n">key</span> <span class="o">=</span> <span class="n">df</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)</span>  <span class="c1"># just labelling</span>
 
@@ -193,7 +174,7 @@
         <span class="k">if</span> <span class="n">D</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">D</span> <span class="o">=</span> <span class="n">select</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">D</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">D</span><span class="p">,</span> <span class="n">select</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">D</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">D</span><span class="p">,</span> <span class="n">select</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="k">return</span><span class="p">(</span><span class="n">D</span><span class="p">)</span></div>
 
@@ -219,8 +200,8 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Launches analysis, collects and assembles all results</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_file</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">aggregation</span><span class="o">=</span><span class="s2">&quot;bi-regional&quot;</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">gr</span> <span class="o">=</span> <span class="n">GatherResults</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">scen_file</span><span class="p">,</span> <span class="n">aggregation</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">scen_file</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gr</span> <span class="o">=</span> <span class="n">GatherResults</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">scen_file</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span> <span class="o">=</span> <span class="n">scen_file</span>
 
 <div class="viewcode-block" id="Results.one_scen"><a class="viewcode-back" href="../../pyce.html#pyce.results.Results.one_scen">[docs]</a>    <span class="k">def</span> <span class="nf">one_scen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_no</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">results_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
@@ -237,7 +218,7 @@
 
         <span class="k">if</span> <span class="n">results_only</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">sc</span> <span class="o">=</span> <span class="n">results</span>
-<span class="c1">#            return(sc)</span>
+            <span class="c1"># return(sc)</span>
             <span class="k">if</span> <span class="n">scen_no</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;baseline&quot;</span><span class="p">,</span> <span class="s2">&quot;base&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
                 <span class="n">sc</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sc_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">scen_no</span><span class="p">)]</span>
             <span class="k">else</span><span class="p">:</span>
@@ -274,7 +255,7 @@
                 <span class="n">t2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">one_scen</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">results_only</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">results_only</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                    <span class="n">t</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">t</span><span class="p">,</span> <span class="n">t2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">t</span><span class="p">,</span> <span class="n">t2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
                 <span class="k">elif</span> <span class="n">results_only</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
                     <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;sc_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
@@ -286,8 +267,7 @@
         <span class="k">if</span> <span class="n">results_only</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="n">C</span><span class="p">[</span><span class="s2">&quot;baseline&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">baseline</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">C</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">baseline</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-            <span class="n">C</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+            <span class="n">C</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">baseline</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
         <span class="k">return</span><span class="p">(</span><span class="n">C</span><span class="p">)</span></div></div>
 </pre></div>
@@ -307,12 +287,14 @@
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -323,7 +305,7 @@
       &copy;2018, Franco Donati.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>

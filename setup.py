@@ -53,6 +53,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://bitbucket.org/CML-IE/pyce/src/master/',
-    version='0.1.1',
+    version='0.1.2',
     zip_safe=False,
 )

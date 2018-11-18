@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>pyce.base_n_scen &#8212; pyce 0.1.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '0.1.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
@@ -29,8 +21,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -52,9 +43,7 @@
 <span class="sd">@institution: Leiden University CML</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">df</span>
 <span class="kn">import</span> <span class="nn">pyce.SUTtoIOT</span> <span class="k">as</span> <span class="nn">SUTtoIOT</span>
@@ -68,29 +57,16 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Loads base data and assembles new tables (scenario) from the processed data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">aggregation</span><span class="o">=</span><span class="s2">&quot;bi-regional&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Define the settings for the base data</span>
-<span class="sd">        Aggregation=&quot;bi-regional&quot; (EU-ROW) | None (multi-regional 49 regions)</span>
 <span class="sd">        method = 0 (IOTpxpSTA_TCm)</span>
 <span class="sd">        method = 1 (IOTpxpSTA_MSCm)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">aggregation</span> <span class="o">==</span> <span class="s2">&quot;bi-regional&quot;</span><span class="p">:</span>
-            <span class="c1">#  SUT biregional EU-ROW</span>
-            <span class="n">file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span>
-                                                <span class="s2">&quot;mrSUT_EU_ROW_V3.3.pkl&quot;</span><span class="p">))</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-
-        <span class="k">elif</span> <span class="n">aggregation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># SUT full 2011 data</span>
-            <span class="n">file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span>
-                                                <span class="s2">&quot;mrSUT_V3.3.pkl&quot;</span><span class="p">))</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span> <span class="o">=</span> <span class="n">SUTtoIOT</span><span class="o">.</span><span class="n">Transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">FD_EXT</span> <span class="o">=</span> <span class="n">SUTtoIOT</span><span class="o">.</span><span class="n">Transform</span><span class="o">.</span><span class="n">FD_EXT</span>
-        <span class="k">del</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># this is no longer useful once loaded into SUTS</span>
 <span class="c1"># =============================================================================</span>
 <span class="c1">#         Transform SUT to IOT and outputting elements necessary for operations</span>
 <span class="c1"># =============================================================================</span>
@@ -106,15 +82,13 @@
 
 <span class="sd">        baseline IOT and relabelling</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-<span class="c1"># =============================================================================</span>
-<span class="c1">#         Loading elements</span>
-<span class="c1"># =============================================================================</span>
+        <span class="c1"># Loading elements</span>
 
         <span class="n">E</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IOT</span><span class="p">[</span><span class="s2">&quot;E&quot;</span><span class="p">]</span>
         <span class="n">RE</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IOT</span><span class="p">[</span><span class="s2">&quot;RE&quot;</span><span class="p">]</span>
         <span class="n">L</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IOT</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">]</span>
         <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IOT</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">]</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IOT</span><span class="p">[</span><span class="s2">&quot;q&quot;</span><span class="p">]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IOT</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
         <span class="n">A</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IOT</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span>
         <span class="n">Y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IOT</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span>
 <span class="c1">#        print(&quot;l_m&quot;, df(Y.index).iloc[0])</span>
@@ -128,9 +102,7 @@
         <span class="n">Bm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IOT</span><span class="p">[</span><span class="s2">&quot;Bm&quot;</span><span class="p">]</span>
         <span class="n">ver_base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IOT</span><span class="p">[</span><span class="s2">&quot;ver&quot;</span><span class="p">]</span>
 
-<span class="c1"># =============================================================================</span>
-<span class="c1">#         Calculating intensity matrices for final demand extentions</span>
-<span class="c1"># =============================================================================</span>
+        <span class="c1"># Calculating intensity matrices for final demand extentions</span>
 
         <span class="n">YBe_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FD_EXT</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">YBe</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">diag_yj</span><span class="p">)</span>
         <span class="n">YBr_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FD_EXT</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">YBr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">diag_yj</span><span class="p">)</span>
@@ -143,11 +115,21 @@
         <span class="n">RYBr</span> <span class="o">=</span> <span class="n">YBr_</span><span class="p">[</span><span class="s2">&quot;RYB&quot;</span><span class="p">]</span>
         <span class="n">RYBm</span> <span class="o">=</span> <span class="n">YBm_</span><span class="p">[</span><span class="s2">&quot;RYB&quot;</span><span class="p">]</span>
 
+        <span class="c1"># Characterisation</span>
+        <span class="n">CrBe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">CrBe</span><span class="p">,</span> <span class="n">Be</span><span class="p">)</span>  <span class="c1"># environmental ext</span>
+        <span class="n">CrBr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">CrBr</span><span class="p">,</span> <span class="n">Br</span><span class="p">)</span>  <span class="c1"># resource ext</span>
+        <span class="n">CrBm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">CrBm</span><span class="p">,</span> <span class="n">Bm</span><span class="p">)</span>  <span class="c1"># material ext</span>
+        <span class="n">CrE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">CrE</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>  <span class="c1"># factor inputs</span>
+
+        <span class="n">CrYBe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">CrBe</span><span class="p">,</span> <span class="n">YBe</span><span class="p">)</span>  <span class="c1"># environmental ext</span>
+        <span class="n">CrYBr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">CrBr</span><span class="p">,</span> <span class="n">YBr</span><span class="p">)</span>  <span class="c1"># resource ext</span>
+        <span class="n">CrYBm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">CrBm</span><span class="p">,</span> <span class="n">YBm</span><span class="p">)</span>  <span class="c1"># material ext</span>
+
         <span class="n">IOT</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="n">Y</span><span class="p">,</span>
                <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="n">L</span><span class="p">,</span>
                <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span>
                <span class="s2">&quot;S&quot;</span><span class="p">:</span> <span class="n">S</span><span class="p">,</span>
-               <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="n">q</span><span class="p">,</span>
+               <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
                <span class="s2">&quot;RE&quot;</span><span class="p">:</span> <span class="n">RE</span><span class="p">,</span>
                <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="n">E</span><span class="p">,</span>
                <span class="s2">&quot;YBe&quot;</span><span class="p">:</span> <span class="n">YBe</span><span class="p">,</span>
@@ -162,7 +144,14 @@
                <span class="s2">&quot;Be&quot;</span><span class="p">:</span> <span class="n">Be</span><span class="p">,</span>
                <span class="s2">&quot;Br&quot;</span><span class="p">:</span> <span class="n">Br</span><span class="p">,</span>
                <span class="s2">&quot;Bm&quot;</span><span class="p">:</span> <span class="n">Bm</span><span class="p">,</span>
-               <span class="s2">&quot;ver&quot;</span><span class="p">:</span> <span class="n">ver_base</span>
+               <span class="s2">&quot;ver&quot;</span><span class="p">:</span> <span class="n">ver_base</span><span class="p">,</span>
+               <span class="s2">&quot;CrBe&quot;</span><span class="p">:</span> <span class="n">CrBe</span><span class="p">,</span>
+               <span class="s2">&quot;CrYBe&quot;</span><span class="p">:</span> <span class="n">CrYBe</span><span class="p">,</span>
+               <span class="s2">&quot;CrBr&quot;</span><span class="p">:</span> <span class="n">CrBr</span><span class="p">,</span>
+               <span class="s2">&quot;CrYBr&quot;</span><span class="p">:</span> <span class="n">CrYBr</span><span class="p">,</span>
+               <span class="s2">&quot;CrBm&quot;</span><span class="p">:</span> <span class="n">CrBm</span><span class="p">,</span>
+               <span class="s2">&quot;CrYBm&quot;</span><span class="p">:</span> <span class="n">CrYBm</span><span class="p">,</span>
+               <span class="s2">&quot;CrE&quot;</span><span class="p">:</span> <span class="n">CrE</span>
                <span class="p">}</span>
 
         <span class="n">IOT_lb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">relabel_in_bulk</span><span class="p">(</span><span class="n">IOT</span><span class="p">)</span>
@@ -179,7 +168,7 @@
         <span class="k">if</span> <span class="n">scen_no</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;baseline&quot;</span><span class="p">,</span> <span class="s2">&quot;base&quot;</span><span class="p">]:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;You specified the baseline so no changes were made.&quot;</span>
                           <span class="s2">&quot;Baseline was returned. Possible scenarios [1,2,n]&quot;</span><span class="p">)</span>
-            <span class="k">return</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+            <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">baseIOT</span><span class="p">())</span>
 
         <span class="k">if</span> <span class="n">base</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">baseIOT</span><span class="p">()</span>
@@ -201,10 +190,10 @@
         <span class="n">prod_get_l_m</span> <span class="o">=</span> <span class="n">get_labels</span><span class="p">(</span><span class="n">S_</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># get the label</span>
 
         <span class="c1"># Apply policy to economic matrices</span>
-        <span class="n">S</span> <span class="o">=</span> <span class="n">ap</span><span class="o">.</span><span class="n">apply_policy</span><span class="p">(</span><span class="n">scen_no</span><span class="p">,</span> <span class="n">S_</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">)</span>
-        <span class="n">inv_diag_q</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">q</span><span class="p">(</span><span class="n">S_</span><span class="p">,</span> <span class="n">Y_</span><span class="p">)))</span>
 
-        <span class="n">A_</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">S_</span><span class="p">,</span> <span class="n">inv_diag_q</span><span class="p">)</span>
+        <span class="n">S_</span> <span class="o">=</span> <span class="n">ap</span><span class="o">.</span><span class="n">apply_policy</span><span class="p">(</span><span class="n">scen_no</span><span class="p">,</span> <span class="n">S_</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">)</span>
+        <span class="n">inv_diag_x</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">S_</span><span class="p">,</span> <span class="n">Y_</span><span class="p">)))</span>
+        <span class="n">A_</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">S_</span><span class="p">,</span> <span class="n">inv_diag_x</span><span class="p">)</span>
         <span class="n">A_</span> <span class="o">=</span> <span class="n">relabel</span><span class="p">(</span><span class="n">A_</span><span class="p">,</span> <span class="n">prod_get_l_m</span><span class="p">,</span> <span class="n">prod_get_l_m</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
         <span class="n">A</span> <span class="o">=</span> <span class="n">ap</span><span class="o">.</span><span class="n">apply_policy</span><span class="p">(</span><span class="n">scen_no</span><span class="p">,</span> <span class="n">df</span><span class="p">(</span><span class="n">A_</span><span class="p">),</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
 
@@ -226,20 +215,30 @@
 
         <span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># row sum of final demand</span>
         <span class="n">diag_yj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>  <span class="c1"># column sum of final demand</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">q_IAy</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">yi</span><span class="p">)</span>
-        <span class="n">diag_q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">x_IAy</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">yi</span><span class="p">)</span>
+        <span class="n">diag_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-        <span class="n">S</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">diag_q</span><span class="p">)</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">diag_x</span><span class="p">)</span>
 
-        <span class="n">E</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RE</span><span class="p">,</span> <span class="n">diag_q</span><span class="p">)</span>  <span class="c1"># primary inputs</span>
+        <span class="n">E</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RE</span><span class="p">,</span> <span class="n">diag_x</span><span class="p">)</span>  <span class="c1"># primary inputs</span>
 
-        <span class="n">Be</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RBe</span><span class="p">,</span> <span class="n">diag_q</span><span class="p">)</span>  <span class="c1"># environmental ext</span>
-        <span class="n">Br</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RBr</span><span class="p">,</span> <span class="n">diag_q</span><span class="p">)</span>  <span class="c1"># resource ext</span>
-        <span class="n">Bm</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RBm</span><span class="p">,</span> <span class="n">diag_q</span><span class="p">)</span>  <span class="c1"># material ext</span>
+        <span class="n">Be</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RBe</span><span class="p">,</span> <span class="n">diag_x</span><span class="p">)</span>  <span class="c1"># environmental ext</span>
+        <span class="n">Br</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RBr</span><span class="p">,</span> <span class="n">diag_x</span><span class="p">)</span>  <span class="c1"># resource ext</span>
+        <span class="n">Bm</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RBm</span><span class="p">,</span> <span class="n">diag_x</span><span class="p">)</span>  <span class="c1"># material ext</span>
 
         <span class="n">YBe</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">fdext</span><span class="o">.</span><span class="n">YB</span><span class="p">(</span><span class="n">RYBe</span><span class="p">,</span> <span class="n">diag_yj</span><span class="p">)</span>  <span class="c1"># environmental ext</span>
         <span class="n">YBr</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">fdext</span><span class="o">.</span><span class="n">YB</span><span class="p">(</span><span class="n">RYBr</span><span class="p">,</span> <span class="n">diag_yj</span><span class="p">)</span>  <span class="c1"># resource ext</span>
         <span class="n">YBm</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">fdext</span><span class="o">.</span><span class="n">YB</span><span class="p">(</span><span class="n">RYBm</span><span class="p">,</span> <span class="n">diag_yj</span><span class="p">)</span>  <span class="c1"># material ext</span>
+
+        <span class="c1"># Characterisation</span>
+        <span class="n">CrBe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">CrBe</span><span class="p">,</span> <span class="n">Be</span><span class="p">)</span>  <span class="c1"># environmental ext</span>
+        <span class="n">CrBr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">CrBr</span><span class="p">,</span> <span class="n">Br</span><span class="p">)</span>  <span class="c1"># resource ext</span>
+        <span class="n">CrBm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">CrBm</span><span class="p">,</span> <span class="n">Bm</span><span class="p">)</span>  <span class="c1"># material ext</span>
+        <span class="n">CrE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">CrE</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>  <span class="c1"># factor inputs</span>
+
+        <span class="n">CrYBe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">CrBe</span><span class="p">,</span> <span class="n">YBe</span><span class="p">)</span>  <span class="c1"># environmental ext</span>
+        <span class="n">CrYBr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">CrBr</span><span class="p">,</span> <span class="n">YBr</span><span class="p">)</span>  <span class="c1"># resource ext</span>
+        <span class="n">CrYBm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">CrBm</span><span class="p">,</span> <span class="n">YBm</span><span class="p">)</span>  <span class="c1"># material ext</span>
 
         <span class="n">ver</span> <span class="o">=</span> <span class="n">sops</span><span class="o">.</span><span class="n">verifyIOT</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>  <span class="c1"># ver_new_IOT</span>
 
@@ -247,7 +246,7 @@
                <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="n">L</span><span class="p">,</span>
                <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span>
                <span class="s2">&quot;S&quot;</span><span class="p">:</span> <span class="n">S</span><span class="p">,</span>
-               <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="n">q</span><span class="p">,</span>
+               <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
                <span class="s2">&quot;RE&quot;</span><span class="p">:</span> <span class="n">RE</span><span class="p">,</span>
                <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="n">E</span><span class="p">,</span>
                <span class="s2">&quot;YBe&quot;</span><span class="p">:</span> <span class="n">YBe</span><span class="p">,</span>
@@ -262,7 +261,14 @@
                <span class="s2">&quot;Be&quot;</span><span class="p">:</span> <span class="n">Be</span><span class="p">,</span>
                <span class="s2">&quot;Br&quot;</span><span class="p">:</span> <span class="n">Br</span><span class="p">,</span>
                <span class="s2">&quot;Bm&quot;</span><span class="p">:</span> <span class="n">Bm</span><span class="p">,</span>
-               <span class="s2">&quot;ver&quot;</span><span class="p">:</span> <span class="n">ver</span>
+               <span class="s2">&quot;ver&quot;</span><span class="p">:</span> <span class="n">ver</span><span class="p">,</span>
+               <span class="s2">&quot;CrBe&quot;</span><span class="p">:</span> <span class="n">CrBe</span><span class="p">,</span>
+               <span class="s2">&quot;CrYBe&quot;</span><span class="p">:</span> <span class="n">CrYBe</span><span class="p">,</span>
+               <span class="s2">&quot;CrBr&quot;</span><span class="p">:</span> <span class="n">CrBr</span><span class="p">,</span>
+               <span class="s2">&quot;CrYBr&quot;</span><span class="p">:</span> <span class="n">CrYBr</span><span class="p">,</span>
+               <span class="s2">&quot;CrBm&quot;</span><span class="p">:</span> <span class="n">CrBm</span><span class="p">,</span>
+               <span class="s2">&quot;CrYBm&quot;</span><span class="p">:</span> <span class="n">CrYBm</span><span class="p">,</span>
+               <span class="s2">&quot;CrE&quot;</span><span class="p">:</span> <span class="n">CrE</span>
                <span class="p">}</span>
 
         <span class="n">IOT_lb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SUTs</span><span class="o">.</span><span class="n">relabel_in_bulk</span><span class="p">(</span><span class="n">IOT</span><span class="p">)</span>
@@ -285,12 +291,14 @@
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -301,7 +309,7 @@
       &copy;2018, Franco Donati.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>
