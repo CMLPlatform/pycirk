@@ -11,7 +11,7 @@ Scope: Modelling the Circular Economy in EEIO
 @institution:Leiden University CML
 """
 import numpy as np
-from pyce.labels import positions
+from pycirk.labels import positions
 
 
 def make_secondary(data):

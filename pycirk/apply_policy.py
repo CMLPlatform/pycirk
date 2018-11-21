@@ -12,8 +12,8 @@ Scope: Modelling the Circular Economy in EEIO
 
 import pandas as pd
 import numpy as np
-from pyce.labels import get_labels
-from pyce.labels import positions
+from pycirk.labels import get_labels
+from pycirk.labels import positions
 import warnings
 
 

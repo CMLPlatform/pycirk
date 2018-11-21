@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pyce.results &#8212; pyce 0.1.1 documentation</title>
+    <title>pycirk.results &#8212; pycirk 0.1.3 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" src="../../_static/documentation_options.js"></script>
@@ -29,7 +29,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for pyce.results</h1><div class="highlight"><pre>
+  <h1>Source code for pycirk.results</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Created on Mon Feb 27 09:26:43 2017</span>
@@ -45,12 +45,12 @@
 <span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">df</span>
 <span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">MultiIndex</span> <span class="k">as</span> <span class="n">mi</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">pyce.base_n_scen</span> <span class="k">import</span> <span class="n">Base_n_scen</span>
-<span class="kn">from</span> <span class="nn">pyce.labels</span> <span class="k">import</span> <span class="n">positions</span>
+<span class="kn">from</span> <span class="nn">pycirk.base_n_scen</span> <span class="k">import</span> <span class="n">Base_n_scen</span>
+<span class="kn">from</span> <span class="nn">pycirk.labels</span> <span class="k">import</span> <span class="n">positions</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="GatherResults"><a class="viewcode-back" href="../../pyce.html#pyce.results.GatherResults">[docs]</a><span class="k">class</span> <span class="nc">GatherResults</span><span class="p">:</span>
+<div class="viewcode-block" id="GatherResults"><a class="viewcode-back" href="../../pycirk.html#pycirk.results.GatherResults">[docs]</a><span class="k">class</span> <span class="nc">GatherResults</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Group results for a specific scenario or all scenarios + baseline</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -65,7 +65,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">analyse</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="s2">&quot;analyse&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span> <span class="o">=</span> <span class="n">scen_file</span>
 
-<div class="viewcode-block" id="GatherResults.retrieve_specified_data"><a class="viewcode-back" href="../../pyce.html#pyce.results.GatherResults.retrieve_specified_data">[docs]</a>    <span class="k">def</span> <span class="nf">retrieve_specified_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">spec_row</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">):</span>
+<div class="viewcode-block" id="GatherResults.retrieve_specified_data"><a class="viewcode-back" href="../../pycirk.html#pycirk.results.GatherResults.retrieve_specified_data">[docs]</a>    <span class="k">def</span> <span class="nf">retrieve_specified_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">spec_row</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Separate, collect and rename results for base and scenarios according</span>
 <span class="sd">        to specifications under th sheet &quot;analysis&quot; in scenarios.xls</span>
@@ -178,7 +178,7 @@
 
         <span class="k">return</span><span class="p">(</span><span class="n">D</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="GatherResults.iter_thru_for_results"><a class="viewcode-back" href="../../pyce.html#pyce.results.GatherResults.iter_thru_for_results">[docs]</a>    <span class="k">def</span> <span class="nf">iter_thru_for_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">):</span>
+<div class="viewcode-block" id="GatherResults.iter_thru_for_results"><a class="viewcode-back" href="../../pycirk.html#pycirk.results.GatherResults.iter_thru_for_results">[docs]</a>    <span class="k">def</span> <span class="nf">iter_thru_for_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        filter policy interventions from scenario file according to specified</span>
 <span class="sd">        matrix and return the respective matrix with it</span>
@@ -196,7 +196,7 @@
         <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="Results"><a class="viewcode-back" href="../../pyce.html#pyce.results.Results">[docs]</a><span class="k">class</span> <span class="nc">Results</span><span class="p">:</span>
+<div class="viewcode-block" id="Results"><a class="viewcode-back" href="../../pycirk.html#pycirk.results.Results">[docs]</a><span class="k">class</span> <span class="nc">Results</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Launches analysis, collects and assembles all results</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -204,7 +204,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">gr</span> <span class="o">=</span> <span class="n">GatherResults</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">scen_file</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span> <span class="o">=</span> <span class="n">scen_file</span>
 
-<div class="viewcode-block" id="Results.one_scen"><a class="viewcode-back" href="../../pyce.html#pyce.results.Results.one_scen">[docs]</a>    <span class="k">def</span> <span class="nf">one_scen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_no</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">results_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Results.one_scen"><a class="viewcode-back" href="../../pycirk.html#pycirk.results.Results.one_scen">[docs]</a>    <span class="k">def</span> <span class="nf">one_scen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_no</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">results_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Display results for baseline or specific scenario</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -235,7 +235,7 @@
 
         <span class="k">return</span><span class="p">(</span><span class="n">sc</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Results.table_res"><a class="viewcode-back" href="../../pyce.html#pyce.results.Results.table_res">[docs]</a>    <span class="k">def</span> <span class="nf">table_res</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Results.table_res"><a class="viewcode-back" href="../../pycirk.html#pycirk.results.Results.table_res">[docs]</a>    <span class="k">def</span> <span class="nf">table_res</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Take a dictionary of all scenarios&#39; results</span>
 <span class="sd">        and organise them in table</span>

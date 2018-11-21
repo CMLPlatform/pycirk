@@ -1,7 +1,7 @@
-pyce
-====
+pycirk
+======
 
 .. toctree::
    :maxdepth: 4
 
-   pyce
+   pycirk

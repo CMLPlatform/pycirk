@@ -1,5 +1,5 @@
 ####
-pyce
+pycirk
 ####
 
 
@@ -9,7 +9,7 @@ pyce
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](resources/docs/CONTRIBUTING.md)
 
-| Documentation: https://bitbucket.org/CML-IE/pyce/src/master/
+| Documentation: https://bitbucket.org/CML-IE/pycirk/src/master/
 
 
 
@@ -23,7 +23,7 @@ pyce
 
 Run in your terminal:0
 
-	$ pip install pyce
+	$ pip install pycirk
 
 
 1.2. From source
@@ -31,7 +31,7 @@ Run in your terminal:0
 
 Clone repository:
 
-	$ git clone https://fdonati@bitbucket.org/CML-IE/pyce.git
+	$ git clone https://fdonati@bitbucket.org/CML-IE/pycirk.git
 
 Once you have a copy of the source, you can install it with:
 	
@@ -45,13 +45,13 @@ Once you have a copy of the source, you can install it with:
 2.1. Import package
 -------------------
 
-	import pyce
+	import pycirk
 
 
 2.2. Initialize
 ---------------
     
-	s = pyce.Start(method, directory, aggregation)
+	s = pycirk.Start(method, directory, aggregation)
 
 
 2.3. set your scenarios and analysis 
@@ -97,11 +97,11 @@ Once you have a copy of the source, you can install it with:
 
 2.6. Use from command line
 
-2.6.1. pyce --help
+2.6.1. pycirk --help
 
-Usage: pyce [OPTIONS]
+Usage: pycirk [OPTIONS]
 
-Console script for pyce. A software to model policy and technological
+Console script for pycirk. A software to model policy and technological
 interventions in Environmentally Extended Input-Output Analysis (EXIOBASE
 V3.3, 2011)
     
@@ -123,7 +123,7 @@ Options:
 
 2.6.2. Command example
 
-	pyce -tm 0 -dr "" -sc "all" -s "all"
+	pycirk -tm 0 -dr "" -sc "all" -s "all"
 
 
 
@@ -167,7 +167,7 @@ It is possible to specify:
 ====================
 
 
-4.1. pyce.py
+4.1. pycirk.py
 ------------
 
 

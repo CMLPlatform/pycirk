@@ -13,8 +13,8 @@ import pandas as pd
 from pandas import DataFrame as df
 from pandas import MultiIndex as mi
 import warnings
-from pyce.base_n_scen import Base_n_scen
-from pyce.labels import positions
+from pycirk.base_n_scen import Base_n_scen
+from pycirk.labels import positions
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 

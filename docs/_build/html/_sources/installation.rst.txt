@@ -8,13 +8,13 @@ Installation
 Stable release
 --------------
 
-To install pyce, run this command in your terminal:
+To install pycirk, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install pyce
+    $ pip install pycirk
 
-This is the preferred method to install pyCE, as it will always install the most recent stable release.
+This is the preferred method to install pycirk, as it will always install the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
@@ -26,19 +26,19 @@ you through the process.
 From sources
 ------------
 
-The sources for pyCE can be downloaded from the `Github repo`_.
+The sources for pycirk can be downloaded from the `Github repo`_.
 
 You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone https://fdonati@bitbucket.org/CML-IE/pyce.git
+    $ git clone https://fdonati@bitbucket.org/CML-IE/pycirk.git
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://bitbucket.org/CML-IE/pyce/src/master/
+    $ curl  -OL https://bitbucket.org/CML-IE/pycirk/src/master/
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/FDonati/pyce
-.. _tarball: https://github.com/FDonati/pyce/tarball/master
+.. _Github repo: https://github.com/FDonati/pycirk
+.. _tarball: https://github.com/FDonati/pycirk/tarball/master

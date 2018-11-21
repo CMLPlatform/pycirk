@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for `pyce` package."""
+"""Tests for `pycirk` package."""
 
 import pytest
-import pyce
+import pycirk
 
 
 @pytest.fixture
 def initialise_method_0():
-    s = pyce.Start(0, "test")
+    s = pycirk.Start(0, "test")
     return(s)
 
 def initialise_method_1():
-    s = pyce.Start(1, "test")
+    s = pycirk.Start(1, "test")
     return(s)
 
 def test_all_results_method0():

@@ -11,9 +11,9 @@ Scope:  Modelling the Circular economy in EEIO
 """
 import numpy as np
 from pandas import DataFrame as df
-from pyce.labels import relabel
-from pyce.labels import get_labels
-from pyce.SUTops import SUTops as sops
+from pycirk.labels import relabel
+from pycirk.labels import get_labels
+from pycirk.SUTops import SUTops as sops
 
 
 class Transform:

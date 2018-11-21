@@ -1,4 +1,4 @@
-Welcome to pyce's documentation!
+Welcome to pycirk's documentation!
 ======================================
 
 .. toctree::

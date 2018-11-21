@@ -14,11 +14,11 @@ Scope: Modelling the Circular economy in EEIO
 import warnings
 import numpy as np
 from pandas import DataFrame as df
-import pyce.SUTtoIOT as SUTtoIOT
-from pyce.SUTops import SUTops as sops
-from pyce.labels import get_labels
-from pyce.labels import relabel
-from pyce.apply_policy import Apply_policy
+import pycirk.SUTtoIOT as SUTtoIOT
+from pycirk.SUTops import SUTops as sops
+from pycirk.labels import get_labels
+from pycirk.labels import relabel
+from pycirk.apply_policy import Apply_policy
 
 
 class Base_n_scen:

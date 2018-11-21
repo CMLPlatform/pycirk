@@ -5,7 +5,7 @@
 
 from setuptools import setup, find_packages
 
-with open('README.rst') as readme_file:
+with open('description.txt') as readme_file:
     readme = readme_file.read()
 
 with open('HISTORY.rst') as history_file:
@@ -24,7 +24,7 @@ setup(
     author="Franco Donati",
     author_email='f.donati@cml.leidenuniv.nl',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Natural Language :: English',
@@ -32,12 +32,12 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3 :: Only',
     ],
-    description="A software to model policy and technological" +
-                "interventions in Environmentally Extended Input-Output" +
-                "Analysis (EXIOBASE V3.3)",
+    description="A software to model Circular Economy policy and" +
+                "technological interventions in Environmentally " +
+                "Extended Input-Output Analysis (EXIOBASE V3.3)",
     entry_points={
         'console_scripts': [
-            'pyce=pyce.pyce_cli:main',
+            'pycirk=pycirk.pycirk_cli:main',
         ],
     },
 
@@ -46,13 +46,13 @@ setup(
     license="GNU General Public License v3",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
-    keywords='pyce',
-    name='pyce',
-    packages=find_packages(include=['pyce']),
+    keywords='pycirk',
+    name='pycirk',
+    packages=find_packages(include=['pycirk']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://bitbucket.org/CML-IE/pyce/src/master/',
-    version='0.1.2',
+    url='https://bitbucket.org/CML-IE/pycirk/src/master/',
+    version='1.0.0',
     zip_safe=False,
 )

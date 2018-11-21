@@ -15,10 +15,10 @@ import pandas as pd
 from sys import platform
 from shutil import copyfile
 import os.path as ospt
-from pyce.save_ import Save
-from pyce.results import Results
+from pycirk.save_ import Save
+from pycirk.results import Results
 import matplotlib.pyplot as plt
-from pyce.make_secondary_flows import make_secondary as ms
+from pycirk.make_secondary_flows import make_secondary as ms
 
 
 class Start:
@@ -59,38 +59,33 @@ class Start:
 
         self.directory = directory
 
+        orig = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                            "scenarios.xls"))
+        print(orig)
         if self.directory == "":
             # here we try to indentify on which platform we are working
             # and specifying default folders
             if "linux" in platform or platform == "darwin":
-                self.directory = os.path.expanduser("~/Documents/") + "pyCE"
+                self.directory = os.path.expanduser("~/Documents/pycirk/")
 
             elif "win" in platform:
                 if platform != "darwin":
-                    self.directory = os.path.expanduser("~/Documents/")+"pyCE"
+                    self.directory = os.path.expanduser("~/Documents/pycirk/")
                 else:
                     self.directory = input("Please specify the directory: ")
             else:
                 self.directory = input("Please specify the directory: ")
-
-            if not os.path.exists(self.directory):
+                # checking if the file already exists else copying settings to
+                # the output folder
+            if not os.path.isfile(self.directory + "scenarios.xls"):
                 os.makedirs(self.directory)
-            else:
-                pass
+                copyfile(orig, self.directory + "scenarios.xls")
 
         elif directory != "test" and "":
             # origin of scenarios.xls file
-            orig = os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                                "scenarios.xls"))
-            # checking if the file already exists else copying settings to
-            # the output folder
-            if not os.path.isfile(self.directory + "/" + "scenarios.xls"):
-                copyfile(orig, self.directory + "/" + "scenarios.xls")
-            else:
-                pass
-
             if not os.path.exists(self.directory):
                 os.makedirs(self.directory)
+                copyfile(orig, self.directory + "scenarios.xls")
             else:
                 pass
 
@@ -117,7 +112,8 @@ class Start:
 
         # defines a directory for outputs when saving
         self.save_directory = self.directory + "/outputs/"
-        self.scen_file = self.directory + "/scenarios.xls"
+        self.scen_file = self.directory + "scenarios.xls"
+        print(self.scen_file)
 
         self.aggregation = aggregation  # biregional or None=multiregional
 
