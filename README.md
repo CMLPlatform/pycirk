@@ -13,7 +13,7 @@ Documentation: https://bitbucket.org/CML-IE/pycirk/src/master/
 
 Run in your terminal:
 
-	$ pip install pycirk # currently not uploaded to PyPI. It will be there by the end of July 20148 
+	$ pip install pycirk
 
 ### From source
 
