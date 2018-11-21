@@ -2,10 +2,11 @@
 
 _A software to model Circular Economy policy and technological interventions in Environmentally Extended Input-Output Analysis starting from SUTs (EXIOBASE V3.3)_
 
+[![DOI](https://zenodo.org/badge/157891556.svg)](https://zenodo.org/badge/latestdoi/157891556)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](resources/docs/CONTRIBUTING.md)
 
-Documentation: https://bitbucket.org/CML-IE/pycirk/src/master/
+Documentation: https://cmlplatform.github.io/pycirk/
 
 ## Installation
 
