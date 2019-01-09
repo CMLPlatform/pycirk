@@ -100,6 +100,7 @@ class SUTops:
             L =  (I-A)^-1
             """
             A = U @ T @ inv_diag_q  # technical coefficient matrix
+            A = np.nan_to_num(A)
             IA = np.identity(len(A)) - A
             L = ln.inv(IA)
 

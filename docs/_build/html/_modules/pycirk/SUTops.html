@@ -132,6 +132,7 @@
 <span class="sd">            L =  (I-A)^-1</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="n">A</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">T</span> <span class="o">@</span> <span class="n">inv_diag_q</span>  <span class="c1"># technical coefficient matrix</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
             <span class="n">IA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">))</span> <span class="o">-</span> <span class="n">A</span>
             <span class="n">L</span> <span class="o">=</span> <span class="n">ln</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">IA</span><span class="p">)</span>
 

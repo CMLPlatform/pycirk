@@ -43,32 +43,86 @@
 <span class="sd">@institution:Leiden University CML</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">pycirk.labels</span> <span class="k">import</span> <span class="n">positions</span>
+<span class="c1"># from pycirk.labels import positions</span>
 
 
 <div class="viewcode-block" id="make_secondary"><a class="viewcode-back" href="../../pycirk.html#pycirk.make_secondary_flows.make_secondary">[docs]</a><span class="k">def</span> <span class="nf">make_secondary</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This allows to allign secondary flow in such a way that they then</span>
 <span class="sd">    appear in the IOT</span>
+
+<span class="sd">    Primary Products&#39; positions</span>
+
+<span class="sd">    C_WOOD: 57</span>
+<span class="sd">    C_PULP: 59</span>
+<span class="sd">    C_PLAS: 85</span>
+<span class="sd">    C_GLAS: 96</span>
+<span class="sd">    C_CMNT: 100</span>
+<span class="sd">    C_STEL: 103</span>
+<span class="sd">    C_PREM: 105</span>
+<span class="sd">    C_ALUM: 107</span>
+<span class="sd">    C_LZTP: 109</span>
+<span class="sd">    C_COPP: 111</span>
+<span class="sd">    C_ONFM: 113</span>
+<span class="sd">    C_CONS: 149</span>
+
+<span class="sd">    Primary Sectors&#39;positions:</span>
+
+<span class="sd">    A_WOOD: 49</span>
+<span class="sd">    A_PULP: 51</span>
+<span class="sd">    A_PLAS: 58</span>
+<span class="sd">    A_GLAS: 64</span>
+<span class="sd">    A_CMNT: 68</span>
+<span class="sd">    A_STEL: 71</span>
+<span class="sd">    A_PREM: 73</span>
+<span class="sd">    A_ALUM: 75</span>
+<span class="sd">    A_LZTP: 77</span>
+<span class="sd">    A_COPP: 79</span>
+<span class="sd">    A_ONFM: 81</span>
+<span class="sd">    A_CONS: 112</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">V</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span>
     <span class="n">U</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;U&quot;</span><span class="p">]</span>
     <span class="n">Y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span>
 
-    <span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;_WOOD&quot;</span><span class="p">,</span> <span class="s2">&quot;_PULP&quot;</span><span class="p">,</span> <span class="s2">&quot;_PLAS&quot;</span><span class="p">,</span> <span class="s2">&quot;_GLAS&quot;</span><span class="p">,</span> <span class="s2">&quot;_CMNT&quot;</span><span class="p">,</span> <span class="s2">&quot;_STEL&quot;</span><span class="p">,</span>
-                 <span class="s2">&quot;_PREM&quot;</span><span class="p">,</span> <span class="s2">&quot;_ALUM&quot;</span><span class="p">,</span> <span class="s2">&quot;_LZTP&quot;</span><span class="p">,</span> <span class="s2">&quot;_COPP&quot;</span><span class="p">,</span> <span class="s2">&quot;_ONFM&quot;</span><span class="p">,</span> <span class="s2">&quot;_CONS&quot;</span><span class="p">]</span>
+    <span class="n">products</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">57</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span>
+                         <span class="mi">105</span><span class="p">,</span> <span class="mi">107</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">113</span><span class="p">,</span> <span class="mi">149</span><span class="p">])</span>
 
-    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">materials</span><span class="p">:</span>
-        <span class="n">prod_or</span> <span class="o">=</span> <span class="s2">&quot;C&quot;</span> <span class="o">+</span> <span class="n">l</span>
-        <span class="n">ind_or</span> <span class="o">=</span> <span class="s2">&quot;A&quot;</span> <span class="o">+</span> <span class="n">l</span>
-        <span class="n">moved</span> <span class="o">=</span> <span class="n">allocate_sec_mat</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">prod_or</span><span class="p">,</span> <span class="n">ind_or</span><span class="p">)</span>
-        <span class="n">V</span> <span class="o">=</span> <span class="n">moved</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span>
-        <span class="n">U</span> <span class="o">=</span> <span class="n">moved</span><span class="p">[</span><span class="s2">&quot;U&quot;</span><span class="p">]</span>
+    <span class="n">industries</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">49</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span>
+                           <span class="mi">75</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">112</span><span class="p">])</span>
+
+    <span class="n">no_countries</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span><span class="o">/</span><span class="mi">200</span><span class="p">)</span>
+
+    <span class="n">prod_or</span> <span class="o">=</span> <span class="n">make_coord_array</span><span class="p">(</span><span class="n">products</span><span class="p">,</span> <span class="n">no_countries</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="n">ind_or</span> <span class="o">=</span> <span class="n">make_coord_array</span><span class="p">(</span><span class="n">industries</span><span class="p">,</span> <span class="n">no_countries</span><span class="p">,</span> <span class="mi">163</span><span class="p">)</span>
+
+    <span class="n">moved</span> <span class="o">=</span> <span class="n">allocate_sec_mat</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">prod_or</span><span class="p">,</span> <span class="n">ind_or</span><span class="p">)</span>
+
+    <span class="n">V</span> <span class="o">=</span> <span class="n">moved</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="n">moved</span><span class="p">[</span><span class="s2">&quot;U&quot;</span><span class="p">]</span>
 
     <span class="n">data</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">V</span>
     <span class="n">data</span><span class="p">[</span><span class="s2">&quot;U&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">U</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="make_coord_array"><a class="viewcode-back" href="../../pycirk.html#pycirk.make_secondary_flows.make_coord_array">[docs]</a><span class="k">def</span> <span class="nf">make_coord_array</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">no_countries</span><span class="p">,</span> <span class="n">no_ind_or_prod</span><span class="p">):</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">nn</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coordinates</span><span class="p">)):</span>
+        <span class="k">while</span> <span class="n">nn</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">no_countries</span><span class="p">):</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">coordinates</span> <span class="o">+</span> <span class="n">no_ind_or_prod</span><span class="o">*</span><span class="n">nn</span>
+            <span class="k">if</span> <span class="s2">&quot;s&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">():</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">g</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">s</span><span class="p">,</span> <span class="n">g</span><span class="p">])</span>
+            <span class="n">nn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="allocate_sec_mat"><a class="viewcode-back" href="../../pycirk.html#pycirk.make_secondary_flows.allocate_sec_mat">[docs]</a><span class="k">def</span> <span class="nf">allocate_sec_mat</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">prod_or</span><span class="p">,</span> <span class="n">ind_or</span><span class="p">):</span>
@@ -85,44 +139,35 @@
     <span class="n">U</span> <span class="o">=</span> <span class="n">U</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-    <span class="n">index</span> <span class="o">=</span> <span class="n">V</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">columns</span> <span class="o">=</span> <span class="n">V</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-
-    <span class="n">reg</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="c1"># position of the primary material</span>
-    <span class="n">or_prod_ix_pos</span> <span class="o">=</span> <span class="n">positions</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">reg</span><span class="p">,</span> <span class="n">prod_or</span><span class="p">)</span>
-    <span class="n">or_ind_col_pos</span> <span class="o">=</span> <span class="n">positions</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="n">reg</span><span class="p">,</span> <span class="n">ind_or</span><span class="p">)</span>
-
     <span class="c1"># position of the secondary material</span>
-    <span class="n">des_prod_ix_pos</span> <span class="o">=</span> <span class="n">or_prod_ix_pos</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="n">des_ind_col_pos</span> <span class="o">=</span> <span class="n">or_ind_col_pos</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">des_prod_ix_pos</span> <span class="o">=</span> <span class="n">prod_or</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">des_ind_col_pos</span> <span class="o">=</span> <span class="n">ind_or</span> <span class="o">+</span> <span class="mi">1</span>
 
     <span class="c1"># getting the value of secondary material from the supply table</span>
     <span class="c1"># which is placed on the primary material row</span>
-    <span class="n">misplaced</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">or_prod_ix_pos</span><span class="p">,</span> <span class="n">des_ind_col_pos</span><span class="p">])</span>
+    <span class="n">misplaced</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">,</span> <span class="n">des_ind_col_pos</span><span class="p">])</span>
 
     <span class="c1"># placing the misplaced value to the secondary material row</span>
     <span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">des_prod_ix_pos</span><span class="p">,</span> <span class="n">des_ind_col_pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">misplaced</span>
 
     <span class="c1"># collecting how much of the primary material is consumed by final demand</span>
     <span class="c1"># to be subtracted from the supply value</span>
-    <span class="n">Y_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">or_prod_ix_pos</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Y_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="c1"># how the supply to intraindustry transactions is distributed in its use</span>
-    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">or_prod_ix_pos</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">Y_values</span><span class="p">)),</span>
-                  <span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">or_prod_ix_pos</span><span class="p">])</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">Y_values</span><span class="p">)),</span>
+                  <span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">])</span>
 
     <span class="c1"># mapping the use of the secondary material according to the distribution</span>
     <span class="c1"># of use of the primary material</span>
     <span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">des_prod_ix_pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">misplaced</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">@</span> <span class="n">dist</span>
 
     <span class="c1"># subtracting the use of secondary material from the primary</span>
-    <span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">or_prod_ix_pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">or_prod_ix_pos</span><span class="p">],</span>
-                                         <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">des_prod_ix_pos</span><span class="p">]))</span>
+    <span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">],</span>
+                                  <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">des_prod_ix_pos</span><span class="p">]))</span>
 
     <span class="c1"># zeroing the misplaced value of secondary materials</span>
-    <span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">or_prod_ix_pos</span><span class="p">,</span> <span class="n">des_ind_col_pos</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">,</span> <span class="n">des_ind_col_pos</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="c1"># verifying balance</span>
     <span class="n">g1_over_g2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span>
@@ -133,6 +178,99 @@
               <span class="s2">&quot;balance&quot;</span><span class="p">:</span> <span class="n">g1_over_g2</span><span class="p">}</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># def make_secondary(data):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     This allows to allign secondary flow in such a way that they then</span>
+<span class="c1">#     appear in the IOT</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     V = data[&quot;V&quot;]</span>
+<span class="c1">#     U = data[&quot;U&quot;]</span>
+<span class="c1">#     Y = data[&quot;Y&quot;]</span>
+<span class="c1"># </span>
+<span class="c1">#     materials = [&quot;_WOOD&quot;, &quot;_PULP&quot;, &quot;_PLAS&quot;, &quot;_GLAS&quot;, &quot;_CMNT&quot;, &quot;_STEL&quot;,</span>
+<span class="c1">#                  &quot;_PREM&quot;, &quot;_ALUM&quot;, &quot;_LZTP&quot;, &quot;_COPP&quot;, &quot;_ONFM&quot;, &quot;_CONS&quot;]</span>
+<span class="c1"># </span>
+<span class="c1">#     for l in materials:</span>
+<span class="c1">#         prod_or = &quot;C&quot; + l</span>
+<span class="c1">#         ind_or = &quot;A&quot; + l</span>
+<span class="c1">#         moved = allocate_sec_mat(V, U, Y, prod_or, ind_or)</span>
+<span class="c1">#         V = moved[&quot;V&quot;]</span>
+<span class="c1">#         U = moved[&quot;U&quot;]</span>
+<span class="c1"># </span>
+<span class="c1">#     data[&quot;V&quot;] = V</span>
+<span class="c1">#     data[&quot;U&quot;] = U</span>
+<span class="c1"># </span>
+<span class="c1">#     return(data)</span>
+<span class="c1"># </span>
+<span class="c1"># </span>
+<span class="c1"># def allocate_sec_mat(V, U, Y, prod_or, ind_or):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     This function allows to move the primary material output from the</span>
+<span class="c1">#     secondary material industries to the secondary material output.</span>
+<span class="c1">#     This allows for the presence of secondary materials in the IOT</span>
+<span class="c1">#     once they are transformed from SUTS.</span>
+<span class="c1"># </span>
+<span class="c1">#     prod_or = row position of the primary supplied material</span>
+<span class="c1">#     ind_or = colum pos. of the primary industry supplying primary material</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     V = V.copy()</span>
+<span class="c1">#     U = U.copy()</span>
+<span class="c1">#     Y = Y.copy()</span>
+<span class="c1"># </span>
+<span class="c1">#     index = V.index.to_frame(False)</span>
+<span class="c1">#     columns = V.columns.to_frame(False)</span>
+<span class="c1"># </span>
+<span class="c1">#     reg = None</span>
+<span class="c1"># </span>
+<span class="c1">#     # position of the primary material</span>
+<span class="c1">#     or_prod_ix_pos = positions(index, reg, prod_or)</span>
+<span class="c1">#     or_ind_col_pos = positions(columns, reg, ind_or)</span>
+<span class="c1"># </span>
+<span class="c1">#     # position of the secondary material</span>
+<span class="c1">#     des_prod_ix_pos = or_prod_ix_pos + 1</span>
+<span class="c1">#     des_ind_col_pos = or_ind_col_pos + 1</span>
+<span class="c1"># </span>
+<span class="c1">#     # getting the value of secondary material from the supply table</span>
+<span class="c1">#     # which is placed on the primary material row</span>
+<span class="c1">#     misplaced = np.array(V.iloc[or_prod_ix_pos, des_ind_col_pos])</span>
+<span class="c1"># </span>
+<span class="c1">#     # placing the misplaced value to the secondary material row</span>
+<span class="c1">#     V.iloc[des_prod_ix_pos, des_ind_col_pos] = misplaced</span>
+<span class="c1"># </span>
+<span class="c1">#     # collecting how much of the primary material is consumed by final demand</span>
+<span class="c1">#     # to be subtracted from the supply value</span>
+<span class="c1">#     Y_values = np.sum(Y.iloc[or_prod_ix_pos], axis=1)</span>
+<span class="c1"># </span>
+<span class="c1">#     # how the supply to intraindustry transactions is distributed in its use</span>
+<span class="c1">#     dist = np.dot(np.diag(1/(np.sum(V.iloc[or_prod_ix_pos], axis=1)-Y_values)),</span>
+<span class="c1">#                   U.iloc[or_prod_ix_pos])</span>
+<span class="c1"># </span>
+<span class="c1">#     # mapping the use of the secondary material according to the distribution</span>
+<span class="c1">#     # of use of the primary material</span>
+<span class="c1">#     U.iloc[des_prod_ix_pos] = np.diag(misplaced.sum(axis=1)) @ dist</span>
+<span class="c1"># </span>
+<span class="c1">#     # subtracting the use of secondary material from the primary</span>
+<span class="c1">#     U.iloc[or_prod_ix_pos] = np.subtract(U.iloc[or_prod_ix_pos],</span>
+<span class="c1">#                                          np.array(U.iloc[des_prod_ix_pos]))</span>
+<span class="c1"># </span>
+<span class="c1">#     # zeroing the misplaced value of secondary materials</span>
+<span class="c1">#     V.iloc[or_prod_ix_pos, des_ind_col_pos] = 0</span>
+<span class="c1"># </span>
+<span class="c1">#     # verifying balance</span>
+<span class="c1">#     g1_over_g2 = (np.sum(V, axis=1) / (np.sum(U, axis=1) +</span>
+<span class="c1">#                                        np.sum(Y, axis=1))) * 100</span>
+<span class="c1"># </span>
+<span class="c1">#     output = {&quot;V&quot;: V,</span>
+<span class="c1">#               &quot;U&quot;: U,</span>
+<span class="c1">#               &quot;balance&quot;: g1_over_g2}</span>
+<span class="c1"># </span>
+<span class="c1">#     return(output)</span>
+<span class="c1"># </span>
+<span class="c1"># =============================================================================</span>
 </pre></div>
 
           </div>
