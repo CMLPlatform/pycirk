@@ -8,6 +8,7 @@ IOT
 Scope: Modelling the Circular Economy in EEIO
 
 @author:Franco Donati
+@contributor: Arjan de Koning
 @institution:Leiden University CML
 """
 import numpy as np
@@ -113,129 +114,54 @@ def allocate_sec_mat(V, U, Y, prod_or, ind_or):
 
     # getting the value of secondary material from the supply table
     # which is placed on the primary material row
-    misplaced = np.array(V.iloc[prod_or, des_ind_col_pos])
+    misplaced = V.iloc[prod_or, des_ind_col_pos]
 
     # placing the misplaced value to the secondary material row
-    V.iloc[des_prod_ix_pos, des_ind_col_pos] = misplaced
+    V.iloc[des_prod_ix_pos, des_ind_col_pos] = np.array(misplaced)
 
     # collecting how much of the primary material is consumed by final demand
     # to be subtracted from the supply value
-    Y_values = np.sum(Y.iloc[prod_or], axis=1)
 
-    # how the supply to intraindustry transactions is distributed in its use
-    dist = np.dot(np.diag(1/(np.sum(V.iloc[prod_or], axis=1)-Y_values)),
-                  U.iloc[prod_or])
+    # matrix  of primary sectors x all products (588 x 7987)
+    prim_sec_supply_trans = V.iloc[prod_or]
 
-    # mapping the use of the secondary material according to the distribution
-    # of use of the primary material
-    U.iloc[des_prod_ix_pos] = np.diag(misplaced.sum(axis=1)) @ dist
+    # scalar value of sum total primary industry supply
+    # prim_sec_tot_output = np.sum(prim_sec_supply_trans)
+    prim_sec_tot_output = prim_sec_supply_trans.sum(axis=1)
 
-    # subtracting the use of secondary material from the primary
-    U.iloc[prod_or] = np.subtract(U.iloc[prod_or],
-                                  np.array(U.iloc[des_prod_ix_pos]))
+    # matrix of secondary product supply by secondary industry (588 x 588)
+    sec_supply_trans = V.iloc[des_prod_ix_pos, des_ind_col_pos]
 
-    # zeroing the misplaced value of secondary materials
+    # vector of total secondary industry output (588)
+    sec_output = sec_supply_trans.sum(axis=1)
+    # vector of ratios between secondary output per industry and sum total
+    # industry supply (diagonalised 588  x 588)
+    ratio_prim_sec = np.zeros((len(sec_output)))
+    for idx in range(0, len(sec_output)):
+        if prim_sec_tot_output.iloc[idx] != 0:
+            ratio_prim_sec[idx] = np.array(sec_output.iloc[idx] / prim_sec_tot_output.iloc[idx])
+    ratio_prim_sec = np.diag(ratio_prim_sec)
+
+    prim_sec_use_trans = U.iloc[prod_or]
+
+    prim_sec_fin_dem_trans = Y.iloc[prod_or]
+
+    eye = np.identity(len(ratio_prim_sec))
+
+    U.iloc[prod_or] = (eye - ratio_prim_sec) @ prim_sec_use_trans
+
+    U.iloc[des_prod_ix_pos] = ratio_prim_sec @ prim_sec_use_trans
+
+    Y.iloc[prod_or] = (eye - ratio_prim_sec) @ prim_sec_fin_dem_trans
+
+    Y.iloc[des_prod_ix_pos] = ratio_prim_sec @ prim_sec_fin_dem_trans
+
     V.iloc[prod_or, des_ind_col_pos] = 0
-
-    # verifying balance
-    g1_over_g2 = (np.sum(V, axis=1) / (np.sum(U, axis=1) +
-                                       np.sum(Y, axis=1))) * 100
 
     output = {"V": V,
               "U": U,
-              "balance": g1_over_g2}
+              "Y": Y}
 
-    return(output)
+    print('splitting off secondary materials ready')
 
-
-
-# =============================================================================
-# def make_secondary(data):
-#     """
-#     This allows to allign secondary flow in such a way that they then
-#     appear in the IOT
-#     """
-#     V = data["V"]
-#     U = data["U"]
-#     Y = data["Y"]
-# 
-#     materials = ["_WOOD", "_PULP", "_PLAS", "_GLAS", "_CMNT", "_STEL",
-#                  "_PREM", "_ALUM", "_LZTP", "_COPP", "_ONFM", "_CONS"]
-# 
-#     for l in materials:
-#         prod_or = "C" + l
-#         ind_or = "A" + l
-#         moved = allocate_sec_mat(V, U, Y, prod_or, ind_or)
-#         V = moved["V"]
-#         U = moved["U"]
-# 
-#     data["V"] = V
-#     data["U"] = U
-# 
-#     return(data)
-# 
-# 
-# def allocate_sec_mat(V, U, Y, prod_or, ind_or):
-#     """
-#     This function allows to move the primary material output from the
-#     secondary material industries to the secondary material output.
-#     This allows for the presence of secondary materials in the IOT
-#     once they are transformed from SUTS.
-# 
-#     prod_or = row position of the primary supplied material
-#     ind_or = colum pos. of the primary industry supplying primary material
-#     """
-#     V = V.copy()
-#     U = U.copy()
-#     Y = Y.copy()
-# 
-#     index = V.index.to_frame(False)
-#     columns = V.columns.to_frame(False)
-# 
-#     reg = None
-# 
-#     # position of the primary material
-#     or_prod_ix_pos = positions(index, reg, prod_or)
-#     or_ind_col_pos = positions(columns, reg, ind_or)
-# 
-#     # position of the secondary material
-#     des_prod_ix_pos = or_prod_ix_pos + 1
-#     des_ind_col_pos = or_ind_col_pos + 1
-# 
-#     # getting the value of secondary material from the supply table
-#     # which is placed on the primary material row
-#     misplaced = np.array(V.iloc[or_prod_ix_pos, des_ind_col_pos])
-# 
-#     # placing the misplaced value to the secondary material row
-#     V.iloc[des_prod_ix_pos, des_ind_col_pos] = misplaced
-# 
-#     # collecting how much of the primary material is consumed by final demand
-#     # to be subtracted from the supply value
-#     Y_values = np.sum(Y.iloc[or_prod_ix_pos], axis=1)
-# 
-#     # how the supply to intraindustry transactions is distributed in its use
-#     dist = np.dot(np.diag(1/(np.sum(V.iloc[or_prod_ix_pos], axis=1)-Y_values)),
-#                   U.iloc[or_prod_ix_pos])
-# 
-#     # mapping the use of the secondary material according to the distribution
-#     # of use of the primary material
-#     U.iloc[des_prod_ix_pos] = np.diag(misplaced.sum(axis=1)) @ dist
-# 
-#     # subtracting the use of secondary material from the primary
-#     U.iloc[or_prod_ix_pos] = np.subtract(U.iloc[or_prod_ix_pos],
-#                                          np.array(U.iloc[des_prod_ix_pos]))
-# 
-#     # zeroing the misplaced value of secondary materials
-#     V.iloc[or_prod_ix_pos, des_ind_col_pos] = 0
-# 
-#     # verifying balance
-#     g1_over_g2 = (np.sum(V, axis=1) / (np.sum(U, axis=1) +
-#                                        np.sum(Y, axis=1))) * 100
-# 
-#     output = {"V": V,
-#               "U": U,
-#               "balance": g1_over_g2}
-# 
-#     return(output)
-# 
-# =============================================================================
+    return output
