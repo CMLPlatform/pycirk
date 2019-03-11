@@ -1,0 +1,24 @@
+code,name,synonym,unit
+w01,Taxes less subsidies on products purchased: Total,T_TLSA,M.EUR
+w02,Other net taxes on production,V_ONTP,M.EUR
+w03.a,"Compensation of employees; wages, salaries, & employers' social contributions: Low-skilled",V_WALS,M.EUR
+w03.b,"Compensation of employees; wages, salaries, & employers' social contributions: Medium-skilled",V_WAMS,M.EUR
+w03.c,"Compensation of employees; wages, salaries, & employers' social contributions: High-skilled",V_WAHS,M.EUR
+w04.a,Operating surplus: Consumption of fixed capital,V_COFC,M.EUR
+w04.b,Operating surplus: Rents on land,V_RENL,
+w04.c,Operating surplus: Royalties on resources,V_ROYR,
+w04.d,Operating surplus: Remaining net operating surplus,V_NOPS,M.EUR
+s01.a_m,Employment: Low-skilled male,E_NRLS_m,1000 p
+s01.a_f,Employment: Low-skilled female,E_NRLS_f,1000 p
+s01.b_m,Employment: Medium-skilled male,E_NRMS_m,1000 p
+s01.b_f,Employment: Medium-skilled female,E_NRMS_f,1000 p
+s01.c_m,Employment: High-skilled male,E_NRHS_m,1000 p
+s01.c_f,Employment: High-skilled female,E_NRHS_f,1000 p
+s02.a_m,Employment hours: Low-skilled male,E_HRLS_m,M.hr
+s02.a_f,Employment hours: Low-skilled female,E_HRLS_f,M.hr
+s02.b_m,Employment hours: Medium-skilled male,E_HRMS_m,M.hr
+s02.b_f,Employment hours: Medium-skilled female,E_HRMS_f,M.hr
+s02.c_m,Employment hours: High-skilled male,E_HRHS_m,M.hr
+s02.c_f,Employment hours: High-skilled female,E_HRHS_f,M.hr
+s03,Employment: Vulnerable employment,E_VNR,1000 p
+s04,Employment hours: Vulnerable employment,E_VHR,M.hr

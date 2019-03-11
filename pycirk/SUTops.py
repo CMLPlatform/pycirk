@@ -272,8 +272,6 @@ class SUTops:
 
             return(L)
 
-    class fdext:
-
         def RYB(inv_diag_yj, YB):
             """
             Method for transformation matrix of YB
@@ -291,6 +289,69 @@ class SUTops:
             YB = YRB @ diag_yj
 
             return (YB)
+
+        def IOT(S, Y, E, Be, Br, Bm):
+            """
+            IOT
+            """
+            x = SUTops.q(S, Y)  # total product output
+            diag_x = np.diag(x)
+            inv_diag_x = SUTops.inv(diag_x)
+
+            y = np.sum(Y, axis=1)
+
+            A = SUTops.IOT.A(S, inv_diag_x)  # technical coefficient matrix
+            L = SUTops.IOT.L(A)  # leontief inverse
+
+            RE = SUTops.IOT.R(E, inv_diag_x)  # primary inputs coef
+            E = SUTops.IOT.B(RE, diag_x)
+
+            RBe = SUTops.IOT.R(Be, inv_diag_x)  # Be coefficient matrix
+            Be = SUTops.IOT.B(RBe, diag_x)  # environmental extensions
+
+            RBr = SUTops.IOT.R(Br, inv_diag_x)  # Br coefficient matrix
+            Br = SUTops.IOT.B(RBr, diag_x)  # resource extensions
+
+            RBm = SUTops.IOT.R(Bm, inv_diag_x)  # Bm coefficient matrix
+            Bm = SUTops.IOT.B(RBm, diag_x)  # Material extension
+
+            S = SUTops.IOT.S(A, diag_x)  # intermediates
+            x = SUTops.IOT.x_IAy(L, y)
+
+            ver_base = SUTops.verifyIOT(S, Y, E)
+
+            IOT = {"A": A,
+                   "S": S,
+                   "L": L,
+                   "S": S,
+                   "Y": Y,
+                   "RE": RE,
+                   "E": E,
+                   "x": x,
+                   "Be": Be,
+                   "RBe": RBe,
+                   "Br": Br,
+                   "RBr": RBr,
+                   "Bm": Bm,
+                   "RBm": RBm,
+                   "ver": ver_base
+                   }
+
+            return(IOT)
+
+        def FD_EXT(YB, diag_yj):
+            """
+            Recalculates FD extensions based on counterfactual final demand
+            """
+            inv_diag_yj = SUTops.inv(diag_yj)
+
+            RYB = SUTops.IOT.RYB(inv_diag_yj, YB)
+            YB = SUTops.IOT.YB(RYB, diag_yj)
+
+            EXT = {"RYB": RYB,
+                   "YB": YB}
+
+            return(EXT)
 
     class difference:
         """

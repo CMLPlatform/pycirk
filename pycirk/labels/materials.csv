@@ -1,0 +1,649 @@
+name,synonym,unit
+Domestic Extraction Used - Primary Crops - Rice,DEU_1.01.001,kt
+Domestic Extraction Used - Primary Crops - Wheat,DEU_1.02.001,kt
+Domestic Extraction Used - Primary Crops - Barley,DEU_1.03.001,kt
+Domestic Extraction Used - Primary Crops - Buckwheat,DEU_1.03.002,kt
+Domestic Extraction Used - Primary Crops - Canary Seed,DEU_1.03.003,kt
+Domestic Extraction Used - Primary Crops - Maize,DEU_1.03.004,kt
+Domestic Extraction Used - Primary Crops - Millet,DEU_1.03.005,kt
+Domestic Extraction Used - Primary Crops - Mixed Grain,DEU_1.03.006,kt
+Domestic Extraction Used - Primary Crops - Oats,DEU_1.03.007,kt
+Domestic Extraction Used - Primary Crops - Rye,DEU_1.03.008,kt
+Domestic Extraction Used - Primary Crops - Sorghum,DEU_1.03.009,kt
+Domestic Extraction Used - Primary Crops - Triticale,DEU_1.03.010,kt
+Domestic Extraction Used - Primary Crops - Cereals nec,DEU_1.03.011,kt
+Domestic Extraction Used - Primary Crops - Fonio,DEU_1.03.012,kt
+Domestic Extraction Used - Primary Crops - Quinoa,DEU_1.03.013,kt
+Domestic Extraction Used - Primary Crops - Potatoes,DEU_1.04.001,kt
+Domestic Extraction Used - Primary Crops - Sweet Potatoes,DEU_1.04.002,kt
+Domestic Extraction Used - Primary Crops - Yams,DEU_1.04.003,kt
+Domestic Extraction Used - Primary Crops - Lentils,DEU_1.04.004,kt
+Domestic Extraction Used - Primary Crops - Lupins,DEU_1.04.005,kt
+Domestic Extraction Used - Primary Crops - Vetches,DEU_1.04.006,kt
+Domestic Extraction Used - Primary Crops - Pulses nec,DEU_1.04.007,kt
+Domestic Extraction Used - Primary Crops - Olives,DEU_1.04.008,kt
+Domestic Extraction Used - Primary Crops - Artichokes,DEU_1.04.009,kt
+Domestic Extraction Used - Primary Crops - Asparagus,DEU_1.04.010,kt
+Domestic Extraction Used - Primary Crops - Cabbages,DEU_1.04.011,kt
+Domestic Extraction Used - Primary Crops - Carrots,DEU_1.04.012,kt
+Domestic Extraction Used - Primary Crops - Cauliflower,DEU_1.04.013,kt
+"Domestic Extraction Used - Primary Crops - Chillies and peppers, green",DEU_1.04.014,kt
+Domestic Extraction Used - Primary Crops - Cucumbers and Gherkins,DEU_1.04.015,kt
+Domestic Extraction Used - Primary Crops - Eggplants,DEU_1.04.016,kt
+Domestic Extraction Used - Primary Crops - Garlic,DEU_1.04.017,kt
+Domestic Extraction Used - Primary Crops - Leeks and other Alliac. Veg.,DEU_1.04.018,kt
+Domestic Extraction Used - Primary Crops - Lettuce,DEU_1.04.019,kt
+Domestic Extraction Used - Primary Crops - Mushrooms,DEU_1.04.020,kt
+"Domestic Extraction Used - Primary Crops - Peas, Green",DEU_1.04.021,kt
+"Domestic Extraction Used - Primary Crops - Pumpkins, Squash, Gourds",DEU_1.04.022,kt
+Domestic Extraction Used - Primary Crops - Spinach,DEU_1.04.023,kt
+Domestic Extraction Used - Primary Crops - Tomatoes,DEU_1.04.024,kt
+Domestic Extraction Used - Primary Crops - Vegetables Fresh nec,DEU_1.04.025,kt
+Domestic Extraction Used - Primary Crops - Apples,DEU_1.04.026,kt
+Domestic Extraction Used - Primary Crops - Apricots,DEU_1.04.027,kt
+Domestic Extraction Used - Primary Crops - Avocados,DEU_1.04.028,kt
+Domestic Extraction Used - Primary Crops - Blueberries,DEU_1.04.029,kt
+Domestic Extraction Used - Primary Crops - Carobs,DEU_1.04.030,kt
+Domestic Extraction Used - Primary Crops - Cherries,DEU_1.04.031,kt
+Domestic Extraction Used - Primary Crops - Currants,DEU_1.04.032,kt
+Domestic Extraction Used - Primary Crops - Dates,DEU_1.04.033,kt
+Domestic Extraction Used - Primary Crops - Figs,DEU_1.04.034,kt
+Domestic Extraction Used - Primary Crops - Gooseberries,DEU_1.04.035,kt
+Domestic Extraction Used - Primary Crops - Grapefruit and Pomelos,DEU_1.04.036,kt
+Domestic Extraction Used - Primary Crops - Grapes,DEU_1.04.037,kt
+Domestic Extraction Used - Primary Crops - Kiwi Fruit,DEU_1.04.038,kt
+Domestic Extraction Used - Primary Crops - Lemons and Limes,DEU_1.04.039,kt
+Domestic Extraction Used - Primary Crops - Oranges,DEU_1.04.040,kt
+Domestic Extraction Used - Primary Crops - Peaches and Nectarines,DEU_1.04.041,kt
+Domestic Extraction Used - Primary Crops - Pears,DEU_1.04.042,kt
+Domestic Extraction Used - Primary Crops - Persimmons,DEU_1.04.043,kt
+Domestic Extraction Used - Primary Crops - Pineapples,DEU_1.04.044,kt
+Domestic Extraction Used - Primary Crops - Plums,DEU_1.04.045,kt
+Domestic Extraction Used - Primary Crops - Quinces,DEU_1.04.046,kt
+Domestic Extraction Used - Primary Crops - Raspberries,DEU_1.04.047,kt
+Domestic Extraction Used - Primary Crops - Sour Cherries,DEU_1.04.048,kt
+Domestic Extraction Used - Primary Crops - Strawberries,DEU_1.04.049,kt
+Domestic Extraction Used - Primary Crops - Tang. Mand Clement. Satsma,DEU_1.04.050,kt
+Domestic Extraction Used - Primary Crops - Berries nec,DEU_1.04.051,kt
+Domestic Extraction Used - Primary Crops - Citrus Fruit nec,DEU_1.04.052,kt
+"Domestic Extraction Used - Primary Crops - Stone Fruit nec,",DEU_1.04.053,kt
+Domestic Extraction Used - Primary Crops - Almonds,DEU_1.04.054,kt
+Domestic Extraction Used - Primary Crops - Chestnuts,DEU_1.04.055,kt
+Domestic Extraction Used - Primary Crops - Hazelnuts,DEU_1.04.056,kt
+Domestic Extraction Used - Primary Crops - Pistachios,DEU_1.04.057,kt
+Domestic Extraction Used - Primary Crops - Walnuts,DEU_1.04.058,kt
+Domestic Extraction Used - Primary Crops - Cassava,DEU_1.04.059,kt
+"Domestic Extraction Used - Primary Crops - Roots and Tubers, nes",DEU_1.04.060,kt
+Domestic Extraction Used - Primary Crops - Taro,DEU_1.04.061,kt
+Domestic Extraction Used - Primary Crops - Yautia,DEU_1.04.062,kt
+Domestic Extraction Used - Primary Crops - Bambara beans,DEU_1.04.063,kt
+"Domestic Extraction Used - Primary Crops - Beans, dry",DEU_1.04.064,kt
+"Domestic Extraction Used - Primary Crops - Beans, green",DEU_1.04.065,kt
+"Domestic Extraction Used - Primary Crops - Broad beans, horse beans, dry",DEU_1.04.066,kt
+Domestic Extraction Used - Primary Crops - Chick peas,DEU_1.04.067,kt
+"Domestic Extraction Used - Primary Crops - Cow peas, dry",DEU_1.04.068,kt
+"Domestic Extraction Used - Primary Crops - Peas, dry",DEU_1.04.069,kt
+Domestic Extraction Used - Primary Crops - Pigeon peas,DEU_1.04.070,kt
+Domestic Extraction Used - Primary Crops - String beans,DEU_1.04.071,kt
+Domestic Extraction Used - Primary Crops - Coconuts,DEU_1.04.072,kt
+Domestic Extraction Used - Primary Crops - Okra,DEU_1.04.073,kt
+Domestic Extraction Used - Primary Crops - Onions,DEU_1.04.074,kt
+"Domestic Extraction Used - Primary Crops - Onions, dry",DEU_1.04.075,kt
+Domestic Extraction Used - Primary Crops - Other melons,DEU_1.04.076,kt
+Domestic Extraction Used - Primary Crops - Watermelons,DEU_1.04.077,kt
+Domestic Extraction Used - Primary Crops - Bananas,DEU_1.04.078,kt
+Domestic Extraction Used - Primary Crops - Cashewapple,DEU_1.04.079,kt
+Domestic Extraction Used - Primary Crops - Cranberries,DEU_1.04.080,kt
+Domestic Extraction Used - Primary Crops - Fruit Fresh Nes,DEU_1.04.081,kt
+"Domestic Extraction Used - Primary Crops - Fruit, tropical fresh nes",DEU_1.04.082,kt
+"Domestic Extraction Used - Primary Crops - Mangoes, mangosteens, guavas",DEU_1.04.083,kt
+Domestic Extraction Used - Primary Crops - Papayas,DEU_1.04.084,kt
+Domestic Extraction Used - Primary Crops - Plantains,DEU_1.04.085,kt
+Domestic Extraction Used - Primary Crops - Arecanuts,DEU_1.04.086,kt
+"Domestic Extraction Used - Primary Crops - Brazil nuts, with shell",DEU_1.04.087,kt
+"Domestic Extraction Used - Primary Crops - Cashew nuts, with shell",DEU_1.04.088,kt
+Domestic Extraction Used - Primary Crops - Kolanuts,DEU_1.04.089,kt
+"Domestic Extraction Used - Primary Crops - Nuts, nes",DEU_1.04.090,kt
+"Domestic Extraction Used - Primary Crops - Leguminous vegetables, nes",DEU_1.04.091,kt
+"Domestic Extraction Used - Primary Crops - Maize, green",DEU_1.04.092,kt
+"Domestic Extraction Used - Primary Crops - Pome fruit, nes",DEU_1.04.093,kt
+Domestic Extraction Used - Primary Crops - Cassava leaves,DEU_1.04.094,kt
+Domestic Extraction Used - Primary Crops - Groundnuts in Shell,DEU_1.05.001,kt
+Domestic Extraction Used - Primary Crops - Hempseed,DEU_1.05.002,kt
+Domestic Extraction Used - Primary Crops - Linseed,DEU_1.05.003,kt
+Domestic Extraction Used - Primary Crops - Melonseed,DEU_1.05.004,kt
+Domestic Extraction Used - Primary Crops - Mustard Seed,DEU_1.05.005,kt
+Domestic Extraction Used - Primary Crops - Poppy Seed,DEU_1.05.006,kt
+Domestic Extraction Used - Primary Crops - Rapeseed,DEU_1.05.007,kt
+Domestic Extraction Used - Primary Crops - Safflower Seed,DEU_1.05.008,kt
+Domestic Extraction Used - Primary Crops - Sesame Seed,DEU_1.05.009,kt
+Domestic Extraction Used - Primary Crops - Soybeans,DEU_1.05.010,kt
+Domestic Extraction Used - Primary Crops - Sunflower Seed,DEU_1.05.011,kt
+Domestic Extraction Used - Primary Crops - Oilseeds nec,DEU_1.05.012,kt
+Domestic Extraction Used - Primary Crops - Oil Palm Fruit,DEU_1.05.013,kt
+Domestic Extraction Used - Primary Crops - Castor oil seed,DEU_1.05.014,kt
+Domestic Extraction Used - Primary Crops - Karite Nuts,DEU_1.05.015,kt
+Domestic Extraction Used - Primary Crops - Tung Nuts,DEU_1.05.016,kt
+Domestic Extraction Used - Primary Crops - Jojoba Seeds,DEU_1.05.017,kt
+Domestic Extraction Used - Primary Crops - Tallowtree Seeds,DEU_1.05.018,kt
+Domestic Extraction Used - Primary Crops - Cottonseed,DEU_1.05.019,kt
+Domestic Extraction Used - Primary Crops - Sugar Beets,DEU_1.06.001,kt
+Domestic Extraction Used - Primary Crops - Sugar Cane,DEU_1.06.002,kt
+Domestic Extraction Used - Primary Crops - Sugar Crops nes,DEU_1.06.003,kt
+Domestic Extraction Used - Primary Crops - Cotton Lint,DEU_1.07.001,kt
+Domestic Extraction Used - Primary Crops - Flax Fibre and Tow,DEU_1.07.002,kt
+Domestic Extraction Used - Primary Crops - Hemp Fibre and Tow,DEU_1.07.003,kt
+Domestic Extraction Used - Primary Crops - Abaca,DEU_1.07.004,kt
+Domestic Extraction Used - Primary Crops - Agave Fibres nes,DEU_1.07.005,kt
+Domestic Extraction Used - Primary Crops - Coir,DEU_1.07.006,kt
+Domestic Extraction Used - Primary Crops - Fibre Crops nes,DEU_1.07.007,kt
+Domestic Extraction Used - Primary Crops - Ramie,DEU_1.07.008,kt
+Domestic Extraction Used - Primary Crops - Sisal,DEU_1.07.009,kt
+Domestic Extraction Used - Primary Crops - Kapok Fibre,DEU_1.07.010,kt
+Domestic Extraction Used - Primary Crops - Jute and Jute-like Fibres,DEU_1.07.011,kt
+Domestic Extraction Used - Primary Crops - Other Bastfibres,DEU_1.07.012,kt
+"Domestic Extraction Used - Primary Crops - Anise, Badian, Fennel",DEU_1.08.001,kt
+Domestic Extraction Used - Primary Crops - Chicory Roots,DEU_1.08.002,kt
+"Domestic Extraction Used - Primary Crops - Coffee, Green",DEU_1.08.003,kt
+Domestic Extraction Used - Primary Crops - Hops,DEU_1.08.004,kt
+Domestic Extraction Used - Primary Crops - Peppermint,DEU_1.08.005,kt
+"Domestic Extraction Used - Primary Crops - Pyrethrum, Dried Flowers",DEU_1.08.006,kt
+Domestic Extraction Used - Primary Crops - Tea,DEU_1.08.007,kt
+Domestic Extraction Used - Primary Crops - Spices nec,DEU_1.08.008,kt
+Domestic Extraction Used - Primary Crops - Cocoa Beans,DEU_1.08.009,kt
+Domestic Extraction Used - Primary Crops - Mate,DEU_1.08.010,kt
+Domestic Extraction Used - Primary Crops - Tobacco Leaves,DEU_1.08.011,kt
+Domestic Extraction Used - Primary Crops - Natural Rubber,DEU_1.08.012,kt
+Domestic Extraction Used - Primary Crops - Cinnamon,DEU_1.08.013,kt
+Domestic Extraction Used - Primary Crops - Cloves,DEU_1.08.014,kt
+Domestic Extraction Used - Primary Crops - Ginger,DEU_1.08.015,kt
+"Domestic Extraction Used - Primary Crops - Nutmeg, mace and cardamoms",DEU_1.08.016,kt
+Domestic Extraction Used - Primary Crops - Vanilla,DEU_1.08.017,kt
+Domestic Extraction Used - Primary Crops - Pepper,DEU_1.08.018,kt
+"Domestic Extraction Used - Primary Crops - Chillies and peppers, dry",DEU_1.08.019,kt
+Domestic Extraction Used - Primary Crops - Tea nes,DEU_1.08.020,kt
+Domestic Extraction Used - Primary Crops - Honey,DEU_1.08.021,kt
+Domestic Extraction Used - Primary Crops - Beeswax,DEU_1.08.022,kt
+Domestic Extraction Used - Primary Crops - Kapokseed in Shell,DEU_1.08.023,kt
+Domestic Extraction Used - Crop residues - Straw,DEU_1.09.001,kt
+Domestic Extraction Used - Crop residues - Feed,DEU_1.09.002,kt
+Domestic Extraction Used - Fodder crops - Alfalfa for Forage and Silage,DEU_1.10.001,kt
+Domestic Extraction Used - Fodder crops - Beets for Fodder,DEU_1.10.002,kt
+Domestic Extraction Used - Fodder crops - Cabbage for Fodder,DEU_1.10.003,kt
+Domestic Extraction Used - Fodder crops - Carrots for Fodder,DEU_1.10.004,kt
+Domestic Extraction Used - Fodder crops - Clover for Forage and Silage,DEU_1.10.005,kt
+Domestic Extraction Used - Fodder crops - Maize for Forage and Silage,DEU_1.10.006,kt
+Domestic Extraction Used - Fodder crops - Other grasses,DEU_1.10.007,
+"Domestic Extraction Used - Fodder crops - Rye Grass, Forage and Silage",DEU_1.10.008,kt
+Domestic Extraction Used - Fodder crops - Sorghum for Forage and Silage,DEU_1.10.009,kt
+Domestic Extraction Used - Fodder crops - Swedes for Fodder,DEU_1.10.010,kt
+Domestic Extraction Used - Fodder crops - Turnips for Fodder,DEU_1.10.011,kt
+"Domestic Extraction Used - Fodder crops - Vegetables and Roots, Fodder",DEU_1.10.012,kt
+Domestic Extraction Used - Fodder crops - Forage Products nec,DEU_1.10.013,kt
+Domestic Extraction Used - Fodder crops - Grasses nec for Forage and Silage,DEU_1.10.014,kt
+Domestic Extraction Used - Fodder crops - Leguminous nec for forage and Silage,DEU_1.10.015,kt
+Domestic Extraction Used - Fodder crops - Green Oilseeds for Fodder,DEU_1.10.016,kt
+Domestic Extraction Used - Grazing,DEU_1.10.017,kt
+Domestic Extraction Used - Forestry - Coniferous wood - Industrial roundwood,DEU_1.11.001,kt
+Domestic Extraction Used - Forestry - Coniferous wood - Wood fuel,DEU_1.11.002,kt
+Domestic Extraction Used - Forestry - Non-coniferous wood - Industrial roundwood,DEU_1.11.003,kt
+Domestic Extraction Used - Forestry - Non-coniferous wood - Wood fuel,DEU_1.11.004,kt
+Domestic Extraction Used - Forestry - Raw materials other than wood,DEU_1.11.005,
+Domestic Extraction Used - Forestry - Kapok Fruit,DEU_1.11.006,
+Domestic Extraction Used - Forestry - Natural Gums,DEU_1.11.007,kt
+Domestic Extraction Used - Fishery - Aquatic plants,DEU_1.12.001,kt
+Domestic Extraction Used - Fishery - Marine fish catch,DEU_1.12.002,kt
+Domestic Extraction Used - Fishery - Inland waters fish catch,DEU_1.12.003,kt
+Domestic Extraction Used - Fishery - Other (e.g. Aquatic mammals),DEU_1.12.004,kt
+Domestic Extraction Used - Metal Ores - Uranium and thorium ores,DEU_2.1,kt
+Domestic Extraction Used - Metal Ores - Iron ores,DEU_2.2,kt
+Domestic Extraction Used - Metal Ores - Copper ores,DEU_2.3,kt
+Domestic Extraction Used - Metal Ores - Nickel ores,DEU_2.4,kt
+Domestic Extraction Used - Metal Ores - Bauxite and aluminium ores,DEU_2.5,kt
+Domestic Extraction Used - Metal Ores - Gold ores,DEU_2.6.01,kt
+Domestic Extraction Used - Metal Ores - PGM ores,DEU_2.6.02,kt
+Domestic Extraction Used - Metal Ores - Silver ores,DEU_2.6.03,kt
+Domestic Extraction Used - Metal Ores - Lead ores,DEU_2.7.01,kt
+Domestic Extraction Used - Metal Ores - Tin ores,DEU_2.7.02,kt
+Domestic Extraction Used - Metal Ores - Zinc ores,DEU_2.7.03,kt
+Domestic Extraction Used - Metal Ores - Other non-ferrous metal ores,DEU_2.8,kt
+Domestic Extraction Used - Non-Metallic Minerals - Other minerals,DEU_3.8,kt
+"Domestic Extraction Used - Non-Metallic Minerals - Limestone, gypsum, chalk, dolomite",DEU_3.3,kt
+Domestic Extraction Used - Non-Metallic Minerals - Slate,DEU_3.5,kt
+Domestic Extraction Used - Non-Metallic Minerals - Building stones,DEU_3.6,kt
+Domestic Extraction Used - Non-Metallic Minerals - Clays and kaolin,DEU_3.2,kt
+Domestic Extraction Used - Non-Metallic Minerals - Gravel and sand,DEU_3.7,kt
+Domestic Extraction Used - Non-Metallic Minerals - Salt,DEU_3.4,kt
+Domestic Extraction Used - Non-Metallic Minerals - Chemical and fertilizer minerals,DEU_3.1,kt
+Domestic Extraction Used - Fossil Fuels - Anthracite,DEU_4.1,kt
+Domestic Extraction Used - Fossil Fuels - Coking coal,DEU_4.2,kt
+Domestic Extraction Used - Fossil Fuels - Other bituminous coal,DEU_4.3,kt
+Domestic Extraction Used - Fossil Fuels - Sub-bituminous coal,DEU_4.4,kt
+Domestic Extraction Used - Fossil Fuels - Lignite/brown coal,DEU_4.5,kt
+Domestic Extraction Used - Fossil Fuels - Peat,DEU_4.6,kt
+Domestic Extraction Used - Fossil Fuels - Crude oil,DEU_4.7,kt
+Domestic Extraction Used - Fossil Fuels - Natural gas,DEU_4.8,kt
+Domestic Extraction Used - Fossil Fuels - Natural gas liquids,DEU_4.9,kt
+Domestic Extraction Used - Fossil Fuels - Oil shale and oil sands,DEU_4.10,kt
+Domestic Extraction Used - Fossil Fuels - Other hydrocarbons,DEU_4.11,kt
+Unused Domestic Extraction - Primary Crops - Rice,UDE_1.01.001,kt
+Unused Domestic Extraction - Primary Crops - Wheat,UDE_1.02.001,kt
+Unused Domestic Extraction - Primary Crops - Barley,UDE_1.03.001,kt
+Unused Domestic Extraction - Primary Crops - Buckwheat,UDE_1.03.002,kt
+Unused Domestic Extraction - Primary Crops - Canary Seed,UDE_1.03.003,kt
+Unused Domestic Extraction - Primary Crops - Maize,UDE_1.03.004,kt
+Unused Domestic Extraction - Primary Crops - Millet,UDE_1.03.005,kt
+Unused Domestic Extraction - Primary Crops - Mixed Grain,UDE_1.03.006,kt
+Unused Domestic Extraction - Primary Crops - Oats,UDE_1.03.007,kt
+Unused Domestic Extraction - Primary Crops - Rye,UDE_1.03.008,kt
+Unused Domestic Extraction - Primary Crops - Sorghum,UDE_1.03.009,kt
+Unused Domestic Extraction - Primary Crops - Triticale,UDE_1.03.010,kt
+Unused Domestic Extraction - Primary Crops - Cereals nec,UDE_1.03.011,kt
+Unused Domestic Extraction - Primary Crops - Fonio,UDE_1.03.012,kt
+Unused Domestic Extraction - Primary Crops - Quinoa,UDE_1.03.013,kt
+Unused Domestic Extraction - Primary Crops - Potatoes,UDE_1.04.001,kt
+Unused Domestic Extraction - Primary Crops - Sweet Potatoes,UDE_1.04.002,kt
+Unused Domestic Extraction - Primary Crops - Yams,UDE_1.04.003,kt
+Unused Domestic Extraction - Primary Crops - Lentils,UDE_1.04.004,kt
+Unused Domestic Extraction - Primary Crops - Lupins,UDE_1.04.005,kt
+Unused Domestic Extraction - Primary Crops - Vetches,UDE_1.04.006,kt
+Unused Domestic Extraction - Primary Crops - Pulses nec,UDE_1.04.007,kt
+Unused Domestic Extraction - Primary Crops - Olives,UDE_1.04.008,kt
+Unused Domestic Extraction - Primary Crops - Artichokes,UDE_1.04.009,kt
+Unused Domestic Extraction - Primary Crops - Asparagus,UDE_1.04.010,kt
+Unused Domestic Extraction - Primary Crops - Cabbages,UDE_1.04.011,kt
+Unused Domestic Extraction - Primary Crops - Carrots,UDE_1.04.012,kt
+Unused Domestic Extraction - Primary Crops - Cauliflower,UDE_1.04.013,kt
+"Unused Domestic Extraction - Primary Crops - Chillies and peppers, green",UDE_1.04.014,kt
+Unused Domestic Extraction - Primary Crops - Cucumbers and Gherkins,UDE_1.04.015,kt
+Unused Domestic Extraction - Primary Crops - Eggplants,UDE_1.04.016,kt
+Unused Domestic Extraction - Primary Crops - Garlic,UDE_1.04.017,kt
+Unused Domestic Extraction - Primary Crops - Leeks and other Alliac. Veg.,UDE_1.04.018,kt
+Unused Domestic Extraction - Primary Crops - Lettuce,UDE_1.04.019,kt
+Unused Domestic Extraction - Primary Crops - Mushrooms,UDE_1.04.020,kt
+"Unused Domestic Extraction - Primary Crops - Peas, Green",UDE_1.04.021,kt
+"Unused Domestic Extraction - Primary Crops - Pumpkins, Squash, Gourds",UDE_1.04.022,kt
+Unused Domestic Extraction - Primary Crops - Spinach,UDE_1.04.023,kt
+Unused Domestic Extraction - Primary Crops - Tomatoes,UDE_1.04.024,kt
+Unused Domestic Extraction - Primary Crops - Vegetables Fresh nec,UDE_1.04.025,kt
+Unused Domestic Extraction - Primary Crops - Apples,UDE_1.04.026,kt
+Unused Domestic Extraction - Primary Crops - Apricots,UDE_1.04.027,kt
+Unused Domestic Extraction - Primary Crops - Avocados,UDE_1.04.028,kt
+Unused Domestic Extraction - Primary Crops - Blueberries,UDE_1.04.029,kt
+Unused Domestic Extraction - Primary Crops - Carobs,UDE_1.04.030,kt
+Unused Domestic Extraction - Primary Crops - Cherries,UDE_1.04.031,kt
+Unused Domestic Extraction - Primary Crops - Currants,UDE_1.04.032,kt
+Unused Domestic Extraction - Primary Crops - Dates,UDE_1.04.033,kt
+Unused Domestic Extraction - Primary Crops - Figs,UDE_1.04.034,kt
+Unused Domestic Extraction - Primary Crops - Gooseberries,UDE_1.04.035,kt
+Unused Domestic Extraction - Primary Crops - Grapefruit and Pomelos,UDE_1.04.036,kt
+Unused Domestic Extraction - Primary Crops - Grapes,UDE_1.04.037,kt
+Unused Domestic Extraction - Primary Crops - Kiwi Fruit,UDE_1.04.038,kt
+Unused Domestic Extraction - Primary Crops - Lemons and Limes,UDE_1.04.039,kt
+Unused Domestic Extraction - Primary Crops - Oranges,UDE_1.04.040,kt
+Unused Domestic Extraction - Primary Crops - Peaches and Nectarines,UDE_1.04.041,kt
+Unused Domestic Extraction - Primary Crops - Pears,UDE_1.04.042,kt
+Unused Domestic Extraction - Primary Crops - Persimmons,UDE_1.04.043,kt
+Unused Domestic Extraction - Primary Crops - Pineapples,UDE_1.04.044,kt
+Unused Domestic Extraction - Primary Crops - Plums,UDE_1.04.045,kt
+Unused Domestic Extraction - Primary Crops - Quinces,UDE_1.04.046,kt
+Unused Domestic Extraction - Primary Crops - Raspberries,UDE_1.04.047,kt
+Unused Domestic Extraction - Primary Crops - Sour Cherries,UDE_1.04.048,kt
+Unused Domestic Extraction - Primary Crops - Strawberries,UDE_1.04.049,kt
+Unused Domestic Extraction - Primary Crops - Tang. Mand Clement. Satsma,UDE_1.04.050,kt
+Unused Domestic Extraction - Primary Crops - Berries nec,UDE_1.04.051,kt
+Unused Domestic Extraction - Primary Crops - Citrus Fruit nec,UDE_1.04.052,kt
+"Unused Domestic Extraction - Primary Crops - Stone Fruit nec,",UDE_1.04.053,kt
+Unused Domestic Extraction - Primary Crops - Almonds,UDE_1.04.054,kt
+Unused Domestic Extraction - Primary Crops - Chestnuts,UDE_1.04.055,kt
+Unused Domestic Extraction - Primary Crops - Hazelnuts,UDE_1.04.056,kt
+Unused Domestic Extraction - Primary Crops - Pistachios,UDE_1.04.057,kt
+Unused Domestic Extraction - Primary Crops - Walnuts,UDE_1.04.058,kt
+Unused Domestic Extraction - Primary Crops - Cassava,UDE_1.04.059,kt
+"Unused Domestic Extraction - Primary Crops - Roots and Tubers, nes",UDE_1.04.060,kt
+Unused Domestic Extraction - Primary Crops - Taro,UDE_1.04.061,kt
+Unused Domestic Extraction - Primary Crops - Yautia,UDE_1.04.062,kt
+Unused Domestic Extraction - Primary Crops - Bambara beans,UDE_1.04.063,kt
+"Unused Domestic Extraction - Primary Crops - Beans, dry",UDE_1.04.064,kt
+"Unused Domestic Extraction - Primary Crops - Beans, green",UDE_1.04.065,kt
+"Unused Domestic Extraction - Primary Crops - Broad beans, horse beans, dry",UDE_1.04.066,kt
+Unused Domestic Extraction - Primary Crops - Chick peas,UDE_1.04.067,kt
+"Unused Domestic Extraction - Primary Crops - Cow peas, dry",UDE_1.04.068,kt
+"Unused Domestic Extraction - Primary Crops - Peas, dry",UDE_1.04.069,kt
+Unused Domestic Extraction - Primary Crops - Pigeon peas,UDE_1.04.070,kt
+Unused Domestic Extraction - Primary Crops - String beans,UDE_1.04.071,kt
+Unused Domestic Extraction - Primary Crops - Coconuts,UDE_1.04.072,kt
+Unused Domestic Extraction - Primary Crops - Okra,UDE_1.04.073,kt
+Unused Domestic Extraction - Primary Crops - Onions,UDE_1.04.074,kt
+"Unused Domestic Extraction - Primary Crops - Onions, dry",UDE_1.04.075,
+Unused Domestic Extraction - Primary Crops - Other melons,UDE_1.04.076,kt
+Unused Domestic Extraction - Primary Crops - Watermelons,UDE_1.04.077,kt
+Unused Domestic Extraction - Primary Crops - Bananas,UDE_1.04.078,kt
+Unused Domestic Extraction - Primary Crops - Cashewapple,UDE_1.04.079,kt
+Unused Domestic Extraction - Primary Crops - Cranberries,UDE_1.04.080,kt
+Unused Domestic Extraction - Primary Crops - Fruit Fresh Nes,UDE_1.04.081,kt
+"Unused Domestic Extraction - Primary Crops - Fruit, tropical fresh nes",UDE_1.04.082,kt
+"Unused Domestic Extraction - Primary Crops - Mangoes, mangosteens, guavas",UDE_1.04.083,kt
+Unused Domestic Extraction - Primary Crops - Papayas,UDE_1.04.084,kt
+Unused Domestic Extraction - Primary Crops - Plantains,UDE_1.04.085,kt
+Unused Domestic Extraction - Primary Crops - Arecanuts,UDE_1.04.086,kt
+"Unused Domestic Extraction - Primary Crops - Brazil nuts, with shell",UDE_1.04.087,kt
+"Unused Domestic Extraction - Primary Crops - Cashew nuts, with shell",UDE_1.04.088,kt
+Unused Domestic Extraction - Primary Crops - Kolanuts,UDE_1.04.089,kt
+"Unused Domestic Extraction - Primary Crops - Nuts, nes",UDE_1.04.090,kt
+"Unused Domestic Extraction - Primary Crops - Leguminous vegetables, nes",UDE_1.04.091,kt
+"Unused Domestic Extraction - Primary Crops - Maize, green",UDE_1.04.092,kt
+"Unused Domestic Extraction - Primary Crops - Pome fruit, nes",UDE_1.04.093,kt
+Unused Domestic Extraction - Primary Crops - Cassava leaves,UDE_1.04.094,kt
+Unused Domestic Extraction - Primary Crops - Groundnuts in Shell,UDE_1.05.001,kt
+Unused Domestic Extraction - Primary Crops - Hempseed,UDE_1.05.002,kt
+Unused Domestic Extraction - Primary Crops - Linseed,UDE_1.05.003,kt
+Unused Domestic Extraction - Primary Crops - Melonseed,UDE_1.05.004,kt
+Unused Domestic Extraction - Primary Crops - Mustard Seed,UDE_1.05.005,kt
+Unused Domestic Extraction - Primary Crops - Poppy Seed,UDE_1.05.006,kt
+Unused Domestic Extraction - Primary Crops - Rapeseed,UDE_1.05.007,kt
+Unused Domestic Extraction - Primary Crops - Safflower Seed,UDE_1.05.008,kt
+Unused Domestic Extraction - Primary Crops - Sesame Seed,UDE_1.05.009,kt
+Unused Domestic Extraction - Primary Crops - Soybeans,UDE_1.05.010,kt
+Unused Domestic Extraction - Primary Crops - Sunflower Seed,UDE_1.05.011,kt
+Unused Domestic Extraction - Primary Crops - Oilseeds nec,UDE_1.05.012,kt
+Unused Domestic Extraction - Primary Crops - Oil Palm Fruit,UDE_1.05.013,kt
+Unused Domestic Extraction - Primary Crops - Castor oil seed,UDE_1.05.014,kt
+Unused Domestic Extraction - Primary Crops - Karite Nuts,UDE_1.05.015,kt
+Unused Domestic Extraction - Primary Crops - Tung Nuts,UDE_1.05.016,kt
+Unused Domestic Extraction - Primary Crops - Jojoba Seeds,UDE_1.05.017,kt
+Unused Domestic Extraction - Primary Crops - Tallowtree Seeds,UDE_1.05.018,kt
+Unused Domestic Extraction - Primary Crops - Cottonseed,UDE_1.05.019,kt
+Unused Domestic Extraction - Primary Crops - Sugar Beets,UDE_1.06.001,kt
+Unused Domestic Extraction - Primary Crops - Sugar Cane,UDE_1.06.002,kt
+Unused Domestic Extraction - Primary Crops - Sugar Crops nes,UDE_1.06.003,kt
+Unused Domestic Extraction - Primary Crops - Cotton Lint,UDE_1.07.001,kt
+Unused Domestic Extraction - Primary Crops - Flax Fibre and Tow,UDE_1.07.002,kt
+Unused Domestic Extraction - Primary Crops - Hemp Fibre and Tow,UDE_1.07.003,kt
+Unused Domestic Extraction - Primary Crops - Abaca,UDE_1.07.004,kt
+Unused Domestic Extraction - Primary Crops - Agave Fibres nes,UDE_1.07.005,kt
+Unused Domestic Extraction - Primary Crops - Coir,UDE_1.07.006,kt
+Unused Domestic Extraction - Primary Crops - Fibre Crops nes,UDE_1.07.007,kt
+Unused Domestic Extraction - Primary Crops - Ramie,UDE_1.07.008,kt
+Unused Domestic Extraction - Primary Crops - Sisal,UDE_1.07.009,kt
+Unused Domestic Extraction - Primary Crops - Kapok Fibre,UDE_1.07.010,kt
+Unused Domestic Extraction - Primary Crops - Jute and Jute-like Fibres,UDE_1.07.011,kt
+Unused Domestic Extraction - Primary Crops - Other Bastfibres,UDE_1.07.012,kt
+"Unused Domestic Extraction - Primary Crops - Anise, Badian, Fennel",UDE_1.08.001,
+Unused Domestic Extraction - Primary Crops - Chicory Roots,UDE_1.08.002,kt
+"Unused Domestic Extraction - Primary Crops - Coffee, Green",UDE_1.08.003,
+Unused Domestic Extraction - Primary Crops - Hops,UDE_1.08.004,
+Unused Domestic Extraction - Primary Crops - Peppermint,UDE_1.08.005,kt
+"Unused Domestic Extraction - Primary Crops - Pyrethrum, Dried Flowers",UDE_1.08.006,kt
+Unused Domestic Extraction - Primary Crops - Tea,UDE_1.08.007,
+Unused Domestic Extraction - Primary Crops - Spices nec,UDE_1.08.008,
+Unused Domestic Extraction - Primary Crops - Cocoa Beans,UDE_1.08.009,kt
+Unused Domestic Extraction - Primary Crops - Mate,UDE_1.08.010,kt
+Unused Domestic Extraction - Primary Crops - Tobacco Leaves,UDE_1.08.011,
+Unused Domestic Extraction - Primary Crops - Natural Rubber,UDE_1.08.012,
+Unused Domestic Extraction - Primary Crops - Cinnamon,UDE_1.08.013,
+Unused Domestic Extraction - Primary Crops - Cloves,UDE_1.08.014,
+Unused Domestic Extraction - Primary Crops - Ginger,UDE_1.08.015,
+"Unused Domestic Extraction - Primary Crops - Nutmeg, mace and cardamoms",UDE_1.08.016,
+Unused Domestic Extraction - Primary Crops - Vanilla,UDE_1.08.017,
+Unused Domestic Extraction - Primary Crops - Pepper,UDE_1.08.018,
+"Unused Domestic Extraction - Primary Crops - Chillies and peppers, dry",UDE_1.08.019,
+Unused Domestic Extraction - Primary Crops - Tea nes,UDE_1.08.020,
+Unused Domestic Extraction - Primary Crops - Kapokseed in Shell,UDE_1.08.023,kt
+Unused Domestic Extraction - Crop residues - Straw,UDE_1.09.001,
+Unused Domestic Extraction - Crop residues - Feed,UDE_1.09.002,
+Unused Domestic Extraction - Fodder crops - Alfalfa for Forage and Silage,UDE_1.10.001,kt
+Unused Domestic Extraction - Fodder crops - Beets for Fodder,UDE_1.10.002,kt
+Unused Domestic Extraction - Fodder crops - Cabbage for Fodder,UDE_1.10.003,kt
+Unused Domestic Extraction - Fodder crops - Carrots for Fodder,UDE_1.10.004,kt
+Unused Domestic Extraction - Fodder crops - Clover for Forage and Silage,UDE_1.10.005,kt
+Unused Domestic Extraction - Fodder crops - Maize for Forage and Silage,UDE_1.10.006,kt
+Unused Domestic Extraction - Fodder crops - Other grasses,UDE_1.10.007,
+"Unused Domestic Extraction - Fodder crops - Rye Grass, Forage and Silage",UDE_1.10.008,kt
+Unused Domestic Extraction - Fodder crops - Sorghum for Forage and Silage,UDE_1.10.009,kt
+Unused Domestic Extraction - Fodder crops - Swedes for Fodder,UDE_1.10.010,kt
+Unused Domestic Extraction - Fodder crops - Turnips for Fodder,UDE_1.10.011,kt
+"Unused Domestic Extraction - Fodder crops - Vegetables and Roots, Fodder",UDE_1.10.012,kt
+Unused Domestic Extraction - Fodder crops - Forage Products nec,UDE_1.10.013,kt
+Unused Domestic Extraction - Fodder crops - Grasses nec for Forage and Silage,UDE_1.10.014,kt
+Unused Domestic Extraction - Fodder crops - Leguminous nec for forage and Silage,UDE_1.10.015,kt
+Unused Domestic Extraction - Fodder crops - Green Oilseeds for Fodder,UDE_1.10.016,kt
+Unused Domestic Extraction - Grazing,UDE_1.10.017,
+Unused Domestic Extraction - Forestry - Coniferous wood - Industrial roundwood,UDE_1.11.001,kt
+Unused Domestic Extraction - Forestry - Coniferous wood - Wood fuel,UDE_1.11.002,kt
+Unused Domestic Extraction - Forestry - Non-coniferous wood - Industrial roundwood,UDE_1.11.003,kt
+Unused Domestic Extraction - Forestry - Non-coniferous wood - Wood fuel,UDE_1.11.004,kt
+Unused Domestic Extraction - Forestry - Raw materials other than wood,UDE_1.11.005,
+Unused Domestic Extraction - Forestry - Kapok Fruit,UDE_1.11.006,
+Unused Domestic Extraction - Forestry - Natural Gums,UDE_1.11.007,
+Unused Domestic Extraction - Fishery - Aquatic plants,UDE_1.12.001,
+Unused Domestic Extraction - Fishery - Marine fish catch,UDE_1.12.002,kt
+Unused Domestic Extraction - Fishery - Inland waters fish catch,UDE_1.12.003,kt
+Unused Domestic Extraction - Fishery - Other (e.g. Aquatic mammals),UDE_1.12.004,
+Unused Domestic Extraction - Metal Ores - Uranium and thorium ores,UDE_2.1,kt
+Unused Domestic Extraction - Metal Ores - Iron ores,UDE_2.2,kt
+Unused Domestic Extraction - Metal Ores - Copper ores,UDE_2.3,kt
+Unused Domestic Extraction - Metal Ores - Nickel ores,UDE_2.4,kt
+Unused Domestic Extraction - Metal Ores - Bauxite and aluminium ores,UDE_2.5,kt
+Unused Domestic Extraction - Metal Ores - Gold ores,UDE_2.6.01,kt
+Unused Domestic Extraction - Metal Ores - PGM ores,UDE_2.6.02,kt
+Unused Domestic Extraction - Metal Ores - Silver ores,UDE_2.6.03,kt
+Unused Domestic Extraction - Metal Ores - Lead ores,UDE_2.7.01,kt
+Unused Domestic Extraction - Metal Ores - Tin ores,UDE_2.7.02,kt
+Unused Domestic Extraction - Metal Ores - Zinc ores,UDE_2.7.03,kt
+Unused Domestic Extraction - Metal Ores - Other non-ferrous metal ores,UDE_2.8,kt
+Unused Domestic Extraction - Non-Metallic Minerals - Other minerals,UDE_3.8,kt
+"Unused Domestic Extraction - Non-Metallic Minerals - Limestone, gypsum, chalk, dolomite",UDE_3.3,kt
+Unused Domestic Extraction - Non-Metallic Minerals - Slate,UDE_3.5,kt
+Unused Domestic Extraction - Non-Metallic Minerals - Building stones,UDE_3.6,kt
+Unused Domestic Extraction - Non-Metallic Minerals - Clays and kaolin,UDE_3.2,kt
+Unused Domestic Extraction - Non-Metallic Minerals - Gravel and sand,UDE_3.7,kt
+Unused Domestic Extraction - Non-Metallic Minerals - Salt,UDE_3.4,
+Unused Domestic Extraction - Non-Metallic Minerals - Chemical and fertilizer minerals,UDE_3.1,kt
+Unused Domestic Extraction - Fossil Fuels - Anthracite,UDE_4.1,kt
+Unused Domestic Extraction - Fossil Fuels - Coking coal,UDE_4.2,kt
+Unused Domestic Extraction - Fossil Fuels - Other bituminous coal,UDE_4.3,kt
+Unused Domestic Extraction - Fossil Fuels - Sub-bituminous coal,UDE_4.4,kt
+Unused Domestic Extraction - Fossil Fuels - Lignite/brown coal,UDE_4.5,kt
+Unused Domestic Extraction - Fossil Fuels - Peat,UDE_4.6,
+Unused Domestic Extraction - Fossil Fuels - Crude oil,UDE_4.7,kt
+Unused Domestic Extraction - Fossil Fuels - Natural gas,UDE_4.8,kt
+Unused Domestic Extraction - Fossil Fuels - Natural gas liquids,UDE_4.9,
+Water Consumption Green - Agriculture - rice,WCG_1.1,Mm3
+Water Consumption Green - Agriculture - wheat,WCG_1.2,Mm3
+Water Consumption Green - Agriculture - other cereals,WCG_1.3,Mm3
+Water Consumption Green - Agriculture - roots and tubers,WCG_1.4,Mm3
+Water Consumption Green - Agriculture - sugar crops,WCG_1.5,Mm3
+Water Consumption Green - Agriculture - pulses,WCG_1.6,Mm3
+Water Consumption Green - Agriculture - nuts,WCG_1.7,Mm3
+Water Consumption Green - Agriculture - oil crops,WCG_1.8,Mm3
+Water Consumption Green - Agriculture - vegetables,WCG_1.9,Mm3
+Water Consumption Green - Agriculture - fruits,WCG_1.10,Mm3
+Water Consumption Green - Agriculture - fibres,WCG_1.11,Mm3
+Water Consumption Green - Agriculture - other crops,WCG_1.12,Mm3
+Water Consumption Green - Agriculture - fodder crops,WCG_1.13,Mm3
+Water Consumption Blue - Agriculture - rice,WCB_1.1,Mm3
+Water Consumption Blue - Agriculture - wheat,WCB_1.2,Mm3
+Water Consumption Blue - Agriculture - other cereals,WCB_1.3,Mm3
+Water Consumption Blue - Agriculture - roots and tubers,WCB_1.4,Mm3
+Water Consumption Blue - Agriculture - sugar crops,WCB_1.5,Mm3
+Water Consumption Blue - Agriculture - pulses,WCB_1.6,Mm3
+Water Consumption Blue - Agriculture - nuts,WCB_1.7,Mm3
+Water Consumption Blue - Agriculture - oil crops,WCB_1.8,Mm3
+Water Consumption Blue - Agriculture - vegetables,WCB_1.9,Mm3
+Water Consumption Blue - Agriculture - fruits,WCB_1.10,Mm3
+Water Consumption Blue - Agriculture - fibres,WCB_1.11,Mm3
+Water Consumption Blue - Agriculture - other crops,WCB_1.12,Mm3
+Water Consumption Blue - Agriculture - fodder crops,WCB_1.13,Mm3
+Water Consumption Blue - Livestock - dairy cattle,WCB_1.14,Mm3
+Water Consumption Blue - Livestock - nondairy cattle,WCB_1.15,Mm3
+Water Consumption Blue - Livestock - pigs,WCB_1.16,Mm3
+Water Consumption Blue - Livestock - sheep,WCB_1.17,Mm3
+Water Consumption Blue - Livestock - goats,WCB_1.18,Mm3
+Water Consumption Blue - Livestock - buffaloes,WCB_1.19,Mm3
+Water Consumption Blue - Livestock - camels,WCB_1.20,Mm3
+Water Consumption Blue - Livestock - horses,WCB_1.21,Mm3
+Water Consumption Blue - Livestock - chicken,WCB_1.22,Mm3
+Water Consumption Blue - Livestock - turkeys,WCB_1.23,Mm3
+Water Consumption Blue - Livestock - ducks,WCB_1.24,Mm3
+Water Consumption Blue - Livestock - geese,WCB_1.25,Mm3
+Water Consumption Blue - Manufacturing - Products of meat cattle,WCB_2.1.1,Mm3
+Water Consumption Blue - Manufacturing - Products of meat pigs,WCB_2.1.2,Mm3
+Water Consumption Blue - Manufacturing - Products of meat poultry,WCB_2.1.3,Mm3
+Water Consumption Blue - Manufacturing - Meat products nec,WCB_2.1.4,Mm3
+Water Consumption Blue - Manufacturing - products of Vegetable oils and fats,WCB_2.1.5,Mm3
+Water Consumption Blue - Manufacturing - Dairy products,WCB_2.1.6,Mm3
+Water Consumption Blue - Manufacturing - Processed rice,WCB_2.1.7,Mm3
+Water Consumption Blue - Manufacturing - Sugar,WCB_2.1.8,Mm3
+Water Consumption Blue - Manufacturing - Food products nec,WCB_2.1.9,Mm3
+Water Consumption Blue - Manufacturing - Beverages,WCB_2.1.10,Mm3
+Water Consumption Blue - Manufacturing - Fish products,WCB_2.1.11,Mm3
+Water Consumption Blue - Manufacturing - Tobacco products (16),WCB_2.1.12,Mm3
+Water Consumption Blue - Manufacturing - Textiles (17),WCB_2.2.1,Mm3
+Water Consumption Blue - Manufacturing - Wearing apparel; furs (18),WCB_2.2.2,Mm3
+Water Consumption Blue - Manufacturing - Leather and leather products (19),WCB_2.2.3,Mm3
+Water Consumption Blue - Manufacturing - Pulp,WCB_2.3.1,Mm3
+"Water Consumption Blue - Manufacturing - Secondary paper for treatment, Re-processing of secondary paper into new pulp",WCB_2.3.2,Mm3
+Water Consumption Blue - Manufacturing - Paper and paper products,WCB_2.3.3,Mm3
+Water Consumption Blue - Manufacturing - Printed matter and recorded media (22),WCB_2.3.4,Mm3
+"Water Consumption Blue - Manufacturing - Plastics, basic",WCB_2.4.1,Mm3
+"Water Consumption Blue - Manufacturing - Secondary plastic for treatment, Re-processing of secondary plastic into new plastic",WCB_2.4.2,Mm3
+Water Consumption Blue - Manufacturing - N-fertiliser,WCB_2.4.3,Mm3
+Water Consumption Blue - Manufacturing - P- and other fertiliser,WCB_2.4.4,Mm3
+Water Consumption Blue - Manufacturing - Chemicals nec,WCB_2.4.5,Mm3
+Water Consumption Blue - Manufacturing - Rubber and plastic products (25),WCB_2.4.6,Mm3
+Water Consumption Blue - Manufacturing - Glass and glass products,WCB_2.5.1,Mm3
+"Water Consumption Blue - Manufacturing - Secondary glass for treatment, Re-processing of secondary glass into new glass",WCB_2.5.2,Mm3
+Water Consumption Blue - Manufacturing - Ceramic goods,WCB_2.5.3,Mm3
+"Water Consumption Blue - Manufacturing - Bricks, tiles and construction products, in baked clay",WCB_2.5.4,Mm3
+"Water Consumption Blue - Manufacturing - Cement, lime and plaster",WCB_2.5.5,Mm3
+"Water Consumption Blue - Manufacturing - Ash for treatment, Re-processing of ash into clinker",WCB_2.5.6,Mm3
+Water Consumption Blue - Manufacturing - Other non-metallic mineral products,WCB_2.5.7,Mm3
+Water Consumption Blue - Manufacturing - Basic iron and steel and of ferro-alloys and first products thereof,WCB_2.6.1,Mm3
+"Water Consumption Blue - Manufacturing - Secondary steel for treatment, Re-processing of secondary steel into new steel",WCB_2.6.2,Mm3
+Water Consumption Blue - Manufacturing - Precious metals,WCB_2.6.3,Mm3
+"Water Consumption Blue - Manufacturing - Secondary preciuos metals for treatment, Re-processing of secondary preciuos metals into new preciuos metals",WCB_2.6.4,Mm3
+Water Consumption Blue - Manufacturing - Aluminium and aluminium products,WCB_2.6.5,Mm3
+"Water Consumption Blue - Manufacturing - Secondary aluminium for treatment, Re-processing of secondary aluminium into new aluminium",WCB_2.6.6,Mm3
+"Water Consumption Blue - Manufacturing - Lead, zinc and tin and products thereof",WCB_2.6.7,Mm3
+"Water Consumption Blue - Manufacturing - Secondary lead for treatment, Re-processing of secondary lead into new lead",WCB_2.6.8,Mm3
+Water Consumption Blue - Manufacturing - Copper products,WCB_2.6.9,Mm3
+"Water Consumption Blue - Manufacturing - Secondary copper for treatment, Re-processing of secondary copper into new copper",WCB_2.6.10,Mm3
+Water Consumption Blue - Manufacturing - Other non-ferrous metal products,WCB_2.6.11,Mm3
+"Water Consumption Blue - Manufacturing - Secondary other non-ferrous metals for treatment, Re-processing of secondary other non-ferrous metals into new other non-ferrous metals",WCB_2.6.12,Mm3
+"Water Consumption Blue - Manufacturing - Fabricated metal products, except machinery and equipment (28)",WCB_2.7.1,Mm3
+Water Consumption Blue - Manufacturing - Machinery and equipment n.e.c. (29),WCB_2.7.2,Mm3
+Water Consumption Blue - Manufacturing - Office machinery and computers (30),WCB_2.7.3,Mm3
+Water Consumption Blue - Manufacturing - Electrical machinery and apparatus n.e.c. (31),WCB_2.7.4,Mm3
+"Water Consumption Blue - Manufacturing - Radio, television and communication equipment and apparatus (32)",WCB_2.7.5,Mm3
+"Water Consumption Blue - Manufacturing - Medical, precision and optical instruments, watches and clocks (33)",WCB_2.7.6,Mm3
+"Water Consumption Blue - Manufacturing - Motor vehicles, trailers and semi-trailers (34)",WCB_2.7.7,Mm3
+Water Consumption Blue - Manufacturing - Other transport equipment (35),WCB_2.7.8,Mm3
+Water Consumption Blue - Manufacturing - Furniture; other manufactured goods n.e.c. (36),WCB_2.7.9,Mm3
+Water Consumption Blue - Electricity - tower - Electricity by coal,WCB_3.1.1,Mm3
+Water Consumption Blue - Electricity - tower - Electricity by gas,WCB_3.1.2,Mm3
+Water Consumption Blue - Electricity - tower - Electricity by nuclear,WCB_3.1.3,Mm3
+Water Consumption Blue - Electricity - tower - Electricity by hydro,WCB_3.1.4,
+Water Consumption Blue - Electricity - tower - Electricity by wind,WCB_3.1.5,
+Water Consumption Blue - Electricity - tower - Electricity by petroleum and other oil derivatives,WCB_3.1.6,Mm3
+Water Consumption Blue - Electricity - tower - Electricity by biomass and waste,WCB_3.1.7,Mm3
+Water Consumption Blue - Electricity - tower - Electricity by solar photovoltaic,WCB_3.1.8,
+Water Consumption Blue - Electricity - tower - Electricity by solar thermal,WCB_3.1.9,Mm3
+"Water Consumption Blue - Electricity - tower - Electricity by tide, wave, ocean",WCB_3.1.10,
+Water Consumption Blue - Electricity - tower - Electricity by Geothermal,WCB_3.1.11,Mm3
+Water Consumption Blue - Electricity - tower - Electricity nec,WCB_3.1.12,
+Water Consumption Blue - Electricity - once-through - Electricity by coal,WCB_3.2.1,Mm3
+Water Consumption Blue - Electricity - once-through - Electricity by gas,WCB_3.2.2,Mm3
+Water Consumption Blue - Electricity - once-through - Electricity by nuclear,WCB_3.2.3,Mm3
+Water Consumption Blue - Electricity - once-through - Electricity by hydro,WCB_3.2.4,
+Water Consumption Blue - Electricity - once-through - Electricity by wind,WCB_3.2.5,
+Water Consumption Blue - Electricity - once-through - Electricity by petroleum and other oil derivatives,WCB_3.2.6,Mm3
+Water Consumption Blue - Electricity - once-through - Electricity by biomass and waste,WCB_3.2.7,Mm3
+Water Consumption Blue - Electricity - once-through - Electricity by solar photovoltaic,WCB_3.2.8,
+Water Consumption Blue - Electricity - once-through - Electricity by solar thermal,WCB_3.2.9,
+"Water Consumption Blue - Electricity - once-through - Electricity by tide, wave, ocean",WCB_3.2.10,
+Water Consumption Blue - Electricity - once-through - Electricity by Geothermal,WCB_3.2.11,Mm3
+Water Consumption Blue - Electricity - once-through - Electricity nec,WCB_3.2.12,
+Water Consumption Blue - Domestic - domestic Water Consumption Blue,WCB_4,
+Water Withdrawal Blue - Manufacturing - Products of meat cattle,WWB_2.1.1,Mm3
+Water Withdrawal Blue - Manufacturing - Products of meat pigs,WWB_2.1.2,Mm3
+Water Withdrawal Blue - Manufacturing - Products of meat poultry,WWB_2.1.3,Mm3
+Water Withdrawal Blue - Manufacturing - Meat products nec,WWB_2.1.4,Mm3
+Water Withdrawal Blue - Manufacturing - products of Vegetable oils and fats,WWB_2.1.5,Mm3
+Water Withdrawal Blue - Manufacturing - Dairy products,WWB_2.1.6,Mm3
+Water Withdrawal Blue - Manufacturing - Processed rice,WWB_2.1.7,Mm3
+Water Withdrawal Blue - Manufacturing - Sugar,WWB_2.1.8,Mm3
+Water Withdrawal Blue - Manufacturing - Food products nec,WWB_2.1.9,Mm3
+Water Withdrawal Blue - Manufacturing - Beverages,WWB_2.1.10,Mm3
+Water Withdrawal Blue - Manufacturing - Fish products,WWB_2.1.11,Mm3
+Water Withdrawal Blue - Manufacturing - Tobacco products (16),WWB_2.1.12,Mm3
+Water Withdrawal Blue - Manufacturing - Textiles (17),WWB_2.2.1,Mm3
+Water Withdrawal Blue - Manufacturing - Wearing apparel; furs (18),WWB_2.2.2,Mm3
+Water Withdrawal Blue - Manufacturing - Leather and leather products (19),WWB_2.2.3,Mm3
+Water Withdrawal Blue - Manufacturing - Pulp,WWB_2.3.1,Mm3
+"Water Withdrawal Blue - Manufacturing - Secondary paper for treatment, Re-processing of secondary paper into new pulp",WWB_2.3.2,Mm3
+Water Withdrawal Blue - Manufacturing - Paper and paper products,WWB_2.3.3,Mm3
+Water Withdrawal Blue - Manufacturing - Printed matter and recorded media (22),WWB_2.3.4,Mm3
+"Water Withdrawal Blue - Manufacturing - Plastics, basic",WWB_2.4.1,Mm3
+"Water Withdrawal Blue - Manufacturing - Secondary plastic for treatment, Re-processing of secondary plastic into new plastic",WWB_2.4.2,Mm3
+Water Withdrawal Blue - Manufacturing - N-fertiliser,WWB_2.4.3,Mm3
+Water Withdrawal Blue - Manufacturing - P- and other fertiliser,WWB_2.4.4,Mm3
+Water Withdrawal Blue - Manufacturing - Chemicals nec,WWB_2.4.5,Mm3
+Water Withdrawal Blue - Manufacturing - Rubber and plastic products (25),WWB_2.4.6,Mm3
+Water Withdrawal Blue - Manufacturing - Glass and glass products,WWB_2.5.1,Mm3
+"Water Withdrawal Blue - Manufacturing - Secondary glass for treatment, Re-processing of secondary glass into new glass",WWB_2.5.2,Mm3
+Water Withdrawal Blue - Manufacturing - Ceramic goods,WWB_2.5.3,Mm3
+"Water Withdrawal Blue - Manufacturing - Bricks, tiles and construction products, in baked clay",WWB_2.5.4,Mm3
+"Water Withdrawal Blue - Manufacturing - Cement, lime and plaster",WWB_2.5.5,Mm3
+"Water Withdrawal Blue - Manufacturing - Ash for treatment, Re-processing of ash into clinker",WWB_2.5.6,Mm3
+Water Withdrawal Blue - Manufacturing - Other non-metallic mineral products,WWB_2.5.7,Mm3
+Water Withdrawal Blue - Manufacturing - Basic iron and steel and of ferro-alloys and first products thereof,WWB_2.6.1,Mm3
+"Water Withdrawal Blue - Manufacturing - Secondary steel for treatment, Re-processing of secondary steel into new steel",WWB_2.6.2,Mm3
+Water Withdrawal Blue - Manufacturing - Precious metals,WWB_2.6.3,Mm3
+"Water Withdrawal Blue - Manufacturing - Secondary preciuos metals for treatment, Re-processing of secondary preciuos metals into new preciuos metals",WWB_2.6.4,Mm3
+Water Withdrawal Blue - Manufacturing - Aluminium and aluminium products,WWB_2.6.5,Mm3
+"Water Withdrawal Blue - Manufacturing - Secondary aluminium for treatment, Re-processing of secondary aluminium into new aluminium",WWB_2.6.6,Mm3
+"Water Withdrawal Blue - Manufacturing - Lead, zinc and tin and products thereof",WWB_2.6.7,Mm3
+"Water Withdrawal Blue - Manufacturing - Secondary lead for treatment, Re-processing of secondary lead into new lead",WWB_2.6.8,Mm3
+Water Withdrawal Blue - Manufacturing - Copper products,WWB_2.6.9,Mm3
+"Water Withdrawal Blue - Manufacturing - Secondary copper for treatment, Re-processing of secondary copper into new copper",WWB_2.6.10,Mm3
+Water Withdrawal Blue - Manufacturing - Other non-ferrous metal products,WWB_2.6.11,Mm3
+"Water Withdrawal Blue - Manufacturing - Secondary other non-ferrous metals for treatment, Re-processing of secondary other non-ferrous metals into new other non-ferrous metals",WWB_2.6.12,Mm3
+"Water Withdrawal Blue - Manufacturing - Fabricated metal products, except machinery and equipment (28)",WWB_2.7.1,Mm3
+Water Withdrawal Blue - Manufacturing - Machinery and equipment n.e.c. (29),WWB_2.7.2,Mm3
+Water Withdrawal Blue - Manufacturing - Office machinery and computers (30),WWB_2.7.3,Mm3
+Water Withdrawal Blue - Manufacturing - Electrical machinery and apparatus n.e.c. (31),WWB_2.7.4,Mm3
+"Water Withdrawal Blue - Manufacturing - Radio, television and communication equipment and apparatus (32)",WWB_2.7.5,Mm3
+"Water Withdrawal Blue - Manufacturing - Medical, precision and optical instruments, watches and clocks (33)",WWB_2.7.6,Mm3
+"Water Withdrawal Blue - Manufacturing - Motor vehicles, trailers and semi-trailers (34)",WWB_2.7.7,Mm3
+Water Withdrawal Blue - Manufacturing - Other transport equipment (35),WWB_2.7.8,Mm3
+Water Withdrawal Blue - Manufacturing - Furniture; other manufactured goods n.e.c. (36),WWB_2.7.9,Mm3
+Water Withdrawal Blue - Electricity - tower - Electricity by coal,WWB_3.1.1,Mm3
+Water Withdrawal Blue - Electricity - tower - Electricity by gas,WWB_3.1.2,Mm3
+Water Withdrawal Blue - Electricity - tower - Electricity by nuclear,WWB_3.1.3,Mm3
+Water Withdrawal Blue - Electricity - tower - Electricity by hydro,WWB_3.1.4,
+Water Withdrawal Blue - Electricity - tower - Electricity by wind,WWB_3.1.5,
+Water Withdrawal Blue - Electricity - tower - Electricity by petroleum and other oil derivatives,WWB_3.1.6,Mm3
+Water Withdrawal Blue - Electricity - tower - Electricity by biomass and waste,WWB_3.1.7,Mm3
+Water Withdrawal Blue - Electricity - tower - Electricity by solar photovoltaic,WWB_3.1.8,
+Water Withdrawal Blue - Electricity - tower - Electricity by solar thermal,WWB_3.1.9,Mm3
+"Water Withdrawal Blue - Electricity - tower - Electricity by tide, wave, ocean",WWB_3.1.10,
+Water Withdrawal Blue - Electricity - tower - Electricity by Geothermal,WWB_3.1.11,Mm3
+Water Withdrawal Blue - Electricity - tower - Electricity nec,WWB_3.1.12,
+Water Withdrawal Blue - Electricity - once-through - Electricity by coal,WWB_3.2.1,Mm3
+Water Withdrawal Blue - Electricity - once-through - Electricity by gas,WWB_3.2.2,Mm3
+Water Withdrawal Blue - Electricity - once-through - Electricity by nuclear,WWB_3.2.3,Mm3
+Water Withdrawal Blue - Electricity - once-through - Electricity by hydro,WWB_3.2.4,
+Water Withdrawal Blue - Electricity - once-through - Electricity by wind,WWB_3.2.5,
+Water Withdrawal Blue - Electricity - once-through - Electricity by petroleum and other oil derivatives,WWB_3.2.6,Mm3
+Water Withdrawal Blue - Electricity - once-through - Electricity by biomass and waste,WWB_3.2.7,Mm3
+Water Withdrawal Blue - Electricity - once-through - Electricity by solar photovoltaic,WWB_3.2.8,
+Water Withdrawal Blue - Electricity - once-through - Electricity by solar thermal,WWB_3.2.9,
+"Water Withdrawal Blue - Electricity - once-through - Electricity by tide, wave, ocean",WWB_3.2.10,
+Water Withdrawal Blue - Electricity - once-through - Electricity by Geothermal,WWB_3.2.11,Mm3
+Water Withdrawal Blue - Electricity - once-through - Electricity nec,WWB_3.2.12,
+Water Withdrawal Blue - Domestic - domestic Water Withdrawal Blue,WWB_4,
+Emission Relevant Energy Carrier,EnER.tot,TJ
+Energy Carrier Supply,EnS.tot,TJ
+Energy Carrier Use,EnU.tot,TJ
+Nature Inputs,NI.tot,TJ

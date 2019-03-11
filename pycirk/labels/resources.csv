@@ -1,0 +1,15 @@
+name,synonym,unit
+Land use - Arable Land - Rice,L_1.1,km2
+Land use - Arable Land - Wheat,L_1.2,km2
+Land use - Arable Land - Other cereals,L_1.3,km2
+"Land use - Arable Land - Vegetables, fruits, nuts",L_1.4,km2
+Land use - Arable Land - Oil crops,L_1.5,km2
+Land use - Arable Land - Sugar crops,L_1.6,km2
+Land use - Arable Land - Fibres,L_1.7,km2
+Land use - Arable Land - Other crops,L_1.8,km2
+Land use - Arable Land - Fodder crops,L_1.9,km2
+Land use - Permanent pasture,L_2,km2
+Used Forest Land - Industrial roundwood,L_3.1,km2
+Used Forest Land - Wood fuel,L_3.2,km2
+Used Other Land - Wood fuel,L_3.3,km2
+Infrastructure Land,L_4,

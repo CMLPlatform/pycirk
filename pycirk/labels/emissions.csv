@@ -1,0 +1,418 @@
+code,name,synonym,unit
+124-38-9c,CO2 - combustion,E_CO2_c,kg
+74-82-8c,CH4 - combustion,E_CH4_c,kg
+10102-44-0c,N2O - combustion,E_N2O_c,kg
+7446-09-5c,SOx - combustion,E_SOx_c,kg
+11104-93-1c,NOx - combustion,E_NOx_c,kg
+7664-41-7c,NH3 - combustion,E_NH3_c,kg
+630-08-0c,CO - combustion,E_CO_c,kg
+50-32-8c,Benzo(a)pyrene - combustion,E_benzo_a_pyrene_c,kg
+205-99-2c,Benzo(b)fluoranthene - combustion,E_benzo_b_fluoranthene_c,kg
+207-08-9c,Benzo(k)fluoranthene - combustion,E_benzo_k_fluoranthene_c,kg
+193-39-5c,"Indeno(1,2,3-cd)pyrene - combustion",E_indeno_pyrene_c,kg
+PCBsc,PCBs - combustion,E_PCBs_c,kg
+PCDD_Fc,PCDD_F - combustion,E_PCDD_F_c,kg
+118-74-1c,HCB - combustion,E_HCB_c,kg
+NMVOCc,NMVOC - combustion,E_NMVOC_c,kg
+PM10c,PM10 - combustion,E_PM10_c,kg
+PM2.5c,PM2.5 - combustion,E_PM25_c,kg
+TSPc,TSP - combustion,E_TSP_c,kg
+17428-41-0c,As - combustion,E_As_c,kg
+22537-48-0c,Cd - combustion,E_Cd_c,kg
+Cr_compdsc,Cr - combustion,E_Cr_c,kg
+15158-11-9c,Cu - combustion,E_Cu_c,kg
+14302-87-5c,Hg - combustion,E_Hg_c,kg
+14701-22-5c,Ni - combustion,E_Ni_c,kg
+14280-50-3c,Pb - combustion,E_Pb_c,kg
+7782-49-2c,Se - combustion,E_Se_c,kg
+23713-49-7c,Zn - combustion,E_Zn_c,kg
+124-38-9wb,CO2 - Waste - biogenic,E_CO2_wb,kg
+124-38-9wf,CO2 - Waste - fossil,E_CO2_wf,kg
+74-82-8w,CH4 - Waste,E_CH4_w,kg
+7664-41-7w,NH3 - Waste,E_NH3_w,kg
+630-08-0w,CO - Waste,E_CO_w,kg
+11104-93-1w,NOx - Waste,E_NOx_w,kg
+7446-09-5w,SOx - Waste,E_SOx_w,kg
+PM2.5w,PM2.5 - Waste,E_PM25_w,kg
+As_nc_1.1,As - non combustion - Agglomeration plant - pellets,E_As_nc_1.1,kg
+As_nc_1.2,As - non combustion - Agglomeration plant - sinter,E_As_nc_1.2,kg
+As_nc_26.0,As - non combustion - Glass production,E_As_nc_26.0,kg
+As_nc_58.0,As - non combustion - Production of coke oven coke,E_As_nc_58.0,kg
+As_nc_59.0,As - non combustion - Production of gascoke,E_As_nc_59.0,kg
+As_nc_69.1,As - non combustion - Steel production: basic oxygen furnace,E_As_nc_69.1,kg
+As_nc_69.2,As - non combustion - Steel production: electric arc furnace,E_As_nc_69.2,kg
+As_nc_69.3,As - non combustion - Steel production: open hearth furnace,E_As_nc_69.3,kg
+B(a)P_nc_56.0,B(a)P - non combustion - Primary aluminium production,E_B(a)P_nc_56.0,kg
+B(a)P_nc_58.0,B(a)P - non combustion - Production of coke oven coke,E_B(a)P_nc_58.0,kg
+B(a)P_nc_59.0,B(a)P - non combustion - Production of gascoke,E_B(a)P_nc_59.0,kg
+B(b)F_nc_56.0,B(b)F - non combustion - Primary aluminium production,E_B(b)F_nc_56.0,kg
+B(b)F_nc_58.0,B(b)F - non combustion - Production of coke oven coke,E_B(b)F_nc_58.0,kg
+B(b)F_nc_59.0,B(b)F - non combustion - Production of gascoke,E_B(b)F_nc_59.0,kg
+B(k)F_nc_56.0,B(k)F - non combustion - Primary aluminium production,E_B(k)F_nc_56.0,kg
+B(k)F_nc_58.0,B(k)F - non combustion - Production of coke oven coke,E_B(k)F_nc_58.0,kg
+B(k)F_nc_59.0,B(k)F - non combustion - Production of gascoke,E_B(k)F_nc_59.0,kg
+CH4_nc_19.0,CH4 - non combustion - Extraction/production of (natural) gas,E_CH4_nc_19.0,kg
+CH4_nc_20.0,CH4 - non combustion - Extraction/production of crude oil,E_CH4_nc_20.0,kg
+CH4_nc_36.0,CH4 - non combustion - Mining of antracite,E_CH4_nc_36.0,kg
+CH4_nc_37.0,CH4 - non combustion - Mining of bituminous coal,E_CH4_nc_37.0,kg
+CH4_nc_38.0,CH4 - non combustion - Mining of coking coal,E_CH4_nc_38.0,kg
+CH4_nc_39.0,CH4 - non combustion - Mining of lignite (brown coal),E_CH4_nc_39.0,kg
+CH4_nc_40.0,CH4 - non combustion - Mining of sub-bituminous coal,E_CH4_nc_40.0,kg
+CH4_nc_46.0,CH4 - non combustion - Oil refinery,E_CH4_nc_46.0,kg
+CO_nc_1.2,CO - non combustion - Agglomeration plant - sinter,E_CO_nc_1.2,kg
+CO_nc_4.0,CO - non combustion - Bricks production,E_CO_nc_4.0,kg
+CO_nc_6.0,CO - non combustion - Carbon black production,E_CO_nc_6.0,kg
+CO_nc_8.0,CO - non combustion - Cement production,E_CO_nc_8.0,kg
+CO_nc_9.1,"CO - non combustion - Chemical wood pulp, dissolving grades",E_CO_nc_9.1,kg
+CO_nc_9.2,"CO - non combustion - Chemical wood pulp, soda and sulphate, other than dissolving grades",E_CO_nc_9.2,kg
+CO_nc_9.3,"CO - non combustion - Chemical wood pulp, sulphite, other than dissolving grades",E_CO_nc_9.3,kg
+CO_nc_26.0,CO - non combustion - Glass production,E_CO_nc_26.0,kg
+CO_nc_34.0,CO - non combustion - Lime production,E_CO_nc_34.0,kg
+CO_nc_46.0,CO - non combustion - Oil refinery,E_CO_nc_46.0,kg
+CO_nc_50.0,"CO - non combustion - Pig iron production, blast furnace",E_CO_nc_50.0,kg
+CO_nc_56.0,CO - non combustion - Primary aluminium production,E_CO_nc_56.0,kg
+CO_nc_58.0,CO - non combustion - Production of coke oven coke,E_CO_nc_58.0,kg
+CO_nc_59.0,CO - non combustion - Production of gascoke,E_CO_nc_59.0,kg
+CO_nc_66.0,"CO - non combustion - Semi-chemical wood pulp, pulp of fibers other than wood",E_CO_nc_66.0,kg
+CO_nc_69.1,CO - non combustion - Steel production: basic oxygen furnace,E_CO_nc_69.1,kg
+CO_nc_69.2,CO - non combustion - Steel production: electric arc furnace,E_CO_nc_69.2,kg
+CO2_nc_8.0,CO2 - non combustion - Cement production,E_CO2_nc_8.0,kg
+CO2_nc_34.0,CO2 - non combustion - Lime production,E_CO2_nc_34.0,kg
+Cd_nc_1.1,Cd - non combustion - Agglomeration plant - pellets,E_Cd_nc_1.1,kg
+Cd_nc_1.2,Cd - non combustion - Agglomeration plant - sinter,E_Cd_nc_1.2,kg
+Cd_nc_26.0,Cd - non combustion - Glass production,E_Cd_nc_26.0,kg
+Cd_nc_45.0,"Cd - non combustion - Nickel, unwrought",E_Cd_nc_45.0,kg
+Cd_nc_58.0,Cd - non combustion - Production of coke oven coke,E_Cd_nc_58.0,kg
+Cd_nc_59.0,Cd - non combustion - Production of gascoke,E_Cd_nc_59.0,kg
+Cd_nc_62.0,"Cd - non combustion - Refined copper; unwrought, not alloyed",E_Cd_nc_62.0,kg
+Cd_nc_63.0,"Cd - non combustion - Refined lead, unwrought",E_Cd_nc_63.0,kg
+Cd_nc_69.1,Cd - non combustion - Steel production: basic oxygen furnace,E_Cd_nc_69.1,kg
+Cd_nc_69.2,Cd - non combustion - Steel production: electric arc furnace,E_Cd_nc_69.2,kg
+Cd_nc_69.3,Cd - non combustion - Steel production: open hearth furnace,E_Cd_nc_69.3,kg
+Cd_nc_74.0,Cd - non combustion - Unrefined copper; copper anodes for electrolytic refining,E_Cd_nc_74.0,kg
+Cd_nc_78.0,"Cd - non combustion - Zinc, unwrought, not alloyed",E_Cd_nc_78.0,kg
+Cr_nc_1.1,Cr - non combustion - Agglomeration plant - pellets,E_Cr_nc_1.1,kg
+Cr_nc_1.2,Cr - non combustion - Agglomeration plant - sinter,E_Cr_nc_1.2,kg
+Cr_nc_26.0,Cr - non combustion - Glass production,E_Cr_nc_26.0,kg
+Cr_nc_50.0,"Cr - non combustion - Pig iron production, blast furnace",E_Cr_nc_50.0,kg
+Cr_nc_69.1,Cr - non combustion - Steel production: basic oxygen furnace,E_Cr_nc_69.1,kg
+Cr_nc_69.2,Cr - non combustion - Steel production: electric arc furnace,E_Cr_nc_69.2,kg
+Cr_nc_69.3,Cr - non combustion - Steel production: open hearth furnace,E_Cr_nc_69.3,kg
+Cu_nc_1.1,Cu - non combustion - Agglomeration plant - pellets,E_Cu_nc_1.1,kg
+Cu_nc_1.2,Cu - non combustion - Agglomeration plant - sinter,E_Cu_nc_1.2,kg
+Cu_nc_26.0,Cu - non combustion - Glass production,E_Cu_nc_26.0,kg
+Cu_nc_50.0,"Cu - non combustion - Pig iron production, blast furnace",E_Cu_nc_50.0,kg
+Cu_nc_69.1,Cu - non combustion - Steel production: basic oxygen furnace,E_Cu_nc_69.1,kg
+Cu_nc_69.2,Cu - non combustion - Steel production: electric arc furnace,E_Cu_nc_69.2,kg
+Cu_nc_69.3,Cu - non combustion - Steel production: open hearth furnace,E_Cu_nc_69.3,kg
+HCB_nc_1.1,HCB - non combustion - Agglomeration plant - pellets,E_HCB_nc_1.1,kg
+HCB_nc_1.2,HCB - non combustion - Agglomeration plant - sinter,E_HCB_nc_1.2,kg
+Hg_nc_1.1,Hg - non combustion - Agglomeration plant - pellets,E_Hg_nc_1.1,kg
+Hg_nc_1.2,Hg - non combustion - Agglomeration plant - sinter,E_Hg_nc_1.2,kg
+Hg_nc_26.0,Hg - non combustion - Glass production,E_Hg_nc_26.0,kg
+Hg_nc_45.0,"Hg - non combustion - Nickel, unwrought",E_Hg_nc_45.0,kg
+Hg_nc_50.0,"Hg - non combustion - Pig iron production, blast furnace",E_Hg_nc_50.0,kg
+Hg_nc_58.0,Hg - non combustion - Production of coke oven coke,E_Hg_nc_58.0,kg
+Hg_nc_59.0,Hg - non combustion - Production of gascoke,E_Hg_nc_59.0,kg
+Hg_nc_62.0,"Hg - non combustion - Refined copper; unwrought, not alloyed",E_Hg_nc_62.0,kg
+Hg_nc_63.0,"Hg - non combustion - Refined lead, unwrought",E_Hg_nc_63.0,kg
+Hg_nc_69.1,Hg - non combustion - Steel production: basic oxygen furnace,E_Hg_nc_69.1,kg
+Hg_nc_69.2,Hg - non combustion - Steel production: electric arc furnace,E_Hg_nc_69.2,kg
+Hg_nc_74.0,Hg - non combustion - Unrefined copper; copper anodes for electrolytic refining,E_Hg_nc_74.0,kg
+Hg_nc_78.0,"Hg - non combustion - Zinc, unwrought, not alloyed",E_Hg_nc_78.0,kg
+Indeno_nc_56.0,Indeno - non combustion - Primary aluminium production,E_Indeno_nc_56.0,kg
+Indeno_nc_58.0,Indeno - non combustion - Production of coke oven coke,E_Indeno_nc_58.0,kg
+Indeno_nc_59.0,Indeno - non combustion - Production of gascoke,E_Indeno_nc_59.0,kg
+NH3_nc_43.0,NH3 - non combustion - N- fertilizer production,E_NH3_nc_43.0,kg
+NMVOC_nc_3.0,NMVOC - non combustion - Beef and veal,E_NMVOC_nc_3.0,kg
+NMVOC_nc_11.0,NMVOC - non combustion - Coil coating (coating of aluminum and steel),E_NMVOC_nc_11.0,kg
+NMVOC_nc_13.0,NMVOC - non combustion - Decorative paint applicatoin,E_NMVOC_nc_13.0,kg
+NMVOC_nc_14.0,NMVOC - non combustion - Degreasing,E_NMVOC_nc_14.0,kg
+NMVOC_nc_15.1,NMVOC - non combustion - Diesel distribution - transport and depots (used in mobile sources),E_NMVOC_nc_15.1,kg
+NMVOC_nc_15.2,NMVOC - non combustion - Diesel distribution - transport and depots (used in stationary sources),E_NMVOC_nc_15.2,kg
+NMVOC_nc_16.0,NMVOC - non combustion - Dry cleaning,E_NMVOC_nc_16.0,kg
+NMVOC_nc_17.0,"NMVOC - non combustion - Extraction, proc. and distribution of gaseous fuels",E_NMVOC_nc_17.0,kg
+NMVOC_nc_18.0,"NMVOC - non combustion - Extraction, proc. and distribution of liquid fuels",E_NMVOC_nc_18.0,kg
+NMVOC_nc_19.0,NMVOC - non combustion - Extraction/production of (natural) gas,E_NMVOC_nc_19.0,kg
+NMVOC_nc_20.0,NMVOC - non combustion - Extraction/production of crude oil,E_NMVOC_nc_20.0,kg
+NMVOC_nc_21.0,"NMVOC - non combustion - Fat, edible and non-edible oil extraction",E_NMVOC_nc_21.0,kg
+NMVOC_nc_23.1,"NMVOC - non combustion - Fish, dried, salted or in brine; smoked fish; edible fish meal",E_NMVOC_nc_23.1,kg
+NMVOC_nc_23.2,"NMVOC - non combustion - Fish, fish fillets, other fish meat and fish livers and roes, frozen",E_NMVOC_nc_23.2,kg
+NMVOC_nc_23.3,"NMVOC - non combustion - Fish, otherwise prepared or preserved; caviar",E_NMVOC_nc_23.3,kg
+NMVOC_nc_24.0,NMVOC - non combustion - Flexography and rotogravure in packaging,E_NMVOC_nc_24.0,kg
+NMVOC_nc_25.1,NMVOC - non combustion - Gasoline distribution - service stations,E_NMVOC_nc_25.1,kg
+NMVOC_nc_25.2,NMVOC - non combustion - Gasoline distribution - transport and depots (used in mobile sources),E_NMVOC_nc_25.2,kg
+NMVOC_nc_25.3,NMVOC - non combustion - Gasoline distribution - transport and depots (used in stationary sources),E_NMVOC_nc_25.3,kg
+NMVOC_nc_28.1,NMVOC - non combustion - Industrial application of adhesives (use of high performance solvent based adhesives),E_NMVOC_nc_28.1,kg
+NMVOC_nc_28.2,NMVOC - non combustion - Industrial application of adhesives (use of traditional solvent based adhesives),E_NMVOC_nc_28.2,kg
+NMVOC_nc_29.2,"NMVOC - non combustion - Industrial paint application, general industry (continuous processes)",E_NMVOC_nc_29.2,kg
+NMVOC_nc_29.3,"NMVOC - non combustion - Industrial paint application, general industry (plastic parts)",E_NMVOC_nc_29.3,kg
+NMVOC_nc_29.1,"NMVOC - non combustion - Industrial paint application, general industry",E_NMVOC_nc_29.1,kg
+NMVOC_nc_30.0,"NMVOC - non combustion - Inorganic chemical industry, fertilizers and other",E_NMVOC_nc_30.0,kg
+NMVOC_nc_33.0,NMVOC - non combustion - Leather coating,E_NMVOC_nc_33.0,kg
+NMVOC_nc_35.0,NMVOC - non combustion - Manufacture of automobiles,E_NMVOC_nc_35.0,kg
+NMVOC_nc_42.0,NMVOC - non combustion - Mutton and lamb,E_NMVOC_nc_42.0,kg
+NMVOC_nc_46.0,NMVOC - non combustion - Oil refinery,E_NMVOC_nc_46.0,kg
+NMVOC_nc_47.1,NMVOC - non combustion - Organic chemical industry - downstream units,E_NMVOC_nc_47.1,kg
+NMVOC_nc_47.2,"NMVOC - non combustion - Organic chemical industry, storage",E_NMVOC_nc_47.2,kg
+NMVOC_nc_48.0,NMVOC - non combustion - Other industrial use of solvents,E_NMVOC_nc_48.0,kg
+NMVOC_nc_49.0,NMVOC - non combustion - Pharmaceutical industry,E_NMVOC_nc_49.0,kg
+NMVOC_nc_52.0,NMVOC - non combustion - Polystyrene processing,E_NMVOC_nc_52.0,kg
+NMVOC_nc_53.0,NMVOC - non combustion - Polyvinylchloride produceduction by suspension process,E_NMVOC_nc_53.0,kg
+NMVOC_nc_54.0,NMVOC - non combustion - Pork,E_NMVOC_nc_54.0,kg
+NMVOC_nc_55.0,"NMVOC - non combustion - Poultry, dressed",E_NMVOC_nc_55.0,kg
+NMVOC_nc_57.0,"NMVOC - non combustion - Printing, offset",E_NMVOC_nc_57.0,kg
+NMVOC_nc_60.0,NMVOC - non combustion - Products incorporating solvents,E_NMVOC_nc_60.0,kg
+NMVOC_nc_61.0,NMVOC - non combustion - Raw sugar,E_NMVOC_nc_61.0,kg
+NMVOC_nc_64.0,NMVOC - non combustion - Rotogravure in publication,E_NMVOC_nc_64.0,kg
+NMVOC_nc_65.0,NMVOC - non combustion - Screen printing,E_NMVOC_nc_65.0,kg
+NMVOC_nc_68.0,NMVOC - non combustion - Steam cracking (ethylene and propylene production),E_NMVOC_nc_68.0,kg
+NMVOC_nc_71.0,NMVOC - non combustion - Synthetic rubber,E_NMVOC_nc_71.0,kg
+NMVOC_nc_73.0,NMVOC - non combustion - Tyre production,E_NMVOC_nc_73.0,kg
+NMVOC_nc_75.0,NMVOC - non combustion - Vehicle refinishing,E_NMVOC_nc_75.0,kg
+NMVOC_nc_76.0,NMVOC - non combustion - Wire coating,E_NMVOC_nc_76.0,kg
+NOx_nc_1.1,NOx - non combustion - Agglomeration plant - pellets,E_NOx_nc_1.1,kg
+NOx_nc_1.2,NOx - non combustion - Agglomeration plant - sinter,E_NOx_nc_1.2,kg
+NOx_nc_4.0,NOx - non combustion - Bricks production,E_NOx_nc_4.0,kg
+NOx_nc_8.0,NOx - non combustion - Cement production,E_NOx_nc_8.0,kg
+NOx_nc_9.1,"NOx - non combustion - Chemical wood pulp, dissolving grades",E_NOx_nc_9.1,kg
+NOx_nc_9.2,"NOx - non combustion - Chemical wood pulp, soda and sulphate, other than dissolving grades",E_NOx_nc_9.2,kg
+NOx_nc_9.3,"NOx - non combustion - Chemical wood pulp, sulphite, other than dissolving grades",E_NOx_nc_9.3,kg
+NOx_nc_26.0,NOx - non combustion - Glass production,E_NOx_nc_26.0,kg
+NOx_nc_34.0,NOx - non combustion - Lime production,E_NOx_nc_34.0,kg
+NOx_nc_45.0,"NOx - non combustion - Nickel, unwrought",E_NOx_nc_45.0,kg
+NOx_nc_46.0,NOx - non combustion - Oil refinery,E_NOx_nc_46.0,kg
+NOx_nc_50.0,"NOx - non combustion - Pig iron production, blast furnace",E_NOx_nc_50.0,kg
+NOx_nc_58.0,NOx - non combustion - Production of coke oven coke,E_NOx_nc_58.0,kg
+NOx_nc_59.0,NOx - non combustion - Production of gascoke,E_NOx_nc_59.0,kg
+NOx_nc_62.0,"NOx - non combustion - Refined copper; unwrought, not alloyed",E_NOx_nc_62.0,kg
+NOx_nc_63.0,"NOx - non combustion - Refined lead, unwrought",E_NOx_nc_63.0,kg
+NOx_nc_66.0,"NOx - non combustion - Semi-chemical wood pulp, pulp of fibers other than wood",E_NOx_nc_66.0,kg
+NOx_nc_69.1,NOx - non combustion - Steel production: basic oxygen furnace,E_NOx_nc_69.1,kg
+NOx_nc_69.2,NOx - non combustion - Steel production: electric arc furnace,E_NOx_nc_69.2,kg
+NOx_nc_70.0,NOx - non combustion - Sulphuric acid production,E_NOx_nc_70.0,kg
+NOx_nc_74.0,NOx - non combustion - Unrefined copper; copper anodes for electrolytic refining,E_NOx_nc_74.0,kg
+NOx_nc_78.0,"NOx - non combustion - Zinc, unwrought, not alloyed",E_NOx_nc_78.0,kg
+Ni_nc_1.1,Ni - non combustion - Agglomeration plant - pellets,E_Ni_nc_1.1,kg
+Ni_nc_1.2,Ni - non combustion - Agglomeration plant - sinter,E_Ni_nc_1.2,kg
+Ni_nc_26.0,Ni - non combustion - Glass production,E_Ni_nc_26.0,kg
+Ni_nc_58.0,Ni - non combustion - Production of coke oven coke,E_Ni_nc_58.0,kg
+Ni_nc_59.0,Ni - non combustion - Production of gascoke,E_Ni_nc_59.0,kg
+Ni_nc_69.1,Ni - non combustion - Steel production: basic oxygen furnace,E_Ni_nc_69.1,kg
+Ni_nc_69.2,Ni - non combustion - Steel production: electric arc furnace,E_Ni_nc_69.2,kg
+Ni_nc_69.3,Ni - non combustion - Steel production: open hearth furnace,E_Ni_nc_69.3,kg
+PAH_nc_1.1,PAH - non combustion - Agglomeration plant - pellets,E_PAH_nc_1.1,kg
+PAH_nc_1.2,PAH - non combustion - Agglomeration plant - sinter,E_PAH_nc_1.2,kg
+PAH_nc_50.0,"PAH - non combustion - Pig iron production, blast furnace",E_PAH_nc_50.0,kg
+PAH_nc_58.0,PAH - non combustion - Production of coke oven coke,E_PAH_nc_58.0,kg
+PAH_nc_59.0,PAH - non combustion - Production of gascoke,E_PAH_nc_59.0,kg
+PAH_nc_69.1,PAH - non combustion - Steel production: basic oxygen furnace,E_PAH_nc_69.1,kg
+PAH_nc_69.2,PAH - non combustion - Steel production: electric arc furnace,E_PAH_nc_69.2,kg
+PCB_nc_1.1,PCB - non combustion - Agglomeration plant - pellets,E_PCB_nc_1.1,kg
+PCB_nc_1.2,PCB - non combustion - Agglomeration plant - sinter,E_PCB_nc_1.2,kg
+PCB_nc_50.0,"PCB - non combustion - Pig iron production, blast furnace",E_PCB_nc_50.0,kg
+PCB_nc_69.1,PCB - non combustion - Steel production: basic oxygen furnace,E_PCB_nc_69.1,kg
+PCB_nc_69.2,PCB - non combustion - Steel production: electric arc furnace,E_PCB_nc_69.2,kg
+PCDD/F_nc_1.1,PCDD/F - non combustion - Agglomeration plant - pellets,E_PCDD/F_nc_1.1,kg
+PCDD/F_nc_1.2,PCDD/F - non combustion - Agglomeration plant - sinter,E_PCDD/F_nc_1.2,kg
+PCDD/F_nc_50.0,"PCDD/F - non combustion - Pig iron production, blast furnace",E_PCDD/F_nc_50.0,kg
+PCDD/F_nc_69.1,PCDD/F - non combustion - Steel production: basic oxygen furnace,E_PCDD/F_nc_69.1,kg
+PCDD/F_nc_69.2,PCDD/F - non combustion - Steel production: electric arc furnace,E_PCDD/F_nc_69.2,kg
+PM10_nc_1.1,PM10 - non combustion - Agglomeration plant - pellets,E_PM10_nc_1.1,kg
+PM10_nc_1.2,PM10 - non combustion - Agglomeration plant - sinter,E_PM10_nc_1.2,kg
+PM10_nc_2.0,PM10 - non combustion - Aluminium ores and concentrates (Bauxite),E_PM10_nc_2.0,kg
+PM10_nc_4.0,PM10 - non combustion - Bricks production,E_PM10_nc_4.0,kg
+PM10_nc_5.0,PM10 - non combustion - Briquettes production,E_PM10_nc_5.0,kg
+PM10_nc_6.0,PM10 - non combustion - Carbon black production,E_PM10_nc_6.0,kg
+PM10_nc_7.0,PM10 - non combustion - Cast iron production (grey iron foundries),E_PM10_nc_7.0,kg
+PM10_nc_8.0,PM10 - non combustion - Cement production,E_PM10_nc_8.0,kg
+PM10_nc_9.1,"PM10 - non combustion - Chemical wood pulp, dissolving grades",E_PM10_nc_9.1,kg
+PM10_nc_9.2,"PM10 - non combustion - Chemical wood pulp, soda and sulphate, other than dissolving grades",E_PM10_nc_9.2,kg
+PM10_nc_9.3,"PM10 - non combustion - Chemical wood pulp, sulphite, other than dissolving grades",E_PM10_nc_9.3,kg
+PM10_nc_10.0,PM10 - non combustion - Chromium ores and concentrates,E_PM10_nc_10.0,kg
+PM10_nc_12.0,PM10 - non combustion - Copper ores and concentrates,E_PM10_nc_12.0,kg
+PM10_nc_22.0,PM10 - non combustion - Fertilizer production (N-fertilizer),E_PM10_nc_22.0,kg
+PM10_nc_26.0,PM10 - non combustion - Glass production,E_PM10_nc_26.0,kg
+PM10_nc_27.0,PM10 - non combustion - Gold ores and concentrates,E_PM10_nc_27.0,kg
+PM10_nc_31.0,PM10 - non combustion - Iron ores and concentrates,E_PM10_nc_31.0,kg
+PM10_nc_32.0,PM10 - non combustion - Lead ores and concentrates,E_PM10_nc_32.0,kg
+PM10_nc_34.0,PM10 - non combustion - Lime production,E_PM10_nc_34.0,kg
+PM10_nc_36.0,PM10 - non combustion - Mining of antracite,E_PM10_nc_36.0,kg
+PM10_nc_37.0,PM10 - non combustion - Mining of bituminous coal,E_PM10_nc_37.0,kg
+PM10_nc_38.0,PM10 - non combustion - Mining of coking coal,E_PM10_nc_38.0,kg
+PM10_nc_39.0,PM10 - non combustion - Mining of lignite (brown coal),E_PM10_nc_39.0,kg
+PM10_nc_40.0,PM10 - non combustion - Mining of sub-bituminous coal,E_PM10_nc_40.0,kg
+PM10_nc_41.0,PM10 - non combustion - Molybdenum ores and concentrates,E_PM10_nc_41.0,kg
+PM10_nc_43.0,PM10 - non combustion - N- fertilizer production,E_PM10_nc_43.0,kg
+PM10_nc_44.0,PM10 - non combustion - Nickel ores and concentrates,E_PM10_nc_44.0,kg
+PM10_nc_45.0,"PM10 - non combustion - Nickel, unwrought",E_PM10_nc_45.0,kg
+PM10_nc_46.0,PM10 - non combustion - Oil refinery,E_PM10_nc_46.0,kg
+PM10_nc_50.0,"PM10 - non combustion - Pig iron production, blast furnace",E_PM10_nc_50.0,kg
+PM10_nc_51.0,PM10 - non combustion - Platinum ores and concentrates,E_PM10_nc_51.0,kg
+PM10_nc_56.0,PM10 - non combustion - Primary aluminium production,E_PM10_nc_56.0,kg
+PM10_nc_58.0,PM10 - non combustion - Production of coke oven coke,E_PM10_nc_58.0,kg
+PM10_nc_59.0,PM10 - non combustion - Production of gascoke,E_PM10_nc_59.0,kg
+PM10_nc_62.0,"PM10 - non combustion - Refined copper; unwrought, not alloyed",E_PM10_nc_62.0,kg
+PM10_nc_63.0,"PM10 - non combustion - Refined lead, unwrought",E_PM10_nc_63.0,kg
+PM10_nc_66.0,"PM10 - non combustion - Semi-chemical wood pulp, pulp of fibers other than wood",E_PM10_nc_66.0,kg
+PM10_nc_67.0,PM10 - non combustion - Silver ores and concentrates,E_PM10_nc_67.0,kg
+PM10_nc_69.1,PM10 - non combustion - Steel production: basic oxygen furnace,E_PM10_nc_69.1,kg
+PM10_nc_69.2,PM10 - non combustion - Steel production: electric arc furnace,E_PM10_nc_69.2,kg
+PM10_nc_69.3,PM10 - non combustion - Steel production: open hearth furnace,E_PM10_nc_69.3,kg
+PM10_nc_72.0,PM10 - non combustion - Tin ores and concentrates,E_PM10_nc_72.0,kg
+PM10_nc_74.0,PM10 - non combustion - Unrefined copper; copper anodes for electrolytic refining,E_PM10_nc_74.0,kg
+PM10_nc_77.0,PM10 - non combustion - Zinc ores and concentrates,E_PM10_nc_77.0,kg
+PM10_nc_78.0,"PM10 - non combustion - Zinc, unwrought, not alloyed",E_PM10_nc_78.0,kg
+PM2.5_nc_1.1,PM2.5 - non combustion - Agglomeration plant - pellets,E_PM2.5_nc_1.1,kg
+PM2.5_nc_1.2,PM2.5 - non combustion - Agglomeration plant - sinter,E_PM2.5_nc_1.2,kg
+PM2.5_nc_2.0,PM2.5 - non combustion - Aluminium ores and concentrates (Bauxite),E_PM2.5_nc_2.0,kg
+PM2.5_nc_4.0,PM2.5 - non combustion - Bricks production,E_PM2.5_nc_4.0,kg
+PM2.5_nc_5.0,PM2.5 - non combustion - Briquettes production,E_PM2.5_nc_5.0,kg
+PM2.5_nc_6.0,PM2.5 - non combustion - Carbon black production,E_PM2.5_nc_6.0,kg
+PM2.5_nc_7.0,PM2.5 - non combustion - Cast iron production (grey iron foundries),E_PM2.5_nc_7.0,kg
+PM2.5_nc_8.0,PM2.5 - non combustion - Cement production,E_PM2.5_nc_8.0,kg
+PM2.5_nc_9.1,"PM2.5 - non combustion - Chemical wood pulp, dissolving grades",E_PM2.5_nc_9.1,kg
+PM2.5_nc_9.2,"PM2.5 - non combustion - Chemical wood pulp, soda and sulphate, other than dissolving grades",E_PM2.5_nc_9.2,kg
+PM2.5_nc_9.3,"PM2.5 - non combustion - Chemical wood pulp, sulphite, other than dissolving grades",E_PM2.5_nc_9.3,kg
+PM2.5_nc_10.0,PM2.5 - non combustion - Chromium ores and concentrates,E_PM2.5_nc_10.0,kg
+PM2.5_nc_12.0,PM2.5 - non combustion - Copper ores and concentrates,E_PM2.5_nc_12.0,kg
+PM2.5_nc_22.0,PM2.5 - non combustion - Fertilizer production (N-fertilizer),E_PM2.5_nc_22.0,kg
+PM2.5_nc_26.0,PM2.5 - non combustion - Glass production,E_PM2.5_nc_26.0,kg
+PM2.5_nc_27.0,PM2.5 - non combustion - Gold ores and concentrates,E_PM2.5_nc_27.0,kg
+PM2.5_nc_31.0,PM2.5 - non combustion - Iron ores and concentrates,E_PM2.5_nc_31.0,kg
+PM2.5_nc_32.0,PM2.5 - non combustion - Lead ores and concentrates,E_PM2.5_nc_32.0,kg
+PM2.5_nc_34.0,PM2.5 - non combustion - Lime production,E_PM2.5_nc_34.0,kg
+PM2.5_nc_36.0,PM2.5 - non combustion - Mining of antracite,E_PM2.5_nc_36.0,kg
+PM2.5_nc_37.0,PM2.5 - non combustion - Mining of bituminous coal,E_PM2.5_nc_37.0,kg
+PM2.5_nc_38.0,PM2.5 - non combustion - Mining of coking coal,E_PM2.5_nc_38.0,kg
+PM2.5_nc_39.0,PM2.5 - non combustion - Mining of lignite (brown coal),E_PM2.5_nc_39.0,kg
+PM2.5_nc_40.0,PM2.5 - non combustion - Mining of sub-bituminous coal,E_PM2.5_nc_40.0,kg
+PM2.5_nc_41.0,PM2.5 - non combustion - Molybdenum ores and concentrates,E_PM2.5_nc_41.0,kg
+PM2.5_nc_43.0,PM2.5 - non combustion - N- fertilizer production,E_PM2.5_nc_43.0,kg
+PM2.5_nc_44.0,PM2.5 - non combustion - Nickel ores and concentrates,E_PM2.5_nc_44.0,kg
+PM2.5_nc_45.0,"PM2.5 - non combustion - Nickel, unwrought",E_PM2.5_nc_45.0,kg
+PM2.5_nc_46.0,PM2.5 - non combustion - Oil refinery,E_PM2.5_nc_46.0,kg
+PM2.5_nc_50.0,"PM2.5 - non combustion - Pig iron production, blast furnace",E_PM2.5_nc_50.0,kg
+PM2.5_nc_51.0,PM2.5 - non combustion - Platinum ores and concentrates,E_PM2.5_nc_51.0,kg
+PM2.5_nc_56.0,PM2.5 - non combustion - Primary aluminium production,E_PM2.5_nc_56.0,kg
+PM2.5_nc_58.0,PM2.5 - non combustion - Production of coke oven coke,E_PM2.5_nc_58.0,kg
+PM2.5_nc_59.0,PM2.5 - non combustion - Production of gascoke,E_PM2.5_nc_59.0,kg
+PM2.5_nc_62.0,"PM2.5 - non combustion - Refined copper; unwrought, not alloyed",E_PM2.5_nc_62.0,kg
+PM2.5_nc_63.0,"PM2.5 - non combustion - Refined lead, unwrought",E_PM2.5_nc_63.0,kg
+PM2.5_nc_66.0,"PM2.5 - non combustion - Semi-chemical wood pulp, pulp of fibers other than wood",E_PM2.5_nc_66.0,kg
+PM2.5_nc_67.0,PM2.5 - non combustion - Silver ores and concentrates,E_PM2.5_nc_67.0,kg
+PM2.5_nc_69.1,PM2.5 - non combustion - Steel production: basic oxygen furnace,E_PM2.5_nc_69.1,kg
+PM2.5_nc_69.2,PM2.5 - non combustion - Steel production: electric arc furnace,E_PM2.5_nc_69.2,kg
+PM2.5_nc_69.3,PM2.5 - non combustion - Steel production: open hearth furnace,E_PM2.5_nc_69.3,kg
+PM2.5_nc_72.0,PM2.5 - non combustion - Tin ores and concentrates,E_PM2.5_nc_72.0,kg
+PM2.5_nc_74.0,PM2.5 - non combustion - Unrefined copper; copper anodes for electrolytic refining,E_PM2.5_nc_74.0,kg
+PM2.5_nc_77.0,PM2.5 - non combustion - Zinc ores and concentrates,E_PM2.5_nc_77.0,kg
+PM2.5_nc_78.0,"PM2.5 - non combustion - Zinc, unwrought, not alloyed",E_PM2.5_nc_78.0,kg
+Pb_nc_1.1,Pb - non combustion - Agglomeration plant - pellets,E_Pb_nc_1.1,kg
+Pb_nc_1.2,Pb - non combustion - Agglomeration plant - sinter,E_Pb_nc_1.2,kg
+Pb_nc_26.0,Pb - non combustion - Glass production,E_Pb_nc_26.0,kg
+Pb_nc_45.0,"Pb - non combustion - Nickel, unwrought",E_Pb_nc_45.0,kg
+Pb_nc_50.0,"Pb - non combustion - Pig iron production, blast furnace",E_Pb_nc_50.0,kg
+Pb_nc_58.0,Pb - non combustion - Production of coke oven coke,E_Pb_nc_58.0,kg
+Pb_nc_59.0,Pb - non combustion - Production of gascoke,E_Pb_nc_59.0,kg
+Pb_nc_62.0,"Pb - non combustion - Refined copper; unwrought, not alloyed",E_Pb_nc_62.0,kg
+Pb_nc_63.0,"Pb - non combustion - Refined lead, unwrought",E_Pb_nc_63.0,kg
+Pb_nc_69.1,Pb - non combustion - Steel production: basic oxygen furnace,E_Pb_nc_69.1,kg
+Pb_nc_69.2,Pb - non combustion - Steel production: electric arc furnace,E_Pb_nc_69.2,kg
+Pb_nc_69.3,Pb - non combustion - Steel production: open hearth furnace,E_Pb_nc_69.3,kg
+Pb_nc_74.0,Pb - non combustion - Unrefined copper; copper anodes for electrolytic refining,E_Pb_nc_74.0,kg
+Pb_nc_78.0,"Pb - non combustion - Zinc, unwrought, not alloyed",E_Pb_nc_78.0,kg
+SOx_nc_1.2,SOx - non combustion - Agglomeration plant - sinter,E_SOx_nc_1.2,kg
+SOx_nc_4.0,SOx - non combustion - Bricks production,E_SOx_nc_4.0,kg
+SOx_nc_8.0,SOx - non combustion - Cement production,E_SOx_nc_8.0,kg
+SOx_nc_9.1,"SOx - non combustion - Chemical wood pulp, dissolving grades",E_SOx_nc_9.1,kg
+SOx_nc_9.2,"SOx - non combustion - Chemical wood pulp, soda and sulphate, other than dissolving grades",E_SOx_nc_9.2,kg
+SOx_nc_9.3,"SOx - non combustion - Chemical wood pulp, sulphite, other than dissolving grades",E_SOx_nc_9.3,kg
+SOx_nc_26.0,SOx - non combustion - Glass production,E_SOx_nc_26.0,kg
+SOx_nc_34.0,SOx - non combustion - Lime production,E_SOx_nc_34.0,kg
+SOx_nc_45.0,"SOx - non combustion - Nickel, unwrought",E_SOx_nc_45.0,kg
+SOx_nc_46.0,SOx - non combustion - Oil refinery,E_SOx_nc_46.0,kg
+SOx_nc_50.0,"SOx - non combustion - Pig iron production, blast furnace",E_SOx_nc_50.0,kg
+SOx_nc_58.0,SOx - non combustion - Production of coke oven coke,E_SOx_nc_58.0,kg
+SOx_nc_59.0,SOx - non combustion - Production of gascoke,E_SOx_nc_59.0,kg
+SOx_nc_62.0,"SOx - non combustion - Refined copper; unwrought, not alloyed",E_SOx_nc_62.0,kg
+SOx_nc_63.0,"SOx - non combustion - Refined lead, unwrought",E_SOx_nc_63.0,kg
+SOx_nc_66.0,"SOx - non combustion - Semi-chemical wood pulp, pulp of fibers other than wood",E_SOx_nc_66.0,kg
+SOx_nc_70.0,SOx - non combustion - Sulphuric acid production,E_SOx_nc_70.0,kg
+SOx_nc_74.0,SOx - non combustion - Unrefined copper; copper anodes for electrolytic refining,E_SOx_nc_74.0,kg
+SOx_nc_78.0,"SOx - non combustion - Zinc, unwrought, not alloyed",E_SOx_nc_78.0,kg
+Se_nc_1.1,Se - non combustion - Agglomeration plant - pellets,E_Se_nc_1.1,kg
+Se_nc_1.2,Se - non combustion - Agglomeration plant - sinter,E_Se_nc_1.2,kg
+Se_nc_26.0,Se - non combustion - Glass production,E_Se_nc_26.0,kg
+Se_nc_69.1,Se - non combustion - Steel production: basic oxygen furnace,E_Se_nc_69.1,kg
+TSP_nc_1.1,TSP - non combustion - Agglomeration plant - pellets,E_TSP_nc_1.1,kg
+TSP_nc_1.2,TSP - non combustion - Agglomeration plant - sinter,E_TSP_nc_1.2,kg
+TSP_nc_2.0,TSP - non combustion - Aluminium ores and concentrates (Bauxite),E_TSP_nc_2.0,kg
+TSP_nc_4.0,TSP - non combustion - Bricks production,E_TSP_nc_4.0,kg
+TSP_nc_5.0,TSP - non combustion - Briquettes production,E_TSP_nc_5.0,kg
+TSP_nc_6.0,TSP - non combustion - Carbon black production,E_TSP_nc_6.0,kg
+TSP_nc_7.0,TSP - non combustion - Cast iron production (grey iron foundries),E_TSP_nc_7.0,kg
+TSP_nc_8.0,TSP - non combustion - Cement production,E_TSP_nc_8.0,kg
+TSP_nc_9.1,"TSP - non combustion - Chemical wood pulp, dissolving grades",E_TSP_nc_9.1,kg
+TSP_nc_9.2,"TSP - non combustion - Chemical wood pulp, soda and sulphate, other than dissolving grades",E_TSP_nc_9.2,kg
+TSP_nc_9.3,"TSP - non combustion - Chemical wood pulp, sulphite, other than dissolving grades",E_TSP_nc_9.3,kg
+TSP_nc_10.0,TSP - non combustion - Chromium ores and concentrates,E_TSP_nc_10.0,kg
+TSP_nc_12.0,TSP - non combustion - Copper ores and concentrates,E_TSP_nc_12.0,kg
+TSP_nc_22.0,TSP - non combustion - Fertilizer production (N-fertilizer),E_TSP_nc_22.0,kg
+TSP_nc_26.0,TSP - non combustion - Glass production,E_TSP_nc_26.0,kg
+TSP_nc_27.0,TSP - non combustion - Gold ores and concentrates,E_TSP_nc_27.0,kg
+TSP_nc_31.0,TSP - non combustion - Iron ores and concentrates,E_TSP_nc_31.0,kg
+TSP_nc_32.0,TSP - non combustion - Lead ores and concentrates,E_TSP_nc_32.0,kg
+TSP_nc_34.0,TSP - non combustion - Lime production,E_TSP_nc_34.0,kg
+TSP_nc_36.0,TSP - non combustion - Mining of antracite,E_TSP_nc_36.0,kg
+TSP_nc_37.0,TSP - non combustion - Mining of bituminous coal,E_TSP_nc_37.0,kg
+TSP_nc_38.0,TSP - non combustion - Mining of coking coal,E_TSP_nc_38.0,kg
+TSP_nc_39.0,TSP - non combustion - Mining of lignite (brown coal),E_TSP_nc_39.0,kg
+TSP_nc_40.0,TSP - non combustion - Mining of sub-bituminous coal,E_TSP_nc_40.0,kg
+TSP_nc_41.0,TSP - non combustion - Molybdenum ores and concentrates,E_TSP_nc_41.0,kg
+TSP_nc_43.0,TSP - non combustion - N- fertilizer production,E_TSP_nc_43.0,kg
+TSP_nc_44.0,TSP - non combustion - Nickel ores and concentrates,E_TSP_nc_44.0,kg
+TSP_nc_45.0,"TSP - non combustion - Nickel, unwrought",E_TSP_nc_45.0,kg
+TSP_nc_46.0,TSP - non combustion - Oil refinery,E_TSP_nc_46.0,kg
+TSP_nc_50.0,"TSP - non combustion - Pig iron production, blast furnace",E_TSP_nc_50.0,kg
+TSP_nc_51.0,TSP - non combustion - Platinum ores and concentrates,E_TSP_nc_51.0,kg
+TSP_nc_56.0,TSP - non combustion - Primary aluminium production,E_TSP_nc_56.0,kg
+TSP_nc_58.0,TSP - non combustion - Production of coke oven coke,E_TSP_nc_58.0,kg
+TSP_nc_59.0,TSP - non combustion - Production of gascoke,E_TSP_nc_59.0,kg
+TSP_nc_62.0,"TSP - non combustion - Refined copper; unwrought, not alloyed",E_TSP_nc_62.0,kg
+TSP_nc_63.0,"TSP - non combustion - Refined lead, unwrought",E_TSP_nc_63.0,kg
+TSP_nc_66.0,"TSP - non combustion - Semi-chemical wood pulp, pulp of fibers other than wood",E_TSP_nc_66.0,kg
+TSP_nc_67.0,TSP - non combustion - Silver ores and concentrates,E_TSP_nc_67.0,kg
+TSP_nc_69.1,TSP - non combustion - Steel production: basic oxygen furnace,E_TSP_nc_69.1,kg
+TSP_nc_69.2,TSP - non combustion - Steel production: electric arc furnace,E_TSP_nc_69.2,kg
+TSP_nc_69.3,TSP - non combustion - Steel production: open hearth furnace,E_TSP_nc_69.3,kg
+TSP_nc_72.0,TSP - non combustion - Tin ores and concentrates,E_TSP_nc_72.0,kg
+TSP_nc_74.0,TSP - non combustion - Unrefined copper; copper anodes for electrolytic refining,E_TSP_nc_74.0,kg
+TSP_nc_77.0,TSP - non combustion - Zinc ores and concentrates,E_TSP_nc_77.0,kg
+TSP_nc_78.0,"TSP - non combustion - Zinc, unwrought, not alloyed",E_TSP_nc_78.0,kg
+Zn_nc_1.1,Zn - non combustion - Agglomeration plant - pellets,E_Zn_nc_1.1,kg
+Zn_nc_1.2,Zn - non combustion - Agglomeration plant - sinter,E_Zn_nc_1.2,kg
+Zn_nc_26.0,Zn - non combustion - Glass production,E_Zn_nc_26.0,kg
+Zn_nc_45.0,"Zn - non combustion - Nickel, unwrought",E_Zn_nc_45.0,kg
+Zn_nc_50.0,"Zn - non combustion - Pig iron production, blast furnace",E_Zn_nc_50.0,kg
+Zn_nc_62.0,"Zn - non combustion - Refined copper; unwrought, not alloyed",E_Zn_nc_62.0,kg
+Zn_nc_63.0,"Zn - non combustion - Refined lead, unwrought",E_Zn_nc_63.0,kg
+Zn_nc_69.1,Zn - non combustion - Steel production: basic oxygen furnace,E_Zn_nc_69.1,kg
+Zn_nc_69.2,Zn - non combustion - Steel production: electric arc furnace,E_Zn_nc_69.2,kg
+Zn_nc_69.3,Zn - non combustion - Steel production: open hearth furnace,E_Zn_nc_69.3,kg
+Zn_nc_74.0,Zn - non combustion - Unrefined copper; copper anodes for electrolytic refining,E_Zn_nc_74.0,kg
+Zn_nc_78.0,"Zn - non combustion - Zinc, unwrought, not alloyed",E_Zn_nc_78.0,kg
+2551-62-4,SF6,E_SF6,kg
+HFC,HFC,E_HFC,kg CO2-eq
+PFC,PFC,E_PFC,kg CO2-eq
+124-38-9p,CO2 - peat decay - Agriculture,E_CO2_p,kg
+CH4_01,CH4 - Agriculture,E_CH4_01,kg
+NOx_01,NOx - Agriculture,E_NOx_01,kg
+NH3_01,NH3 - Agriculture,E_NH3_01,kg
+N2O_01,N2O - Agriculture,E_N2O_01,kg
+N_01,Nitrogen - Agriculture,E_N_01,kg
+N_2,Nitrogen - Waste,E_N_2,kg
+P_01,Phosphorus - Agriculture,E_P_01,kg
+P_2,Phosphorus - Waste,E_P_2,kg
+P_01,Phosphorus - Agriculture,E_P_01,kg
+necw,Emissions nec - Waste,E_necw,kg

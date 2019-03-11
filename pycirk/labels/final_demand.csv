@@ -1,0 +1,15 @@
+region,code,name,synonym,unit
+EU,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,y06,Export,I_EXP,M.EUR
+ROW,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,y06,Export,I_EXP,M.EUR

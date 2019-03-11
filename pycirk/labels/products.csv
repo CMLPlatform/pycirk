@@ -1,0 +1,401 @@
+region,code,name,synonym,unit
+EU,p01.a,Paddy rice,C_PARI,M.EUR
+EU,p01.b,Wheat,C_WHEA,M.EUR
+EU,p01.c,Cereal grains nec,C_OCER,M.EUR
+EU,p01.d,"Vegetables, fruit, nuts",C_FVEG,M.EUR
+EU,p01.e,Oil seeds,C_OILS,M.EUR
+EU,p01.f,"Sugar cane, sugar beet",C_SUGB,M.EUR
+EU,p01.g,Plant-based fibers,C_FIBR,M.EUR
+EU,p01.h,Crops nec,C_OTCR,M.EUR
+EU,p01.i,Cattle,C_CATL,M.EUR
+EU,p01.j,Pigs,C_PIGS,M.EUR
+EU,p01.k,Poultry,C_PLTR,M.EUR
+EU,p01.l,Meat animals nec,C_OMEA,M.EUR
+EU,p01.m,Animal products nec,C_OANP,M.EUR
+EU,p01.n,Raw milk,C_MILK,M.EUR
+EU,p01.o,"Wool, silk-worm cocoons",C_WOOL,M.EUR
+EU,p01.w.1,Manure (conventional treatment),C_MANC,M.EUR
+EU,p01.w.2,Manure (biogas treatment),C_MANB,M.EUR
+EU,p02,"Products of forestry, logging and related services",C_FORE,M.EUR
+EU,p05,Fish and other fishing products; services incidental of fishing,C_FISH,M.EUR
+EU,p10.a,Anthracite,C_ANTH,M.EUR
+EU,p10.b,Coking Coal,C_COKC,M.EUR
+EU,p10.c,Other Bituminous Coal,C_OTBC,M.EUR
+EU,p10.d,Sub-Bituminous Coal,C_SUBC,M.EUR
+EU,p10.e,Patent Fuel,C_PATF,M.EUR
+EU,p10.f,Lignite/Brown Coal,C_LIBC,M.EUR
+EU,p10.g,BKB/Peat Briquettes,C_BKBP,M.EUR
+EU,p10.h,Peat,C_PEAT,M.EUR
+EU,p11.a,"Crude petroleum and services related to crude oil extraction, excluding surveying",C_COIL,M.EUR
+EU,p11.b,"Natural gas and services related to natural gas extraction, excluding surveying",C_GASE,M.EUR
+EU,p11.b.1,Natural Gas Liquids,C_GASL,M.EUR
+EU,p11.c,Other Hydrocarbons,C_OGPL,M.EUR
+EU,p12,Uranium and thorium ores,C_ORAN,M.EUR
+EU,p13.1,Iron ores,C_IRON,M.EUR
+EU,p13.20.11,Copper ores and concentrates,C_COPO,M.EUR
+EU,p13.20.12,Nickel ores and concentrates,C_NIKO,M.EUR
+EU,p13.20.13,Aluminium ores and concentrates,C_ALUO,M.EUR
+EU,p13.20.14,Precious metal ores and concentrates,C_PREO,M.EUR
+EU,p13.20.15,"Lead, zinc and tin ores and concentrates",C_LZTO,M.EUR
+EU,p13.20.16,Other non-ferrous metal ores and concentrates,C_ONFO,M.EUR
+EU,p14.1,Stone,C_STON,M.EUR
+EU,p14.2,Sand and clay,C_SDCL,M.EUR
+EU,p14.3,"Chemical and fertilizer minerals, salt and other mining and quarrying products n.e.c.",C_CHMF,M.EUR
+EU,p15.a,Products of meat cattle,C_PCAT,M.EUR
+EU,p15.b,Products of meat pigs,C_PPIG,M.EUR
+EU,p15.c,Products of meat poultry,C_PPLT,M.EUR
+EU,p15.d,Meat products nec,C_POME,M.EUR
+EU,p15.e,products of Vegetable oils and fats,C_VOIL,M.EUR
+EU,p15.f,Dairy products,C_DAIR,M.EUR
+EU,p15.g,Processed rice,C_RICE,M.EUR
+EU,p15.h,Sugar,C_SUGR,M.EUR
+EU,p15.i,Food products nec,C_OFOD,M.EUR
+EU,p15.j,Beverages,C_BEVR,M.EUR
+EU,p15.k,Fish products,C_FSHP,M.EUR
+EU,p16,Tobacco products,C_TOBC,M.EUR
+EU,p17,Textiles,C_TEXT,M.EUR
+EU,p18,Wearing apparel; furs,C_GARM,M.EUR
+EU,p19,Leather and leather products,C_LETH,M.EUR
+EU,p20,Wood and products of wood and cork (except furniture); articles of straw and plaiting materials,C_WOOD,M.EUR
+EU,p20.w,"Wood material for treatment, Re-processing of secondary wood material into new wood material",C_WOOW,M.EUR
+EU,p21.1,Pulp,C_PULP,M.EUR
+EU,p21.w.1,"Secondary paper for treatment, Re-processing of secondary paper into new pulp",C_PAPR,M.EUR
+EU,p21.2,Paper and paper products,C_PAPE,M.EUR
+EU,p22,Printed matter and recorded media,C_MDIA,M.EUR
+EU,p23.1.a,Coke Oven Coke,C_COKE,M.EUR
+EU,p23.1.b,Gas Coke,C_GCOK,M.EUR
+EU,p23.1.c,Coal Tar,C_COTA,M.EUR
+EU,p23.20.a,Motor Gasoline,C_MGSL,M.EUR
+EU,p23.20.b,Aviation Gasoline,C_AGSL,M.EUR
+EU,p23.20.c,Gasoline Type Jet Fuel,C_GJET,M.EUR
+EU,p23.20.d,Kerosene Type Jet Fuel,C_KJET,M.EUR
+EU,p23.20.e,Kerosene,C_KERO,M.EUR
+EU,p23.20.f,Gas/Diesel Oil,C_DOIL,M.EUR
+EU,p23.20.g,Heavy Fuel Oil,C_FOIL,M.EUR
+EU,p23.20.h,Refinery Gas,C_RGAS,M.EUR
+EU,p23.20.i,Liquefied Petroleum Gases (LPG),C_LPGA,M.EUR
+EU,p23.20.j,Refinery Feedstocks,C_REFF,M.EUR
+EU,p23.20.k,Ethane,C_ETHA,M.EUR
+EU,p23.20.l,Naphtha,C_NAPT,M.EUR
+EU,p23.20.m,White Spirit & SBP,C_WHSP,M.EUR
+EU,p23.20.n,Lubricants,C_LUBR,M.EUR
+EU,p23.20.o,Bitumen,C_BITU,M.EUR
+EU,p23.20.p,Paraffin Waxes,C_PARW,M.EUR
+EU,p23.20.q,Petroleum Coke,C_PETC,M.EUR
+EU,p23.20.r,Non-specified Petroleum Products,C_NSPP,M.EUR
+EU,p23.3,Nuclear fuel,C_NUCF,M.EUR
+EU,p24.a,"Plastics, basic",C_PLAS,M.EUR
+EU,p24.a.w,"Secondary plastic for treatment, Re-processing of secondary plastic into new plastic",C_PLAW,M.EUR
+EU,p24.b,N-fertiliser,C_NFER,M.EUR
+EU,p24.c,P- and other fertiliser,C_PFER,M.EUR
+EU,p24.d,Chemicals nec,C_CHEM,M.EUR
+EU,p24.e,Charcoal,C_CHAR,M.EUR
+EU,p24.f,Additives/Blending Components,C_ADDC,M.EUR
+EU,p24.g,Biogasoline,C_BIOG,M.EUR
+EU,p24.h,Biodiesels,C_BIOD,M.EUR
+EU,p24.i,Other Liquid Biofuels,C_OBIO,M.EUR
+EU,p25,Rubber and plastic products,C_RUBP,M.EUR
+EU,p26.a,Glass and glass products,C_GLAS,M.EUR
+EU,p26.a.w,"Secondary glass for treatment, Re-processing of secondary glass into new glass",C_GLAW,M.EUR
+EU,p26.b,Ceramic goods,C_CRMC,M.EUR
+EU,p26.c,"Bricks, tiles and construction products, in baked clay",C_BRIK,M.EUR
+EU,p26.d,"Cement, lime and plaster",C_CMNT,M.EUR
+EU,p26.d.w,"Ash for treatment, Re-processing of ash into clinker",C_ASHW,M.EUR
+EU,p26.e,Other non-metallic mineral products,C_ONMM,M.EUR
+EU,p27.a,Basic iron and steel and of ferro-alloys and first products thereof,C_STEL,M.EUR
+EU,p27.a.w,"Secondary steel for treatment, Re-processing of secondary steel into new steel",C_STEW,M.EUR
+EU,p27.41,Precious metals,C_PREM,M.EUR
+EU,p27.41.w,"Secondary preciuos metals for treatment, Re-processing of secondary preciuos metals into new preciuos metals",C_PREW,M.EUR
+EU,p27.42,Aluminium and aluminium products,C_ALUM,M.EUR
+EU,p27.42.w,"Secondary aluminium for treatment, Re-processing of secondary aluminium into new aluminium",C_ALUW,M.EUR
+EU,p27.43,"Lead, zinc and tin and products thereof",C_LZTP,M.EUR
+EU,p27.43.w,"Secondary lead for treatment, Re-processing of secondary lead into new lead",C_LZTW,M.EUR
+EU,p27.44,Copper products,C_COPP,M.EUR
+EU,p27.44.w,"Secondary copper for treatment, Re-processing of secondary copper into new copper",C_COPW,M.EUR
+EU,p27.45,Other non-ferrous metal products,C_ONFM,M.EUR
+EU,p27.45.w,"Secondary other non-ferrous metals for treatment, Re-processing of secondary other non-ferrous metals into new other non-ferrous metals",C_ONFW,M.EUR
+EU,p27.5,Foundry work services,C_METC,M.EUR
+EU,p28,"Fabricated metal products, except machinery and equipment",C_FABM,M.EUR
+EU,p29,Machinery and equipment n.e.c.,C_MACH,M.EUR
+EU,p30,Office machinery and computers,C_OFMA,M.EUR
+EU,p31,Electrical machinery and apparatus n.e.c.,C_ELMA,M.EUR
+EU,p32,"Radio, television and communication equipment and apparatus",C_RATV,M.EUR
+EU,p33,"Medical, precision and optical instruments, watches and clocks",C_MEIN,M.EUR
+EU,p34,"Motor vehicles, trailers and semi-trailers",C_MOTO,M.EUR
+EU,p35,Other transport equipment,C_OTRE,M.EUR
+EU,p36,Furniture; other manufactured goods n.e.c.,C_FURN,M.EUR
+EU,p37,Secondary raw materials,C_RYMS,M.EUR
+EU,p37.w.1,"Bottles for treatment, Recycling of bottles by direct reuse",C_BOTW,M.EUR
+EU,p40.11.a,Electricity by coal,C_POWC,M.EUR
+EU,p40.11.b,Electricity by gas,C_POWG,M.EUR
+EU,p40.11.c,Electricity by nuclear,C_POWN,M.EUR
+EU,p40.11.d,Electricity by hydro,C_POWH,M.EUR
+EU,p40.11.e,Electricity by wind,C_POWW,M.EUR
+EU,p40.11.f,Electricity by petroleum and other oil derivatives,C_POWP,M.EUR
+EU,p40.11.g,Electricity by biomass and waste,C_POWB,M.EUR
+EU,p40.11.h,Electricity by solar photovoltaic,C_POWS,M.EUR
+EU,p40.11.i,Electricity by solar thermal,C_POWE,M.EUR
+EU,p40.11.j,"Electricity by tide, wave, ocean",C_POWO,M.EUR
+EU,p40.11.k,Electricity by Geothermal,C_POWM,M.EUR
+EU,p40.11.l,Electricity nec,C_POWZ,M.EUR
+EU,p40.12,Transmission services of electricity,C_POWT,M.EUR
+EU,p40.13,Distribution and trade services of electricity,C_POWD,M.EUR
+EU,p40.2.a,Coke oven gas,C_COOG,M.EUR
+EU,p40.2.b,Blast Furnace Gas,C_MBFG,M.EUR
+EU,p40.2.c,Oxygen Steel Furnace Gas,C_MOSG,M.EUR
+EU,p40.2.d,Gas Works Gas,C_MGWG,M.EUR
+EU,p40.2.e,Biogas,C_MBIO,M.EUR
+EU,p40.2.1,Distribution services of gaseous fuels through mains,C_GASD,M.EUR
+EU,p40.3,Steam and hot water supply services,C_HWAT,M.EUR
+EU,p41,"Collected and purified water, distribution services of water",C_WATR,M.EUR
+EU,p45,Construction work,C_CONS,M.EUR
+EU,p45.w,"Secondary construction material for treatment, Re-processing of secondary construction material into aggregates",C_CONW,M.EUR
+EU,p50.a,"Sale, maintenance, repair of motor vehicles, motor vehicles parts, motorcycles, motor cycles parts and accessoiries",C_TDMO,M.EUR
+EU,p50.b,Retail trade services of motor fuel,C_TDFU,M.EUR
+EU,p51,"Wholesale trade and commission trade services, except of motor vehicles and motorcycles",C_TDWH,M.EUR
+EU,p52,"Retail  trade services, except of motor vehicles and motorcycles; repair services of personal and household goods",C_TDRT,M.EUR
+EU,p55,Hotel and restaurant services,C_HORE,M.EUR
+EU,p60.1,Railway transportation services,C_TRAI,M.EUR
+EU,p60.2,Other land transportation services,C_TLND,M.EUR
+EU,p60.3,Transportation services via pipelines,C_TPIP,M.EUR
+EU,p61.1,Sea and coastal water transportation services,C_TWAS,M.EUR
+EU,p61.2,Inland water transportation services,C_TWAI,M.EUR
+EU,p62,Air transport services,C_TAIR,M.EUR
+EU,p63,Supporting and auxiliary transport services; travel agency services,C_TAUX,M.EUR
+EU,p64,Post and telecommunication services,C_PTEL,M.EUR
+EU,p65,"Financial intermediation services, except insurance and pension funding services",C_FINT,M.EUR
+EU,p66,"Insurance and pension funding services, except compulsory social security services",C_FINS,M.EUR
+EU,p67,Services auxiliary to financial intermediation,C_FAUX,M.EUR
+EU,p70,Real estate services,C_REAL,M.EUR
+EU,p71,Renting services of machinery and equipment without operator and of personal and household goods,C_MARE,M.EUR
+EU,p72,Computer and related services,C_COMP,M.EUR
+EU,p73,Research and development services,C_RESD,M.EUR
+EU,p74,Other business services,C_OBUS,M.EUR
+EU,p75,Public administration and defence services; compulsory social security services,C_PADF,M.EUR
+EU,p80,Education services,C_EDUC,M.EUR
+EU,p85,Health and social work services,C_HEAL,M.EUR
+EU,p90.1.a,Food waste for treatment: incineration,C_INCF,M.EUR
+EU,p90.1.b,Paper waste for treatment: incineration,C_INCP,M.EUR
+EU,p90.1.c,Plastic waste for treatment: incineration,C_INCL,M.EUR
+EU,p90.1.d,Intert/metal waste for treatment: incineration,C_INCM,M.EUR
+EU,p90.1.e,Textiles waste for treatment: incineration,C_INCT,M.EUR
+EU,p90.1.f,Wood waste for treatment: incineration,C_INCW,M.EUR
+EU,p90.1.g,Oil/hazardous waste for treatment: incineration,C_INCO,M.EUR
+EU,p90.2.a,Food waste for treatment: biogasification and land application,C_BIOF,M.EUR
+EU,p90.2.b,Paper waste for treatment: biogasification and land application,C_BIOP,M.EUR
+EU,p90.2.c,Sewage sludge for treatment: biogasification and land application,C_BIOS,M.EUR
+EU,p90.3.a,Food waste for treatment: composting and land application,C_COMF,M.EUR
+EU,p90.3.b,Paper and wood waste for treatment: composting and land application,C_COMW,M.EUR
+EU,p90.4.a,Food waste for treatment: waste water treatment,C_WASF,M.EUR
+EU,p90.4.b,Other waste for treatment: waste water treatment,C_WASO,M.EUR
+EU,p90.5.a,Food waste for treatment: landfill,C_LANF,M.EUR
+EU,p90.5.b,Paper for treatment: landfill,C_LANP,M.EUR
+EU,p90.5.c,Plastic waste for treatment: landfill,C_LANL,M.EUR
+EU,p90.5.d,Inert/metal/hazardous waste for treatment: landfill,C_LANI,M.EUR
+EU,p90.5.e,Textiles waste for treatment: landfill,C_LANT,M.EUR
+EU,p90.5.f,Wood waste for treatment: landfill,C_LANW,M.EUR
+EU,p91,Membership organisation services n.e.c.,C_ORGA,M.EUR
+EU,p92,"Recreational, cultural and sporting services",C_RECR,M.EUR
+EU,p93,Other services,C_OSER,M.EUR
+EU,p95,Private households with employed persons,C_PRHH,M.EUR
+EU,p99,Extra-territorial organizations and bodies,C_EXTO,M.EUR
+ROW,p01.a,Paddy rice,C_PARI,M.EUR
+ROW,p01.b,Wheat,C_WHEA,M.EUR
+ROW,p01.c,Cereal grains nec,C_OCER,M.EUR
+ROW,p01.d,"Vegetables, fruit, nuts",C_FVEG,M.EUR
+ROW,p01.e,Oil seeds,C_OILS,M.EUR
+ROW,p01.f,"Sugar cane, sugar beet",C_SUGB,M.EUR
+ROW,p01.g,Plant-based fibers,C_FIBR,M.EUR
+ROW,p01.h,Crops nec,C_OTCR,M.EUR
+ROW,p01.i,Cattle,C_CATL,M.EUR
+ROW,p01.j,Pigs,C_PIGS,M.EUR
+ROW,p01.k,Poultry,C_PLTR,M.EUR
+ROW,p01.l,Meat animals nec,C_OMEA,M.EUR
+ROW,p01.m,Animal products nec,C_OANP,M.EUR
+ROW,p01.n,Raw milk,C_MILK,M.EUR
+ROW,p01.o,"Wool, silk-worm cocoons",C_WOOL,M.EUR
+ROW,p01.w.1,Manure (conventional treatment),C_MANC,M.EUR
+ROW,p01.w.2,Manure (biogas treatment),C_MANB,M.EUR
+ROW,p02,"Products of forestry, logging and related services",C_FORE,M.EUR
+ROW,p05,Fish and other fishing products; services incidental of fishing,C_FISH,M.EUR
+ROW,p10.a,Anthracite,C_ANTH,M.EUR
+ROW,p10.b,Coking Coal,C_COKC,M.EUR
+ROW,p10.c,Other Bituminous Coal,C_OTBC,M.EUR
+ROW,p10.d,Sub-Bituminous Coal,C_SUBC,M.EUR
+ROW,p10.e,Patent Fuel,C_PATF,M.EUR
+ROW,p10.f,Lignite/Brown Coal,C_LIBC,M.EUR
+ROW,p10.g,BKB/Peat Briquettes,C_BKBP,M.EUR
+ROW,p10.h,Peat,C_PEAT,M.EUR
+ROW,p11.a,"Crude petroleum and services related to crude oil extraction, excluding surveying",C_COIL,M.EUR
+ROW,p11.b,"Natural gas and services related to natural gas extraction, excluding surveying",C_GASE,M.EUR
+ROW,p11.b.1,Natural Gas Liquids,C_GASL,M.EUR
+ROW,p11.c,Other Hydrocarbons,C_OGPL,M.EUR
+ROW,p12,Uranium and thorium ores,C_ORAN,M.EUR
+ROW,p13.1,Iron ores,C_IRON,M.EUR
+ROW,p13.20.11,Copper ores and concentrates,C_COPO,M.EUR
+ROW,p13.20.12,Nickel ores and concentrates,C_NIKO,M.EUR
+ROW,p13.20.13,Aluminium ores and concentrates,C_ALUO,M.EUR
+ROW,p13.20.14,Precious metal ores and concentrates,C_PREO,M.EUR
+ROW,p13.20.15,"Lead, zinc and tin ores and concentrates",C_LZTO,M.EUR
+ROW,p13.20.16,Other non-ferrous metal ores and concentrates,C_ONFO,M.EUR
+ROW,p14.1,Stone,C_STON,M.EUR
+ROW,p14.2,Sand and clay,C_SDCL,M.EUR
+ROW,p14.3,"Chemical and fertilizer minerals, salt and other mining and quarrying products n.e.c.",C_CHMF,M.EUR
+ROW,p15.a,Products of meat cattle,C_PCAT,M.EUR
+ROW,p15.b,Products of meat pigs,C_PPIG,M.EUR
+ROW,p15.c,Products of meat poultry,C_PPLT,M.EUR
+ROW,p15.d,Meat products nec,C_POME,M.EUR
+ROW,p15.e,products of Vegetable oils and fats,C_VOIL,M.EUR
+ROW,p15.f,Dairy products,C_DAIR,M.EUR
+ROW,p15.g,Processed rice,C_RICE,M.EUR
+ROW,p15.h,Sugar,C_SUGR,M.EUR
+ROW,p15.i,Food products nec,C_OFOD,M.EUR
+ROW,p15.j,Beverages,C_BEVR,M.EUR
+ROW,p15.k,Fish products,C_FSHP,M.EUR
+ROW,p16,Tobacco products,C_TOBC,M.EUR
+ROW,p17,Textiles,C_TEXT,M.EUR
+ROW,p18,Wearing apparel; furs,C_GARM,M.EUR
+ROW,p19,Leather and leather products,C_LETH,M.EUR
+ROW,p20,Wood and products of wood and cork (except furniture); articles of straw and plaiting materials,C_WOOD,M.EUR
+ROW,p20.w,"Wood material for treatment, Re-processing of secondary wood material into new wood material",C_WOOW,M.EUR
+ROW,p21.1,Pulp,C_PULP,M.EUR
+ROW,p21.w.1,"Secondary paper for treatment, Re-processing of secondary paper into new pulp",C_PAPR,M.EUR
+ROW,p21.2,Paper and paper products,C_PAPE,M.EUR
+ROW,p22,Printed matter and recorded media,C_MDIA,M.EUR
+ROW,p23.1.a,Coke Oven Coke,C_COKE,M.EUR
+ROW,p23.1.b,Gas Coke,C_GCOK,M.EUR
+ROW,p23.1.c,Coal Tar,C_COTA,M.EUR
+ROW,p23.20.a,Motor Gasoline,C_MGSL,M.EUR
+ROW,p23.20.b,Aviation Gasoline,C_AGSL,M.EUR
+ROW,p23.20.c,Gasoline Type Jet Fuel,C_GJET,M.EUR
+ROW,p23.20.d,Kerosene Type Jet Fuel,C_KJET,M.EUR
+ROW,p23.20.e,Kerosene,C_KERO,M.EUR
+ROW,p23.20.f,Gas/Diesel Oil,C_DOIL,M.EUR
+ROW,p23.20.g,Heavy Fuel Oil,C_FOIL,M.EUR
+ROW,p23.20.h,Refinery Gas,C_RGAS,M.EUR
+ROW,p23.20.i,Liquefied Petroleum Gases (LPG),C_LPGA,M.EUR
+ROW,p23.20.j,Refinery Feedstocks,C_REFF,M.EUR
+ROW,p23.20.k,Ethane,C_ETHA,M.EUR
+ROW,p23.20.l,Naphtha,C_NAPT,M.EUR
+ROW,p23.20.m,White Spirit & SBP,C_WHSP,M.EUR
+ROW,p23.20.n,Lubricants,C_LUBR,M.EUR
+ROW,p23.20.o,Bitumen,C_BITU,M.EUR
+ROW,p23.20.p,Paraffin Waxes,C_PARW,M.EUR
+ROW,p23.20.q,Petroleum Coke,C_PETC,M.EUR
+ROW,p23.20.r,Non-specified Petroleum Products,C_NSPP,M.EUR
+ROW,p23.3,Nuclear fuel,C_NUCF,M.EUR
+ROW,p24.a,"Plastics, basic",C_PLAS,M.EUR
+ROW,p24.a.w,"Secondary plastic for treatment, Re-processing of secondary plastic into new plastic",C_PLAW,M.EUR
+ROW,p24.b,N-fertiliser,C_NFER,M.EUR
+ROW,p24.c,P- and other fertiliser,C_PFER,M.EUR
+ROW,p24.d,Chemicals nec,C_CHEM,M.EUR
+ROW,p24.e,Charcoal,C_CHAR,M.EUR
+ROW,p24.f,Additives/Blending Components,C_ADDC,M.EUR
+ROW,p24.g,Biogasoline,C_BIOG,M.EUR
+ROW,p24.h,Biodiesels,C_BIOD,M.EUR
+ROW,p24.i,Other Liquid Biofuels,C_OBIO,M.EUR
+ROW,p25,Rubber and plastic products,C_RUBP,M.EUR
+ROW,p26.a,Glass and glass products,C_GLAS,M.EUR
+ROW,p26.a.w,"Secondary glass for treatment, Re-processing of secondary glass into new glass",C_GLAW,M.EUR
+ROW,p26.b,Ceramic goods,C_CRMC,M.EUR
+ROW,p26.c,"Bricks, tiles and construction products, in baked clay",C_BRIK,M.EUR
+ROW,p26.d,"Cement, lime and plaster",C_CMNT,M.EUR
+ROW,p26.d.w,"Ash for treatment, Re-processing of ash into clinker",C_ASHW,M.EUR
+ROW,p26.e,Other non-metallic mineral products,C_ONMM,M.EUR
+ROW,p27.a,Basic iron and steel and of ferro-alloys and first products thereof,C_STEL,M.EUR
+ROW,p27.a.w,"Secondary steel for treatment, Re-processing of secondary steel into new steel",C_STEW,M.EUR
+ROW,p27.41,Precious metals,C_PREM,M.EUR
+ROW,p27.41.w,"Secondary preciuos metals for treatment, Re-processing of secondary preciuos metals into new preciuos metals",C_PREW,M.EUR
+ROW,p27.42,Aluminium and aluminium products,C_ALUM,M.EUR
+ROW,p27.42.w,"Secondary aluminium for treatment, Re-processing of secondary aluminium into new aluminium",C_ALUW,M.EUR
+ROW,p27.43,"Lead, zinc and tin and products thereof",C_LZTP,M.EUR
+ROW,p27.43.w,"Secondary lead for treatment, Re-processing of secondary lead into new lead",C_LZTW,M.EUR
+ROW,p27.44,Copper products,C_COPP,M.EUR
+ROW,p27.44.w,"Secondary copper for treatment, Re-processing of secondary copper into new copper",C_COPW,M.EUR
+ROW,p27.45,Other non-ferrous metal products,C_ONFM,M.EUR
+ROW,p27.45.w,"Secondary other non-ferrous metals for treatment, Re-processing of secondary other non-ferrous metals into new other non-ferrous metals",C_ONFW,M.EUR
+ROW,p27.5,Foundry work services,C_METC,M.EUR
+ROW,p28,"Fabricated metal products, except machinery and equipment",C_FABM,M.EUR
+ROW,p29,Machinery and equipment n.e.c.,C_MACH,M.EUR
+ROW,p30,Office machinery and computers,C_OFMA,M.EUR
+ROW,p31,Electrical machinery and apparatus n.e.c.,C_ELMA,M.EUR
+ROW,p32,"Radio, television and communication equipment and apparatus",C_RATV,M.EUR
+ROW,p33,"Medical, precision and optical instruments, watches and clocks",C_MEIN,M.EUR
+ROW,p34,"Motor vehicles, trailers and semi-trailers",C_MOTO,M.EUR
+ROW,p35,Other transport equipment,C_OTRE,M.EUR
+ROW,p36,Furniture; other manufactured goods n.e.c.,C_FURN,M.EUR
+ROW,p37,Secondary raw materials,C_RYMS,M.EUR
+ROW,p37.w.1,"Bottles for treatment, Recycling of bottles by direct reuse",C_BOTW,M.EUR
+ROW,p40.11.a,Electricity by coal,C_POWC,M.EUR
+ROW,p40.11.b,Electricity by gas,C_POWG,M.EUR
+ROW,p40.11.c,Electricity by nuclear,C_POWN,M.EUR
+ROW,p40.11.d,Electricity by hydro,C_POWH,M.EUR
+ROW,p40.11.e,Electricity by wind,C_POWW,M.EUR
+ROW,p40.11.f,Electricity by petroleum and other oil derivatives,C_POWP,M.EUR
+ROW,p40.11.g,Electricity by biomass and waste,C_POWB,M.EUR
+ROW,p40.11.h,Electricity by solar photovoltaic,C_POWS,M.EUR
+ROW,p40.11.i,Electricity by solar thermal,C_POWE,M.EUR
+ROW,p40.11.j,"Electricity by tide, wave, ocean",C_POWO,M.EUR
+ROW,p40.11.k,Electricity by Geothermal,C_POWM,M.EUR
+ROW,p40.11.l,Electricity nec,C_POWZ,M.EUR
+ROW,p40.12,Transmission services of electricity,C_POWT,M.EUR
+ROW,p40.13,Distribution and trade services of electricity,C_POWD,M.EUR
+ROW,p40.2.a,Coke oven gas,C_COOG,M.EUR
+ROW,p40.2.b,Blast Furnace Gas,C_MBFG,M.EUR
+ROW,p40.2.c,Oxygen Steel Furnace Gas,C_MOSG,M.EUR
+ROW,p40.2.d,Gas Works Gas,C_MGWG,M.EUR
+ROW,p40.2.e,Biogas,C_MBIO,M.EUR
+ROW,p40.2.1,Distribution services of gaseous fuels through mains,C_GASD,M.EUR
+ROW,p40.3,Steam and hot water supply services,C_HWAT,M.EUR
+ROW,p41,"Collected and purified water, distribution services of water",C_WATR,M.EUR
+ROW,p45,Construction work,C_CONS,M.EUR
+ROW,p45.w,"Secondary construction material for treatment, Re-processing of secondary construction material into aggregates",C_CONW,M.EUR
+ROW,p50.a,"Sale, maintenance, repair of motor vehicles, motor vehicles parts, motorcycles, motor cycles parts and accessoiries",C_TDMO,M.EUR
+ROW,p50.b,Retail trade services of motor fuel,C_TDFU,M.EUR
+ROW,p51,"Wholesale trade and commission trade services, except of motor vehicles and motorcycles",C_TDWH,M.EUR
+ROW,p52,"Retail  trade services, except of motor vehicles and motorcycles; repair services of personal and household goods",C_TDRT,M.EUR
+ROW,p55,Hotel and restaurant services,C_HORE,M.EUR
+ROW,p60.1,Railway transportation services,C_TRAI,M.EUR
+ROW,p60.2,Other land transportation services,C_TLND,M.EUR
+ROW,p60.3,Transportation services via pipelines,C_TPIP,M.EUR
+ROW,p61.1,Sea and coastal water transportation services,C_TWAS,M.EUR
+ROW,p61.2,Inland water transportation services,C_TWAI,M.EUR
+ROW,p62,Air transport services,C_TAIR,M.EUR
+ROW,p63,Supporting and auxiliary transport services; travel agency services,C_TAUX,M.EUR
+ROW,p64,Post and telecommunication services,C_PTEL,M.EUR
+ROW,p65,"Financial intermediation services, except insurance and pension funding services",C_FINT,M.EUR
+ROW,p66,"Insurance and pension funding services, except compulsory social security services",C_FINS,M.EUR
+ROW,p67,Services auxiliary to financial intermediation,C_FAUX,M.EUR
+ROW,p70,Real estate services,C_REAL,M.EUR
+ROW,p71,Renting services of machinery and equipment without operator and of personal and household goods,C_MARE,M.EUR
+ROW,p72,Computer and related services,C_COMP,M.EUR
+ROW,p73,Research and development services,C_RESD,M.EUR
+ROW,p74,Other business services,C_OBUS,M.EUR
+ROW,p75,Public administration and defence services; compulsory social security services,C_PADF,M.EUR
+ROW,p80,Education services,C_EDUC,M.EUR
+ROW,p85,Health and social work services,C_HEAL,M.EUR
+ROW,p90.1.a,Food waste for treatment: incineration,C_INCF,M.EUR
+ROW,p90.1.b,Paper waste for treatment: incineration,C_INCP,M.EUR
+ROW,p90.1.c,Plastic waste for treatment: incineration,C_INCL,M.EUR
+ROW,p90.1.d,Intert/metal waste for treatment: incineration,C_INCM,M.EUR
+ROW,p90.1.e,Textiles waste for treatment: incineration,C_INCT,M.EUR
+ROW,p90.1.f,Wood waste for treatment: incineration,C_INCW,M.EUR
+ROW,p90.1.g,Oil/hazardous waste for treatment: incineration,C_INCO,M.EUR
+ROW,p90.2.a,Food waste for treatment: biogasification and land application,C_BIOF,M.EUR
+ROW,p90.2.b,Paper waste for treatment: biogasification and land application,C_BIOP,M.EUR
+ROW,p90.2.c,Sewage sludge for treatment: biogasification and land application,C_BIOS,M.EUR
+ROW,p90.3.a,Food waste for treatment: composting and land application,C_COMF,M.EUR
+ROW,p90.3.b,Paper and wood waste for treatment: composting and land application,C_COMW,M.EUR
+ROW,p90.4.a,Food waste for treatment: waste water treatment,C_WASF,M.EUR
+ROW,p90.4.b,Other waste for treatment: waste water treatment,C_WASO,M.EUR
+ROW,p90.5.a,Food waste for treatment: landfill,C_LANF,M.EUR
+ROW,p90.5.b,Paper for treatment: landfill,C_LANP,M.EUR
+ROW,p90.5.c,Plastic waste for treatment: landfill,C_LANL,M.EUR
+ROW,p90.5.d,Inert/metal/hazardous waste for treatment: landfill,C_LANI,M.EUR
+ROW,p90.5.e,Textiles waste for treatment: landfill,C_LANT,M.EUR
+ROW,p90.5.f,Wood waste for treatment: landfill,C_LANW,M.EUR
+ROW,p91,Membership organisation services n.e.c.,C_ORGA,M.EUR
+ROW,p92,"Recreational, cultural and sporting services",C_RECR,M.EUR
+ROW,p93,Other services,C_OSER,M.EUR
+ROW,p95,Private households with employed persons,C_PRHH,M.EUR
+ROW,p99,Extra-territorial organizations and bodies,C_EXTO,M.EUR

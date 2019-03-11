@@ -12,7 +12,7 @@ Scope: Modelling the Circular Economy in EEIO
 @institution:Leiden University CML
 """
 import numpy as np
-# from pycirk.labels import positions
+import pycirk.positions as pos
 
 
 def make_secondary(data):
@@ -63,8 +63,8 @@ def make_secondary(data):
 
     no_countries = int(len(Y)/200)
 
-    prod_or = make_coord_array(products, no_countries, 200)
-    ind_or = make_coord_array(industries, no_countries, 163)
+    prod_or = pos.make_coord_array(products, no_countries, 200)
+    ind_or = pos.make_coord_array(industries, no_countries, 163)
 
     moved = allocate_sec_mat(V, U, Y, prod_or, ind_or)
 
@@ -75,23 +75,6 @@ def make_secondary(data):
     data["U"] = U
 
     return(data)
-
-
-def make_coord_array(coordinates, no_countries, no_ind_or_prod):
-
-    n = 0
-    nn = 0
-    while n in range(len(coordinates)):
-        while nn in range(no_countries):
-            g = coordinates + no_ind_or_prod*nn
-            if "s" not in locals():
-                s = g
-            else:
-                s = np.concatenate([s, g])
-            nn = nn+1
-        n = n+1
-
-    return(s)
 
 
 def allocate_sec_mat(V, U, Y, prod_or, ind_or):

@@ -1,0 +1,121 @@
+impact_method,characterization,reference,unit
+"Problem oriented approach: baseline (CML, 1999)","abiotic depletion (elements, ultimate ultimate reserves)",ADPelements (Oers et al. 2001),kg antimony eq.
+"Problem oriented approach: baseline (CML, 1999)",abiotic depletion (fossil fuels),"ADPfossil fuels (Oers et al., 2001)",MJ
+"Problem oriented approach: non baseline (CML, 1999)","abiotic depletion (elements, reserve base)",ADPelements (Oers et al. 2001),kg antimony eq.
+"Problem oriented approach: non baseline (CML, 1999)","abiotic depletion (elements, economic reserve)",ADPelements (Oers et al. 2001),kg antimony eq.
+"Problem oriented approach: non baseline (CML, 1999)",Landuse increase of land competition,"LUC (Guinee et al, 2001)",m2*yr
+"Problem oriented approach: baseline (CML, 1999)",global warming GWP100,"GWP100 (IPCC, 2007)",kg CO2 eq.
+"Problem oriented approach: non baseline (CML, 1999)",global warming net GWP100 min,"net GWP100 min(Houghton et al., 2001)",kg CO2 eq.
+"Problem oriented approach: non baseline (CML, 1999)",global warming net GWP100 max,"net GWP100 max(Houghton et al., 2001)",kg CO2 eq.
+"Problem oriented approach: non baseline (CML, 1999)",global warming GWP20 ,"GWP20 (IPCC, 2007)",kg CO2 eq.
+"Problem oriented approach: non baseline (CML, 1999)",global warming GWP500 ,"GWP500 (IPCC, 2007)",kg CO2 eq.
+"Problem oriented approach: baseline (CML, 1999)",ozone layer depletion ODP steady state ,"ODP steady state (WMO, 2003)",kg CFC-11 eq.
+"Problem oriented approach: non baseline (CML, 1999)",ozone layer depletion ODP5 ,"ODP5 (Solomon & Albritton, 1992))",kg CFC-11 eq.
+"Problem oriented approach: non baseline (CML, 1999)",ozone layer depletion ODP10,"ODP10 (Solomon & Albritton, 1992))",kg CFC-11 eq.
+"Problem oriented approach: non baseline (CML, 1999)",ozone layer depletion ODP15,"ODP15 (Solomon & Albritton, 1992))",kg CFC-11 eq.
+"Problem oriented approach: non baseline (CML, 1999)",ozone layer depletion ODP20,"ODP20 (Solomon & Albritton, 1992))",kg CFC-11 eq.
+"Problem oriented approach: non baseline (CML, 1999)",ozone layer depletion ODP25,"ODP25 (Solomon & Albritton, 1992))",kg CFC-11 eq.
+"Problem oriented approach: non baseline (CML, 1999)",ozone layer depletion ODP30,"ODP30 (Solomon & Albritton, 1992))",kg CFC-11 eq.
+"Problem oriented approach: non baseline (CML, 1999)",ozone layer depletion ODP40,"ODP40 (Solomon & Albritton, 1992))",kg CFC-11 eq.
+"Problem oriented approach: baseline (CML, 1999)",human toxicity HTP inf. ,"HTP inf. (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: baseline (CML, 1999)",Freshwater aquatic ecotoxicity FAETP inf. ,"FAETP inf. (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: baseline (CML, 1999)",Marine aquatic ecotoxicity MAETP inf,"MAETP inf. (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Freshwater sedimental ecotoxicity FSETP inf.,"FSETP inf. (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Marine sedimental ecotoxicity MSETP inf.,"MSETP inf. (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: baseline (CML, 1999)",Terrestrial ecotoxicity TETP inf,"TETP inf.(Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",human toxicity HTP 20,"HTP 20 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Freshwater aquatic ecotoxicity FAETP 20,"FAETP 20 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Marine aquatic ecotoxicity MAETP 20,"MAETP 20 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Freshwater sedimental ecotoxicity FSETP 20,"FSETP 20 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Marine sedimental ecotoxicity MSETP 20,"MSETP 20 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Terrestrial ecotoxicity TETP 20,"TETP 20 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",human toxicity HTP 100,"HTP 100 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Freshwater aquatic ecotoxicity FAETP 100,"FAETP 100 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Marine aquatic ecotoxicity MAETP 100,"MAETP 100 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Freshwater sedimental ecotoxicity FSETP 100,"FSETP 100 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Marine sedimental ecotoxicity MSETP 100,"MSETP 100 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Terrestrial ecotoxicity TETP 100,"TETP 100 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",human toxicity HTP 500,"HTP 500 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Freshwater aquatic ecotoxicity FAETP 500,"FAETP 500 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Marine aquatic ecotoxicity MAETP 500,"MAETP 500 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Freshwater sedimental ecotoxicity FSETP 500,"FSETP 500 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Marine sedimental ecotoxicity MSETP 500,"MSETP 500 (Huijbregts, 1999 & 2000)","kg 1,4-dichlorobenzene eq."
+"Problem oriented approach: non baseline (CML, 1999)",Terrestrial ecotoxicity,"TETP 500 (Huijbregts, 1999 & 2000) TETP 500","kg 1,4-dichlorobenzene eq."
+USEtox,Human toxicity,"CTUh (Rosenbaum et al., 2008)",cases
+USEtox,Fresh water Ecotoxicity,"CTUe (Rosenbaum et al., 2008)",PAF m3.day
+"Problem oriented approach: baseline (CML, 1999)",photochemical oxidation (high NOx),"POCP (Jenkin & Hayman, 1999; Derwent et al. 1998; high NOx)",kg ethylene eq.
+"Problem oriented approach: non baseline (CML, 1999)",photochemical oxidation (low NOx),POCP (Andersson-Sköld et al. 1992; low NOx),kg ethylene eq.
+"Problem oriented approach: non baseline (CML, 1999)",photochemical oxidation (MIR; very high NOx),"MIR 1997; very high NOx (Carter, 1994, 1997, 1998;Carter, Pierce, Luo &  Malkina, 1995 )",kg formed ozone
+"Problem oriented approach: non baseline (CML, 1999)",photochemical oxidation (MOIR; high NOx),"MOIR; high NOx (Carter, 1994, 1997, 1998;Carter, Pierce, Luo &  Malkina, 1995 )",kg formed ozone
+"Problem oriented approach: non baseline (CML, 1999)",photochemical oxidation (EBIR; low NOx),"EBIR; low NOx (Carter, 1994, 1997, 1998;Carter, Pierce, Luo &  Malkina, 1995 )",kg formed ozone
+"Problem oriented approach: baseline (CML, 1999)","acidification (incl. fate, average Europe total, A&B)","AP ( Huijbregts, 1999; average Europe total, A&B)",kg SO2 eq.
+"Problem oriented approach: non baseline (CML, 1999)",acidification (fate not incl.),AP (Hauschild & Wenzel (1998).,kg SO2 eq.
+"Problem oriented approach: baseline (CML, 1999)",eutrophication (fate not incl.),EP (Heijungs et al. 1992)),kg PO4--- eq.
+"Problem oriented approach: non baseline (CML, 1999)","eutrophication (incl. fate, average Europe total, A&B)","EP ( Huijbregts, 1999; average Europe total, A&B)",kg NOx eq.
+"Problem oriented approach: non baseline (CML, 1999)",radiation,"(Frischknecht et al., 1999)","DALYs (Egalitarian, Hierarchist)"
+"Problem oriented approach: non baseline (CML, 1999)",odour,1/OTV,m3
+Damage Approach,"EPS (Steen, 1999))","EPS (Steen, 1999))",elu
+ECOINDICATOR 99 (H.A),Carcinogenic effects on humans (H.A),Carcinogenic effects on humans (H.A),DALY
+ECOINDICATOR 99 (H.A),Respiratory effects on humans caused by organic substances (H.A),Respiratory effects on humans caused by organic substances (H.A),DALY
+ECOINDICATOR 99 (H.A),Respiratory effects on humans caused by inorganic substances (H.A),Respiratory effects on humans caused by inorganic substances (H.A),DALY
+ECOINDICATOR 99 (H.A),Damages to human health caused by climate change (H.A),Damages to human health caused by climate change (H.A),DALY
+ECOINDICATOR 99 (H.A),Human health effects caused by ionising radiation (H.A),Human health effects caused by ionising radiation (H.A),DALY
+ECOINDICATOR 99 (H.A),Human health effects caused by ozone layer depletion (H.A),Human health effects caused by ozone layer depletion (H.A),DALY
+ECOINDICATOR 99 (H.A),Damage to Ecosystem Quality caused by ecotoxic emissions (H.A),Damage to Ecosystem Quality caused by ecotoxic emissions (H.A),PDF*m2*yr
+ECOINDICATOR 99 (H.A),Damage to Ecosystem Quality caused by the combined effect of acidification and eutrophication (H.A),Damage to Ecosystem Quality caused by the combined effect of acidification and eutrophication (H.A),PDF*m2*yr
+ECOINDICATOR 99 (H.A),Damage to Ecosystem Quality caused by land occupation (H.A),Damage to Ecosystem Quality caused by land occupation (H.A),PDF*m2*yr
+ECOINDICATOR 99 (H.A),Damage to Ecosystem Quality caused by land conversion (H.A),Damage to Ecosystem Quality caused by land conversion (H.A),PDF*m2
+ECOINDICATOR 99 (H.A),Damage to Resources caused by extraction of minerals (H.A),Damage to Resources caused by extraction of minerals (H.A),MJ surplus energy
+ECOINDICATOR 99 (H.A),Damage to Resources caused by extraction of fossil fuels (H.A),Damage to Resources caused by extraction of fossil fuels (H.A),MJ surplus energy
+ECOINDICATOR 99 (E.E),Carcinogenic effects on humans (E.E),Carcinogenic effects on humans (E.E),DALY
+ECOINDICATOR 99 (E.E),Respiratory effects on humans caused by organic substances (E.E),Respiratory effects on humans caused by organic substances (E.E),DALY
+ECOINDICATOR 99 (E.E),Respiratory effects on humans caused by inorganic substances (E.E),Respiratory effects on humans caused by inorganic substances (E.E),DALY
+ECOINDICATOR 99 (E.E),Damages to human health caused by climate change (E.E),Damages to human health caused by climate change (E.E),DALY
+ECOINDICATOR 99 (E.E),Human health effects caused by ionising radiation (E.E),Human health effects caused by ionising radiation (E.E),DALY
+ECOINDICATOR 99 (E.E),Human health effects caused by ozone layer depletion (E.E),Human health effects caused by ozone layer depletion (E.E),DALY
+ECOINDICATOR 99 (E.E),Damage to Ecosystem Quality caused by ecotoxic emissions (E.E)),Damage to Ecosystem Quality caused by ecotoxic emissions (E.E)),PDF*m2*yr
+ECOINDICATOR 99 (E.E),Damage to Ecosystem Quality caused by the combined effect of acidification and eutrophication (E.E),Damage to Ecosystem Quality caused by the combined effect of acidification and eutrophication (E.E),PDF*m2*yr
+ECOINDICATOR 99 (E.E),Damage to Ecosystem Quality caused by land occupation (E.E),Damage to Ecosystem Quality caused by land occupation (E.E),PDF*m2*yr
+ECOINDICATOR 99 (E.E),Damage to Ecosystem Quality caused by land conversion (E.E),Damage to Ecosystem Quality caused by land conversion (E.E),PDF*m2
+ECOINDICATOR 99 (E.E),Damage to Resources caused by extraction of minerals (E.E),Damage to Resources caused by extraction of minerals (E.E),MJ surplus energy
+ECOINDICATOR 99 (E.E),Damage to Resources caused by extraction of fossil fuels (E.E),Damage to Resources caused by extraction of fossil fuels (E.E),MJ surplus energy
+ECOINDICATOR 99 (I.I),Carcinogenic effects on humans (I.I),Carcinogenic effects on humans (I.I),DALY
+ECOINDICATOR 99 (I.I),Respiratory effects on humans caused by organic substances (I.I),Respiratory effects on humans caused by organic substances (I.I),DALY
+ECOINDICATOR 99 (I.I),Respiratory effects on humans caused by inorganic substances (I.I),Respiratory effects on humans caused by inorganic substances (I.I),DALY
+ECOINDICATOR 99 (I.I),Damages to human health caused by climate change (I.I),Damages to human health caused by climate change (I.I),DALY
+ECOINDICATOR 99 (I.I),Human health effects caused by ionising radiation (I.I),Human health effects caused by ionising radiation (I.I),DALY
+ECOINDICATOR 99 (I.I),Human health effects caused by ozone layer depletion (I.I),Human health effects caused by ozone layer depletion (I.I),DALY
+ECOINDICATOR 99 (I.I),Damage to Ecosystem Quality caused by ecotoxic emissions (I.I),Damage to Ecosystem Quality caused by ecotoxic emissions (I.I),PDF*m2*yr
+ECOINDICATOR 99 (I.I),Damage to Ecosystem Quality caused by the combined effect of acidification and eutrophication (I.I),Damage to Ecosystem Quality caused by the combined effect of acidification and eutrophication (I.I),PDF*m2*yr
+ECOINDICATOR 99 (I.I),Damage to Ecosystem Quality caused by land occupation (I.I),Damage to Ecosystem Quality caused by land occupation (I.I),PDF*m2*yr
+ECOINDICATOR 99 (I.I),Damage to Ecosystem Quality caused by land conversion (I.I),Damage to Ecosystem Quality caused by land conversion (I.I),PDF*m2
+ECOINDICATOR 99 (I.I),Damage to Resources caused by extraction of minerals (I.I),Damage to Resources caused by extraction of minerals (I.I),MJ surplus energy
+ECOINDICATOR 99 (I.I),Damage to Resources caused by extraction of fossil fuels (I.I),Damage to Resources caused by extraction of fossil fuels (I.I),MJ surplus energy
+ILCD recommended CF,Climate change midpoint,Global warming potential 100 years,kg CO2-Equivalents
+ILCD recommended CF,"Climate change endpoint, human health",Disability Adjusted Life Years (DALY),DALY
+ILCD recommended CF,"Climate change endpoint, ecosystems",Potentially Disappeared Fraction of species (PDF),PDF
+ILCD recommended CF,Ozone depletion midpoint,Ozone Depletion Potential (ODP),kg CFC11-Equivalents
+ILCD recommended CF,"Ozone depletion endpoint, human health",Disability Adjusted Life Years (DALY),DALY
+ILCD recommended CF,"Human toxicity midpoint, cancer effects",Comparative Toxic Unit for human (CTUh),CTUh/kg = cases
+ILCD recommended CF,"Human toxicity midpoint, non-cancer effects",Comparative Toxic Unit for human (CTUh),CTUh = cases
+ILCD recommended CF,"Human toxicity endpoint, cancer effects",Disability Adjusted Life Years (DALY),DALY
+ILCD recommended CF,"Human toxicity endpoint, non-cancer effects",Disability Adjusted Life Years (DALY),DALY
+ILCD recommended CF,Particulate matter/Respiratory inorganics midpoint,emission-weighed average PM2.5 equivalent,kg PM2.5-eq
+ILCD recommended CF,Particulate matter/Respiratory inorganics endpoint,Disability Adjusted Life Years (DALY),DALY
+ILCD recommended CF,"Ionizing radiation midpoint, human health",?,?
+ILCD recommended CF,"Ionizing radiation midpoint, ecosystems",?,?
+ILCD recommended CF,"Ionizing radiation endpoint, human health",Disability Adjusted Life Years (DALY),DALY
+ILCD recommended CF,"Ionizing radiation endpoint, ecosystems",Potentially Disappeared Fraction of species (PDF),PDF.m3.yr
+ILCD recommended CF,"Photochemical ozone formation midpoint, human health",Photochemical ozone creation potential (POCP),kg-C2H4 equivalents
+ILCD recommended CF,"Photochemical ozone formation endpoint, human health",Disability Adjusted Life Years (DALY),DALY
+ILCD recommended CF,Acidification midpoint,Accumulated Exceedance (AE),Accumulated Exceedance (AE)
+ILCD recommended CF,Acidification endpoint,Change in potentially not occuring fraction of plant species per change in base saturation,PDF
+ILCD recommended CF,Eutrophication terrestrial midpoint,Accumulated Exceedance (AE),Accumulated Exceedance (AE)
+ILCD recommended CF,Eutrophication freshwater midpoint,Potentially Disappeared Fraction of species (PDF),kg-P equivalent
+ILCD recommended CF,Eutrophication marine midpoint,Potentially Disappeared Fraction of species (PDF),kg-N equivalent
+ILCD recommended CF,Eutrophication freshwater endpoint,Potentially Disappeared Fraction of species (PDF),PDF
+ILCD recommended CF,Ecotoxicity freshwater midpoint,Comparative Toxic Unit for ecosystems (CTUe),CTUe = PAF.m3.year
+ILCD recommended CF,Ecotoxicity freshwater endpoint,Potentially Disappeared Fraction of species (PDF),PDF.m3.year
+ILCD recommended CF,"Resource depletion water, midpoint",?,?
+ILCD recommended CF,"Resource depletion, mineral, fossils and renewables, midpoint",Quantity of resource available to an average world citizen,Person Reserve
+ILCD recommended CF,"Resource depletion, mineral, fossils and renewables, endpoint",Surplus costs,$
