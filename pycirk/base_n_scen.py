@@ -16,136 +16,160 @@ import numpy as np
 from pandas import DataFrame as df
 from pycirk.SUTops import SUTops as sops
 from pycirk.apply_policy import Apply_policy
-from pycirk.SUTtoIOT import basic_labels
+from pycirk.utils import dotdict
 
 
-class Base_n_scen:
+def organize_data(data):
+
+    E = data["E"]
+    RE = data["RE"]
+    L = data["L"]
+    S = data["S"]
+    x = data["x"]
+    A = data["A"]
+    Y = data["Y"]
+
+    RBe = data["RBe"]
+    RBr = data["RBr"]
+    RBm = data["RBm"]
+
+    Be = data["Be"]
+    Br = data["Br"]
+    Bm = data["Bm"]
+
+    CrBe_ = data["CrBe"]
+    CrBr_ = data["CrBr"]
+    CrBm_ = data["CrBm"]
+    CrE_ = data["CrE"]
+
+    ver_base = data["ver"]
+
+    # Calculating intensity matrices for final demand extentions
+
+    YBe_ = data["YBe"]
+    YBr_ = data["YBr"]
+    YBm_ = data["YBm"]
+
+    diag_yj = np.diag(Y.sum(axis=0))
+
+    _YBe = sops.IOT.FD_EXT(YBe_, diag_yj)
+    _YBr = sops.IOT.FD_EXT(YBr_, diag_yj)
+    _YBm = sops.IOT.FD_EXT(YBm_, diag_yj)
+
+    YBe = _YBe["YB"]
+    YBr = _YBr["YB"]
+    YBm = _YBm["YB"]
+    RYBe = _YBe["RYB"]
+    RYBr = _YBr["RYB"]
+    RYBm = _YBm["RYB"]
+
+    # Characterisation
+    CrBe = np.matmul(CrBe_, Be)  # emissions ext
+    CrBr = np.matmul(CrBr_, Br)  # resource ext
+    CrBm = np.matmul(CrBm_, Bm)  # material ext
+    CrE = np.matmul(CrE_, E)  # factor inputs
+
+    CrYBe = np.matmul(CrBe_, YBe)  # emissions ext
+    CrYBr = np.matmul(CrBr_, YBr)  # resource ext
+    CrYBm = np.matmul(CrBm_, YBm)  # material ext
+
+    IOT = {"RE": RE,
+           "A": A,
+           "Y": Y,
+           "Be": Be,
+           "RBe": RBe,
+           "YBe": YBe,
+           "RYBe": RYBe,
+           "Br": Br,
+           "RBr": RBr,
+           "YBr": YBr,
+           "RYBr": RYBr,
+           "Bm": Bm,
+           "RBm": RBm,
+           "YBm": YBm,
+           "RYBm": RYBm,
+           "CrBe": CrBe,
+           "CrBm": CrBm,
+           "CrBr": CrBr,
+           "CrYBe": CrYBe,
+           "CrYBm": CrYBm,
+           "CrYBr": CrYBr,
+           "CrE": CrE,
+           "L": L,
+           "S": S,
+           "E": E,
+           "x": x,
+           "ver": ver_base
+           }
+
+    return(dotdict(IOT))
+
+
+def sceneIOT(data, scen_no, scen_file):
     """
-    Loads base data and assembles new tables (scenario) from the processed data
+    baseline IOT calculated with Technical Coefficient or
+    Market coefficient method
     """
-    def __init__(self, data):
-        """
-        Baseline IOT
-        """
-        self.IOT = data
 
-        self.E_ = data["E"]
-        self.RE_ = data["RE"]
-        self.L_ = data["L"]
-        self.S_ = data["S"]
-        self.x_ = data["x"]
-        self.A_ = data["A"]
-        self.Y_ = data["Y"]
+    ap = Apply_policy(scen_file)
 
-        self.RBe_ = data["RBe"]
-        self.RBr_ = data["RBr"]
-        self.RBm_ = data["RBm"]
+    Y_ = data.Y.copy(True)
+    S_ = data.S.copy(True)
+    RE_ = data.RE.copy(True)
+    RBe_ = data.RBe.copy(True)
+    RBr_ = data.RBr.copy(True)
+    RBm_ = data.RBm.copy(True)
+    RYBe_ = data.RYBe.copy(True)
+    RYBr_ = data.RYBr.copy(True)
+    RYBm_ = data.RYBm.copy(True)
 
-        self.Be_ = data["Be"]
-        self.Br_ = data["Br"]
-        self.Bm_ = data["Bm"]
+    # Apply policy to economic matrices
+    S_ = ap.apply_policy(scen_no, S_, "S")
+    inv_diag_x = sops.inv(np.diag(sops.IOT.x(S_, Y_)))
+    A_ = sops.IOT.A(S_, inv_diag_x)
+    data.A = ap.apply_policy(scen_no, df(A_), "A")
 
-        self.YBe_ = data["YBe"]
-        self.YBr_ = data["YBr"]
-        self.YBm_ = data["YBm"]
-        self.ver_base = data["ver"]
+    Y = ap.apply_policy(scen_no, Y_, "Y")
+    RE = ap.apply_policy(scen_no, RE_, "RE")
 
-        self.diag_yj = np.diag(self.Y.sum(axis=0))
+    # Apply policy to intermediate extension coefficient matrices
+    data.RBe = ap.apply_policy(scen_no, RBe_, "RBe")
+    data.RBr = ap.apply_policy(scen_no, RBr_, "RBr")
+    data.RBm = ap.apply_policy(scen_no, RBm_, "RBm")
 
-        # Calculating intensity matrices for final demand extentions
-        self._YBe = sops.IOT.FD_EXT(self.YBe, self.diag_yj)
-        self._YBr = sops.IOT.FD_EXT(self.YBr, self.diag_yj)
-        self._YBm = sops.IOT.FD_EXT(self.YBm, self.diag_yj)
+    # Apply policy to  final demand extension coefficient matrices
+    data.RYBe = ap.apply_policy(scen_no, RYBe_, "RYBe")
+    data.RYBr = ap.apply_policy(scen_no, RYBr_, "RYBr")
+    data.RYBm = ap.apply_policy(scen_no, RYBm_, "RYBm")
 
-        self.YBe_ = self._YBe["YB"]
-        self.YBr_ = self._YBr["YB"]
-        self.YBm_ = self._YBm["YB"]
-        self.RYBe_ = self._YBe["RYB"]
-        self.RYBr_ = self._YBr["RYB"]
-        self.RYBm_ = self._YBm["RYB"]
+    # Scenario
+    data.L = sops.IOT.L(A_)  # L from S and Y modified
 
-        # Characterisation
-        self.CrBe_ = np.matmul(self.SUTs.CrBe, self.Be)  # emissions ext
-        self.CrBr_ = np.matmul(self.SUTs.CrBr, self.Br)  # resource ext
-        self.CrBm_ = np.matmul(self.SUTs.CrBm, self.Bm)  # material ext
-        self.CrE_ = np.matmul(self.SUTs.CrE, self.E)  # factor inputs
+    yi = np.sum(Y, axis=1)  # row sum of final demand
+    diag_yj = np.diag(Y.sum(axis=0))  # column sum of FD
+    x = sops.IOT.x_IAy(L, yi)
+    diag_x = np.diag(x)
 
-        self.CrYBe_ = np.matmul(self.SUTs.CrBe, self.YBe)  # emissions ext
-        self.CrYBr_ = np.matmul(self.SUTs.CrBr, self.YBr)  # resource ext
-        self.CrYBm_ = np.matmul(self.SUTs.CrBm, self.YBm)  # material ext
+    S = sops.IOT.S(A, diag_x)
 
-    def sceneIOT(self, scen_no, scen_file):
-        """
-        baseline IOT calculated with Technical Coefficient or
-        Market coefficient method
-        """
+    E = sops.IOT.B(RE, diag_x)  # primary inputs
 
-#        if scen_no in [0, "baseline", "base"]:
-#            warnings.warn("You specified the baseline so no changes were made."
-#                          "Baseline was returned. Possible scenarios [1,2,n]")
-#            return(self.IOT)
-#        else:
+    Be = sops.IOT.B(RBe, diag_x)  # emissions ext
+    Br = sops.IOT.B(RBr, diag_x)  # resource ext
+    Bm = sops.IOT.B(RBm, diag_x)  # material ext
 
-        ap = Apply_policy(scen_file)
+    YBe = sops.IOT.FD_EXT(RYBe, diag_yj)  # emissions ext
+    YBr = sops.IOT.FD_EXT(RYBr, diag_yj)  # resource ext
+    YBm = sops.IOT.FD_EXT(RYBm, diag_yj)  # material ext
 
-        Y_ = self.Y_.copy(True)
-        S_ = self.S_.copy(True)
-        RE_ = self.RE_.copy(True)
-        RBe_ = self.RBe_.copy(True)
-        RBr_ = self.RBr_.copy(True)
-        RBm_ = self.RBm_.copy(True)
-        RYBe_ = self.RYBe_.copy(True)
-        RYBr_ = self.RYBr_.copy(True)
-        RYBm_ = self.RYBm_.copy(True)
+    # Characterisation
+    CrBe = np.matmul(CrBe_, Be)  # emissions ext
+    CrBr = np.matmul(CrBr_, Br)  # resource ext
+    CrBm = np.matmul(CrBm_, Bm)  # material ext
+    CrE = np.matmul(CrE_, E)  # factor inputs
 
-        # Apply policy to economic matrices
+    CrYBe = np.matmul(CrBe_, YBe)  # emissions ext
+    CrYBr = np.matmul(CrBr_, YBr)  # resource ext
+    CrYBm = np.matmul(CrBm_, YBm)  # material ext
 
-        S_ = ap.apply_policy(scen_no, S_, "S")
-        inv_diag_x = sops.inv(np.diag(sops.IOT.x(S_, Y_)))
-        A_ = sops.IOT.A(S_, inv_diag_x)
-        self.A = ap.apply_policy(scen_no, df(A_), "A")
-
-        self.Y = ap.apply_policy(scen_no, Y_, "Y")
-        self.RE = ap.apply_policy(scen_no, RE_, "RE")
-
-        # Apply policy to intermediate extension coefficient matrices
-        self.RBe = ap.apply_policy(scen_no, RBe_, "RBe")
-        self.RBr = ap.apply_policy(scen_no, RBr_, "RBr")
-        self.RBm = ap.apply_policy(scen_no, RBm_, "RBm")
-
-        # Apply policy to  final demand extension coefficient matrices
-        self.RYBe = ap.apply_policy(scen_no, RYBe_, "RYBe")
-        self.RYBr = ap.apply_policy(scen_no, RYBr_, "RYBr")
-        self.RYBm = ap.apply_policy(scen_no, RYBm_, "RYBm")
-
-        # Scenario
-        self.L = sops.IOT.L(self.A)  # L from S and Y modified
-
-        self.yi = np.sum(self.Y, axis=1)  # row sum of final demand
-        self.diag_yj = np.diag(self.Y.sum(axis=0))  # column sum of FD
-        self.x = sops.IOT.x_IAy(self.L, self.yi)
-        self.diag_x = np.diag(self.x)
-
-        self.S = sops.IOT.S(self.A, self.diag_x)
-
-        self.E = sops.IOT.B(self.RE, self.diag_x)  # primary inputs
-
-        self.Be = sops.IOT.B(self.RBe, self.diag_x)  # emissions ext
-        self.Br = sops.IOT.B(self.RBr, self.diag_x)  # resource ext
-        self.Bm = sops.IOT.B(self.RBm, self.diag_x)  # material ext
-
-        self.YBe = sops.fdext.YB(self.RYBe, self.diag_yj)  # emissions ext
-        self.YBr = sops.fdext.YB(self.RYBr, self.diag_yj)  # resource ext
-        self.YBm = sops.fdext.YB(self.RYBm, self.diag_yj)  # material ext
-
-        # Characterisation
-        self.CrBe = np.matmul(self.SUTs.CrBe, self.Be)  # emissions ext
-        self.CrBr = np.matmul(self.SUTs.CrBr, self.Br)  # resource ext
-        self.CrBm = np.matmul(self.SUTs.CrBm, self.Bm)  # material ext
-        self.CrE = np.matmul(self.SUTs.CrE, self.E)  # factor inputs
-
-        self.CrYBe = np.matmul(self.SUTs.CrBe, self.YBe)  # emissions ext
-        self.CrYBr = np.matmul(self.SUTs.CrBr, self.YBr)  # resource ext
-        self.CrYBm = np.matmul(self.SUTs.CrBm, self.YBm)  # material ext
-
-        self.ver = sops.verifyIOT(self.S, self.Y, self.E)  # ver_new_IOT
+    ver = sops.verifyIOT(S, Y, E)  # ver_new_IOT

@@ -282,11 +282,11 @@ class SUTops:
 
             return (YRB)
 
-        def YB(YRB, diag_yj):
+        def YB(RYB, diag_yj):
             """
             Extensions and primary input for IO tables
             """
-            YB = YRB @ diag_yj
+            YB = RYB @ diag_yj
 
             return (YB)
 
@@ -347,6 +347,7 @@ class SUTops:
 
             RYB = SUTops.IOT.RYB(inv_diag_yj, YB)
             YB = SUTops.IOT.YB(RYB, diag_yj)
+            print(YB.shape)
 
             EXT = {"RYB": RYB,
                    "YB": YB}
