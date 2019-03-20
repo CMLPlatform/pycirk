@@ -13,106 +13,70 @@ Scope: Modelling the Circular Economy in EEIO
 import pandas as pd
 import numpy as np
 from pycirk.labels import positions
+from pycirk.SUTops import sops
+from pycirk.labels import get_labels
+from pandas import DataFrame as df
 import warnings
-
 
 def sceneIOT(data, scen_no, scen_file):
     """
     baseline IOT calculated with Technical Coefficient or
     Market coefficient method
     """
-
-    Y_ = data.Y.copy(True)
-    S_ = data.S.copy(True)
-    RE_ = data.RE.copy(True)
-    RBe_ = data.RBe.copy(True)
-    RBr_ = data.RBr.copy(True)
-    RBm_ = data.RBm.copy(True)
-    RYBe_ = data.RYBe.copy(True)
-    RYBr_ = data.RYBr.copy(True)
-    RYBm_ = data.RYBm.copy(True)
-
+    data = data.copy()
+    
     # Apply policy to economic matrices
-    S_ = ap(scen_file, scen_no, S_, "S")
-    inv_diag_x = sops.inv(np.diag(sops.IOT.x(S_, Y_)))
-    A_ = sops.IOT.A(S_, inv_diag_x)
-    A = ap(scen_file, scen_no, df(A_), "A")
+    data.S = apply_policy(scen_file, scen_no, data.S, "S")
+    inv_diag_x = sops.inv(np.diag(sops.IOT.x(data.S, data.Y)))
+    A = sops.IOT.A(data.S, inv_diag_x)
+    data.A = apply_policy(scen_file, scen_no, df(A), "A")
 
-    Y = ap(scen_file, scen_no, Y_, "Y")
-    RE = ap(scen_file, scen_no, RE_, "RE")
+    data.Y = apply_policy(scen_file, scen_no, data.Y, "Y")
+    data.RE = apply_policy(scen_file, scen_no, data.RE, "RE")
 
     # Apply policy to intermediate extension coefficient matrices
-    RBe = ap(scen_file, scen_no, RBe_, "RBe")
-    RBr = ap(scen_file, scen_no, RBr_, "RBr")
-    RBm = ap(scen_file, scen_no, RBm_, "RBm")
+    data.RBe = apply_policy(scen_file, scen_no, data.RBe, "RBe")
+    data.RBr = apply_policy(scen_file, scen_no, data.RBr, "RBr")
+    data.RBm = apply_policy(scen_file, scen_no, data.RBm, "RBm")
 
     # Apply policy to  final demand extension coefficient matrices
-    RYBe = ap(scen_file, scen_no, RYBe_, "RYBe")
-    RYBr = ap(scen_file, scen_no, RYBr_, "RYBr")
-    RYBm = ap(scen_file, scen_no, RYBm_, "RYBm")
+    data.RYBe = apply_policy(scen_file, scen_no, data.RYBe, "RYBe")
+    data.RYBr = apply_policy(scen_file, scen_no, data.RYBr, "RYBr")
+    data.RYBm = apply_policy(scen_file, scen_no, data.RYBm, "RYBm")
 
     # Scenario
-    L = sops.IOT.L(A_)  # L from S and Y modified
+    data.L = sops.IOT.L(data.A)  # L from S and Y modified
 
-    yi = np.sum(Y, axis=1)  # row sum of final demand
-    diag_yj = np.diag(Y.sum(axis=0))  # column sum of FD
-    x = sops.IOT.x_IAy(L, yi)
-    diag_x = np.diag(x)
+    yi = np.sum(data.Y, axis=1)  # row sum of final demand
+    diag_yj = np.diag(data.Y.sum(axis=0))  # column sum of FD
+    data.x = sops.IOT.x_IAy(data.L, yi)
+    diag_x = np.diag(data.x)
 
-    S = sops.IOT.S(A_, diag_x)
+    data.S = sops.IOT.S(data.A, diag_x)
 
-    E = sops.IOT.B(RE, diag_x)  # primary inputs
+    data.E = sops.IOT.B(data.RE, diag_x)  # primary inputs
 
-    Be = sops.IOT.B(RBe_, diag_x)  # emissions ext
-    Br = sops.IOT.B(RBr_, diag_x)  # resource ext
-    Bm = sops.IOT.B(RBm_, diag_x)  # material ext
+    data.Be = sops.IOT.B(data.RBe, diag_x)  # emissions ext
+    data.Br = sops.IOT.B(data.RBr, diag_x)  # resource ext
+    data.Bm = sops.IOT.B(data.RBm, diag_x)  # material ext
 
-    YBe = sops.IOT.FD_EXT(RYBe, diag_yj)  # emissions ext
-    YBr = sops.IOT.FD_EXT(RYBr, diag_yj)  # resource ext
-    YBm = sops.IOT.FD_EXT(RYBm, diag_yj)  # material ext
+    data.YBe = sops.IOT.FD_EXT(data.RYBe, diag_yj)  # emissions ext
+    data.YBr = sops.IOT.FD_EXT(data.RYBr, diag_yj)  # resource ext
+    data.YBm = sops.IOT.FD_EXT(data.RYBm, diag_yj)  # material ext
 
     # Characterisation
-    CrBe = np.matmul(data.CrBe, Be)  # emissions ext
-    CrBr = np.matmul(data.CrBr, Br)  # resource ext
-    CrBm = np.matmul(data.CrBm_, Bm)  # material ext
-    CrE = np.matmul(data.CrE_, E)  # factor inputs
+    data.CrBe = np.matmul(data.CrBe, data.Be)  # emissions ext
+    data.CrBr = np.matmul(data.CrBr, data.Br)  # resource ext
+    data.CrBm = np.matmul(data.CrBm, data.Bm)  # material ext
+    data.CrE = np.matmul(data.CrE, data.E)  # factor inputs
 
-    CrYBe = np.matmul(data.CrBe, YBe)  # emissions ext
-    CrYBr = np.matmul(data.CrBr, YBr)  # resource ext
-    CrYBm = np.matmul(data.CrBm, YBm)  # material ext
+    data.CrYBe = np.matmul(data.CrBe, data.YBe)  # emissions ext
+    data.CrYBr = np.matmul(data.CrBr, data.YBr)  # resource ext
+    data.CrYBm = np.matmul(data.CrBm, data.YBm)  # material ext
 
-    ver = sops.verifyIOT(S, Y, E)  # ver_new_IOT
+    data.ver = sops.verifyIOT(data.S, data.Y, data.E)  # ver_new_IOT
 
-    IOT = {"RE": RE,
-           "A": A,
-           "Y": Y,
-           "Be": Be,
-           "RBe": RBe,
-           "YBe": YBe,
-           "RYBe": RYBe,
-           "Br": Br,
-           "RBr": RBr,
-           "YBr": YBr,
-           "RYBr": RYBr,
-           "Bm": Bm,
-           "RBm": RBm,
-           "YBm": YBm,
-           "RYBm": RYBm,
-           "CrBe": CrBe,
-           "CrBm": CrBm,
-           "CrBr": CrBr,
-           "CrYBe": CrYBe,
-           "CrYBm": CrYBm,
-           "CrYBr": CrYBr,
-           "CrE": CrE,
-           "L": L,
-           "S": S,
-           "E": E,
-           "x": x,
-           "ver": ver
-           }
-
-    return(IOT)
+    return(data)
 
 def apply_policy(scen_file, scen_no, M, M_name):
     """
@@ -342,9 +306,7 @@ def make_new(fltr_policies, M, M_name):
             inter = row["intervention"]
             ide = row["identifier"]  # used during debugging
 
-# =============================================================================
-#                 Collecting the specified coordinates for the intevention
-# =============================================================================
+            # Collecting the specified coordinates for the intevention
 
             # coordinates for region and category
             reg_o = row["reg_o"]
@@ -352,17 +314,15 @@ def make_new(fltr_policies, M, M_name):
 
             cat_o = row["cat_o"]
             cat_d = row["cat_d"]
-# =============================================================================
-#                Translate coordinates from str to numerical position
-# =============================================================================
-
+            
+            # Translate coordinates from str to numerical position
+            
             # get the labels from the matrix
             ind_M = get_labels(M, 0)  # a matrix with all index labels
             col_M = get_labels(M, 1)  # matrix with all column labels
 
             o_pos = positions(ind_M, reg_o, cat_o)
             d_pos = positions(col_M, reg_d, cat_d)
-#                print(y_pos, x_pos)
 
             # make dictionaries of all interventions
             kt1 = {"kt": row["kt1"], "kp": row["kp1"]}

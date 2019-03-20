@@ -12,8 +12,8 @@ Scope: Modelling the Circular Economy in EEIO
 
 from pandas import DataFrame as df
 from pandas import MultiIndex as mi
-import munch
-import numpy as np
+from pandas import read_csv
+from munch import Munch
 import warnings
 
 
@@ -24,10 +24,6 @@ def save_labels( data):
     get_labels(data["CrBr"], 0).to_csv("labels//charact_resources.csv", index=False)
     get_labels(data["CrBm"], 0).to_csv("labels//charact_materials.csv", index=False)
     get_labels(data["CrE"], 0).to_csv("labels//charact_factor_inputs.csv", index=False)
-
-    # without unit column = to be used for extension tables
-    get_labels(data["Y"], 0, drop_unit=True)
-
     get_labels(data["E"], 0).to_csv("labels//factor_inputs.csv", index=False)
     get_labels(data["Y"], 1).to_csv("labels//final_demand.csv", index=False)
     get_labels(data["Y"], 1, drop_unit=True)
@@ -35,64 +31,99 @@ def save_labels( data):
     get_labels(data["Br"], 0).to_csv("labels//resources.csv", index=False)
     get_labels(data["Bm"], 0).to_csv("labels//materials.csv", index=False)
 
-def load_labels( data):
+def load_labels():
+    
+    ind = read_csv("labels//industry.csv")  # with unit column
+    prod = read_csv("labels//products.csv")  # with unit column
+    
+    primary = read_csv("labels//factor_inputs.csv")
+    fin_dem = read_csv("labels//final_demand.csv")
+    emis = read_csv("labels//emissions.csv")
+    res = read_csv("labels//resources.csv")
+    mat = read_csv("labels//materials.csv")
 
+    car_emis = read_csv("labels//charact_emissions.csv")
+    car_res = read_csv("labels//charact_resources.csv")
+    car_mat = read_csv("labels//charact_materials.csv")
+    car_prim = read_csv("labels//charact_factor_inputs.csv")
+    
+    labels = {"ind": ind,
+              "prod": prod,
+              "primary": primary,
+              "fin_dem": fin_dem,
+              "emis": emis,
+              "res": res,
+              "mat": mat,
+              "car_emis": car_emis,
+              "car_res": car_res,
+              "car_mat": car_mat,
+              "car_prim": car_prim}
+    return(labels)
+    
 
-def relabel_in_bulk( data):
+def relabel_in_bulk(data, trans_method=0):
     """
     This function makes sure that everything is labeled in IOT tables
+    
+    trans_method = 0 is prod x prod , 1 is ind x ind
     """
+    lb = Munch(load_labels())
+    
+    if trans_method == 0:
+        cat = lb.prod
+    elif trans_method == 1:
+        cat = lb.ind
 
     # Relabel Main IOT elements
-    data.S = relabel(data["S"], prod_get_l, prod_get_l_m, "S")
-    data.L = relabel(data["L"], prod_get_l, prod_get_l, "L")
-    data.A = relabel(data["A"], prod_get_l_m, prod_get_l_m, "A")
-    data.Y = relabel(data["Y"], Y_get_l, prod_get_l_m, "Y")
-    data.E = relabel(data["E"], prod_get_l, E_get_l, "E")
-    data.RE = relabel(data["RE"], prod_get_l_m, E_get_l, "RE")
+    data.S = relabel(data.S, cat.iloc[:,:4], cat, "S")
+    data.L = relabel(data.L, cat.iloc[:,:4], cat.iloc[:,:4], "L")
+    data.A = relabel(data.A, cat, cat, "A")
+    data.Y = relabel(data.Y, lb.fin_dem, cat, "Y")
+    data.E = relabel(data.E, cat.iloc[:,:4], lb.primary, "E")
+    data.RE = relabel(data.RE, cat, lb.primary, "RE")
 
     # Relabel Inter-trans extensions
-    data.Be = relabel(data["Be"], prod_get_l, Be_get_l, "Be")
-    data.Br = relabel(data["Br"], prod_get_l, Br_get_l, "Br")
-    data.Bm = relabel(data["Bm"], prod_get_l, Bm_get_l, "Bm")
+    data.Be = relabel(data.Be, cat.iloc[:,:4], lb.emis, "Be")
+    data.Br = relabel(data.Br, cat.iloc[:,:4], lb.res, "Br")
+    data.Bm = relabel(data.Bm, cat.iloc[:,:4], lb.mat, "Bm")
 
     # Inter-trans extensions' intensities
-    data.RBe = relabel(data["RBe"], prod_get_l_m, Be_get_l, "RBe")
-    data.RBr = relabel(data["RBr"], prod_get_l_m, Br_get_l, "RBr")
-    data.RBm = relabel(data["RBm"], prod_get_l_m, Bm_get_l, "RBm")
+    data.RBe = relabel(data.RBe, cat, lb.emis, "RBe")
+    data.RBr = relabel(data.RBr, cat, lb.res, "RBr")
+    data.RBm = relabel(data.RBm, cat, lb.mat, "RBm")
 
     # Relabel characterisation
-    data.CrBe = relabel(data["CrBe"], prod_get_l, CrBe_get_l, "CrBe")
-    data.CrBr = relabel(data["CrBr"], prod_get_l, CrBr_get_l, "CrBe")
-    data.CrBm = relabel(data["CrBm"], prod_get_l, CrBm_get_l, "CrBe")
-    data.CrE = relabel(data["CrE"], prod_get_l, CrE_get_l, "CrBe")
+    data.CrBe = relabel(data.CrBe, cat.iloc[:,:4], lb.car_emis, "CrBe")
+    data.CrBr = relabel(data.CrBr, cat.iloc[:,:4], lb.car_res, "CrBe")
+    data.CrBm = relabel(data.CrBm, cat.iloc[:,:4], lb.car_mat, "CrBe")
+    data.CrE = relabel(data.CrE, cat.iloc[:,:4], lb.car_prim, "CrBe")
 
     # label q
-    data.x = relabel(data["x"], "x", prod_get_l_m, "x")
+    data.x = relabel(data["x"], "x", cat, "x")
     # label balance verification
-    data.ver_label = "balance (x_out/x_in) - % - 100=balanced - 0=NaN no values"
-    data.ver = relabel(df(data["ver"], ver_label, prod_get_l, "ver"))
+    ver_label = "balance (x_out/x_in) - % - 100=balanced - 0=NaN no values"
+    data.ver = relabel(data.ver, ver_label, cat.iloc[:,:4], "ver")
 
     # Labeling final demand extensions
-    data.YBe = relabel(data["YBe"], Y_get_l, Be_get_l, "YBe")
+    data.YBe = relabel(data.YBe, lb.fin_dem.iloc[:,:4], lb.emis, "YBe")
 
-    data.YBr = relabel(data["YBr"], Y_get_l, Br_get_l, "YBr")
+    data.YBr = relabel(data.YBr, lb.fin_dem.iloc[:,:4], lb.res, "YBr")
 
-    data.YBm = relabel(data["YBm"], Y_get_l, Bm_get_l, "YBm")
+    data.YBm = relabel(data.YBm, lb.fin_dem.iloc[:,:4], lb.mat, "YBm")
 
     # Labeling final demand extensions' intensities
-    data.RYBe = relabel(data["RYBe"], Y_get_l_m, Be_get_l, "RYBe")
-    data.RYBr = relabel(data["RYBr"], Y_get_l_m, Br_get_l, "RYBr")
-    data.RYBm = relabel(data["RYBm"], Y_get_l_m, Bm_get_l, "RYBm")
+    data.RYBe = relabel(data.RYBe, lb.fin_dem, lb.emis, "RYBe")
+    data.RYBr = relabel(data.RYBr, lb.fin_dem, lb.res, "RYBr")
+    data.RYBm = relabel(data.RYBm, lb.fin_dem, lb.mat, "RYBm")
 
     # Relabel characterisation for final demand
-    data.CrYBe = relabel(data["CrYBe"], Y_get_l, CrBe_get_l, "CrBe")
-    data.CrYBr = relabel(data["CrYBr"], Y_get_l, CrBr_get_l, "CrBe")
-    data.CrYBm = relabel(data["CrYBm"], Y_get_l, CrBm_get_l, "CrBe")
+    data.CrYBe = relabel(data.CrYBe, lb.fin_dem, lb.car_emis, "CrBe")
+    data.CrYBr = relabel(data.CrYBr, lb.fin_dem, lb.car_res, "CrBe")
+    data.CrYBm = relabel(data.CrYBm, lb.fin_dem, lb.car_mat, "CrBe")
 
     return(data)
 
-def get_labels( matrix, axis=0, drop_unit=False):
+def get_labels(matrix, axis=0, drop_unit=False):
     """
     Collects labels from a dataframe
     axis = 0 => Index
@@ -128,7 +159,7 @@ def get_labels( matrix, axis=0, drop_unit=False):
 
     return(output)
 
-def apply_labels( matrix, labels, axis=0):
+def apply_labels(matrix, labels, axis=0):
     """
     Applies labels to a dataframe
     axis = 0 => Index
@@ -143,7 +174,7 @@ def apply_labels( matrix, labels, axis=0):
 
     return(matrix)
 
-def relabel( M, column_labels, index_labels, name):
+def relabel(M, column_labels, index_labels, name):
     """
     Processes apply_labels and apply _names together
     """
