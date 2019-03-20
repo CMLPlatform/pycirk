@@ -12,10 +12,107 @@ Scope: Modelling the Circular Economy in EEIO
 
 import pandas as pd
 import numpy as np
-from pycirk.labels import get_labels
 from pycirk.labels import positions
 import warnings
 
+
+def sceneIOT(data, scen_no, scen_file):
+    """
+    baseline IOT calculated with Technical Coefficient or
+    Market coefficient method
+    """
+
+    Y_ = data.Y.copy(True)
+    S_ = data.S.copy(True)
+    RE_ = data.RE.copy(True)
+    RBe_ = data.RBe.copy(True)
+    RBr_ = data.RBr.copy(True)
+    RBm_ = data.RBm.copy(True)
+    RYBe_ = data.RYBe.copy(True)
+    RYBr_ = data.RYBr.copy(True)
+    RYBm_ = data.RYBm.copy(True)
+
+    # Apply policy to economic matrices
+    S_ = ap(scen_file, scen_no, S_, "S")
+    inv_diag_x = sops.inv(np.diag(sops.IOT.x(S_, Y_)))
+    A_ = sops.IOT.A(S_, inv_diag_x)
+    A = ap(scen_file, scen_no, df(A_), "A")
+
+    Y = ap(scen_file, scen_no, Y_, "Y")
+    RE = ap(scen_file, scen_no, RE_, "RE")
+
+    # Apply policy to intermediate extension coefficient matrices
+    RBe = ap(scen_file, scen_no, RBe_, "RBe")
+    RBr = ap(scen_file, scen_no, RBr_, "RBr")
+    RBm = ap(scen_file, scen_no, RBm_, "RBm")
+
+    # Apply policy to  final demand extension coefficient matrices
+    RYBe = ap(scen_file, scen_no, RYBe_, "RYBe")
+    RYBr = ap(scen_file, scen_no, RYBr_, "RYBr")
+    RYBm = ap(scen_file, scen_no, RYBm_, "RYBm")
+
+    # Scenario
+    L = sops.IOT.L(A_)  # L from S and Y modified
+
+    yi = np.sum(Y, axis=1)  # row sum of final demand
+    diag_yj = np.diag(Y.sum(axis=0))  # column sum of FD
+    x = sops.IOT.x_IAy(L, yi)
+    diag_x = np.diag(x)
+
+    S = sops.IOT.S(A_, diag_x)
+
+    E = sops.IOT.B(RE, diag_x)  # primary inputs
+
+    Be = sops.IOT.B(RBe_, diag_x)  # emissions ext
+    Br = sops.IOT.B(RBr_, diag_x)  # resource ext
+    Bm = sops.IOT.B(RBm_, diag_x)  # material ext
+
+    YBe = sops.IOT.FD_EXT(RYBe, diag_yj)  # emissions ext
+    YBr = sops.IOT.FD_EXT(RYBr, diag_yj)  # resource ext
+    YBm = sops.IOT.FD_EXT(RYBm, diag_yj)  # material ext
+
+    # Characterisation
+    CrBe = np.matmul(data.CrBe, Be)  # emissions ext
+    CrBr = np.matmul(data.CrBr, Br)  # resource ext
+    CrBm = np.matmul(data.CrBm_, Bm)  # material ext
+    CrE = np.matmul(data.CrE_, E)  # factor inputs
+
+    CrYBe = np.matmul(data.CrBe, YBe)  # emissions ext
+    CrYBr = np.matmul(data.CrBr, YBr)  # resource ext
+    CrYBm = np.matmul(data.CrBm, YBm)  # material ext
+
+    ver = sops.verifyIOT(S, Y, E)  # ver_new_IOT
+
+    IOT = {"RE": RE,
+           "A": A,
+           "Y": Y,
+           "Be": Be,
+           "RBe": RBe,
+           "YBe": YBe,
+           "RYBe": RYBe,
+           "Br": Br,
+           "RBr": RBr,
+           "YBr": YBr,
+           "RYBr": RYBr,
+           "Bm": Bm,
+           "RBm": RBm,
+           "YBm": YBm,
+           "RYBm": RYBm,
+           "CrBe": CrBe,
+           "CrBm": CrBm,
+           "CrBr": CrBr,
+           "CrYBe": CrYBe,
+           "CrYBm": CrYBm,
+           "CrYBr": CrYBr,
+           "CrE": CrE,
+           "L": L,
+           "S": S,
+           "E": E,
+           "x": x,
+           "ver": ver
+           }
+
+    return(IOT)
 
 def apply_policy(scen_file, scen_no, M, M_name):
     """
@@ -36,8 +133,8 @@ def apply_policy(scen_file, scen_no, M, M_name):
         raise KeyError("only integer or explicit name (scenario_x)" +
                        "are allowed")
 
-    scenario = pd.read_excel(scen_file, sheet_name=scen_no,
-                                  header=1, index=None)
+    scenario = pd.read_excel(scen_file, sheet_name=scen_no, header=1,
+                             index=None)
 
     if scenario["matrix"].isnull().values.all():
         matrix = M
@@ -49,6 +146,7 @@ def apply_policy(scen_file, scen_no, M, M_name):
         matrix = make_new(fltr_pols, M, M_name)
 
     return (matrix)
+
 
 def basic_mult(ide, a, kt, kp):
     """
@@ -73,6 +171,7 @@ def basic_mult(ide, a, kt, kp):
         d = np.nan_to_num(d)
         return(d)
 
+
 def basic_add(ide, a, at):
     """
 
@@ -83,6 +182,7 @@ def basic_add(ide, a, at):
         d = a + at
         d = np.nan_to_num(d)
         return(d)
+
 
 def substitution(d, s, fx_kp):
     """
@@ -110,6 +210,7 @@ def substitution(d, s, fx_kp):
     ind = np.nan_to_num(ind)
     return(ind)
 
+
 def copy(d, c, fx_kp):
     """
     Moves the value from one or multiple cells (in the same row or column)
@@ -124,6 +225,7 @@ def copy(d, c, fx_kp):
     ind = np.array(d) + (np.array(c) * fx_kp)
 
     return(ind)
+
 
 def policy_engine(M, inter, subs=False, copy=False):
     """
@@ -214,6 +316,7 @@ def policy_engine(M, inter, subs=False, copy=False):
                         M.iloc[y1, x1] = substitution(d, s, inter["swk"])
 
     return(M)
+
 
 def make_new(fltr_policies, M, M_name):
     """

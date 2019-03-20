@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Nov  2 12:05:08 2016
+Created on Wed Nov 2 12:05:08 2016
 
 Description: Class to perform SUT and IOT transformations and balancing
 
@@ -354,35 +354,34 @@ class SUTops:
 
             return(EXT)
 
-    class difference:
-        """
-        This class is used to calculate the difference between scenarios
-        """
 
-        def delta_Y(Y, Yalt):
-            """
-            method to calculate difference in Y
-            Y = final demand baseline
-            Yalt = final demand scenario
-            """
-            delta_Y = Y - Yalt
 
-            return (delta_Y)
+def delta_Y(Y, Yalt):
+    """
+    method to calculate difference in Y
+    Y = final demand baseline
+    Yalt = final demand scenario
+    """
+    delta_Y = Y - Yalt
 
-        def delta_x(L, Lalt, y):
-            """
-            method to calculate difference in q
-            L = Leontief of baseline
-            Lalt = Leontief of scenario
-            """
-            delta_x = (L-Lalt) @ y
+    return (delta_Y)
 
-            return (delta_x)
 
-    def verifyIOT(S, Y, E):
-        x_out = np.sum(np.array(S), axis=1) + np.sum(np.array(Y), axis=1)
-        x_in = np.sum(S, axis=0) + np.sum(E[:9], axis=0)
-        with np.errstate(divide="ignore", invalid="ignore"):
-            ver = x_out/x_in * 100
-        ver = np.nan_to_num(ver)
-        return(ver)
+def delta_x(L, Lalt, y):
+    """
+    method to calculate difference in q
+    L = Leontief of baseline
+    Lalt = Leontief of scenario
+    """
+    delta_x = (L-Lalt) @ y
+
+    return (delta_x)
+
+
+def verifyIOT(S, Y, E):
+    x_out = np.sum(np.array(S), axis=1) + np.sum(np.array(Y), axis=1)
+    x_in = np.sum(S, axis=0) + np.sum(E[:9], axis=0)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        ver = x_out/x_in * 100
+    ver = np.nan_to_num(ver)
+    return(ver)

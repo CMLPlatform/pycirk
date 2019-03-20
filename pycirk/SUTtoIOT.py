@@ -24,7 +24,6 @@ class Transform:
         self.V = SUTs["V"]  # Supply matrix
         self.U = SUTs["U"]  # Intermediate use
         self.Y = SUTs["Y"]  # Final demand
-#        self.Tm = SUTs["Tm"] # Trade margins
         self.E = SUTs["E"]  # Primary input
         self.Be = SUTs["Be"]  # emissions extension
         self.YBe = SUTs["YBe"]  # emissions extension final demand
@@ -33,10 +32,10 @@ class Transform:
         self.Bm = SUTs["Bm"]  # Materials extension
         self.YBm = SUTs["YBm"]  # Materials extension final demand
 
-        self.CrBe = SUTs["CrBe"]  # Characterisation emissions
-        self.CrBm = SUTs["CrBm"]  # Characterisation materials
-        self.CrBr = SUTs["CrBr"]  # Characterisation resources
-        self.CrE = SUTs["CrE"]  # Characterisation factor inputs
+        self.CrBe_k = SUTs["CrBe"]  # Characterisation coefficients emissions
+        self.CrBm_k = SUTs["CrBm"]  # Characterisation coefficients materials
+        self.CrBr_k = SUTs["CrBr"]  # Characterisation coefficients resources
+        self.CrE_k = SUTs["CrE"]  # Characterisation coefficients factor inputs
 
         # baseline variables
         self.e = np.sum(self.E[: 9], axis=0)
