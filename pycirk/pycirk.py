@@ -9,13 +9,11 @@ Scope: Modelling the Circular Economy in EEIO
 @author:Franco Donati
 @institution:Leiden University CML
 """
-import numpy
 import pandas as pd
-from pycirk.save_ import Save
+from pycirk.save_utils import Save
 from pycirk.results import Results
-from pycirk.pycirk_set import Settings
-import matplotlib.pyplot as plt
-
+from pycirk.pycirk_settings import Settings
+from pycirk.make_scenarios import make_counter_factuals as mcf
 
 class Pycirk:
     """
@@ -53,6 +51,8 @@ class Pycirk:
 
         self.settings = Settings(method, make_secondary, save_directory,
                                  aggregation, file)
+        
+        self.scen_file = Settings.scenario_file()
 
     def run_one_scenario(self, scen_no, results_only=True):
         """
@@ -64,10 +64,9 @@ class Pycirk:
         """
         if scen_no in [0, "baseline", "base", None]:
             scen_no = "baseline"
-            IO = self.settings.IO
+            IO = self.settings.transform_to_io()
         else:
-            IO = self.settings.bns.sceneIOT(self.settings.IO, scen_no,
-                                            self.scen_file)
+            IO = mcf(IO, scen_no, self.scen_file)
 
         output = Results.one_scen(IO, scen_no, results_only)
 
@@ -143,23 +142,3 @@ class Pycirk:
         """
         self.save_results()
         self.save_all_scenarios()
-
-    def plot_results(self, results):
-        """
-        Plots bar graph of the summary results
-        """
-
-        labels = list(results.index[1:].values)
-        base = results[0]
-        y_pos = numpy.arange(len(results[1:]))
-        difference = -(1-results.iloc[1:] / base)*100
-
-        title = "Difference from baseline"
-        sub_title = results.name
-
-        plt.bar(y_pos, difference, width=0.35, align='center', alpha=0.75)
-        plt.xticks(y_pos, labels)
-        plt.xlabel("Scenarios")
-        plt.ylabel("%")  # sub_title[-1])
-        plt.title(str(title) + "\n" + str(sub_title))
-        plt.show()

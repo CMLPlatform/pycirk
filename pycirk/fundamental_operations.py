@@ -13,7 +13,7 @@ import numpy as np
 from numpy import linalg as ln
 
 
-class SUTops:
+class Operations:
     """
     Contains all basic operations to transform SUTs into IOTs and verify them
     It contains two subclasses defining two different trasformation methods
@@ -322,31 +322,31 @@ class SUTops:
             """
             IOT
             """
-            x = SUTops.q(S, Y)  # total product output
+            x = Operations.q(S, Y)  # total product output
             diag_x = np.diag(x)
-            inv_diag_x = SUTops.inv(diag_x)
+            inv_diag_x = Operations.inv(diag_x)
 
             y = np.sum(Y, axis=1)
 
-            A = SUTops.IOT.A(S, inv_diag_x)  # technical coefficient matrix
-            L = SUTops.IOT.L(A)  # leontief inverse
+            A = Operations.IOT.A(S, inv_diag_x)  # technical coefficient matrix
+            L = Operations.IOT.L(A)  # leontief inverse
 
-            RE = SUTops.IOT.R(E, inv_diag_x)  # primary inputs coef
-            E = SUTops.IOT.B(RE, diag_x)
+            RE = Operations.IOT.R(E, inv_diag_x)  # primary inputs coef
+            E = Operations.IOT.B(RE, diag_x)
 
-            RBe = SUTops.IOT.R(Be, inv_diag_x)  # Be coefficient matrix
-            Be = SUTops.IOT.B(RBe, diag_x)  # environmental extensions
+            RBe = Operations.IOT.R(Be, inv_diag_x)  # Be coefficient matrix
+            Be = Operations.IOT.B(RBe, diag_x)  # environmental extensions
 
-            RBr = SUTops.IOT.R(Br, inv_diag_x)  # Br coefficient matrix
-            Br = SUTops.IOT.B(RBr, diag_x)  # resource extensions
+            RBr = Operations.IOT.R(Br, inv_diag_x)  # Br coefficient matrix
+            Br = Operations.IOT.B(RBr, diag_x)  # resource extensions
 
-            RBm = SUTops.IOT.R(Bm, inv_diag_x)  # Bm coefficient matrix
-            Bm = SUTops.IOT.B(RBm, diag_x)  # Material extension
+            RBm = Operations.IOT.R(Bm, inv_diag_x)  # Bm coefficient matrix
+            Bm = Operations.IOT.B(RBm, diag_x)  # Material extension
 
-            S = SUTops.IOT.S(A, diag_x)  # intermediates
-            x = SUTops.IOT.x_IAy(L, y)
+            S = Operations.IOT.S(A, diag_x)  # intermediates
+            x = Operations.IOT.x_IAy(L, y)
 
-            ver_base = SUTops.verifyIOT(S, Y, E)
+            ver_base = Operations.verifyIOT(S, Y, E)
 
             IOT = {"A": A,
                    "S": S,
@@ -371,11 +371,10 @@ class SUTops:
             """
             Recalculates FD extensions based on counterfactual final demand
             """
-            inv_diag_yj = SUTops.inv(diag_yj)
+            inv_diag_yj = Operations.inv(diag_yj)
 
-            RYB = SUTops.IOT.RYB(inv_diag_yj, YB)
-            YB = SUTops.IOT.YB(RYB, diag_yj)
-            print(YB.shape)
+            RYB = Operations.IOT.RYB(inv_diag_yj, YB)
+            YB = Operations.IOT.YB(RYB, diag_yj)
 
             EXT = {"RYB": RYB,
                    "YB": YB}

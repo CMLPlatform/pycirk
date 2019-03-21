@@ -10,7 +10,7 @@ Scope:  Modelling the Circular economy in EEIO
 @institution:  Leiden University CML
 """
 import numpy as np
-from pycirk.SUTops import SUTops as sops
+from pycirk.fundamental_operations import Operations as ops
 
 
 class Transform:
@@ -51,10 +51,10 @@ class Transform:
         self.diag_yj = np.diag(self.yj)  # diagonal of yj
 
         # bv inverses
-        self.inv_diag_yi = sops.inv(self.diag_yi)
-        self.inv_diag_yj = sops.inv(self.diag_yj)
-        self.inv_diag_q = sops.inv(self.diag_q)
-        self.inv_diag_g = sops.inv(self.diag_g)
+        self.inv_diag_yi = ops.inv(self.diag_yi)
+        self.inv_diag_yj = ops.inv(self.diag_yj)
+        self.inv_diag_q = ops.inv(self.diag_q)
+        self.inv_diag_g = ops.inv(self.diag_g)
 
         del(SUTs)
 
@@ -63,28 +63,30 @@ class Transform:
         IOT prod x prod Single tech Industry-technology assumption
         Technical coef method
         """
-        T = sops.PxP_ITA_TC.T(self.V, self.inv_diag_g)  # transformation matrix
-        L = sops.PxP_ITA_TC.L(self.U, T, self.inv_diag_q)  # leontief inverse
-        RE = sops.PxP_ITA_TC.R(self.E, T, self.inv_diag_q)  # primary inp. coef
-        E = sops.PxP_ITA_TC.B(RE, self.diag_q)  # primary inputs
+        met = ops.PxP_ITA_TC
+        
+        T = met.T(self.V, self.inv_diag_g)  # transformation matrix
+        L = met.L(self.U, T, self.inv_diag_q)  # leontief inverse
+        RE = met.R(self.E, T, self.inv_diag_q)  # primary inp. coef
+        E = met.B(RE, self.diag_q)  # primary inputs
 
-        RBe = sops.PxP_ITA_TC.R(self.Be, T, self.inv_diag_q)  # Be coef. matrix
-        Be = sops.PxP_ITA_TC.B(RBe, self.diag_q)  # emissions extensions
+        RBe = met.R(self.Be, T, self.inv_diag_q)  # Be coef. matrix
+        Be = met.B(RBe, self.diag_q)  # emissions extensions
 
-        RBr = sops.PxP_ITA_TC.R(self.Br, T, self.inv_diag_q)  # Br coef. matrix
-        Br = sops.PxP_ITA_TC.B(RBr, self.diag_q)  # resource extensions
+        RBr = met.R(self.Br, T, self.inv_diag_q)  # Br coef. matrix
+        Br = met.B(RBr, self.diag_q)  # resource extensions
 
-        RBm = sops.PxP_ITA_TC.R(self.Bm, T, self.inv_diag_q)  # Bm coef. matrix
-        Bm = sops.PxP_ITA_TC.B(RBm, self.diag_q)  # Material extension
+        RBm = met.R(self.Bm, T, self.inv_diag_q)  # Bm coef. matrix
+        Bm = met.B(RBm, self.diag_q)  # Material extension
 
-        S = sops.PxP_ITA_TC.S(T, self.U)  # intermediates
-        x = sops.IOT.x_IAy(L, self.yi)  # total product ouput
+        S = met.S(T, self.U)  # intermediates
+        x = ops.IOT.x_IAy(L, self.yi)  # total product ouput
 
-        A = sops.IOT.A(S, self.inv_diag_q)
+        A = ops.IOT.A(S, self.inv_diag_q)
 
         Y = self.Y
 
-        ver_base = sops.verifyIOT(S, Y, E)
+        ver_base = ops.verifyIOT(S, Y, E)
 
         IOT = {"x": x,
                "T": T,
@@ -117,30 +119,32 @@ class Transform:
         IOT prod x prod Single tech Industry-technology assumption
         Market share coef method
         """
-        Z = sops.PxP_ITA_MSC.Z(self.U, self.inv_diag_g)  # ind. interm. coef.
-        D = sops.PxP_ITA_MSC.D(self.V, self.inv_diag_q)  # Market shares
-        A = sops.PxP_ITA_MSC.A(Z, D)  # technical coefficient matrix
-        L = sops.PxP_ITA_MSC.L(A)  # leontief inverse
-        RE = sops.PxP_ITA_MSC.R(self.E, D, self.inv_diag_g)  # primary inputs
-        E = sops.PxP_ITA_MSC.B(RE, self.diag_q)
+        met = ops.PxP_ITA_MSC
+        
+        Z = met.Z(self.U, self.inv_diag_g)  # ind. interm. coef.
+        D = met.D(self.V, self.inv_diag_q)  # Market shares
+        A = met.A(Z, D)  # technical coefficient matrix
+        L = met.L(A)  # leontief inverse
+        RE = met.R(self.E, D, self.inv_diag_g)  # primary inputs
+        E = met.B(RE, self.diag_q)
 
-        RBe = sops.PxP_ITA_MSC.R(self.Be, D, self.inv_diag_g)  # Be coef. matr.
-        Be = sops.PxP_ITA_MSC.B(RBe, self.diag_q)  # emissions extensions
+        RBe = met.R(self.Be, D, self.inv_diag_g)  # Be coef. matr.
+        Be = met.B(RBe, self.diag_q)  # emissions extensions
 
-        RBr = sops.PxP_ITA_MSC.R(self.Br, D, self.inv_diag_g)  # Br coef. matr.
-        Br = sops.PxP_ITA_MSC.B(RBr, self.diag_q)  # resource extensions
+        RBr = met.R(self.Br, D, self.inv_diag_g)  # Br coef. matr.
+        Br = met.B(RBr, self.diag_q)  # resource extensions
 
-        RBm = sops.PxP_ITA_MSC.R(self.Bm, D, self.inv_diag_g)  # Bm coef. matr.
-        Bm = sops.PxP_ITA_MSC.B(RBm, self.diag_q)  # Material extension
+        RBm = met.R(self.Bm, D, self.inv_diag_g)  # Bm coef. matr.
+        Bm = met.B(RBm, self.diag_q)  # Material extension
 
-        S = sops.PxP_ITA_MSC.S(Z, D, self.diag_q)  # intermediates
-        x = sops.IOT.x_IAy(L, self.yi)  # total product output
+        S = met.S(Z, D, self.diag_q)  # intermediates
+        x = ops.IOT.x_IAy(L, self.yi)  # total product output
 
-        A = sops.IOT.A(S, self.inv_diag_q)
+        A = ops.IOT.A(S, self.inv_diag_q)
 
         Y = self.Y
 
-        ver_base = sops.verifyIOT(S, Y, E)
+        ver_base = ops.verifyIOT(S, Y, E)
 
         IOT = {"RE": RE,
                "A": A,

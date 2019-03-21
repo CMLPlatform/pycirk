@@ -18,7 +18,7 @@ from shutil import copyfile
 import os.path as ospt
 from pycirk.organize_io import Organize_IO
 from pycirk.make_secondary_flows import make_secondary as ms
-from pycirk.SUTtoIOT import Transform
+from pycirk.transformation_methods import Transform
 
 
 class Settings:
@@ -100,7 +100,7 @@ class Settings:
         orig = os.path.abspath(os.path.join(os.path.dirname(__file__),
                                             "scenarios.xls"))
 
-        directory = self.file_directory
+        directory = self.file_directory()
         file = directory + "scenarios.xls"
 
         if not os.path.isfile(file):
@@ -111,16 +111,16 @@ class Settings:
 
     def create_output_folder(self):
 
-        output_folder = self.file_directory + "/outputs/"
+        output_folder = self.file_directory() + "/outputs/"
 
         if os.path.isdir(output_folder) is True:
             pass
         elif os.path.isdir(output_folder) is False:
             os.makedirs(output_folder)
 
-    def load_scenario_file(self):
+    def scenario_file(self):
 
-        scen_file = pd.ExcelFile(self.file_directory + "scenarios.xls")
+        scen_file = self.file_directory() + "scenarios.xls"
 
         return(scen_file)
 
@@ -147,7 +147,6 @@ class Settings:
 
             if self.aggregation == 0:
                 io = io_file_bi
-                print("wow")
                 sut = "data//mrSUT_EU_ROW_V3.3.pkl"
 
             elif self.aggregation == 1:
@@ -165,11 +164,9 @@ class Settings:
                                         ospt.join(ospt.dirname(__file__)))
 
             elif os.path.exists(io) is True:
-                print(io)
                 data = io
                 typ = "io"
             elif os.path.exists(sut) is True:
-                print(sut)
                 data = sut
                 typ = "sut"
 
@@ -206,22 +203,21 @@ class Settings:
                 IOT = SUTs.IOTpxpSTA_MSCm()
 
             IOT = Organize_IO(IOT)
-            print("here")
 
             if self.aggregation == 0:
                 pickle_name = "pycirk//data//mrIO_EU_ROW_V3.3" + extension
-                print("here_again1")
             elif self.aggregation == 1:
                 pickle_name = "pycirk//data//mrIO_V3.3" + extension
-                print("here_again2")
             # saving the IO tables to avoid rebuilding them all the time
 
             datatopkl = IOT.__dict__
             with open(pickle_name, "wb") as w:
                 pickle.dump(datatopkl, w, 2)  # pickling
-            #w.close()
-
+            
+            #os.remove(pickle_name)
         elif typ == "io":
                 IOT = Organize_IO(data)
+        
+        
 
         return(IOT)

@@ -13,7 +13,7 @@ Scope: Modelling the Circular economy in EEIO
 
 # import warnings
 import numpy as np
-from pycirk.SUTops import SUTops as sops
+from pycirk.fundamental_operations import Operations as ops
 
 
 class Organize_IO:
@@ -53,9 +53,9 @@ class Organize_IO:
 
         diag_yj = np.diag(self.Y.sum(axis=0))
 
-        _YBe = sops.IOT.FD_EXT(YBe_, diag_yj)
-        _YBr = sops.IOT.FD_EXT(YBr_, diag_yj)
-        _YBm = sops.IOT.FD_EXT(YBm_, diag_yj)
+        _YBe = ops.IOT.FD_EXT(YBe_, diag_yj)
+        _YBr = ops.IOT.FD_EXT(YBr_, diag_yj)
+        _YBm = ops.IOT.FD_EXT(YBm_, diag_yj)
 
         self.YBe = _YBe["YB"]
         self.YBr = _YBr["YB"]

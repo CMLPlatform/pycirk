@@ -13,13 +13,13 @@ Scope: Modelling the Circular Economy in EEIO
 import pandas as pd
 import numpy as np
 from pycirk.positions import positions
-from pycirk.SUTops import sops
+from pycirk.fundamental_operations import Operations as ops
 from pycirk.labels import get_labels
 from pandas import DataFrame as df
 import warnings
 
 
-def sceneIOT(data, scen_no, scen_file):
+def make_counter_factuals(data, scen_no, scen_file):
     """
     baseline IOT calculated with Technical Coefficient or
     Market coefficient method
@@ -27,43 +27,43 @@ def sceneIOT(data, scen_no, scen_file):
     data = data.copy()
 
     # Apply policy to economic matrices
-    data.S = apply_policy(scen_file, scen_no, data.S, "S")
-    inv_diag_x = sops.inv(np.diag(sops.IOT.x(data.S, data.Y)))
-    A = sops.IOT.A(data.S, inv_diag_x)
-    data.A = apply_policy(scen_file, scen_no, df(A), "A")
+    data.S = counterfactual(scen_file, scen_no, data.S, "S")
+    inv_diag_x = ops.inv(np.diag(ops.IOT.x(data.S, data.Y)))
+    A = ops.IOT.A(data.S, inv_diag_x)
+    data.A = counterfactual(scen_file, scen_no, df(A), "A")
 
-    data.Y = apply_policy(scen_file, scen_no, data.Y, "Y")
-    data.RE = apply_policy(scen_file, scen_no, data.RE, "RE")
+    data.Y = counterfactual(scen_file, scen_no, data.Y, "Y")
+    data.RE = counterfactual(scen_file, scen_no, data.RE, "RE")
 
     # Apply policy to intermediate extension coefficient matrices
-    data.RBe = apply_policy(scen_file, scen_no, data.RBe, "RBe")
-    data.RBr = apply_policy(scen_file, scen_no, data.RBr, "RBr")
-    data.RBm = apply_policy(scen_file, scen_no, data.RBm, "RBm")
+    data.RBe = counterfactual(scen_file, scen_no, data.RBe, "RBe")
+    data.RBr = counterfactual(scen_file, scen_no, data.RBr, "RBr")
+    data.RBm = counterfactual(scen_file, scen_no, data.RBm, "RBm")
 
     # Apply policy to  final demand extension coefficient matrices
-    data.RYBe = apply_policy(scen_file, scen_no, data.RYBe, "RYBe")
-    data.RYBr = apply_policy(scen_file, scen_no, data.RYBr, "RYBr")
-    data.RYBm = apply_policy(scen_file, scen_no, data.RYBm, "RYBm")
+    data.RYBe = counterfactual(scen_file, scen_no, data.RYBe, "RYBe")
+    data.RYBr = counterfactual(scen_file, scen_no, data.RYBr, "RYBr")
+    data.RYBm = counterfactual(scen_file, scen_no, data.RYBm, "RYBm")
 
     # Scenario
-    data.L = sops.IOT.L(data.A)  # L from S and Y modified
+    data.L = ops.IOT.L(data.A)  # L from S and Y modified
 
     yi = np.sum(data.Y, axis=1)  # row sum of final demand
     diag_yj = np.diag(data.Y.sum(axis=0))  # column sum of FD
-    data.x = sops.IOT.x_IAy(data.L, yi)
+    data.x = ops.IOT.x_IAy(data.L, yi)
     diag_x = np.diag(data.x)
 
-    data.S = sops.IOT.S(data.A, diag_x)
+    data.S = ops.IOT.S(data.A, diag_x)
 
-    data.E = sops.IOT.B(data.RE, diag_x)  # primary inputs
+    data.E = ops.IOT.B(data.RE, diag_x)  # primary inputs
 
-    data.Be = sops.IOT.B(data.RBe, diag_x)  # emissions ext
-    data.Br = sops.IOT.B(data.RBr, diag_x)  # resource ext
-    data.Bm = sops.IOT.B(data.RBm, diag_x)  # material ext
+    data.Be = ops.IOT.B(data.RBe, diag_x)  # emissions ext
+    data.Br = ops.IOT.B(data.RBr, diag_x)  # resource ext
+    data.Bm = ops.IOT.B(data.RBm, diag_x)  # material ext
 
-    data.YBe = sops.IOT.FD_EXT(data.RYBe, diag_yj)  # emissions ext
-    data.YBr = sops.IOT.FD_EXT(data.RYBr, diag_yj)  # resource ext
-    data.YBm = sops.IOT.FD_EXT(data.RYBm, diag_yj)  # material ext
+    data.YBe = ops.IOT.FD_EXT(data.RYBe, diag_yj)  # emissions ext
+    data.YBr = ops.IOT.FD_EXT(data.RYBr, diag_yj)  # resource ext
+    data.YBm = ops.IOT.FD_EXT(data.RYBm, diag_yj)  # material ext
 
     # Characterisation
     data.CrBe = np.matmul(data.CrBe, data.Be)  # emissions ext
@@ -75,12 +75,12 @@ def sceneIOT(data, scen_no, scen_file):
     data.CrYBr = np.matmul(data.CrBr, data.YBr)  # resource ext
     data.CrYBm = np.matmul(data.CrBm, data.YBm)  # material ext
 
-    data.ver = sops.verifyIOT(data.S, data.Y, data.E)  # ver_new_IOT
+    data.ver = ops.verifyIOT(data.S, data.Y, data.E)  # ver_new_IOT
 
     return(data)
 
 
-def apply_policy(scen_file, scen_no, M, M_name):
+def counterfactual(scen_file, scen_no, M, M_name):
     """
     Separates policy interventions by matrix subject to intervention
     and aply policy interventions on specific matrix
@@ -193,7 +193,7 @@ def copy(d, c, fx_kp):
     return(ind)
 
 
-def policy_engine(M, inter, subs=False, copy=False):
+def counterfactual_engine(M, inter, subs=False, copy=False):
     """
     This function allows for the proccessing of the specified interventions
     onto a selected matrix. It calls various functions to modify the values
@@ -420,6 +420,6 @@ def make_new(fltr_policies, M, M_name):
 
 #                print(ide, intervention)
 
-            M = policy_engine(M, intervention, substitution, copy)
+            M = counterfactual_engine(M, intervention, substitution, copy)
 
     return(M)

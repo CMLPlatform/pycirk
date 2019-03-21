@@ -74,18 +74,18 @@ def positions(ind_df, reg, cat):
     return(positions)
 
 
-# def make_coord_array(coordinates, no_countries, no_ind_or_prod):
-#
-#    n = 0
-#    nn = 0
-#    while n in range(len(coordinates)):
-#        while nn in range(no_countries):
-#            g = coordinates + no_ind_or_prod*nn
-#            if "s" not in locals():
-#                s = g
-#            else:
-#                s = np.concatenate([s, g])
-#            nn = nn+1
-#        n = n+1
-#
-#    return(s)
+def make_coord_array(coordinates, no_countries, no_ind_or_prod):
+
+    n = 0
+    nn = 0
+    while n in range(len(coordinates)):
+        while nn in range(no_countries):
+            g = coordinates + no_ind_or_prod*nn
+            if "s" not in locals():
+                s = g
+            else:
+                s = np.concatenate([s, g])
+            nn = nn+1
+        n = n+1
+
+    return(s)
