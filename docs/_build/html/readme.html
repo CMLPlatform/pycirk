@@ -9,7 +9,7 @@
     <title>pycirk &#8212; pycirk 1.0.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -29,6 +29,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="pycirk">
@@ -243,57 +245,6 @@ V3.3, 2011)</p>
 <li>region of interest</li>
 <li>impact categories # Please see the data_validation_list sheet in the scenarios.xls file for the comprehensive list</li>
 </ul>
-<p>### make_secondary.py
-Allows for the modification of secondary material flows in the SUTs so that they are visible in the IO system</p>
-</div>
-</div>
-<div class="section" id="other-modules">
-<h2>5. Other modules<a class="headerlink" href="#other-modules" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="results-py">
-<h3>5.1. results.py<a class="headerlink" href="#results-py" title="Permalink to this headline">¶</a></h3>
-<p>Class to assemble results for analysis as specified in scenario.xls analysis sheet:</p>
-<ul class="simple">
-<li>Output product content in other products</li>
-<li>Output results for each scenario</li>
-<li>Output results and all IO tables and extensions</li>
-</ul>
-</div>
-<div class="section" id="save-py">
-<h3>5.2. <a href="#id1"><span class="problematic" id="id2">save_</span></a>.py<a class="headerlink" href="#save-py" title="Permalink to this headline">¶</a></h3>
-<p>Save class:</p>
-<ul class="simple">
-<li>Save one scenario results</li>
-<li>Save one scenario results + IOTs</li>
-<li>Save all scenarios + IOTs</li>
-<li>Save all results</li>
-</ul>
-</div>
-<div class="section" id="apply-policy-py">
-<h3>5.3. apply_policy.py<a class="headerlink" href="#apply-policy-py" title="Permalink to this headline">¶</a></h3>
-<p>Policy interventions class:</p>
-<ul class="simple">
-<li>Recreate any matrix in IOT from policy interventions listed in the scenarios scenarios.xls</li>
-</ul>
-</div>
-<div class="section" id="base-n-scen-py">
-<h3>5.4. base_n_scen.py<a class="headerlink" href="#base-n-scen-py" title="Permalink to this headline">¶</a></h3>
-<p>Calculate IOT for baseline and scenarios from SUTs</p>
-</div>
-<div class="section" id="suttoiot-py">
-<h3>5.5. SUTtoIOT.py<a class="headerlink" href="#suttoiot-py" title="Permalink to this headline">¶</a></h3>
-<p>Assemblying IOTs and Extensions from:</p>
-<ul class="simple">
-<li>Prod x prod industry technology assumption in market share coefficient method</li>
-<li>Prod x prod industry technology assumption in technical coefficient method</li>
-</ul>
-</div>
-<div class="section" id="sutops-py">
-<h3>5.6. SUTops.py<a class="headerlink" href="#sutops-py" title="Permalink to this headline">¶</a></h3>
-<p>Class for fundamental mathematical operations of IOA and SUT</p>
-</div>
-<div class="section" id="labels-py">
-<h3>5.7. labels.py<a class="headerlink" href="#labels-py" title="Permalink to this headline">¶</a></h3>
-<p>General label manager for tables</p>
 </div>
 </div>
 <div class="section" id="credits">
@@ -307,46 +258,39 @@ MSc. Glenn Auguilar Hernandez for testing</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">pycirk</a><ul>
-<li><a class="reference internal" href="#installation">1. Installation</a><ul>
-<li><a class="reference internal" href="#stable-release">1.1. Stable release</a></li>
-<li><a class="reference internal" href="#from-source">1.2. From source</a></li>
+<h1 class="logo"><a href="index.html">pycirk</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pycirk</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">1. Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">2. Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#features">3. Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#important-modules">4. Important modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#credits">6. Credits</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#usage">2. Usage</a><ul>
-<li><a class="reference internal" href="#import-package">2.1. Import package</a></li>
-<li><a class="reference internal" href="#initialize">2.2. Initialize</a></li>
-<li><a class="reference internal" href="#set-your-scenarios-and-analysis">2.3. set your scenarios and analysis</a></li>
-<li><a class="reference internal" href="#run-scenarios">2.4. Run scenarios</a></li>
-<li><a class="reference internal" href="#save-scenarios">2.5. save scenarios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">pycirk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
 </ul>
-</li>
-<li><a class="reference internal" href="#features">3. Features</a></li>
-<li><a class="reference internal" href="#important-modules">4. Important modules</a><ul>
-<li><a class="reference internal" href="#pycirk-py">4.1. pycirk.py</a></li>
-<li><a class="reference internal" href="#scenarios-xls">4.2. scenarios.xls</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#other-modules">5. Other modules</a><ul>
-<li><a class="reference internal" href="#results-py">5.1. results.py</a></li>
-<li><a class="reference internal" href="#save-py">5.2. save_.py</a></li>
-<li><a class="reference internal" href="#apply-policy-py">5.3. apply_policy.py</a></li>
-<li><a class="reference internal" href="#base-n-scen-py">5.4. base_n_scen.py</a></li>
-<li><a class="reference internal" href="#suttoiot-py">5.5. SUTtoIOT.py</a></li>
-<li><a class="reference internal" href="#sutops-py">5.6. SUTops.py</a></li>
-<li><a class="reference internal" href="#labels-py">5.7. labels.py</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#credits">6. Credits</a></li>
-</ul>
-</li>
-</ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -356,13 +300,6 @@ MSc. Glenn Auguilar Hernandez for testing</p>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/readme.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -375,16 +312,24 @@ MSc. Glenn Auguilar Hernandez for testing</p>
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, Franco Donati.
+      &copy;2019, Franco Donati.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="_sources/readme.rst.txt"

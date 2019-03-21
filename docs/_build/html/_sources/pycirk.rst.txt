@@ -4,34 +4,10 @@ pycirk package
 Submodules
 ----------
 
-pycirk.SUTops module
---------------------
+pycirk.fundamental\_operations module
+-------------------------------------
 
-.. automodule:: pycirk.SUTops
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pycirk.SUTtoIOT module
-----------------------
-
-.. automodule:: pycirk.SUTtoIOT
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pycirk.apply\_policy module
----------------------------
-
-.. automodule:: pycirk.apply_policy
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pycirk.base\_n\_scen module
----------------------------
-
-.. automodule:: pycirk.base_n_scen
+.. automodule:: pycirk.fundamental_operations
     :members:
     :undoc-members:
     :show-inheritance:
@@ -44,10 +20,34 @@ pycirk.labels module
     :undoc-members:
     :show-inheritance:
 
+pycirk.make\_scenarios module
+-----------------------------
+
+.. automodule:: pycirk.make_scenarios
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pycirk.make\_secondary\_flows module
 ------------------------------------
 
 .. automodule:: pycirk.make_secondary_flows
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pycirk.organize\_io module
+--------------------------
+
+.. automodule:: pycirk.organize_io
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pycirk.positions module
+-----------------------
+
+.. automodule:: pycirk.positions
     :members:
     :undoc-members:
     :show-inheritance:
@@ -68,6 +68,14 @@ pycirk.pycirk\_cli module
     :undoc-members:
     :show-inheritance:
 
+pycirk.pycirk\_settings module
+------------------------------
+
+.. automodule:: pycirk.pycirk_settings
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pycirk.results module
 ---------------------
 
@@ -76,10 +84,18 @@ pycirk.results module
     :undoc-members:
     :show-inheritance:
 
-pycirk.save\_ module
---------------------
+pycirk.save\_utils module
+-------------------------
 
-.. automodule:: pycirk.save_
+.. automodule:: pycirk.save_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pycirk.transformation\_methods module
+-------------------------------------
+
+.. automodule:: pycirk.transformation_methods
     :members:
     :undoc-members:
     :show-inheritance:

@@ -173,7 +173,7 @@ It is possible to specify:
 
 
 4.1. pycirk.py
-------------
+--------------
 
 
 1. Initiates the operations to set scenarios and to create IOT from SUT based on prodxprod Industry-Technology assumption both under Market Share Coefficient method and Technical Coefficient method.
@@ -233,71 +233,6 @@ Furthemore, from the analysis sheet you can set the following variables to be co
 - resource extensions
 - region of interest
 - impact categories # Please see the data_validation_list sheet in the scenarios.xls file for the comprehensive list
-
-
-### make_secondary.py
-Allows for the modification of secondary material flows in the SUTs so that they are visible in the IO system
-
-    
-================
-5. Other modules
-================
-
-
-5.1. results.py
----------------
-
-Class to assemble results for analysis as specified in scenario.xls analysis sheet:
-
-- Output product content in other products
-- Output results for each scenario
-- Output results and all IO tables and extensions 
-
-
-5.2. save_.py
--------------
-
-Save class:
-
-- Save one scenario results
-- Save one scenario results + IOTs
-- Save all scenarios + IOTs
-- Save all results
-
-
-5.3. apply_policy.py
---------------------
-
-Policy interventions class:
-
-- Recreate any matrix in IOT from policy interventions listed in the scenarios scenarios.xls
-
-
-5.4. base_n_scen.py
--------------------
-
-Calculate IOT for baseline and scenarios from SUTs
-
-
-5.5. SUTtoIOT.py
-----------------
-
-Assemblying IOTs and Extensions from: 
-
-- Prod x prod industry technology assumption in market share coefficient method
-- Prod x prod industry technology assumption in technical coefficient method
-
-
-5.6. SUTops.py
---------------
-
-Class for fundamental mathematical operations of IOA and SUT
-
-
-5.7. labels.py 
---------------
-
-General label manager for tables	
 
 
 

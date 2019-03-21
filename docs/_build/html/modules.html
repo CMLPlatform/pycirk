@@ -9,7 +9,7 @@
     <title>pycirk &#8212; pycirk 1.0.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -29,6 +29,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="pycirk">
@@ -37,16 +39,18 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pycirk.html">pycirk package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pycirk.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.SUTops">pycirk.SUTops module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.SUTtoIOT">pycirk.SUTtoIOT module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.apply_policy">pycirk.apply_policy module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.base_n_scen">pycirk.base_n_scen module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.fundamental_operations">pycirk.fundamental_operations module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.labels">pycirk.labels module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.make_scenarios">pycirk.make_scenarios module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.make_secondary_flows">pycirk.make_secondary_flows module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.organize_io">pycirk.organize_io module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.positions">pycirk.positions module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.pycirk">pycirk.pycirk module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.pycirk_cli">pycirk.pycirk_cli module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycirk.html#pycirk-pycirk-cli-module">pycirk.pycirk_cli module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.pycirk_settings">pycirk.pycirk_settings module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.results">pycirk.results module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.save_">pycirk.save_ module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.save_utils">pycirk.save_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk.transformation_methods">pycirk.transformation_methods module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pycirk.html#module-pycirk">Module contents</a></li>
 </ul>
 </li>
@@ -56,10 +60,36 @@
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pycirk</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">pycirk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pycirk</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pycirk.html">pycirk package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
@@ -68,13 +98,6 @@
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/modules.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -87,16 +110,24 @@
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, Franco Donati.
+      &copy;2019, Franco Donati.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="_sources/modules.rst.txt"

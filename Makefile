@@ -51,7 +51,7 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 lint: ## check style with flake8
-	flake8 pyce tests
+	flake8 pycirk tests
 
 test: ## run tests quickly with the default Python
 	py.test
@@ -60,13 +60,13 @@ test-all: ## run tests on every Python version with tox
 	tox
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source pyce -m pytest
+	coverage run --source pycirk -m pytest
 	coverage report -m
 	coverage html
 	$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/pyce.rst
+	rm -f docs/pycirk.rst
 	rm -f docs/modules.rst
 	sphinx-apidoc -o docs/ pycirk
 	$(MAKE) -C docs clean

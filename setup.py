@@ -5,7 +5,7 @@
 
 from setuptools import setup, find_packages
 
-with open('description.txt') as readme_file:
+with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 with open('HISTORY.rst') as history_file:
@@ -53,6 +53,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://bitbucket.org/CML-IE/pycirk/src/master/',
-    version='1.0.0',
+    version='1.5.0',
     zip_safe=False,
 )

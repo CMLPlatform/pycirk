@@ -9,7 +9,7 @@
     <title>pycirk.make_secondary_flows &#8212; pycirk 1.0.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
@@ -27,6 +27,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <h1>Source code for pycirk.make_secondary_flows</h1><div class="highlight"><pre>
@@ -40,10 +42,11 @@
 <span class="sd">Scope: Modelling the Circular Economy in EEIO</span>
 
 <span class="sd">@author:Franco Donati</span>
+<span class="sd">@contributor: Arjan de Koning</span>
 <span class="sd">@institution:Leiden University CML</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="c1"># from pycirk.labels import positions</span>
+<span class="kn">import</span> <span class="nn">pycirk.positions</span> <span class="k">as</span> <span class="nn">pos</span>
 
 
 <div class="viewcode-block" id="make_secondary"><a class="viewcode-back" href="../../pycirk.html#pycirk.make_secondary_flows.make_secondary">[docs]</a><span class="k">def</span> <span class="nf">make_secondary</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
@@ -94,8 +97,8 @@
 
     <span class="n">no_countries</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span><span class="o">/</span><span class="mi">200</span><span class="p">)</span>
 
-    <span class="n">prod_or</span> <span class="o">=</span> <span class="n">make_coord_array</span><span class="p">(</span><span class="n">products</span><span class="p">,</span> <span class="n">no_countries</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
-    <span class="n">ind_or</span> <span class="o">=</span> <span class="n">make_coord_array</span><span class="p">(</span><span class="n">industries</span><span class="p">,</span> <span class="n">no_countries</span><span class="p">,</span> <span class="mi">163</span><span class="p">)</span>
+    <span class="n">prod_or</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">make_coord_array</span><span class="p">(</span><span class="n">products</span><span class="p">,</span> <span class="n">no_countries</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="n">ind_or</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">make_coord_array</span><span class="p">(</span><span class="n">industries</span><span class="p">,</span> <span class="n">no_countries</span><span class="p">,</span> <span class="mi">163</span><span class="p">)</span>
 
     <span class="n">moved</span> <span class="o">=</span> <span class="n">allocate_sec_mat</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">prod_or</span><span class="p">,</span> <span class="n">ind_or</span><span class="p">)</span>
 
@@ -106,23 +109,6 @@
     <span class="n">data</span><span class="p">[</span><span class="s2">&quot;U&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">U</span>
 
     <span class="k">return</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="make_coord_array"><a class="viewcode-back" href="../../pycirk.html#pycirk.make_secondary_flows.make_coord_array">[docs]</a><span class="k">def</span> <span class="nf">make_coord_array</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">no_countries</span><span class="p">,</span> <span class="n">no_ind_or_prod</span><span class="p">):</span>
-
-    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">nn</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">while</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coordinates</span><span class="p">)):</span>
-        <span class="k">while</span> <span class="n">nn</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">no_countries</span><span class="p">):</span>
-            <span class="n">g</span> <span class="o">=</span> <span class="n">coordinates</span> <span class="o">+</span> <span class="n">no_ind_or_prod</span><span class="o">*</span><span class="n">nn</span>
-            <span class="k">if</span> <span class="s2">&quot;s&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">():</span>
-                <span class="n">s</span> <span class="o">=</span> <span class="n">g</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">s</span><span class="p">,</span> <span class="n">g</span><span class="p">])</span>
-            <span class="n">nn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">+</span><span class="mi">1</span>
-        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="allocate_sec_mat"><a class="viewcode-back" href="../../pycirk.html#pycirk.make_secondary_flows.allocate_sec_mat">[docs]</a><span class="k">def</span> <span class="nf">allocate_sec_mat</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">prod_or</span><span class="p">,</span> <span class="n">ind_or</span><span class="p">):</span>
@@ -145,139 +131,87 @@
 
     <span class="c1"># getting the value of secondary material from the supply table</span>
     <span class="c1"># which is placed on the primary material row</span>
-    <span class="n">misplaced</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">,</span> <span class="n">des_ind_col_pos</span><span class="p">])</span>
+    <span class="n">misplaced</span> <span class="o">=</span> <span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">,</span> <span class="n">des_ind_col_pos</span><span class="p">]</span>
 
     <span class="c1"># placing the misplaced value to the secondary material row</span>
-    <span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">des_prod_ix_pos</span><span class="p">,</span> <span class="n">des_ind_col_pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">misplaced</span>
+    <span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">des_prod_ix_pos</span><span class="p">,</span> <span class="n">des_ind_col_pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">misplaced</span><span class="p">)</span>
 
     <span class="c1"># collecting how much of the primary material is consumed by final demand</span>
     <span class="c1"># to be subtracted from the supply value</span>
-    <span class="n">Y_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="c1"># how the supply to intraindustry transactions is distributed in its use</span>
-    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">Y_values</span><span class="p">)),</span>
-                  <span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">])</span>
+    <span class="c1"># matrix  of primary sectors x all products (588 x 7987)</span>
+    <span class="n">prim_sec_supply_trans</span> <span class="o">=</span> <span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">]</span>
 
-    <span class="c1"># mapping the use of the secondary material according to the distribution</span>
-    <span class="c1"># of use of the primary material</span>
-    <span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">des_prod_ix_pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">misplaced</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">@</span> <span class="n">dist</span>
+    <span class="c1"># scalar value of sum total primary industry supply</span>
+    <span class="c1"># prim_sec_tot_output = np.sum(prim_sec_supply_trans)</span>
+    <span class="n">prim_sec_tot_output</span> <span class="o">=</span> <span class="n">prim_sec_supply_trans</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="c1"># subtracting the use of secondary material from the primary</span>
-    <span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">],</span>
-                                  <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">des_prod_ix_pos</span><span class="p">]))</span>
+    <span class="c1"># matrix of secondary product supply by secondary industry (588 x 588)</span>
+    <span class="n">sec_supply_trans</span> <span class="o">=</span> <span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">des_prod_ix_pos</span><span class="p">,</span> <span class="n">des_ind_col_pos</span><span class="p">]</span>
 
-    <span class="c1"># zeroing the misplaced value of secondary materials</span>
+    <span class="c1"># vector of total secondary industry output (588)</span>
+    <span class="n">sec_output</span> <span class="o">=</span> <span class="n">sec_supply_trans</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># vector of ratios between secondary output per industry and sum total</span>
+    <span class="c1"># industry supply (diagonalised 588  x 588)</span>
+    <span class="n">ratio_prim_sec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">sec_output</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sec_output</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">prim_sec_tot_output</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ratio_prim_sec</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sec_output</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">/</span> <span class="n">prim_sec_tot_output</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+    <span class="n">ratio_prim_sec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">ratio_prim_sec</span><span class="p">)</span>
+
+    <span class="n">prim_sec_use_trans</span> <span class="o">=</span> <span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">]</span>
+
+    <span class="n">prim_sec_fin_dem_trans</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">]</span>
+
+    <span class="n">eye</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ratio_prim_sec</span><span class="p">))</span>
+
+    <span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">eye</span> <span class="o">-</span> <span class="n">ratio_prim_sec</span><span class="p">)</span> <span class="o">@</span> <span class="n">prim_sec_use_trans</span>
+
+    <span class="n">U</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">des_prod_ix_pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">ratio_prim_sec</span> <span class="o">@</span> <span class="n">prim_sec_use_trans</span>
+
+    <span class="n">Y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">eye</span> <span class="o">-</span> <span class="n">ratio_prim_sec</span><span class="p">)</span> <span class="o">@</span> <span class="n">prim_sec_fin_dem_trans</span>
+
+    <span class="n">Y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">des_prod_ix_pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">ratio_prim_sec</span> <span class="o">@</span> <span class="n">prim_sec_fin_dem_trans</span>
+
     <span class="n">V</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">prod_or</span><span class="p">,</span> <span class="n">des_ind_col_pos</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="c1"># verifying balance</span>
-    <span class="n">g1_over_g2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span>
-                                       <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span> <span class="o">*</span> <span class="mi">100</span>
 
     <span class="n">output</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;V&quot;</span><span class="p">:</span> <span class="n">V</span><span class="p">,</span>
               <span class="s2">&quot;U&quot;</span><span class="p">:</span> <span class="n">U</span><span class="p">,</span>
-              <span class="s2">&quot;balance&quot;</span><span class="p">:</span> <span class="n">g1_over_g2</span><span class="p">}</span>
+              <span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="n">Y</span><span class="p">}</span>
 
-    <span class="k">return</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;splitting off secondary materials ready&#39;</span><span class="p">)</span>
 
-
-
-<span class="c1"># =============================================================================</span>
-<span class="c1"># def make_secondary(data):</span>
-<span class="c1">#     &quot;&quot;&quot;</span>
-<span class="c1">#     This allows to allign secondary flow in such a way that they then</span>
-<span class="c1">#     appear in the IOT</span>
-<span class="c1">#     &quot;&quot;&quot;</span>
-<span class="c1">#     V = data[&quot;V&quot;]</span>
-<span class="c1">#     U = data[&quot;U&quot;]</span>
-<span class="c1">#     Y = data[&quot;Y&quot;]</span>
-<span class="c1"># </span>
-<span class="c1">#     materials = [&quot;_WOOD&quot;, &quot;_PULP&quot;, &quot;_PLAS&quot;, &quot;_GLAS&quot;, &quot;_CMNT&quot;, &quot;_STEL&quot;,</span>
-<span class="c1">#                  &quot;_PREM&quot;, &quot;_ALUM&quot;, &quot;_LZTP&quot;, &quot;_COPP&quot;, &quot;_ONFM&quot;, &quot;_CONS&quot;]</span>
-<span class="c1"># </span>
-<span class="c1">#     for l in materials:</span>
-<span class="c1">#         prod_or = &quot;C&quot; + l</span>
-<span class="c1">#         ind_or = &quot;A&quot; + l</span>
-<span class="c1">#         moved = allocate_sec_mat(V, U, Y, prod_or, ind_or)</span>
-<span class="c1">#         V = moved[&quot;V&quot;]</span>
-<span class="c1">#         U = moved[&quot;U&quot;]</span>
-<span class="c1"># </span>
-<span class="c1">#     data[&quot;V&quot;] = V</span>
-<span class="c1">#     data[&quot;U&quot;] = U</span>
-<span class="c1"># </span>
-<span class="c1">#     return(data)</span>
-<span class="c1"># </span>
-<span class="c1"># </span>
-<span class="c1"># def allocate_sec_mat(V, U, Y, prod_or, ind_or):</span>
-<span class="c1">#     &quot;&quot;&quot;</span>
-<span class="c1">#     This function allows to move the primary material output from the</span>
-<span class="c1">#     secondary material industries to the secondary material output.</span>
-<span class="c1">#     This allows for the presence of secondary materials in the IOT</span>
-<span class="c1">#     once they are transformed from SUTS.</span>
-<span class="c1"># </span>
-<span class="c1">#     prod_or = row position of the primary supplied material</span>
-<span class="c1">#     ind_or = colum pos. of the primary industry supplying primary material</span>
-<span class="c1">#     &quot;&quot;&quot;</span>
-<span class="c1">#     V = V.copy()</span>
-<span class="c1">#     U = U.copy()</span>
-<span class="c1">#     Y = Y.copy()</span>
-<span class="c1"># </span>
-<span class="c1">#     index = V.index.to_frame(False)</span>
-<span class="c1">#     columns = V.columns.to_frame(False)</span>
-<span class="c1"># </span>
-<span class="c1">#     reg = None</span>
-<span class="c1"># </span>
-<span class="c1">#     # position of the primary material</span>
-<span class="c1">#     or_prod_ix_pos = positions(index, reg, prod_or)</span>
-<span class="c1">#     or_ind_col_pos = positions(columns, reg, ind_or)</span>
-<span class="c1"># </span>
-<span class="c1">#     # position of the secondary material</span>
-<span class="c1">#     des_prod_ix_pos = or_prod_ix_pos + 1</span>
-<span class="c1">#     des_ind_col_pos = or_ind_col_pos + 1</span>
-<span class="c1"># </span>
-<span class="c1">#     # getting the value of secondary material from the supply table</span>
-<span class="c1">#     # which is placed on the primary material row</span>
-<span class="c1">#     misplaced = np.array(V.iloc[or_prod_ix_pos, des_ind_col_pos])</span>
-<span class="c1"># </span>
-<span class="c1">#     # placing the misplaced value to the secondary material row</span>
-<span class="c1">#     V.iloc[des_prod_ix_pos, des_ind_col_pos] = misplaced</span>
-<span class="c1"># </span>
-<span class="c1">#     # collecting how much of the primary material is consumed by final demand</span>
-<span class="c1">#     # to be subtracted from the supply value</span>
-<span class="c1">#     Y_values = np.sum(Y.iloc[or_prod_ix_pos], axis=1)</span>
-<span class="c1"># </span>
-<span class="c1">#     # how the supply to intraindustry transactions is distributed in its use</span>
-<span class="c1">#     dist = np.dot(np.diag(1/(np.sum(V.iloc[or_prod_ix_pos], axis=1)-Y_values)),</span>
-<span class="c1">#                   U.iloc[or_prod_ix_pos])</span>
-<span class="c1"># </span>
-<span class="c1">#     # mapping the use of the secondary material according to the distribution</span>
-<span class="c1">#     # of use of the primary material</span>
-<span class="c1">#     U.iloc[des_prod_ix_pos] = np.diag(misplaced.sum(axis=1)) @ dist</span>
-<span class="c1"># </span>
-<span class="c1">#     # subtracting the use of secondary material from the primary</span>
-<span class="c1">#     U.iloc[or_prod_ix_pos] = np.subtract(U.iloc[or_prod_ix_pos],</span>
-<span class="c1">#                                          np.array(U.iloc[des_prod_ix_pos]))</span>
-<span class="c1"># </span>
-<span class="c1">#     # zeroing the misplaced value of secondary materials</span>
-<span class="c1">#     V.iloc[or_prod_ix_pos, des_ind_col_pos] = 0</span>
-<span class="c1"># </span>
-<span class="c1">#     # verifying balance</span>
-<span class="c1">#     g1_over_g2 = (np.sum(V, axis=1) / (np.sum(U, axis=1) +</span>
-<span class="c1">#                                        np.sum(Y, axis=1))) * 100</span>
-<span class="c1"># </span>
-<span class="c1">#     output = {&quot;V&quot;: V,</span>
-<span class="c1">#               &quot;U&quot;: U,</span>
-<span class="c1">#               &quot;balance&quot;: g1_over_g2}</span>
-<span class="c1"># </span>
-<span class="c1">#     return(output)</span>
-<span class="c1"># </span>
-<span class="c1"># =============================================================================</span>
+    <span class="k">return</span> <span class="n">output</span></div>
 </pre></div>
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pycirk</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">pycirk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">pycirk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
@@ -298,16 +232,24 @@
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, Franco Donati.
+      &copy;2019, Franco Donati.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
 

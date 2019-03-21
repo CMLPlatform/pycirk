@@ -32,13 +32,13 @@ You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone https://fdonati@bitbucket.org/CML-IE/pycirk.git
+    $ git clone git://github.com/FDonati/pycirk
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://bitbucket.org/CML-IE/pycirk/src/master/
+    $ curl  -OL https://github.com/FDonati/pycirk/tarball/master
 
 Once you have a copy of the source, you can install it with:
 

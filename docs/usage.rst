@@ -2,6 +2,6 @@
 Usage
 =====
 
-To use pyce in a project::
+To use pycirk in a project::
 
     import pycirk

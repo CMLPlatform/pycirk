@@ -48,7 +48,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'pycirk'
-copyright = u"2018, Franco Donati"
+copyright = u"2019, Franco Donati"
 author = u"Franco Donati"
 
 # The version info for the project you're documenting, acts as replacement

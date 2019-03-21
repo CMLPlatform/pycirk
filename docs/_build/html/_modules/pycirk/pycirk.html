@@ -9,7 +9,7 @@
     <title>pycirk.pycirk &#8212; pycirk 1.0.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
@@ -27,6 +27,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <h1>Source code for pycirk.pycirk</h1><div class="highlight"><pre>
@@ -41,26 +43,20 @@
 <span class="sd">@author:Franco Donati</span>
 <span class="sd">@institution:Leiden University CML</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sys</span> <span class="k">import</span> <span class="n">platform</span>
-<span class="kn">from</span> <span class="nn">shutil</span> <span class="k">import</span> <span class="n">copyfile</span>
-<span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">ospt</span>
-<span class="kn">from</span> <span class="nn">pycirk.save_</span> <span class="k">import</span> <span class="n">Save</span>
+<span class="kn">from</span> <span class="nn">pycirk.save_utils</span> <span class="k">import</span> <span class="n">Save</span>
 <span class="kn">from</span> <span class="nn">pycirk.results</span> <span class="k">import</span> <span class="n">Results</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">pycirk.make_secondary_flows</span> <span class="k">import</span> <span class="n">make_secondary</span> <span class="k">as</span> <span class="n">ms</span>
+<span class="kn">from</span> <span class="nn">pycirk.pycirk_settings</span> <span class="k">import</span> <span class="n">Settings</span>
+<span class="kn">from</span> <span class="nn">pycirk.make_scenarios</span> <span class="k">import</span> <span class="n">make_counter_factuals</span> <span class="k">as</span> <span class="n">mcf</span>
 
-
-<div class="viewcode-block" id="Start"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Start">[docs]</a><span class="k">class</span> <span class="nc">Start</span><span class="p">:</span>
+<div class="viewcode-block" id="Pycirk"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Pycirk">[docs]</a><span class="k">class</span> <span class="nc">Pycirk</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    directory = directory in which you want to work and save</span>
 
 <span class="sd">    method = 0 &gt;&gt; Prod X Prod Ind-Tech Assumption Technical Coeff method</span>
 <span class="sd">    method = 1 &gt;&gt; Prod X Prod Ind-Tech Assumption Market Share Coeff method</span>
 
-<span class="sd">    aggregation = &quot;bi-regional&quot; (EU- ROW) or None (multi-regional 49 regions)</span>
+<span class="sd">    aggregation = 0 is &quot;bi-regional&quot; (EU- ROW) or 1 is None (multi-regional 49 regions)</span>
 
 <span class="sd">    From start you can launch all the analysis specifications listed under</span>
 <span class="sd">    scenarios.xls</span>
@@ -84,101 +80,17 @@
 <span class="sd">        &quot;scenario_1&quot; is also allowed for scenarios</span>
 <span class="sd">        None, 0, base and baseline are also accepted for baseline</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">aggregation</span><span class="o">=</span><span class="s2">&quot;bi-regional&quot;</span><span class="p">,</span>
-                 <span class="n">file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">make_secondary</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">make_secondary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_directory</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                 <span class="n">aggregation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">method</span><span class="p">)</span>  <span class="c1"># 0 or 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">Settings</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">make_secondary</span><span class="p">,</span> <span class="n">save_directory</span><span class="p">,</span>
+                                 <span class="n">aggregation</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">directory</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">scenario_file</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">baseline</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">transform_to_io</span><span class="p">()</span>
 
-        <span class="n">orig</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span>
-                                            <span class="s2">&quot;scenarios.xls&quot;</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">orig</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-            <span class="c1"># here we try to indentify on which platform we are working</span>
-            <span class="c1"># and specifying default folders</span>
-            <span class="k">if</span> <span class="s2">&quot;linux&quot;</span> <span class="ow">in</span> <span class="n">platform</span> <span class="ow">or</span> <span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;darwin&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/Documents/pycirk/&quot;</span><span class="p">)</span>
-
-            <span class="k">elif</span> <span class="s2">&quot;win&quot;</span> <span class="ow">in</span> <span class="n">platform</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">platform</span> <span class="o">!=</span> <span class="s2">&quot;darwin&quot;</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/Documents/pycirk/&quot;</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please specify the directory: &quot;</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please specify the directory: &quot;</span><span class="p">)</span>
-                <span class="c1"># checking if the file already exists else copying settings to</span>
-                <span class="c1"># the output folder</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;scenarios.xls&quot;</span><span class="p">):</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
-                <span class="n">copyfile</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;scenarios.xls&quot;</span><span class="p">)</span>
-
-        <span class="k">elif</span> <span class="n">directory</span> <span class="o">!=</span> <span class="s2">&quot;test&quot;</span> <span class="ow">and</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-            <span class="c1"># origin of scenarios.xls file</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">):</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
-                <span class="n">copyfile</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;scenarios.xls&quot;</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">pass</span>
-
-        <span class="k">elif</span> <span class="n">directory</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>  <span class="c1"># test path contains preset test scenario</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;tests/&quot;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">specs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;research&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
-                          <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
-                          <span class="s2">&quot;institution&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
-                          <span class="p">}</span>
-
-        <span class="k">if</span> <span class="n">directory</span> <span class="o">!=</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Author&#39;s name:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># e.g. &quot;Franco Donati&quot;</span>
-            <span class="n">research</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Project name:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># e.g. &quot;Modelling the CE&quot;</span>
-            <span class="n">institution</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Institution:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># e.g.&quot;Leiden Univ. CML&quot;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">specs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;research&quot;</span><span class="p">:</span> <span class="n">research</span><span class="p">,</span>
-                          <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-                          <span class="s2">&quot;institution&quot;</span><span class="p">:</span> <span class="n">institution</span><span class="p">,</span>
-                          <span class="p">}</span>
-
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Please open scenarios.xls under &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span>
-              <span class="s2">&quot; to set your work.</span><span class="se">\n\n</span><span class="s2">Return to this script after you are&quot;</span><span class="p">,</span>
-              <span class="s2">&quot;done setting up your scenarios.&quot;</span><span class="p">)</span>
-
-        <span class="c1"># defines a directory for outputs when saving</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/outputs/&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;scenarios.xls&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">aggregation</span> <span class="o">=</span> <span class="n">aggregation</span>  <span class="c1"># biregional or None=multiregional</span>
-
-        <span class="c1"># uploading data</span>
-        <span class="k">if</span> <span class="n">file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># choosing aggregation type (bi-regional or full 49 regions)</span>
-            <span class="k">if</span> <span class="n">aggregation</span> <span class="o">==</span> <span class="s2">&quot;bi-regional&quot;</span><span class="p">:</span>
-                <span class="c1">#  SUT biregional EU-ROW</span>
-                <span class="n">file</span> <span class="o">=</span> <span class="n">ospt</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">ospt</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ospt</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span>
-                                              <span class="s2">&quot;mrSUT_EU_ROW_V3.3.pkl&quot;</span><span class="p">))</span>
-            <span class="k">elif</span> <span class="n">aggregation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="c1"># SUT full 2011 data</span>
-                <span class="n">file</span> <span class="o">=</span> <span class="n">ospt</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">ospt</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ospt</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span>
-                                              <span class="s2">&quot;mrSUT_V3.3.pkl&quot;</span><span class="p">))</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;Download database from exiobase.eu &quot;</span> <span class="o">+</span>
-                                        <span class="s2">&quot;or ask for a copy through &quot;</span> <span class="o">+</span>
-                                        <span class="s2">&quot;f.donati@cml.leidenuniv.nl &quot;</span> <span class="o">+</span>
-                                        <span class="s2">&quot;and add it to &quot;</span> <span class="o">+</span>
-                                        <span class="n">ospt</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ospt</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)))</span>
-
-        <span class="c1"># making secondary flows apparent</span>
-        <span class="k">if</span> <span class="n">make_secondary</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">ms</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">init_res</span> <span class="o">=</span> <span class="n">Results</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span><span class="p">)</span>
-
-<div class="viewcode-block" id="Start.run_one_scenario"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Start.run_one_scenario">[docs]</a>    <span class="k">def</span> <span class="nf">run_one_scenario</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">results_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Pycirk.run_one_scenario"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Pycirk.run_one_scenario">[docs]</a>    <span class="k">def</span> <span class="nf">run_one_scenario</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">results_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run to check specific scenario</span>
 
@@ -186,19 +98,56 @@
 <span class="sd">            - True, output results for analysis</span>
 <span class="sd">            - False, output all tables plus results for analysis</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">scenario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_res</span><span class="o">.</span><span class="n">one_scen</span><span class="p">(</span><span class="n">scen_no</span><span class="p">,</span> <span class="n">results_only</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scen_no</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;baseline&quot;</span><span class="p">,</span> <span class="s2">&quot;base&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+            <span class="n">scen_no</span> <span class="o">=</span> <span class="s2">&quot;baseline&quot;</span>
+            <span class="n">IO</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">baseline</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">IO</span> <span class="o">=</span> <span class="n">mcf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">baseline</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span><span class="p">)</span>
 
-        <span class="k">return</span><span class="p">(</span><span class="n">scenario</span><span class="p">)</span></div>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">Results</span><span class="o">.</span><span class="n">one_scen</span><span class="p">(</span><span class="n">IO</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">results_only</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Start.all_results"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Start.all_results">[docs]</a>    <span class="k">def</span> <span class="nf">all_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Pycirk.all_results"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Pycirk.all_results">[docs]</a>    <span class="k">def</span> <span class="nf">all_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Output all results in a table</span>
+<span class="sd">        Take a dictionary of all scenarios&#39; results</span>
+<span class="sd">        and organise them in table</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">results_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_res</span><span class="o">.</span><span class="n">table_res</span><span class="p">()</span>
 
-        <span class="k">return</span><span class="p">(</span><span class="n">results_table</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">results_only</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
 
-<div class="viewcode-block" id="Start.save_one_scenario"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Start.save_one_scenario">[docs]</a>    <span class="k">def</span> <span class="nf">save_one_scenario</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">results_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sheets</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">IOT</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_one_scenario</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">results_only</span><span class="p">)</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">Results</span><span class="o">.</span><span class="n">one_scen</span><span class="p">(</span><span class="n">IOT</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">results_only</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">results_only</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;sc_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                    <span class="n">output</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span>
+
+            <span class="k">elif</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">t2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">one_scen</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">results_only</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">results_only</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">t</span><span class="p">,</span> <span class="n">t2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">results_only</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;sc_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                    <span class="n">output</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">t2</span>
+            <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">baseline</span> <span class="o">=</span> <span class="n">Results</span><span class="o">.</span><span class="n">one_scen</span><span class="p">(</span><span class="s2">&quot;baseline&quot;</span><span class="p">,</span> <span class="n">results_only</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">results_only</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">output</span><span class="p">[</span><span class="s2">&quot;baseline&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">baseline</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">baseline</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Pycirk.save_one_scenario"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Pycirk.save_one_scenario">[docs]</a>    <span class="k">def</span> <span class="nf">save_one_scenario</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">results_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Output all results in a table</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -206,7 +155,7 @@
         <span class="n">scenario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_one_scenario</span><span class="p">(</span><span class="n">scen_no</span><span class="p">,</span> <span class="n">results_only</span><span class="p">)</span>
         <span class="n">init_save</span><span class="o">.</span><span class="n">save_</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Start.save_all_scenarios"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Start.save_all_scenarios">[docs]</a>    <span class="k">def</span> <span class="nf">save_all_scenarios</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Pycirk.save_all_scenarios"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Pycirk.save_all_scenarios">[docs]</a>    <span class="k">def</span> <span class="nf">save_all_scenarios</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save all results in separate files and sheets</span>
 <span class="sd">        data e.g. all_results.all_tables</span>
@@ -215,7 +164,7 @@
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_res</span><span class="o">.</span><span class="n">table_res</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">init_save</span><span class="o">.</span><span class="n">save_everything</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Start.save_results"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Start.save_results">[docs]</a>    <span class="k">def</span> <span class="nf">save_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Pycirk.save_results"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Pycirk.save_results">[docs]</a>    <span class="k">def</span> <span class="nf">save_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save results</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -223,43 +172,42 @@
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_results</span><span class="p">()</span>
         <span class="n">init_save</span><span class="o">.</span><span class="n">save_results</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Start.save_everything"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Start.save_everything">[docs]</a>    <span class="k">def</span> <span class="nf">save_everything</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Pycirk.save_everything"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Pycirk.save_everything">[docs]</a>    <span class="k">def</span> <span class="nf">save_everything</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save all scenarios and results</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_results</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">save_all_scenarios</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="Start.plot_results"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Start.plot_results">[docs]</a>    <span class="k">def</span> <span class="nf">plot_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Plots bar graph of the summary results</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-        <span class="n">base</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">y_pos</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
-        <span class="n">difference</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">/</span> <span class="n">base</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
-
-        <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Difference from baseline&quot;</span>
-        <span class="n">sub_title</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">name</span>
-
-        <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">y_pos</span><span class="p">,</span> <span class="n">difference</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">y_pos</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Scenarios&quot;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;%&quot;</span><span class="p">)</span>  <span class="c1"># sub_title[-1])</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sub_title</span><span class="p">))</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div></div>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">Start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_all_scenarios</span><span class="p">()</span></div></div>
 </pre></div>
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pycirk</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">pycirk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">pycirk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
@@ -280,16 +228,24 @@
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, Franco Donati.
+      &copy;2019, Franco Donati.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
 
