@@ -147,6 +147,7 @@ class Settings:
 
             if self.aggregation == 0:
                 io = io_file_bi
+                print("wow")
                 sut = "data//mrSUT_EU_ROW_V3.3.pkl"
 
             elif self.aggregation == 1:
@@ -178,7 +179,7 @@ class Settings:
 
     def transform_to_io(self):
 
-        dataset_spec = self.check_dataset_location
+        dataset_spec = self.check_dataset_location()
 
         loc = dataset_spec["loc"]
         typ = dataset_spec["type"]
@@ -192,26 +193,35 @@ class Settings:
         if typ == "sut":
             if self.make_secondary is True:
                 data = ms(data)
-                SUTs = Transform(data)
-                #  Transform SUT to IOT
-                if self.method == 0:
-                    IOT = SUTs.IOTpxpSTA_TCm()
-                elif self.method == 1:
-                    IOT = SUTs.IOTpxpSTA_MSCm()
+                extension = ".x.pkl"
+            else:
+                extension = ".pkl"
 
-                IOT = Organize_IO(IOT)
+            SUTs = Transform(data)
 
-                if self.aggregation == 0:
-                    pickle_name = "data//mrIO_EU_ROW_V3.3.x.pkl"
-                elif self.aggregation == 1:
-                    pickle_name = "data//mrIO_V3.3.x.pkl"
+        #  Transform SUT to IOT
+            if self.method == 0:
+                IOT = SUTs.IOTpxpSTA_TCm()
+            elif self.method == 1:
+                IOT = SUTs.IOTpxpSTA_MSCm()
 
+            IOT = Organize_IO(IOT)
+            print("here")
+
+            if self.aggregation == 0:
+                pickle_name = "pycirk//data//mrIO_EU_ROW_V3.3" + extension
+                print("here_again1")
+            elif self.aggregation == 1:
+                pickle_name = "pycirk//data//mrIO_V3.3" + extension
+                print("here_again2")
             # saving the IO tables to avoid rebuilding them all the time
-            w = open(pickle_name, "wb")
-            pickle.dump(self.IO, w, 2)  # pickling
-            w.close()
+
+            datatopkl = IOT.__dict__
+            with open(pickle_name, "wb") as w:
+                pickle.dump(datatopkl, w, 2)  # pickling
+            #w.close()
 
         elif typ == "io":
-                IOT = Organize_IO(IOT)
+                IOT = Organize_IO(data)
 
         return(IOT)

@@ -13,7 +13,7 @@ import warnings
 import pandas as pd
 from pandas import DataFrame as df
 from pandas import MultiIndex as mi
-from pycirk.labels import positions
+from pycirk.positions import positions
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 

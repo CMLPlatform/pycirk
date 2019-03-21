@@ -32,10 +32,10 @@ def save_labels( data):
     get_labels(data["Bm"], 0).to_csv("labels//materials.csv", index=False)
 
 def load_labels():
-    
+
     ind = read_csv("labels//industry.csv")  # with unit column
     prod = read_csv("labels//products.csv")  # with unit column
-    
+
     primary = read_csv("labels//factor_inputs.csv")
     fin_dem = read_csv("labels//final_demand.csv")
     emis = read_csv("labels//emissions.csv")
@@ -46,7 +46,7 @@ def load_labels():
     car_res = read_csv("labels//charact_resources.csv")
     car_mat = read_csv("labels//charact_materials.csv")
     car_prim = read_csv("labels//charact_factor_inputs.csv")
-    
+
     labels = {"ind": ind,
               "prod": prod,
               "primary": primary,
@@ -59,33 +59,33 @@ def load_labels():
               "car_mat": car_mat,
               "car_prim": car_prim}
     return(labels)
-    
+
 
 def relabel_in_bulk(data, trans_method=0):
     """
     This function makes sure that everything is labeled in IOT tables
-    
+
     trans_method = 0 is prod x prod , 1 is ind x ind
     """
     lb = Munch(load_labels())
-    
+
     if trans_method == 0:
         cat = lb.prod
     elif trans_method == 1:
         cat = lb.ind
 
     # Relabel Main IOT elements
-    data.S = relabel(data.S, cat.iloc[:,:4], cat, "S")
-    data.L = relabel(data.L, cat.iloc[:,:4], cat.iloc[:,:4], "L")
+    data.S = relabel(data.S, cat.iloc[:, :4], cat, "S")
+    data.L = relabel(data.L, cat.iloc[:, :4], cat.iloc[:, :4], "L")
     data.A = relabel(data.A, cat, cat, "A")
     data.Y = relabel(data.Y, lb.fin_dem, cat, "Y")
-    data.E = relabel(data.E, cat.iloc[:,:4], lb.primary, "E")
+    data.E = relabel(data.E, cat.iloc[:, :4], lb.primary, "E")
     data.RE = relabel(data.RE, cat, lb.primary, "RE")
 
     # Relabel Inter-trans extensions
-    data.Be = relabel(data.Be, cat.iloc[:,:4], lb.emis, "Be")
-    data.Br = relabel(data.Br, cat.iloc[:,:4], lb.res, "Br")
-    data.Bm = relabel(data.Bm, cat.iloc[:,:4], lb.mat, "Bm")
+    data.Be = relabel(data.Be, cat.iloc[:, :4], lb.emis, "Be")
+    data.Br = relabel(data.Br, cat.iloc[:, :4], lb.res, "Br")
+    data.Bm = relabel(data.Bm, cat.iloc[:, :4], lb.mat, "Bm")
 
     # Inter-trans extensions' intensities
     data.RBe = relabel(data.RBe, cat, lb.emis, "RBe")
@@ -93,23 +93,23 @@ def relabel_in_bulk(data, trans_method=0):
     data.RBm = relabel(data.RBm, cat, lb.mat, "RBm")
 
     # Relabel characterisation
-    data.CrBe = relabel(data.CrBe, cat.iloc[:,:4], lb.car_emis, "CrBe")
-    data.CrBr = relabel(data.CrBr, cat.iloc[:,:4], lb.car_res, "CrBe")
-    data.CrBm = relabel(data.CrBm, cat.iloc[:,:4], lb.car_mat, "CrBe")
-    data.CrE = relabel(data.CrE, cat.iloc[:,:4], lb.car_prim, "CrBe")
+    data.CrBe = relabel(data.CrBe, cat.iloc[:, :4], lb.car_emis, "CrBe")
+    data.CrBr = relabel(data.CrBr, cat.iloc[:, :4], lb.car_res, "CrBe")
+    data.CrBm = relabel(data.CrBm, cat.iloc[:, :4], lb.car_mat, "CrBe")
+    data.CrE = relabel(data.CrE, cat.iloc[:, :4], lb.car_prim, "CrBe")
 
     # label q
     data.x = relabel(data["x"], "x", cat, "x")
     # label balance verification
     ver_label = "balance (x_out/x_in) - % - 100=balanced - 0=NaN no values"
-    data.ver = relabel(data.ver, ver_label, cat.iloc[:,:4], "ver")
+    data.ver = relabel(data.ver, ver_label, cat.iloc[:, :4], "ver")
 
     # Labeling final demand extensions
-    data.YBe = relabel(data.YBe, lb.fin_dem.iloc[:,:4], lb.emis, "YBe")
+    data.YBe = relabel(data.YBe, lb.fin_dem.iloc[:, :4], lb.emis, "YBe")
 
-    data.YBr = relabel(data.YBr, lb.fin_dem.iloc[:,:4], lb.res, "YBr")
+    data.YBr = relabel(data.YBr, lb.fin_dem.iloc[:, :4], lb.res, "YBr")
 
-    data.YBm = relabel(data.YBm, lb.fin_dem.iloc[:,:4], lb.mat, "YBm")
+    data.YBm = relabel(data.YBm, lb.fin_dem.iloc[:, :4], lb.mat, "YBm")
 
     # Labeling final demand extensions' intensities
     data.RYBe = relabel(data.RYBe, lb.fin_dem, lb.emis, "RYBe")
@@ -122,6 +122,7 @@ def relabel_in_bulk(data, trans_method=0):
     data.CrYBm = relabel(data.CrYBm, lb.fin_dem, lb.car_mat, "CrBe")
 
     return(data)
+
 
 def get_labels(matrix, axis=0, drop_unit=False):
     """
@@ -159,6 +160,7 @@ def get_labels(matrix, axis=0, drop_unit=False):
 
     return(output)
 
+
 def apply_labels(matrix, labels, axis=0):
     """
     Applies labels to a dataframe
@@ -173,6 +175,7 @@ def apply_labels(matrix, labels, axis=0):
         matrix.columns.names = labels.columns
 
     return(matrix)
+
 
 def relabel(M, column_labels, index_labels, name):
     """

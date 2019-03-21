@@ -100,14 +100,14 @@ class Transform:
                "Bm": Bm,
                "YBm": self.YBm,
                "RBm": RBm,
-               "CrBe": self.CrBe,
-               "CrBm": self.CrBm,
-               "CrBr": self.CrBr,
-               "CrE": self.CrE,
+               "CrBe_k": self.CrBe_k,
+               "CrBm_k": self.CrBm_k,
+               "CrBr_k": self.CrBr_k,
+               "CrE_k": self.CrE_k,
                "L": L,
                "E": E,
                "S": S,
-               "ver": ver_base
+               "ver_base": ver_base
                }
 
         return(IOT)
@@ -155,15 +155,15 @@ class Transform:
                "Bm": Bm,
                "YBm": self.YBm,
                "RBm": RBm,
-               "CrBe": self.CrBe,
-               "CrBm": self.CrBm,
-               "CrBr": self.CrBr,
-               "CrE": self.CrE,
+               "CrBe_k": self.CrBe_k,
+               "CrBm_k": self.CrBm_k,
+               "CrBr_k": self.CrBr_k,
+               "CrE_k": self.CrE_k,
                "L": L,
                "S": S,
                "E": E,
                "x": x,
-               "ver": ver_base
+               "ver_base": ver_base
                }
 
         return(IOT)

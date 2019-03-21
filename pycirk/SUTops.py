@@ -75,6 +75,34 @@ class SUTops:
 
         return(p)
 
+    def delta_Y(Y, Yalt):
+        """
+        method to calculate difference in Y
+        Y = final demand baseline
+        Yalt = final demand scenario
+        """
+        delta_Y = Y - Yalt
+
+        return (delta_Y)
+
+    def delta_x(L, Lalt, y):
+        """
+        method to calculate difference in q
+        L = Leontief of baseline
+        Lalt = Leontief of scenario
+        """
+        delta_x = (L-Lalt) @ y
+
+        return (delta_x)
+
+    def verifyIOT(S, Y, E):
+        x_out = np.sum(np.array(S), axis=1) + np.sum(np.array(Y), axis=1)
+        x_in = np.sum(S, axis=0) + np.sum(E[:9], axis=0)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            ver = x_out/x_in * 100
+        ver = np.nan_to_num(ver)
+        return(ver)
+
     class PxP_ITA_TC:
         """
         Model with Transformation Coefficients
@@ -353,35 +381,3 @@ class SUTops:
                    "YB": YB}
 
             return(EXT)
-
-
-
-def delta_Y(Y, Yalt):
-    """
-    method to calculate difference in Y
-    Y = final demand baseline
-    Yalt = final demand scenario
-    """
-    delta_Y = Y - Yalt
-
-    return (delta_Y)
-
-
-def delta_x(L, Lalt, y):
-    """
-    method to calculate difference in q
-    L = Leontief of baseline
-    Lalt = Leontief of scenario
-    """
-    delta_x = (L-Lalt) @ y
-
-    return (delta_x)
-
-
-def verifyIOT(S, Y, E):
-    x_out = np.sum(np.array(S), axis=1) + np.sum(np.array(Y), axis=1)
-    x_in = np.sum(S, axis=0) + np.sum(E[:9], axis=0)
-    with np.errstate(divide="ignore", invalid="ignore"):
-        ver = x_out/x_in * 100
-    ver = np.nan_to_num(ver)
-    return(ver)

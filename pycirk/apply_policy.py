@@ -12,11 +12,12 @@ Scope: Modelling the Circular Economy in EEIO
 
 import pandas as pd
 import numpy as np
-from pycirk.labels import positions
+from pycirk.positions import positions
 from pycirk.SUTops import sops
 from pycirk.labels import get_labels
 from pandas import DataFrame as df
 import warnings
+
 
 def sceneIOT(data, scen_no, scen_file):
     """
@@ -24,7 +25,7 @@ def sceneIOT(data, scen_no, scen_file):
     Market coefficient method
     """
     data = data.copy()
-    
+
     # Apply policy to economic matrices
     data.S = apply_policy(scen_file, scen_no, data.S, "S")
     inv_diag_x = sops.inv(np.diag(sops.IOT.x(data.S, data.Y)))
@@ -77,6 +78,7 @@ def sceneIOT(data, scen_no, scen_file):
     data.ver = sops.verifyIOT(data.S, data.Y, data.E)  # ver_new_IOT
 
     return(data)
+
 
 def apply_policy(scen_file, scen_no, M, M_name):
     """
@@ -314,9 +316,9 @@ def make_new(fltr_policies, M, M_name):
 
             cat_o = row["cat_o"]
             cat_d = row["cat_d"]
-            
+
             # Translate coordinates from str to numerical position
-            
+
             # get the labels from the matrix
             ind_M = get_labels(M, 0)  # a matrix with all index labels
             col_M = get_labels(M, 1)  # matrix with all column labels

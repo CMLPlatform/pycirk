@@ -20,9 +20,7 @@ class Organize_IO:
     """
     Creates an object out of IO dataset
     """
-
     def __init__(self, data):
-
         self.E = data["E"]
         self.RE = data["RE"]
         self.L = data["L"]
@@ -40,12 +38,12 @@ class Organize_IO:
         self.Bm = data["Bm"]
 
         # characterization factors for extensions
-        self.CrBe_k = data["CrBe"]
-        self.CrBr_k = data["CrBr"]
-        self.CrBm_k = data["CrBm"]
-        self.CrE_k = data["CrE"]
+        self.CrBe_k = data["CrBe_k"]
+        self.CrBr_k = data["CrBr_k"]
+        self.CrBm_k = data["CrBm_k"]
+        self.CrE_k = data["CrE_k"]
 
-        self.ver_base = data["ver"]
+        self.ver_base = data["ver_base"]
 
         # Calculating intensity matrices for final demand extentions
 
@@ -75,10 +73,3 @@ class Organize_IO:
         self.CrYBe = np.matmul(self.CrBe_k, self.YBe)  # emissions ext
         self.CrYBr = np.matmul(self.CrBr_k, self.YBr)  # resource ext
         self.CrYBm = np.matmul(self.CrBm_k, self.YBm)  # material ext
-
-    def organize_labels(self, labels):
-        value = 0
-        return(value)
-
-
-
