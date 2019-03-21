@@ -19,6 +19,7 @@ import os.path as ospt
 from pycirk.organize_io import Organize_IO
 from pycirk.make_secondary_flows import make_secondary as ms
 from pycirk.transformation_methods import Transform
+from pycirk.labels import relabel_in_bulk
 
 
 class Settings:
@@ -202,7 +203,7 @@ class Settings:
             elif self.method == 1:
                 IOT = SUTs.IOTpxpSTA_MSCm()
 
-            IOT = Organize_IO(IOT)
+            IOT = relabel_in_bulk(Organize_IO(IOT))
 
             if self.aggregation == 0:
                 pickle_name = "pycirk//data//mrIO_EU_ROW_V3.3" + extension
@@ -216,7 +217,7 @@ class Settings:
             
             #os.remove(pickle_name)
         elif typ == "io":
-                IOT = Organize_IO(data)
+                IOT = relabel_in_bulk(Organize_IO(data))
         
         
 

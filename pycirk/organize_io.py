@@ -15,12 +15,12 @@ Scope: Modelling the Circular economy in EEIO
 import numpy as np
 from pycirk.fundamental_operations import Operations as ops
 
-
 class Organize_IO:
     """
     Creates an object out of IO dataset
     """
     def __init__(self, data):
+        
         self.E = data["E"]
         self.RE = data["RE"]
         self.L = data["L"]

@@ -17,7 +17,7 @@ from munch import Munch
 import warnings
 
 
-def save_labels( data):
+def save_labels(data):
     get_labels(data["V"], 1).to_csv("labels//industry.csv", index=False)  # with unit column
     get_labels(data["Y"], 0).to_csv("labels//products.csv", index=False)  # with unit column
     get_labels(data["CrBe"], 0).to_csv("labels//charact_emissions.csv", index=False)
@@ -33,19 +33,19 @@ def save_labels( data):
 
 def load_labels():
 
-    ind = read_csv("labels//industry.csv")  # with unit column
-    prod = read_csv("labels//products.csv")  # with unit column
+    ind = read_csv("pycirk//labels//industry.csv")  # with unit column
+    prod = read_csv("pycirk//labels//products.csv")  # with unit column
 
-    primary = read_csv("labels//factor_inputs.csv")
-    fin_dem = read_csv("labels//final_demand.csv")
-    emis = read_csv("labels//emissions.csv")
-    res = read_csv("labels//resources.csv")
-    mat = read_csv("labels//materials.csv")
+    primary = read_csv("pycirk//labels//factor_inputs.csv")
+    fin_dem = read_csv("pycirk//labels//final_demand.csv")
+    emis = read_csv("pycirk//labels//emissions.csv")
+    res = read_csv("pycirk//labels//resources.csv")
+    mat = read_csv("pycirk//labels//materials.csv")
 
-    car_emis = read_csv("labels//charact_emissions.csv")
-    car_res = read_csv("labels//charact_resources.csv")
-    car_mat = read_csv("labels//charact_materials.csv")
-    car_prim = read_csv("labels//charact_factor_inputs.csv")
+    car_emis = read_csv("pycirk//labels//charact_emissions.csv")
+    car_res = read_csv("pycirk//labels//charact_resources.csv")
+    car_mat = read_csv("pycirk//labels//charact_materials.csv")
+    car_prim = read_csv("pycirk//labels//charact_factor_inputs.csv")
 
     labels = {"ind": ind,
               "prod": prod,
@@ -99,10 +99,10 @@ def relabel_in_bulk(data, trans_method=0):
     data.CrE = relabel(data.CrE, cat.iloc[:, :4], lb.car_prim, "CrBe")
 
     # label q
-    data.x = relabel(data["x"], "x", cat, "x")
+    data.x = relabel(data.x, "x", cat, "x")
     # label balance verification
     ver_label = "balance (x_out/x_in) - % - 100=balanced - 0=NaN no values"
-    data.ver = relabel(data.ver, ver_label, cat.iloc[:, :4], "ver")
+    data.ver_base = relabel(data.ver_base, ver_label, cat.iloc[:, :4], "ver_base")
 
     # Labeling final demand extensions
     data.YBe = relabel(data.YBe, lb.fin_dem.iloc[:, :4], lb.emis, "YBe")
