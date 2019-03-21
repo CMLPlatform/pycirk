@@ -19,7 +19,7 @@ import os.path as ospt
 from pycirk.organize_io import Organize_IO
 from pycirk.make_secondary_flows import make_secondary as ms
 from pycirk.transformation_methods import Transform
-from pycirk.labels import relabel_in_bulk
+from pycirk.labels import relabel_in_bulk, save_labels
 
 
 class Settings:
@@ -196,6 +196,7 @@ class Settings:
                 extension = ".pkl"
 
             SUTs = Transform(data)
+            save_labels(SUTs)
 
         #  Transform SUT to IOT
             if self.method == 0:
@@ -217,8 +218,7 @@ class Settings:
             
             #os.remove(pickle_name)
         elif typ == "io":
+                save_labels(data)
                 IOT = relabel_in_bulk(Organize_IO(data))
         
-        
-
         return(IOT)

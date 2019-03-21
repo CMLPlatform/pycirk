@@ -18,23 +18,31 @@ import warnings
 
 
 def save_labels(data):
-    get_labels(data["V"], 1).to_csv("labels//industry.csv", index=False)  # with unit column
-    get_labels(data["Y"], 0).to_csv("labels//products.csv", index=False)  # with unit column
-    get_labels(data["CrBe"], 0).to_csv("labels//charact_emissions.csv", index=False)
-    get_labels(data["CrBr"], 0).to_csv("labels//charact_resources.csv", index=False)
-    get_labels(data["CrBm"], 0).to_csv("labels//charact_materials.csv", index=False)
-    get_labels(data["CrE"], 0).to_csv("labels//charact_factor_inputs.csv", index=False)
-    get_labels(data["E"], 0).to_csv("labels//factor_inputs.csv", index=False)
-    get_labels(data["Y"], 1).to_csv("labels//final_demand.csv", index=False)
-    get_labels(data["Y"], 1, drop_unit=True)
-    get_labels(data["Be"], 0).to_csv("labels//emissions.csv", index=False)
-    get_labels(data["Br"], 0).to_csv("labels//resources.csv", index=False)
-    get_labels(data["Bm"], 0).to_csv("labels//materials.csv", index=False)
+    
+    try:
+        get_labels(data["V"], 1).to_csv("pycirk//labels//industry.csv", index=False)  # with unit column
+    except Exception:
+        pass
+    
+    get_labels(data["Y"], 0).to_csv("pycirk//labels//products.csv", index=False)  # with unit column
+    get_labels(data["CrBe"], 0).to_csv("pycirk//labels//charact_emissions.csv", index=False)
+    get_labels(data["CrBr"], 0).to_csv("pycirk//labels//charact_resources.csv", index=False)
+    get_labels(data["CrBm"], 0).to_csv("pycirk//labels//charact_materials.csv", index=False)
+    get_labels(data["CrE"], 0).to_csv("pycirk//labels//charact_factor_inputs.csv", index=False)
+    get_labels(data["E"], 0).to_csv("pycirk//labels//factor_inputs.csv", index=False)
+    get_labels(data["Y"], 1).to_csv("pycirk//labels//final_demand.csv", index=False)
+    get_labels(data["Be"], 0).to_csv("pycirk//labels//emissions.csv", index=False)
+    get_labels(data["Br"], 0).to_csv("pycirk//labels//resources.csv", index=False)
+    get_labels(data["Bm"], 0).to_csv("pycirk//labels//materials.csv", index=False)
 
 def load_labels():
-
-    ind = read_csv("pycirk//labels//industry.csv")  # with unit column
-    prod = read_csv("pycirk//labels//products.csv")  # with unit column
+    
+    try:
+        ind = read_csv("pycirk//labels//industry.csv")  # with unit column
+        prod = None
+    except Exception:
+        prod = read_csv("pycirk//labels//products.csv")  # with unit column
+        ind = None
 
     primary = read_csv("pycirk//labels//factor_inputs.csv")
     fin_dem = read_csv("pycirk//labels//final_demand.csv")

@@ -12,7 +12,6 @@ Scope:  Modelling the Circular economy in EEIO
 import numpy as np
 from pycirk.fundamental_operations import Operations as ops
 
-
 class Transform:
     """
     Transforms SUTs to IOT an calcualate extensions

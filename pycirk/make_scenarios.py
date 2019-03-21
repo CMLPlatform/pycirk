@@ -14,8 +14,9 @@ import pandas as pd
 import numpy as np
 from pycirk.positions import positions
 from pycirk.fundamental_operations import Operations as ops
-from pycirk.labels import get_labels
+from pycirk.labels import get_labels, relabel_in_bulk
 from pandas import DataFrame as df
+from copy import deepcopy
 import warnings
 
 
@@ -24,7 +25,7 @@ def make_counter_factuals(data, scen_no, scen_file):
     baseline IOT calculated with Technical Coefficient or
     Market coefficient method
     """
-    data = data.copy()
+    data = deepcopy(data)
 
     # Apply policy to economic matrices
     data.S = counterfactual(scen_file, scen_no, data.S, "S")
@@ -61,21 +62,30 @@ def make_counter_factuals(data, scen_no, scen_file):
     data.Br = ops.IOT.B(data.RBr, diag_x)  # resource ext
     data.Bm = ops.IOT.B(data.RBm, diag_x)  # material ext
 
-    data.YBe = ops.IOT.FD_EXT(data.RYBe, diag_yj)  # emissions ext
-    data.YBr = ops.IOT.FD_EXT(data.RYBr, diag_yj)  # resource ext
-    data.YBm = ops.IOT.FD_EXT(data.RYBm, diag_yj)  # material ext
+    _YBe = ops.IOT.FD_EXT(data.RYBe, diag_yj)  # emissions ext
+    _YBr = ops.IOT.FD_EXT(data.RYBr, diag_yj)  # resource ext
+    _YBm = ops.IOT.FD_EXT(data.RYBm, diag_yj)  # material ext
+
+    data.YBe = _YBe["YB"]
+    data.YBr = _YBr["YB"]
+    data.YBm = _YBm["YB"]
+    data.RYBe = _YBe["RYB"]
+    data.RYBr = _YBr["RYB"]
+    data.RYBm = _YBm["RYB"]
 
     # Characterisation
-    data.CrBe = np.matmul(data.CrBe, data.Be)  # emissions ext
-    data.CrBr = np.matmul(data.CrBr, data.Br)  # resource ext
-    data.CrBm = np.matmul(data.CrBm, data.Bm)  # material ext
-    data.CrE = np.matmul(data.CrE, data.E)  # factor inputs
+    data.CrBe = np.matmul(data.CrBe_k, data.Be)  # emissions ext
+    data.CrBr = np.matmul(data.CrBr_k, data.Br)  # resource ext
+    data.CrBm = np.matmul(data.CrBm_k, data.Bm)  # material ext
+    data.CrE = np.matmul(data.CrE_k, data.E)  # factor inputs
 
-    data.CrYBe = np.matmul(data.CrBe, data.YBe)  # emissions ext
-    data.CrYBr = np.matmul(data.CrBr, data.YBr)  # resource ext
-    data.CrYBm = np.matmul(data.CrBm, data.YBm)  # material ext
+    data.CrYBe = np.matmul(data.CrBe_k, data.YBe)  # emissions ext
+    data.CrYBr = np.matmul(data.CrBr_k, data.YBr)  # resource ext
+    data.CrYBm = np.matmul(data.CrBm_k, data.YBm)  # material ext
 
     data.ver = ops.verifyIOT(data.S, data.Y, data.E)  # ver_new_IOT
+    
+    relabel_in_bulk(data)
 
     return(data)
 

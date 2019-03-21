@@ -51,8 +51,10 @@ class Pycirk:
 
         self.settings = Settings(method, make_secondary, save_directory,
                                  aggregation, file)
-        
+
         self.scen_file = Settings.scenario_file()
+        
+        self.baseline = Settings.transform_to_io()
 
     def run_one_scenario(self, scen_no, results_only=True):
         """
@@ -64,9 +66,9 @@ class Pycirk:
         """
         if scen_no in [0, "baseline", "base", None]:
             scen_no = "baseline"
-            IO = self.settings.transform_to_io()
+            IO = self.baseline
         else:
-            IO = mcf(IO, scen_no, self.scen_file)
+            IO = mcf(self.baseline, scen_no, self.scen_file)
 
         output = Results.one_scen(IO, scen_no, results_only)
 
