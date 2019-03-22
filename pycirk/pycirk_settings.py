@@ -16,7 +16,6 @@ import pickle
 from sys import platform
 from shutil import copyfile
 import os.path as ospt
-from pycirk.organize_io import Organize_IO
 from pycirk.make_secondary_flows import make_secondary as ms
 from pycirk.transformation_methods import Transform
 from pycirk.labels import relabel_in_bulk, save_labels
@@ -196,15 +195,15 @@ class Settings:
                 extension = ".pkl"
 
             SUTs = Transform(data)
-            save_labels(SUTs)
-
+            save_labels(data)
+            del(data)
         #  Transform SUT to IOT
             if self.method == 0:
                 IOT = SUTs.IOTpxpSTA_TCm()
             elif self.method == 1:
                 IOT = SUTs.IOTpxpSTA_MSCm()
 
-            IOT = relabel_in_bulk(Organize_IO(IOT))
+            del(SUTs)
 
             if self.aggregation == 0:
                 pickle_name = "pycirk//data//mrIO_EU_ROW_V3.3" + extension
@@ -212,13 +211,14 @@ class Settings:
                 pickle_name = "pycirk//data//mrIO_V3.3" + extension
             # saving the IO tables to avoid rebuilding them all the time
 
-            datatopkl = IOT.__dict__
             with open(pickle_name, "wb") as w:
-                pickle.dump(datatopkl, w, 2)  # pickling
-            
+                pickle.dump(IOT, w, 2)  # pickling
+
             #os.remove(pickle_name)
+
         elif typ == "io":
                 save_labels(data)
-                IOT = relabel_in_bulk(Organize_IO(data))
-        
+                IOT = data
+                del(data)
+
         return(IOT)

@@ -11,6 +11,8 @@ Scope:  Modelling the Circular economy in EEIO
 """
 import numpy as np
 from pycirk.fundamental_operations import Operations as ops
+from munch import Munch
+
 
 class Transform:
     """
@@ -23,21 +25,20 @@ class Transform:
         self.V = SUTs["V"]  # Supply matrix
         self.U = SUTs["U"]  # Intermediate use
         self.Y = SUTs["Y"]  # Final demand
-        self.E = SUTs["E"]  # Primary input
-        self.Be = SUTs["Be"]  # emissions extension
-        self.YBe = SUTs["YBe"]  # emissions extension final demand
-        self.Br = SUTs["Br"]  # Resources extension
-        self.YBr = SUTs["YBr"]  # Resources extension final demand
-        self.Bm = SUTs["Bm"]  # Materials extension
-        self.YBm = SUTs["YBm"]  # Materials extension final demand
+        self.W = SUTs["W"]  # Primary input
+        self.E = SUTs["E"]  # emissions extension
+        self.YE = SUTs["YE"]  # emissions extension final demand
+        self.R = SUTs["R"]  # Resources extension
+        self.YR = SUTs["YR"]  # Resources extension final demand
+        self.M = SUTs["M"]  # Materials extension
+        self.YM = SUTs["YM"]  # Materials extension final demand
 
-        self.CrBe_k = SUTs["CrBe"]  # Characterisation coefficients emissions
-        self.CrBm_k = SUTs["CrBm"]  # Characterisation coefficients materials
-        self.CrBr_k = SUTs["CrBr"]  # Characterisation coefficients resources
-        self.CrE_k = SUTs["CrE"]  # Characterisation coefficients factor inputs
+        self.Cr_E_k = SUTs["Cr_E_k"]  # Charact coefficients emissions
+        self.Cr_R_k = SUTs["Cr_R_k"]  # Charact coefficients resources
+        self.Cr_M_k = SUTs["Cr_M_k"]  # Charact coefficients materials
+        self.Cr_W_k = SUTs["Cr_W_k"]  # Charact coefficients factor inputs
 
         # baseline variables
-        self.e = np.sum(self.E[: 9], axis=0)
         self.yi = np.array(np.sum(self.Y, axis=1))  # row sum of final demand
         self.yj = np.array(np.sum(self.Y, axis=0))  # col sum of final demand
         self.q = np.sum(self.V, axis=1)  # total product output
@@ -63,51 +64,52 @@ class Transform:
         Technical coef method
         """
         met = ops.PxP_ITA_TC
-        
+
         T = met.T(self.V, self.inv_diag_g)  # transformation matrix
         L = met.L(self.U, T, self.inv_diag_q)  # leontief inverse
-        RE = met.R(self.E, T, self.inv_diag_q)  # primary inp. coef
-        E = met.B(RE, self.diag_q)  # primary inputs
 
-        RBe = met.R(self.Be, T, self.inv_diag_q)  # Be coef. matrix
-        Be = met.B(RBe, self.diag_q)  # emissions extensions
-
-        RBr = met.R(self.Br, T, self.inv_diag_q)  # Br coef. matrix
-        Br = met.B(RBr, self.diag_q)  # resource extensions
-
-        RBm = met.R(self.Bm, T, self.inv_diag_q)  # Bm coef. matrix
-        Bm = met.B(RBm, self.diag_q)  # Material extension
+        w = met.B(self.W, T, self.inv_diag_q)  # primary inp. coef matrix
 
         S = met.S(T, self.U)  # intermediates
+        x = ops.IOT.x_IAy(L, self.yi)
+        W = ops.IOT.R(w, np.diag(x))
+        ver_base = ops.verifyIOT(S, self.Y, W)
+        del(self.V)
+        del(self.U)
+        del(self.W)
+
+        e = met.B(self.E, T, self.inv_diag_q)  # emis coef. matrix
+        del(self.E)
+
+        r = met.B(self.R, T, self.inv_diag_q)  # resour coef. matrix
+        del(self.R)
+
+        m = met.B(self.M, T, self.inv_diag_q)  # mater coef. matrix
+        del(self.M)
+
         x = ops.IOT.x_IAy(L, self.yi)  # total product ouput
 
         A = ops.IOT.A(S, self.inv_diag_q)
 
-        Y = self.Y
+        Ye = ops.IOT.YB(self.YE, self.inv_diag_yj)
+        Yr = ops.IOT.YB(self.YR, self.inv_diag_yj)
+        Ym = ops.IOT.YB(self.YM, self.inv_diag_yj)
 
-        ver_base = ops.verifyIOT(S, Y, E)
-
-        IOT = {"x": x,
-               "T": T,
-               "Y": Y,
-               "A": A,
-               "RE": RE,
-               "Be": Be,
-               "YBe": self.YBe,
-               "RBe": RBe,
-               "Br": Br,
-               "YBr": self.YBr,
-               "RBr": RBr,
-               "Bm": Bm,
-               "YBm": self.YBm,
-               "RBm": RBm,
-               "CrBe_k": self.CrBe_k,
-               "CrBm_k": self.CrBm_k,
-               "CrBr_k": self.CrBr_k,
-               "CrE_k": self.CrE_k,
+        IOT = {"Y": self.Y,
                "L": L,
-               "E": E,
                "S": S,
+               "A": A,
+               "w": w,
+               "e": e,
+               "Ye": Ye,
+               "r": r,
+               "Yr": Yr,
+               "m": m,
+               "Ym": Ym,
+               "Cr_E_k": self.Cr_E_k,
+               "Cr_M_k": self.Cr_M_k,
+               "Cr_R_k": self.Cr_R_k,
+               "Cr_W_k": self.Cr_W_k,
                "ver_base": ver_base
                }
 
@@ -119,54 +121,55 @@ class Transform:
         Market share coef method
         """
         met = ops.PxP_ITA_MSC
-        
+
         Z = met.Z(self.U, self.inv_diag_g)  # ind. interm. coef.
         D = met.D(self.V, self.inv_diag_q)  # Market shares
         A = met.A(Z, D)  # technical coefficient matrix
         L = met.L(A)  # leontief inverse
-        RE = met.R(self.E, D, self.inv_diag_g)  # primary inputs
-        E = met.B(RE, self.diag_q)
-
-        RBe = met.R(self.Be, D, self.inv_diag_g)  # Be coef. matr.
-        Be = met.B(RBe, self.diag_q)  # emissions extensions
-
-        RBr = met.R(self.Br, D, self.inv_diag_g)  # Br coef. matr.
-        Br = met.B(RBr, self.diag_q)  # resource extensions
-
-        RBm = met.R(self.Bm, D, self.inv_diag_g)  # Bm coef. matr.
-        Bm = met.B(RBm, self.diag_q)  # Material extension
-
+        w = met.B(self.W, D, self.inv_diag_g)  # primary inputs
+        x = ops.IOT.x_IAy(L, self.yi)
+        W = ops.IOT.R(w, np.diag(x))
         S = met.S(Z, D, self.diag_q)  # intermediates
-        x = ops.IOT.x_IAy(L, self.yi)  # total product output
+        ver_base = ops.verifyIOT(S, self.Y, W)
+        del(self.V)
+        del(self.U)
+        del(self.W)
+
+        e = met.B(self.E, D, self.inv_diag_g)  # emis coef. matrix
+        del(self.E)
+
+        r = met.B(self.R, D, self.inv_diag_g)  # resour coef. matrix
+        del(self.R)
+
+        m = met.B(self.M, D, self.inv_diag_g)  # mater coef. matrix
+        del(self.M)
+
+        x = ops.IOT.x_IAy(L, self.yi)  # total product ouput
 
         A = ops.IOT.A(S, self.inv_diag_q)
 
-        Y = self.Y
+        Ye = ops.IOT.YB(self.YE, self.inv_diag_yj)
+        Yr = ops.IOT.YB(self.YR, self.inv_diag_yj)
+        Ym = ops.IOT.YB(self.YM, self.inv_diag_yj)
 
-        ver_base = ops.verifyIOT(S, Y, E)
-
-        IOT = {"RE": RE,
-               "A": A,
-               "Y": Y,
-               "D": D,
-               "Be": Be,
-               "YBe": self.YBe,
-               "RBe": RBe,
-               "Br": Br,
-               "YBr": self.YBr,
-               "RBr": RBr,
-               "Bm": Bm,
-               "YBm": self.YBm,
-               "RBm": RBm,
-               "CrBe_k": self.CrBe_k,
-               "CrBm_k": self.CrBm_k,
-               "CrBr_k": self.CrBr_k,
-               "CrE_k": self.CrE_k,
+        IOT = {"Y": self.Y,
                "L": L,
                "S": S,
-               "E": E,
-               "x": x,
+               "A": A,
+               "w": w,
+               "e": e,
+               "Ye": Ye,
+               "r": r,
+               "Yr": Yr,
+               "m": m,
+               "Ym": Ym,
+               "Cr_E_k": self.Cr_E_k,
+               "Cr_M_k": self.Cr_M_k,
+               "Cr_R_k": self.Cr_R_k,
+               "Cr_W_k": self.Cr_W_k,
                "ver_base": ver_base
                }
 
         return(IOT)
+
+        # Add here more transformation methods for industry-by-industry

@@ -24,56 +24,10 @@ class Operations:
         """
         Returns inverse by dividing by 1 and eliminating inf and nan values
         """
-        with np.errstate(divide="ignore", invalid="ignore"):
-            x = 1/x
-        x[x == np.inf] = 0
-        x[x == np.nan] = 0
+        mask = (x == 0)
+        x[~mask] = 1/x[~mask]
 
         return(x)
-
-    def var(self, V, U, Y, E):
-        """
-        Returns variables that are useful in all calculations
-        """
-        V = np.mat(V)
-        U = np.mat(U)
-        Y = np.mat(Y)
-        E = np.mat(E)
-
-        e = E[:9].sum(axis=0).getA1()
-        yi = Y.sum(axis=1).getA1()
-        yj = Y.sum(axis=0).getA1()
-        q = V.sum(axis=1).getA1()
-        g = V.sum(axis=0).getA1()
-
-        diag_yi = np.diag(yi)
-        inv_diag_yi = self.inv(diag_yi)
-
-        diag_yj = np.diag(yj)
-        inv_diag_yj = self.inv(diag_yj)
-
-        diag_q = np.diag(q)
-        inv_diag_q = self.inv(diag_q)
-
-        diag_g = np.diag(g)
-        inv_diag_g = self.inv(diag_g)
-
-        p = {"e": e,
-             "yi": yi,
-             "yj": yj,
-             "q": q,
-             "g": g,
-             "diag_q": diag_q,
-             "diag_g": diag_g,
-             "diag_yi": diag_yi,
-             "diag_yj": diag_yj,
-             "inv_diag_q": inv_diag_q,
-             "inv_diag_g": inv_diag_g,
-             "inv_diag_yi": inv_diag_yi,
-             "inv_diag_yj": inv_diag_yj
-             }
-
-        return(p)
 
     def delta_Y(Y, Yalt):
         """
@@ -95,9 +49,9 @@ class Operations:
 
         return (delta_x)
 
-    def verifyIOT(S, Y, E):
+    def verifyIOT(S, Y, W):
         x_out = np.sum(np.array(S), axis=1) + np.sum(np.array(Y), axis=1)
-        x_in = np.sum(S, axis=0) + np.sum(E[:9], axis=0)
+        x_in = np.sum(S, axis=0) + np.sum(W[:9], axis=0)
         with np.errstate(divide="ignore", invalid="ignore"):
             ver = x_out/x_in * 100
         ver = np.nan_to_num(ver)
@@ -134,22 +88,21 @@ class Operations:
 
             return(L)
 
-        def R(B, T, inv_diag_q):
+        def B(R, T, inv_diag_q):
             """
-            Value added and extension requirement matrix
-            R = E * inv(diag(g))
+            Calculates extension intensity
             """
-            BT = B @ T
-            R = BT @ inv_diag_q  # Input coefficients
-            return (R)
-
-        def B(R, diag_q):
-            """
-            Extensions and primary input for IO tables
-            """
-            B = R @ diag_q
-
+            RT = R @ T
+            B = RT @ inv_diag_q  # Input coefficients
             return (B)
+
+        def R(B, diag_q):
+            """
+            Calculates absolute extensions
+            """
+            R = B @ diag_q
+
+            return (R)
 
         def S(T, U):
             """
@@ -206,22 +159,21 @@ class Operations:
 
             return(L)
 
-        def R(B, D, inv_diag_g):
+        def B(R, D, inv_diag_g):
             """
-            Input coefficients ext_matrix
-            R = E * inv(diag(g))
+            Calculates extensions intensities
             """
-            R_ = B @ inv_diag_g
-            R = np.matmul(R_, D)
-            return (R)
+            B_ = R @ inv_diag_g
+            B = np.matmul(B_, D)
+            return(B)
 
-        def B(R, diag_q):
+        def R(B, diag_q):
             """
-            Extensions and primary input for IO tables
+            Calculates absolute extensions
             """
-            B = R @ diag_q
+            R = B @ diag_q
 
-            return (B)
+            return(R)
 
         def S(Z, D, diag_q):
             """
@@ -247,21 +199,21 @@ class Operations:
 
             return(q)
 
-        def R(B, inv_diag_x):
+        def B(R, inv_diag_x):
             """
-            Primary input and intermediates extensions coefficient matrix
+            Calculates extensions intensities
             """
-            R = B @ inv_diag_x
-
-            return(R)
-
-        def B(R, diag_x):
-            """
-            Primary input and intermediates extensions matrix
-            """
-            B = R @ diag_x
+            B = R @ inv_diag_x
 
             return(B)
+
+        def R(B, diag_x):
+            """
+            Calculates absolute extensions
+            """
+            R = B @ diag_x
+
+            return(R)
 
         def x_IAy(L, y):
             """
@@ -300,29 +252,30 @@ class Operations:
 
             return(L)
 
-        def RYB(inv_diag_yj, YB):
+        def YB(YR, inv_diag_yj):
             """
+            Calculates intensities of extensions in final demand
             Method for transformation matrix of YB
             (e.g. final demand emissions)
-            RB = YB * inv(diag(yj))
             """
-            YRB = YB @ inv_diag_yj
+            YB = YR @ inv_diag_yj
 
-            return (YRB)
+            return(YB)
 
-        def YB(RYB, diag_yj):
+        def YR(YB, diag_yj):
             """
-            Extensions and primary input for IO tables
+            Caclculates absolute extensions in final demand
             """
-            YB = RYB @ diag_yj
+            YR = YB @ diag_yj
 
-            return (YB)
+            return(YR)
 
-        def IOT(S, Y, E, Be, Br, Bm):
+        # is this function really needed?
+        def IOT(S, Y, W, E, R, M):
             """
             IOT
             """
-            x = Operations.q(S, Y)  # total product output
+            x = Operations.IOT.x(S, Y)  # total product output
             diag_x = np.diag(x)
             inv_diag_x = Operations.inv(diag_x)
 
@@ -331,17 +284,17 @@ class Operations:
             A = Operations.IOT.A(S, inv_diag_x)  # technical coefficient matrix
             L = Operations.IOT.L(A)  # leontief inverse
 
-            RE = Operations.IOT.R(E, inv_diag_x)  # primary inputs coef
-            E = Operations.IOT.B(RE, diag_x)
+            w = Operations.IOT.B(W, inv_diag_x)  # primary inputs coef
+            W = Operations.IOT.R(w, diag_x)
 
-            RBe = Operations.IOT.R(Be, inv_diag_x)  # Be coefficient matrix
-            Be = Operations.IOT.B(RBe, diag_x)  # environmental extensions
+            e = Operations.IOT.B(E, inv_diag_x)  # Be coefficient matrix
+            E = Operations.IOT.R(e, diag_x)  # environmental extensions
 
-            RBr = Operations.IOT.R(Br, inv_diag_x)  # Br coefficient matrix
-            Br = Operations.IOT.B(RBr, diag_x)  # resource extensions
+            r = Operations.IOT.B(R, inv_diag_x)  # Br coefficient matrix
+            R = Operations.IOT.R(r, diag_x)  # resource extensions
 
-            RBm = Operations.IOT.R(Bm, inv_diag_x)  # Bm coefficient matrix
-            Bm = Operations.IOT.B(RBm, diag_x)  # Material extension
+            m = Operations.IOT.B(M, inv_diag_x)  # Bm coefficient matrix
+            M = Operations.IOT.R(m, diag_x)  # Material extension
 
             S = Operations.IOT.S(A, diag_x)  # intermediates
             x = Operations.IOT.x_IAy(L, y)
@@ -353,30 +306,16 @@ class Operations:
                    "L": L,
                    "S": S,
                    "Y": Y,
-                   "RE": RE,
-                   "E": E,
+                   "w": w,
+                   "W": W,
                    "x": x,
-                   "Be": Be,
-                   "RBe": RBe,
-                   "Br": Br,
-                   "RBr": RBr,
-                   "Bm": Bm,
-                   "RBm": RBm,
-                   "ver": ver_base
+                   "E": E,
+                   "e": e,
+                   "R": R,
+                   "r": r,
+                   "M": M,
+                   "m": m,
+                   "ver_base": ver_base
                    }
 
             return(IOT)
-
-        def FD_EXT(YB, diag_yj):
-            """
-            Recalculates FD extensions based on counterfactual final demand
-            """
-            inv_diag_yj = Operations.inv(diag_yj)
-
-            RYB = Operations.IOT.RYB(inv_diag_yj, YB)
-            YB = Operations.IOT.YB(RYB, diag_yj)
-
-            EXT = {"RYB": RYB,
-                   "YB": YB}
-
-            return(EXT)

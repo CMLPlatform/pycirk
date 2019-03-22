@@ -92,6 +92,14 @@ pycirk.save\_utils module
     :undoc-members:
     :show-inheritance:
 
+pycirk.sherman\_morrison module
+-------------------------------
+
+.. automodule:: pycirk.sherman_morrison
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pycirk.transformation\_methods module
 -------------------------------------
 

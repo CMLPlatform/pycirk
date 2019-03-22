@@ -21,12 +21,11 @@ class Results:
     """
     Launches analysis, collects and assembles all results
     """
-    def __init__(self, IOT, scen_file, make_secondary, exists):
+    def __init__(self, scen_file, make_secondary, exists):
 
         sheet_names = self.scen_file.sheet_names
         self.sheets = [f for f in sheet_names if f.startswith("scenario_")]
         self.analysis_sheet = pd.read_excel(self.scen_file, "analyse", header=1)
-        self.IOT = IOT
         self.exists = exists
 
     def one_scen(self, IOT, scen_no=None, results_only=True):

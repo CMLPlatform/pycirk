@@ -34,17 +34,17 @@ def make_counter_factuals(data, scen_no, scen_file):
     data.A = counterfactual(scen_file, scen_no, df(A), "A")
 
     data.Y = counterfactual(scen_file, scen_no, data.Y, "Y")
-    data.RE = counterfactual(scen_file, scen_no, data.RE, "RE")
+    data.w = counterfactual(scen_file, scen_no, data.w, "w")
 
     # Apply policy to intermediate extension coefficient matrices
-    data.RBe = counterfactual(scen_file, scen_no, data.RBe, "RBe")
-    data.RBr = counterfactual(scen_file, scen_no, data.RBr, "RBr")
-    data.RBm = counterfactual(scen_file, scen_no, data.RBm, "RBm")
+    data.e = counterfactual(scen_file, scen_no, data.e, "e")
+    data.r = counterfactual(scen_file, scen_no, data.r, "r")
+    data.m = counterfactual(scen_file, scen_no, data.m, "m")
 
     # Apply policy to  final demand extension coefficient matrices
-    data.RYBe = counterfactual(scen_file, scen_no, data.RYBe, "RYBe")
-    data.RYBr = counterfactual(scen_file, scen_no, data.RYBr, "RYBr")
-    data.RYBm = counterfactual(scen_file, scen_no, data.RYBm, "RYBm")
+    data.Ye = counterfactual(scen_file, scen_no, data.Ye, "Ye")
+    data.Yr = counterfactual(scen_file, scen_no, data.Yr, "Yr")
+    data.Ym = counterfactual(scen_file, scen_no, data.Ym, "Ym")
 
     # Scenario
     data.L = ops.IOT.L(data.A)  # L from S and Y modified
@@ -56,11 +56,11 @@ def make_counter_factuals(data, scen_no, scen_file):
 
     data.S = ops.IOT.S(data.A, diag_x)
 
-    data.E = ops.IOT.B(data.RE, diag_x)  # primary inputs
+    data.W = ops.IOT.B(data.w, diag_x)  # primary inputs
 
-    data.Be = ops.IOT.B(data.RBe, diag_x)  # emissions ext
-    data.Br = ops.IOT.B(data.RBr, diag_x)  # resource ext
-    data.Bm = ops.IOT.B(data.RBm, diag_x)  # material ext
+    data.e = ops.IOT.B(data.e, diag_x)  # emissions ext
+    data.r = ops.IOT.B(data.r, diag_x)  # resource ext
+    data.m = ops.IOT.B(data.m, diag_x)  # material ext
 
     _YBe = ops.IOT.FD_EXT(data.RYBe, diag_yj)  # emissions ext
     _YBr = ops.IOT.FD_EXT(data.RYBr, diag_yj)  # resource ext
@@ -84,7 +84,7 @@ def make_counter_factuals(data, scen_no, scen_file):
     data.CrYBm = np.matmul(data.CrBm_k, data.YBm)  # material ext
 
     data.ver = ops.verifyIOT(data.S, data.Y, data.E)  # ver_new_IOT
-    
+
     relabel_in_bulk(data)
 
     return(data)
