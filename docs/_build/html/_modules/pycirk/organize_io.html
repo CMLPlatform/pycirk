@@ -36,7 +36,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Created on Tue Feb 7 16:29:23 2017</span>
 
-<span class="sd">Description: Calculate baseline and scenarios in IOT</span>
+<span class="sd">Description: Organize essential tables for saving</span>
 
 <span class="sd">Scope: Modelling the Circular economy in EEIO</span>
 
@@ -45,68 +45,25 @@
 <span class="sd">@institution: Leiden University CML</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="c1"># import warnings</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">pycirk.fundamental_operations</span> <span class="k">import</span> <span class="n">Operations</span> <span class="k">as</span> <span class="n">ops</span>
 
-<div class="viewcode-block" id="Organize_IO"><a class="viewcode-back" href="../../pycirk.html#pycirk.organize_io.Organize_IO">[docs]</a><span class="k">class</span> <span class="nc">Organize_IO</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates an object out of IO dataset</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;E&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">RE</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;RE&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span>
+<div class="viewcode-block" id="organizer"><a class="viewcode-back" href="../../pycirk.html#pycirk.organize_io.organizer">[docs]</a><span class="k">def</span> <span class="nf">organizer</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">RBe</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;RBe&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">RBr</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;RBr&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">RBm</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;RBm&quot;</span><span class="p">]</span>
+    <span class="n">IOT</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;S&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">],</span>
+           <span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">],</span>
+           <span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">],</span>
+           <span class="s2">&quot;e&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;e&quot;</span><span class="p">],</span>
+           <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">],</span>
+           <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">],</span>
+           <span class="s2">&quot;Ye&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Ye&quot;</span><span class="p">],</span>
+           <span class="s2">&quot;Yr&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Yr&quot;</span><span class="p">],</span>
+           <span class="s2">&quot;Ym&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Ym&quot;</span><span class="p">],</span>
+           <span class="s2">&quot;Cr_E_k&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Cr_E_k&quot;</span><span class="p">],</span>
+           <span class="s2">&quot;Cr_M_k&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Cr_M_k&quot;</span><span class="p">],</span>
+           <span class="s2">&quot;Cr_R_k&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Cr_R_k&quot;</span><span class="p">],</span>
+           <span class="s2">&quot;Cr_W_k&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Cr_W_k&quot;</span><span class="p">]</span>
+           <span class="p">}</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">Be</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Be&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Br</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Br&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Bm</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Bm&quot;</span><span class="p">]</span>
-
-        <span class="c1"># characterization factors for extensions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrBe_k</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;CrBe_k&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrBr_k</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;CrBr_k&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrBm_k</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;CrBm_k&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrE_k</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;CrE_k&quot;</span><span class="p">]</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">ver_base</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ver_base&quot;</span><span class="p">]</span>
-
-        <span class="c1"># Calculating intensity matrices for final demand extentions</span>
-
-        <span class="n">YBe_</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;YBe&quot;</span><span class="p">]</span>
-        <span class="n">YBr_</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;YBr&quot;</span><span class="p">]</span>
-        <span class="n">YBm_</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;YBm&quot;</span><span class="p">]</span>
-
-        <span class="n">diag_yj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-
-        <span class="n">_YBe</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">FD_EXT</span><span class="p">(</span><span class="n">YBe_</span><span class="p">,</span> <span class="n">diag_yj</span><span class="p">)</span>
-        <span class="n">_YBr</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">FD_EXT</span><span class="p">(</span><span class="n">YBr_</span><span class="p">,</span> <span class="n">diag_yj</span><span class="p">)</span>
-        <span class="n">_YBm</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">FD_EXT</span><span class="p">(</span><span class="n">YBm_</span><span class="p">,</span> <span class="n">diag_yj</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">YBe</span> <span class="o">=</span> <span class="n">_YBe</span><span class="p">[</span><span class="s2">&quot;YB&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">YBr</span> <span class="o">=</span> <span class="n">_YBr</span><span class="p">[</span><span class="s2">&quot;YB&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">YBm</span> <span class="o">=</span> <span class="n">_YBm</span><span class="p">[</span><span class="s2">&quot;YB&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">RYBe</span> <span class="o">=</span> <span class="n">_YBe</span><span class="p">[</span><span class="s2">&quot;RYB&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">RYBr</span> <span class="o">=</span> <span class="n">_YBr</span><span class="p">[</span><span class="s2">&quot;RYB&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">RYBm</span> <span class="o">=</span> <span class="n">_YBm</span><span class="p">[</span><span class="s2">&quot;RYB&quot;</span><span class="p">]</span>
-
-        <span class="c1"># Characterized extensions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrBe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CrBe_k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Be</span><span class="p">)</span>  <span class="c1"># emissions ext</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrBr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CrBr_k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Br</span><span class="p">)</span>  <span class="c1"># resource ext</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrBm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CrBm_k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Bm</span><span class="p">)</span>  <span class="c1"># material ext</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CrE_k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">)</span>  <span class="c1"># factor inputs</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrYBe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CrBe_k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">YBe</span><span class="p">)</span>  <span class="c1"># emissions ext</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrYBr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CrBr_k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">YBr</span><span class="p">)</span>  <span class="c1"># resource ext</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrYBm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CrBm_k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">YBm</span><span class="p">)</span>  <span class="c1"># material ext</span></div>
+    <span class="k">return</span><span class="p">(</span><span class="n">IOT</span><span class="p">)</span></div>
 </pre></div>
 
           </div>

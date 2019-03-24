@@ -12,7 +12,7 @@ Scope: Modelling the Circular Economy in EEIO
 
 import pandas as pd
 import numpy as np
-from pycirk.positions import positions
+from pycirk import positions
 from pycirk.fundamental_operations import Operations as ops
 from copy import deepcopy
 import warnings

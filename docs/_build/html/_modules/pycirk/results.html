@@ -47,7 +47,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">df</span>
 <span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">MultiIndex</span> <span class="k">as</span> <span class="n">mi</span>
-<span class="kn">from</span> <span class="nn">pycirk.positions</span> <span class="k">import</span> <span class="n">positions</span>
+<span class="kn">from</span> <span class="nn">pycirk</span> <span class="k">import</span> <span class="n">positions</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
 
 
@@ -55,12 +55,11 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Launches analysis, collects and assembles all results</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">IOT</span><span class="p">,</span> <span class="n">scen_file</span><span class="p">,</span> <span class="n">make_secondary</span><span class="p">,</span> <span class="n">exists</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_file</span><span class="p">,</span> <span class="n">make_secondary</span><span class="p">,</span> <span class="n">exists</span><span class="p">):</span>
 
         <span class="n">sheet_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span><span class="o">.</span><span class="n">sheet_names</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sheets</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">sheet_names</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;scenario_&quot;</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">analysis_sheet</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span><span class="p">,</span> <span class="s2">&quot;analyse&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">IOT</span> <span class="o">=</span> <span class="n">IOT</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exists</span> <span class="o">=</span> <span class="n">exists</span>
 
 <div class="viewcode-block" id="Results.one_scen"><a class="viewcode-back" href="../../pycirk.html#pycirk.results.Results.one_scen">[docs]</a>    <span class="k">def</span> <span class="nf">one_scen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">IOT</span><span class="p">,</span> <span class="n">scen_no</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">results_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>

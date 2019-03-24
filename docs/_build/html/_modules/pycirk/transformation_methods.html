@@ -45,6 +45,8 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">pycirk.fundamental_operations</span> <span class="k">import</span> <span class="n">Operations</span> <span class="k">as</span> <span class="n">ops</span>
+<span class="kn">from</span> <span class="nn">munch</span> <span class="k">import</span> <span class="n">Munch</span>
+
 
 <div class="viewcode-block" id="Transform"><a class="viewcode-back" href="../../pycirk.html#pycirk.transformation_methods.Transform">[docs]</a><span class="k">class</span> <span class="nc">Transform</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -57,21 +59,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span>  <span class="c1"># Supply matrix</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">U</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;U&quot;</span><span class="p">]</span>  <span class="c1"># Intermediate use</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span>  <span class="c1"># Final demand</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;E&quot;</span><span class="p">]</span>  <span class="c1"># Primary input</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Be</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;Be&quot;</span><span class="p">]</span>  <span class="c1"># emissions extension</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">YBe</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;YBe&quot;</span><span class="p">]</span>  <span class="c1"># emissions extension final demand</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Br</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;Br&quot;</span><span class="p">]</span>  <span class="c1"># Resources extension</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">YBr</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;YBr&quot;</span><span class="p">]</span>  <span class="c1"># Resources extension final demand</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Bm</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;Bm&quot;</span><span class="p">]</span>  <span class="c1"># Materials extension</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">YBm</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;YBm&quot;</span><span class="p">]</span>  <span class="c1"># Materials extension final demand</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;W&quot;</span><span class="p">]</span>  <span class="c1"># Primary input</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;E&quot;</span><span class="p">]</span>  <span class="c1"># emissions extension</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">YE</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;YE&quot;</span><span class="p">]</span>  <span class="c1"># emissions extension final demand</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>  <span class="c1"># Resources extension</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">YR</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;YR&quot;</span><span class="p">]</span>  <span class="c1"># Resources extension final demand</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">]</span>  <span class="c1"># Materials extension</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">YM</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;YM&quot;</span><span class="p">]</span>  <span class="c1"># Materials extension final demand</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrBe_k</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;CrBe&quot;</span><span class="p">]</span>  <span class="c1"># Characterisation coefficients emissions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrBm_k</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;CrBm&quot;</span><span class="p">]</span>  <span class="c1"># Characterisation coefficients materials</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrBr_k</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;CrBr&quot;</span><span class="p">]</span>  <span class="c1"># Characterisation coefficients resources</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">CrE_k</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;CrE&quot;</span><span class="p">]</span>  <span class="c1"># Characterisation coefficients factor inputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Cr_E_k</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;Cr_E_k&quot;</span><span class="p">]</span>  <span class="c1"># Charact coefficients emissions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Cr_R_k</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;Cr_R_k&quot;</span><span class="p">]</span>  <span class="c1"># Charact coefficients resources</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Cr_M_k</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;Cr_M_k&quot;</span><span class="p">]</span>  <span class="c1"># Charact coefficients materials</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Cr_W_k</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;Cr_W_k&quot;</span><span class="p">]</span>  <span class="c1"># Charact coefficients factor inputs</span>
 
         <span class="c1"># baseline variables</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">[:</span> <span class="mi">9</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># row sum of final demand</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">yj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>  <span class="c1"># col sum of final demand</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># total product output</span>
@@ -97,51 +98,52 @@
 <span class="sd">        Technical coef method</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">met</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">PxP_ITA_TC</span>
-        
+
         <span class="n">T</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">T</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># transformation matrix</span>
         <span class="n">L</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">L</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">U</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># leontief inverse</span>
-        <span class="n">RE</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># primary inp. coef</span>
-        <span class="n">E</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diag_q</span><span class="p">)</span>  <span class="c1"># primary inputs</span>
 
-        <span class="n">RBe</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Be</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># Be coef. matrix</span>
-        <span class="n">Be</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RBe</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diag_q</span><span class="p">)</span>  <span class="c1"># emissions extensions</span>
-
-        <span class="n">RBr</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Br</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># Br coef. matrix</span>
-        <span class="n">Br</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RBr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diag_q</span><span class="p">)</span>  <span class="c1"># resource extensions</span>
-
-        <span class="n">RBm</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Bm</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># Bm coef. matrix</span>
-        <span class="n">Bm</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RBm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diag_q</span><span class="p">)</span>  <span class="c1"># Material extension</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># primary inp. coef matrix</span>
 
         <span class="n">S</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">U</span><span class="p">)</span>  <span class="c1"># intermediates</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">x_IAy</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yi</span><span class="p">)</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">ver_base</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">verifyIOT</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">)</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">U</span><span class="p">)</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="n">e</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># emis coef. matrix</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">)</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># resour coef. matrix</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">)</span>
+
+        <span class="n">m</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># mater coef. matrix</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">)</span>
+
         <span class="n">x</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">x_IAy</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yi</span><span class="p">)</span>  <span class="c1"># total product ouput</span>
 
         <span class="n">A</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>
 
-        <span class="n">Y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span>
+        <span class="n">Ye</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">YB</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">YE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_yj</span><span class="p">)</span>
+        <span class="n">Yr</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">YB</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">YR</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_yj</span><span class="p">)</span>
+        <span class="n">Ym</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">YB</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">YM</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_yj</span><span class="p">)</span>
 
-        <span class="n">ver_base</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">verifyIOT</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>
-
-        <span class="n">IOT</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-               <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span>
-               <span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="n">Y</span><span class="p">,</span>
-               <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span>
-               <span class="s2">&quot;RE&quot;</span><span class="p">:</span> <span class="n">RE</span><span class="p">,</span>
-               <span class="s2">&quot;Be&quot;</span><span class="p">:</span> <span class="n">Be</span><span class="p">,</span>
-               <span class="s2">&quot;YBe&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">YBe</span><span class="p">,</span>
-               <span class="s2">&quot;RBe&quot;</span><span class="p">:</span> <span class="n">RBe</span><span class="p">,</span>
-               <span class="s2">&quot;Br&quot;</span><span class="p">:</span> <span class="n">Br</span><span class="p">,</span>
-               <span class="s2">&quot;YBr&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">YBr</span><span class="p">,</span>
-               <span class="s2">&quot;RBr&quot;</span><span class="p">:</span> <span class="n">RBr</span><span class="p">,</span>
-               <span class="s2">&quot;Bm&quot;</span><span class="p">:</span> <span class="n">Bm</span><span class="p">,</span>
-               <span class="s2">&quot;YBm&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">YBm</span><span class="p">,</span>
-               <span class="s2">&quot;RBm&quot;</span><span class="p">:</span> <span class="n">RBm</span><span class="p">,</span>
-               <span class="s2">&quot;CrBe_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CrBe_k</span><span class="p">,</span>
-               <span class="s2">&quot;CrBm_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CrBm_k</span><span class="p">,</span>
-               <span class="s2">&quot;CrBr_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CrBr_k</span><span class="p">,</span>
-               <span class="s2">&quot;CrE_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CrE_k</span><span class="p">,</span>
+        <span class="n">IOT</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span>
                <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="n">L</span><span class="p">,</span>
-               <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="n">E</span><span class="p">,</span>
                <span class="s2">&quot;S&quot;</span><span class="p">:</span> <span class="n">S</span><span class="p">,</span>
+               <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span>
+               <span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span>
+               <span class="s2">&quot;e&quot;</span><span class="p">:</span> <span class="n">e</span><span class="p">,</span>
+               <span class="s2">&quot;Ye&quot;</span><span class="p">:</span> <span class="n">Ye</span><span class="p">,</span>
+               <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">,</span>
+               <span class="s2">&quot;Yr&quot;</span><span class="p">:</span> <span class="n">Yr</span><span class="p">,</span>
+               <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span>
+               <span class="s2">&quot;Ym&quot;</span><span class="p">:</span> <span class="n">Ym</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_E_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_E_k</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_M_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_M_k</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_R_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_R_k</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_W_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_W_k</span><span class="p">,</span>
                <span class="s2">&quot;ver_base&quot;</span><span class="p">:</span> <span class="n">ver_base</span>
                <span class="p">}</span>
 
@@ -153,57 +155,58 @@
 <span class="sd">        Market share coef method</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">met</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">PxP_ITA_MSC</span>
-        
+
         <span class="n">Z</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">U</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># ind. interm. coef.</span>
         <span class="n">D</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">D</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># Market shares</span>
         <span class="n">A</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>  <span class="c1"># technical coefficient matrix</span>
         <span class="n">L</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">L</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>  <span class="c1"># leontief inverse</span>
-        <span class="n">RE</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># primary inputs</span>
-        <span class="n">E</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diag_q</span><span class="p">)</span>
-
-        <span class="n">RBe</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Be</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># Be coef. matr.</span>
-        <span class="n">Be</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RBe</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diag_q</span><span class="p">)</span>  <span class="c1"># emissions extensions</span>
-
-        <span class="n">RBr</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Br</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># Br coef. matr.</span>
-        <span class="n">Br</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RBr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diag_q</span><span class="p">)</span>  <span class="c1"># resource extensions</span>
-
-        <span class="n">RBm</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Bm</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># Bm coef. matr.</span>
-        <span class="n">Bm</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">RBm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diag_q</span><span class="p">)</span>  <span class="c1"># Material extension</span>
-
+        <span class="n">w</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># primary inputs</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">x_IAy</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yi</span><span class="p">)</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
         <span class="n">S</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diag_q</span><span class="p">)</span>  <span class="c1"># intermediates</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">x_IAy</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yi</span><span class="p">)</span>  <span class="c1"># total product output</span>
+        <span class="n">ver_base</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">verifyIOT</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">)</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">U</span><span class="p">)</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="n">e</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># emis coef. matrix</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">)</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># resour coef. matrix</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">)</span>
+
+        <span class="n">m</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># mater coef. matrix</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">)</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">x_IAy</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yi</span><span class="p">)</span>  <span class="c1"># total product ouput</span>
 
         <span class="n">A</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>
 
-        <span class="n">Y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span>
+        <span class="n">Ye</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">YB</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">YE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_yj</span><span class="p">)</span>
+        <span class="n">Yr</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">YB</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">YR</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_yj</span><span class="p">)</span>
+        <span class="n">Ym</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">YB</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">YM</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_yj</span><span class="p">)</span>
 
-        <span class="n">ver_base</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">verifyIOT</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>
-
-        <span class="n">IOT</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;RE&quot;</span><span class="p">:</span> <span class="n">RE</span><span class="p">,</span>
-               <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span>
-               <span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="n">Y</span><span class="p">,</span>
-               <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="n">D</span><span class="p">,</span>
-               <span class="s2">&quot;Be&quot;</span><span class="p">:</span> <span class="n">Be</span><span class="p">,</span>
-               <span class="s2">&quot;YBe&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">YBe</span><span class="p">,</span>
-               <span class="s2">&quot;RBe&quot;</span><span class="p">:</span> <span class="n">RBe</span><span class="p">,</span>
-               <span class="s2">&quot;Br&quot;</span><span class="p">:</span> <span class="n">Br</span><span class="p">,</span>
-               <span class="s2">&quot;YBr&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">YBr</span><span class="p">,</span>
-               <span class="s2">&quot;RBr&quot;</span><span class="p">:</span> <span class="n">RBr</span><span class="p">,</span>
-               <span class="s2">&quot;Bm&quot;</span><span class="p">:</span> <span class="n">Bm</span><span class="p">,</span>
-               <span class="s2">&quot;YBm&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">YBm</span><span class="p">,</span>
-               <span class="s2">&quot;RBm&quot;</span><span class="p">:</span> <span class="n">RBm</span><span class="p">,</span>
-               <span class="s2">&quot;CrBe_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CrBe_k</span><span class="p">,</span>
-               <span class="s2">&quot;CrBm_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CrBm_k</span><span class="p">,</span>
-               <span class="s2">&quot;CrBr_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CrBr_k</span><span class="p">,</span>
-               <span class="s2">&quot;CrE_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CrE_k</span><span class="p">,</span>
+        <span class="n">IOT</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span>
                <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="n">L</span><span class="p">,</span>
                <span class="s2">&quot;S&quot;</span><span class="p">:</span> <span class="n">S</span><span class="p">,</span>
-               <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="n">E</span><span class="p">,</span>
-               <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+               <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span>
+               <span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span>
+               <span class="s2">&quot;e&quot;</span><span class="p">:</span> <span class="n">e</span><span class="p">,</span>
+               <span class="s2">&quot;Ye&quot;</span><span class="p">:</span> <span class="n">Ye</span><span class="p">,</span>
+               <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">,</span>
+               <span class="s2">&quot;Yr&quot;</span><span class="p">:</span> <span class="n">Yr</span><span class="p">,</span>
+               <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span>
+               <span class="s2">&quot;Ym&quot;</span><span class="p">:</span> <span class="n">Ym</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_E_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_E_k</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_M_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_M_k</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_R_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_R_k</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_W_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_W_k</span><span class="p">,</span>
                <span class="s2">&quot;ver_base&quot;</span><span class="p">:</span> <span class="n">ver_base</span>
                <span class="p">}</span>
 
         <span class="k">return</span><span class="p">(</span><span class="n">IOT</span><span class="p">)</span></div></div>
+
+        <span class="c1"># Add here more transformation methods for industry-by-industry</span>
 </pre></div>
 
           </div>

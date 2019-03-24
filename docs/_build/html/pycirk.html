@@ -69,19 +69,13 @@ A = S * inv(diag(x))</p>
 
 <dl class="method">
 <dt id="pycirk.fundamental_operations.Operations.IOT.B">
-<code class="descname">B</code><span class="sig-paren">(</span><em>diag_x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.IOT.B"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.IOT.B" title="Permalink to this definition">¶</a></dt>
-<dd><p>Primary input and intermediates extensions matrix</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pycirk.fundamental_operations.Operations.IOT.FD_EXT">
-<code class="descname">FD_EXT</code><span class="sig-paren">(</span><em>diag_yj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.IOT.FD_EXT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.IOT.FD_EXT" title="Permalink to this definition">¶</a></dt>
-<dd><p>Recalculates FD extensions based on counterfactual final demand</p>
+<code class="descname">B</code><span class="sig-paren">(</span><em>inv_diag_x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.IOT.B"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.IOT.B" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates extensions intensities</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pycirk.fundamental_operations.Operations.IOT.IOT">
-<code class="descname">IOT</code><span class="sig-paren">(</span><em>Y</em>, <em>E</em>, <em>Be</em>, <em>Br</em>, <em>Bm</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.IOT.IOT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.IOT.IOT" title="Permalink to this definition">¶</a></dt>
+<code class="descname">IOT</code><span class="sig-paren">(</span><em>Y</em>, <em>W</em>, <em>E</em>, <em>R</em>, <em>M</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.IOT.IOT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.IOT.IOT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -93,16 +87,8 @@ L = (I-A)^-1</p>
 
 <dl class="method">
 <dt id="pycirk.fundamental_operations.Operations.IOT.R">
-<code class="descname">R</code><span class="sig-paren">(</span><em>inv_diag_x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.IOT.R"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.IOT.R" title="Permalink to this definition">¶</a></dt>
-<dd><p>Primary input and intermediates extensions coefficient matrix</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pycirk.fundamental_operations.Operations.IOT.RYB">
-<code class="descname">RYB</code><span class="sig-paren">(</span><em>YB</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.IOT.RYB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.IOT.RYB" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method for transformation matrix of YB
-(e.g. final demand emissions)
-RB = YB * inv(diag(yj))</p>
+<code class="descname">R</code><span class="sig-paren">(</span><em>diag_x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.IOT.R"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.IOT.R" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates absolute extensions</p>
 </dd></dl>
 
 <dl class="method">
@@ -114,8 +100,16 @@ S = A * diag_x</p>
 
 <dl class="method">
 <dt id="pycirk.fundamental_operations.Operations.IOT.YB">
-<code class="descname">YB</code><span class="sig-paren">(</span><em>diag_yj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.IOT.YB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.IOT.YB" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extensions and primary input for IO tables</p>
+<code class="descname">YB</code><span class="sig-paren">(</span><em>inv_diag_yj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.IOT.YB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.IOT.YB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates intensities of extensions in final demand
+Method for transformation matrix of YB
+(e.g. final demand emissions)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycirk.fundamental_operations.Operations.IOT.YR">
+<code class="descname">YR</code><span class="sig-paren">(</span><em>diag_yj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.IOT.YR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.IOT.YR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Caclculates absolute extensions in final demand</p>
 </dd></dl>
 
 <dl class="method">
@@ -148,8 +142,8 @@ A = Z * D</p>
 
 <dl class="method">
 <dt id="pycirk.fundamental_operations.Operations.PxP_ITA_MSC.B">
-<code class="descname">B</code><span class="sig-paren">(</span><em>diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.PxP_ITA_MSC.B"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.PxP_ITA_MSC.B" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extensions and primary input for IO tables</p>
+<code class="descname">B</code><span class="sig-paren">(</span><em>D</em>, <em>inv_diag_g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.PxP_ITA_MSC.B"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.PxP_ITA_MSC.B" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates extensions intensities</p>
 </dd></dl>
 
 <dl class="method">
@@ -168,9 +162,8 @@ L = (I-A)^-1</p>
 
 <dl class="method">
 <dt id="pycirk.fundamental_operations.Operations.PxP_ITA_MSC.R">
-<code class="descname">R</code><span class="sig-paren">(</span><em>D</em>, <em>inv_diag_g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.PxP_ITA_MSC.R"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.PxP_ITA_MSC.R" title="Permalink to this definition">¶</a></dt>
-<dd><p>Input coefficients ext_matrix
-R = E * inv(diag(g))</p>
+<code class="descname">R</code><span class="sig-paren">(</span><em>diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.PxP_ITA_MSC.R"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.PxP_ITA_MSC.R" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates absolute extensions</p>
 </dd></dl>
 
 <dl class="method">
@@ -197,8 +190,8 @@ Z = U * inv(diag(g))</p>
 ProdxProd Industry Technology assumption</p>
 <dl class="method">
 <dt id="pycirk.fundamental_operations.Operations.PxP_ITA_TC.B">
-<code class="descname">B</code><span class="sig-paren">(</span><em>diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.PxP_ITA_TC.B"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.PxP_ITA_TC.B" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extensions and primary input for IO tables</p>
+<code class="descname">B</code><span class="sig-paren">(</span><em>T</em>, <em>inv_diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.PxP_ITA_TC.B"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.PxP_ITA_TC.B" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates extension intensity</p>
 </dd></dl>
 
 <dl class="method">
@@ -212,9 +205,8 @@ L =  (I-A)^-1</p>
 
 <dl class="method">
 <dt id="pycirk.fundamental_operations.Operations.PxP_ITA_TC.R">
-<code class="descname">R</code><span class="sig-paren">(</span><em>T</em>, <em>inv_diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.PxP_ITA_TC.R"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.PxP_ITA_TC.R" title="Permalink to this definition">¶</a></dt>
-<dd><p>Value added and extension requirement matrix
-R = E * inv(diag(g))</p>
+<code class="descname">R</code><span class="sig-paren">(</span><em>diag_q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.PxP_ITA_TC.R"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.PxP_ITA_TC.R" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates absolute extensions</p>
 </dd></dl>
 
 <dl class="method">
@@ -256,14 +248,8 @@ Lalt = Leontief of scenario</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pycirk.fundamental_operations.Operations.var">
-<code class="descname">var</code><span class="sig-paren">(</span><em>V</em>, <em>U</em>, <em>Y</em>, <em>E</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.var"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.var" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns variables that are useful in all calculations</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="pycirk.fundamental_operations.Operations.verifyIOT">
-<code class="descname">verifyIOT</code><span class="sig-paren">(</span><em>Y</em>, <em>E</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.verifyIOT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.verifyIOT" title="Permalink to this definition">¶</a></dt>
+<code class="descname">verifyIOT</code><span class="sig-paren">(</span><em>Y</em>, <em>W</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/fundamental_operations.html#Operations.verifyIOT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.fundamental_operations.Operations.verifyIOT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -276,44 +262,68 @@ Lalt = Leontief of scenario</p>
 <p>Scope: Modelling the Circular Economy in EEIO</p>
 <p>&#64;author:Franco Donati
 &#64;institution:Leiden University CML</p>
-<dl class="function">
-<dt id="pycirk.labels.apply_labels">
-<code class="descclassname">pycirk.labels.</code><code class="descname">apply_labels</code><span class="sig-paren">(</span><em>matrix</em>, <em>labels</em>, <em>axis=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#apply_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.apply_labels" title="Permalink to this definition">¶</a></dt>
+<dl class="class">
+<dt id="pycirk.labels.Labels">
+<em class="property">class </em><code class="descclassname">pycirk.labels.</code><code class="descname">Labels</code><a class="reference internal" href="_modules/pycirk/labels.html#Labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="pycirk.labels.Labels.apply_labels">
+<code class="descname">apply_labels</code><span class="sig-paren">(</span><em>matrix</em>, <em>labels</em>, <em>axis=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.apply_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.apply_labels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Applies labels to a dataframe
 axis = 0 =&gt; Index
 axis = 1 =&gt; columns</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="pycirk.labels.get_labels">
-<code class="descclassname">pycirk.labels.</code><code class="descname">get_labels</code><span class="sig-paren">(</span><em>matrix</em>, <em>axis=0</em>, <em>drop_unit=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.get_labels" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collects labels from a dataframe
-axis = 0 =&gt; Index
-axis = 1 =&gt; columns</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pycirk.labels.load_labels">
-<code class="descclassname">pycirk.labels.</code><code class="descname">load_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#load_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.load_labels" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="pycirk.labels.Labels.calc_no_of_something">
+<code class="descname">calc_no_of_something</code><span class="sig-paren">(</span><em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.calc_no_of_something"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.calc_no_of_something" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
-<dt id="pycirk.labels.relabel">
-<code class="descclassname">pycirk.labels.</code><code class="descname">relabel</code><span class="sig-paren">(</span><em>M</em>, <em>column_labels</em>, <em>index_labels</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#relabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.relabel" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="pycirk.labels.Labels.get_labels">
+<code class="descname">get_labels</code><span class="sig-paren">(</span><em>matrix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collects labels from a dataframe</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycirk.labels.Labels.get_unique_labels">
+<code class="descname">get_unique_labels</code><span class="sig-paren">(</span><em>list_of_labels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.get_unique_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.get_unique_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pycirk.labels.Labels.list_of_something">
+<code class="descname">list_of_something</code><span class="sig-paren">(</span><em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.list_of_something"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.list_of_something" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pycirk.labels.Labels.load_labels">
+<code class="descname">load_labels</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.load_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.load_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pycirk.labels.Labels.organize_unique_labels">
+<code class="descname">organize_unique_labels</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.organize_unique_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.organize_unique_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pycirk.labels.Labels.relabel">
+<code class="descname">relabel</code><span class="sig-paren">(</span><em>M</em>, <em>column_labels</em>, <em>index_labels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.relabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.relabel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Processes apply_labels and apply _names together</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="pycirk.labels.relabel_in_bulk">
-<code class="descclassname">pycirk.labels.</code><code class="descname">relabel_in_bulk</code><span class="sig-paren">(</span><em>data</em>, <em>trans_method=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#relabel_in_bulk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.relabel_in_bulk" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="pycirk.labels.Labels.relabel_to_save">
+<code class="descname">relabel_to_save</code><span class="sig-paren">(</span><em>data</em>, <em>trans_method</em>, <em>labels_directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.relabel_to_save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.relabel_to_save" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function makes sure that everything is labeled in IOT tables</p>
 <p>trans_method = 0 is prod x prod , 1 is ind x ind</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="pycirk.labels.save_labels">
-<code class="descclassname">pycirk.labels.</code><code class="descname">save_labels</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#save_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.save_labels" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="pycirk.labels.Labels.save_labels">
+<code class="descname">save_labels</code><span class="sig-paren">(</span><em>data</em>, <em>directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.save_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.save_labels" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+</dd></dl>
 
 </div>
 <div class="section" id="module-pycirk.make_scenarios">
@@ -376,10 +386,9 @@ kp = market penetration coefficient</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pycirk.make_scenarios.make_counter_factuals">
-<code class="descclassname">pycirk.make_scenarios.</code><code class="descname">make_counter_factuals</code><span class="sig-paren">(</span><em>data</em>, <em>scen_no</em>, <em>scen_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/make_scenarios.html#make_counter_factuals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.make_scenarios.make_counter_factuals" title="Permalink to this definition">¶</a></dt>
-<dd><p>baseline IOT calculated with Technical Coefficient or
-Market coefficient method</p>
+<dt id="pycirk.make_scenarios.make_counterfactuals">
+<code class="descclassname">pycirk.make_scenarios.</code><code class="descname">make_counterfactuals</code><span class="sig-paren">(</span><em>data</em>, <em>scen_no</em>, <em>scen_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/make_scenarios.html#make_counterfactuals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.make_scenarios.make_counterfactuals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate all the counterfactual matrices for the database</p>
 </dd></dl>
 
 <dl class="function">
@@ -468,16 +477,14 @@ A_CONS: 112</p>
 <div class="section" id="module-pycirk.organize_io">
 <span id="pycirk-organize-io-module"></span><h2>pycirk.organize_io module<a class="headerlink" href="#module-pycirk.organize_io" title="Permalink to this headline">¶</a></h2>
 <p>Created on Tue Feb 7 16:29:23 2017</p>
-<p>Description: Calculate baseline and scenarios in IOT</p>
+<p>Description: Organize essential tables for saving</p>
 <p>Scope: Modelling the Circular economy in EEIO</p>
 <p>&#64;author: Franco Donati
 &#64;institution: Leiden University CML</p>
-<dl class="class">
-<dt id="pycirk.organize_io.Organize_IO">
-<em class="property">class </em><code class="descclassname">pycirk.organize_io.</code><code class="descname">Organize_IO</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/organize_io.html#Organize_IO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.organize_io.Organize_IO" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Creates an object out of IO dataset</p>
-</dd></dl>
+<dl class="function">
+<dt id="pycirk.organize_io.organizer">
+<code class="descclassname">pycirk.organize_io.</code><code class="descname">organizer</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/organize_io.html#organizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.organize_io.organizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-pycirk.positions">
@@ -488,18 +495,16 @@ A_CONS: 112</p>
 <p>&#64;author:Franco Donati
 &#64;institution:Leiden University CML</p>
 <dl class="function">
-<dt id="pycirk.positions.make_coord_array">
-<code class="descclassname">pycirk.positions.</code><code class="descname">make_coord_array</code><span class="sig-paren">(</span><em>coordinates</em>, <em>no_countries</em>, <em>no_ind_or_prod</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/positions.html#make_coord_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.positions.make_coord_array" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="pycirk.positions.category_position">
+<code class="descclassname">pycirk.positions.</code><code class="descname">category_position</code><span class="sig-paren">(</span><em>item</em>, <em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/positions.html#category_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.positions.category_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a dataframe of the multiindex and identifies the position
+of the specified values</p>
+</dd></dl>
 
 <dl class="function">
-<dt id="pycirk.positions.positions">
-<code class="descclassname">pycirk.positions.</code><code class="descname">positions</code><span class="sig-paren">(</span><em>ind_df</em>, <em>reg</em>, <em>cat</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/positions.html#positions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.positions.positions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a dataframe of the multiindex and identifies the position
-of the specified values
-reg = regions [EU or ROW]
-cat = category of synonym [C_STEL]</p>
-</dd></dl>
+<dt id="pycirk.positions.make_coord_array">
+<code class="descclassname">pycirk.positions.</code><code class="descname">make_coord_array</code><span class="sig-paren">(</span><em>coordinates</em>, <em>no_countries</em>, <em>no_categories</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/positions.html#make_coord_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.positions.make_coord_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-pycirk.pycirk">
@@ -599,6 +604,11 @@ data e.g. all_results.all_tables</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This class allows for to specify the settings for pycirk.</p>
 <dl class="method">
+<dt id="pycirk.pycirk_settings.Settings.assign_labels_to_class">
+<code class="descname">assign_labels_to_class</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk_settings.html#Settings.assign_labels_to_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk_settings.Settings.assign_labels_to_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="pycirk.pycirk_settings.Settings.check_dataset_location">
 <code class="descname">check_dataset_location</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk_settings.html#Settings.check_dataset_location"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk_settings.Settings.check_dataset_location" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -642,6 +652,11 @@ data e.g. all_results.all_tables</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="pycirk.pycirk_settings.Settings.set_scenario">
+<code class="descname">set_scenario</code><span class="sig-paren">(</span><em>data</em>, <em>scen_no</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk_settings.html#Settings.set_scenario"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk_settings.Settings.set_scenario" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="pycirk.pycirk_settings.Settings.transform_to_io">
 <code class="descname">transform_to_io</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk_settings.html#Settings.transform_to_io"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk_settings.Settings.transform_to_io" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -658,7 +673,7 @@ data e.g. all_results.all_tables</p>
 &#64;institution:Leiden University CML, TU Delft TPM</p>
 <dl class="class">
 <dt id="pycirk.results.Results">
-<em class="property">class </em><code class="descclassname">pycirk.results.</code><code class="descname">Results</code><span class="sig-paren">(</span><em>IOT</em>, <em>scen_file</em>, <em>make_secondary</em>, <em>exists</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/results.html#Results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.results.Results" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pycirk.results.</code><code class="descname">Results</code><span class="sig-paren">(</span><em>scen_file</em>, <em>make_secondary</em>, <em>exists</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/results.html#Results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.results.Results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Launches analysis, collects and assembles all results</p>
 <dl class="method">
@@ -724,6 +739,16 @@ spec_row = row in the scenarios sheet specifying settings</p>
 </dd></dl>
 
 </dd></dl>
+
+</div>
+<div class="section" id="module-pycirk.sherman_morrison">
+<span id="pycirk-sherman-morrison-module"></span><h2>pycirk.sherman_morrison module<a class="headerlink" href="#module-pycirk.sherman_morrison" title="Permalink to this headline">¶</a></h2>
+<p>Created on Wed Mar 20 18:10:44 2019</p>
+<p>&#64;author: donatif</p>
+<dl class="function">
+<dt id="pycirk.sherman_morrison.sherman_morrison">
+<code class="descclassname">pycirk.sherman_morrison.</code><code class="descname">sherman_morrison</code><span class="sig-paren">(</span><em>A</em>, <em>L</em>, <em>coordinates_for_u</em>, <em>coordinates_for_v</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/sherman_morrison.html#sherman_morrison"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.sherman_morrison.sherman_morrison" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-pycirk.transformation_methods">

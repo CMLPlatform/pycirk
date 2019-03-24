@@ -13,7 +13,7 @@ import pandas as pd
 from pycirk.save_utils import Save
 from pycirk.results import Results
 from pycirk.pycirk_settings import Settings
-from pycirk.make_scenarios import make_counter_factuals as mcf
+from pycirk.make_scenarios import make_counterfactuals as mcf
 
 class Pycirk:
     """
