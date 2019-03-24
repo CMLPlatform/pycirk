@@ -18,7 +18,9 @@ from shutil import copyfile
 import os.path as ospt
 from pycirk.make_secondary_flows import make_secondary as ms
 from pycirk.transformation_methods import Transform
-from pycirk.labels import relabel_in_bulk, save_labels
+from pycirk.make_scenarios import make_counterfactuals as mc
+from pycirk.labels import Labels 
+from pycirk.organize_io import organizer
 
 
 class Settings:
@@ -34,6 +36,8 @@ class Settings:
         self.save_directory = save_directory
         self.test = test
         self.aggregation = aggregation
+        self.lb = Labels()
+        self.directory_labels = "pycirk//labels"
 
     def check_expand_directory(self, directory):
         """
@@ -195,7 +199,7 @@ class Settings:
                 extension = ".pkl"
 
             SUTs = Transform(data)
-            save_labels(data)
+            self.lb.save_labels(data, self.directory_labels)
             del(data)
         #  Transform SUT to IOT
             if self.method == 0:
@@ -204,21 +208,57 @@ class Settings:
                 IOT = SUTs.IOTpxpSTA_MSCm()
 
             del(SUTs)
+            
+#            IOT = lb.
 
             if self.aggregation == 0:
                 pickle_name = "pycirk//data//mrIO_EU_ROW_V3.3" + extension
             elif self.aggregation == 1:
                 pickle_name = "pycirk//data//mrIO_V3.3" + extension
             # saving the IO tables to avoid rebuilding them all the time
-
+            
+            IOT = organizer(IOT)
+            IOT = self.lb.relabel_to_save(IOT, self.method, self.directory_labels)
+            
             with open(pickle_name, "wb") as w:
                 pickle.dump(IOT, w, 2)  # pickling
 
             #os.remove(pickle_name)
-
         elif typ == "io":
-                save_labels(data)
+                self.lb.save_labels(data, self.directory_labels)
                 IOT = data
                 del(data)
 
         return(IOT)
+        
+    def assign_labels_to_class(self):#, data, scen_no):
+        
+        all_labels = self.lb.organize_unique_labels(self.directory_labels)
+        try:
+            self.lb.country_labels = self.all_labels.main_cat.country_code
+        except Exception:
+            pass
+        
+        self.lb.region_labels = all_labels.main_cat.region
+        self.lb.cat_labels = all_labels.main_cat
+        self.lb.W_labels = all_labels.primary
+        self.lb.E_labels = all_labels.emis
+        self.lb.R_labels = all_labels.res
+        self.lb.M_labels = all_labels.mat
+        self.lb.Y_labels = all_labels.fin_dem
+        self.lb.Cr_E_labels = all_labels.car_emis
+        self.lb.Cr_R_labels = all_labels.car_res
+        self.lb.Cr_M_labels = all_labels.car_mat
+        self.lb.Cr_W_labels = all_labels.car_prim
+        
+        return(self.lb)
+    
+    def set_scenario(self, data, scen_no):
+        
+        scenario = mc(data, scen_no, self.scenario_file())
+        
+        scenario = self.lb.relabel_to_save(scenario)
+        
+        return(scenario)
+        
+        

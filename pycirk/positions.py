@@ -17,70 +17,53 @@ import numpy as np
 # Maybe somebody else will want to give a crack at it
 
 
-def positions(ind_df, reg, cat):
+def category_position(item, labels):
     """
     Takes a dataframe of the multiindex and identifies the position
-    of the specified values
-    reg = regions [EU or ROW]
-    cat = category of synonym [C_STEL]
+    of the specified values    
     """
+    
+    if item in ["All","all","ALL", np.nan]:
+        
+        coordinate = None
+        range_coordinates = None
 
-#    if reg in ["EU", "ROW"]:
-#        no_reg = 2
-#        no_cat = len(ind_df)/no_reg
-#        if no_cat not in [163, 200]:
-#            no_cat = input("Specify number of product/sector categories in" +
-#                           "your database:\n")
-#    elif len(ind_df)/49 in [163, 200]:
-#        no_reg = 49
-#        no_cat = len(ind_df)/no_reg
-#    else:
-#        no_cat = input("Specify no of products/sectors in your database:\n")
-#        no_reg = input("Specify no of regions in your database:\n")
-#
-#    ind_df = ind_df.iloc[:len(ind_df)/no_reg]
-
-    if "region" in ind_df.columns:
-        # this exception is added for indeces that do not have a regional label
-        try:
-            if reg not in ["All", "None", "", "nan"]:
-                if reg in ["EU", "ROW"]:
-                    ind_df = ind_df.loc[ind_df["region"] == reg]
-                else:
-                    try:
-                        ind_df = ind_df.loc[ind_df["country_code"] == reg]
-                    except Exception:
-                        pass
-            else:
-                reg = range(len(ind_df))
-        except Exception:
-            pass
     else:
-        pass
+        
+        try:
+            if item in labels.characterization:
+                coordinate = [i for i, values in enumerate(labels.characterization) if item in values]
+                range_coordinates = len(labels.characterization)
+        except AttributeError:
+            
+            if item in labels.name:
+                coordinate = [i for i, values in enumerate(labels.name) if item in values]
+                range_coordinates = len(labels.names)
+            elif item in labels.synonym:
+                coordinate = [i for i, values in enumerate(labels.synonym) if item in values]
+                range_coordinates = len(labels.synonym)
+            elif item in labels.code:
+                coordinate = [i for i, values in enumerate(labels.code) if item in values]
+                range_coordinates = len(labels.code)
+            elif item in labels.country_code:
+                coordinate = [i for i, values in enumerate(labels.country_code) if item in values]
+                range_coordinates = len(labels.country_code)
+            elif item in labels.region:
+                coordinate = [i for i, values in enumerate(labels.region) if item in values]
+                range_coordinates = len(labels.region)
+    
+    set_of_coordinate = {"coordinate":coordinate, "range_coordinates":range_coordinates}
+    
+    return(set_of_coordinate)
 
-    try:
-        if cat not in ["All", "None", "", "nan"]:
-            try:
-                ind_df = ind_df.loc[ind_df["synonym"] == cat]
-            except Exception:
-                ind_df = ind_df.loc[ind_df["characterization"] == cat]
-        else:
-            cat = range(len(ind_df))
-    except Exception:
-        pass
 
-    positions = np.array(ind_df.index)
-
-    return(positions)
-
-
-def make_coord_array(coordinates, no_countries, no_ind_or_prod):
+def make_coord_array(coordinates, no_countries, no_categories):
 
     n = 0
     nn = 0
     while n in range(len(coordinates)):
         while nn in range(no_countries):
-            g = coordinates + no_ind_or_prod*nn
+            g = coordinates + no_categories * nn
             if "s" not in locals():
                 s = g
             else:

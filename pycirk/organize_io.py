@@ -2,7 +2,7 @@
 """
 Created on Tue Feb 7 16:29:23 2017
 
-Description: Calculate baseline and scenarios in IOT
+Description: Organize essential tables for saving
 
 Scope: Modelling the Circular economy in EEIO
 
@@ -16,13 +16,13 @@ def organizer(data):
 
     IOT = {"S": data["S"],
            "Y": data["Y"],
-           "W": data["W"],
-           "E": data["E"],
-           "R": data["R"],
-           "M": data["M"],
-           "YE": data["YE"],
-           "YR": data["YR"],
-           "YM": data["YM"],
+           "w": data["w"],
+           "e": data["e"],
+           "r": data["r"],
+           "m": data["m"],
+           "Ye": data["Ye"],
+           "Yr": data["Yr"],
+           "Ym": data["Ym"],
            "Cr_E_k": data["Cr_E_k"],
            "Cr_M_k": data["Cr_M_k"],
            "Cr_R_k": data["Cr_R_k"],

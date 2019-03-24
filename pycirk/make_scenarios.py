@@ -14,78 +14,84 @@ import pandas as pd
 import numpy as np
 from pycirk.positions import positions
 from pycirk.fundamental_operations import Operations as ops
-from pycirk.labels import get_labels, relabel_in_bulk
-from pandas import DataFrame as df
 from copy import deepcopy
 import warnings
+from pycirk import sherman_morrison as sher_mor
 
 
-def make_counter_factuals(data, scen_no, scen_file):
+def make_counterfactuals(data, scen_no, scen_file):
     """
-    baseline IOT calculated with Technical Coefficient or
-    Market coefficient method
+    Calculate all the counterfactual matrices for the database
     """
     data = deepcopy(data)
 
     # Apply policy to economic matrices
-    data.S = counterfactual(scen_file, scen_no, data.S, "S")
-    inv_diag_x = ops.inv(np.diag(ops.IOT.x(data.S, data.Y)))
-    A = ops.IOT.A(data.S, inv_diag_x)
-    data.A = counterfactual(scen_file, scen_no, df(A), "A")
+    data.S = counterfactual(scen_file, scen_no, data.S, "S")    
 
+    # First total product output from changes in S
+    x_ = ops.IOT.x(data.S, data.Y)
+    diag_x_ = np.diag(x_)
+    inv_diag_x_ = ops.inv(diag_x_)
+    
+    A = ops.IOT.A(data.S, inv_diag_x_)
+    
+    data.A = counterfactual(scen_file, scen_no, A, "A")
     data.Y = counterfactual(scen_file, scen_no, data.Y, "Y")
-    data.w = counterfactual(scen_file, scen_no, data.w, "w")
 
+    x = ops.IOT.x(data.S, data.Y)
+    diag_x = np.diag(x)
+    inv_diag_x = ops.inv(diag_x)
+
+    data.w = counterfactual(scen_file, scen_no, data.w, "w")
+    
+    W = ops.IOT.R(data.w, diag_x)
+    data.W = counterfactual(scen_file, scen_no, W, "W")
+    
     # Apply policy to intermediate extension coefficient matrices
     data.e = counterfactual(scen_file, scen_no, data.e, "e")
     data.r = counterfactual(scen_file, scen_no, data.r, "r")
     data.m = counterfactual(scen_file, scen_no, data.m, "m")
+    
+    # Apply policy to intermediate extension matrices
+    E = ops.IOT.R(data.E, diag_x)
+    R = ops.IOT.R(data.R, diag_x)
+    M = ops.IOT.R(data.M, diag_x)
+    
+    data.E = counterfactual(scen_file, scen_no, E, "E")
+    data.R = counterfactual(scen_file, scen_no, R, "R")
+    data.M = counterfactual(scen_file, scen_no, M, "M")
 
     # Apply policy to  final demand extension coefficient matrices
     data.Ye = counterfactual(scen_file, scen_no, data.Ye, "Ye")
     data.Yr = counterfactual(scen_file, scen_no, data.Yr, "Yr")
-    data.Ym = counterfactual(scen_file, scen_no, data.Ym, "Ym")
+    data.Ym = counterfactual(scen_file, scen_no, data.Ym, "Ym")    
+    
+    # Apply policy to final demand extension matrices
+    YE = ops.IOT.YR(data.Ye, diag_x)
+    YR = ops.IOT.YR(data.Yr, diag_x)
+    YM = ops.IOT.YR(data.Ym, diag_x)
+    
+    data.YE = counterfactual(scen_file, scen_no, YE, "YE")
+    data.YR = counterfactual(scen_file, scen_no, YR, "YR")
+    data.YM = counterfactual(scen_file, scen_no, YM, "YM")
+        
 
     # Scenario
     data.L = ops.IOT.L(data.A)  # L from S and Y modified
 
-    yi = np.sum(data.Y, axis=1)  # row sum of final demand
     diag_yj = np.diag(data.Y.sum(axis=0))  # column sum of FD
+    yi = np.sum(data.Y, axis=1)  # row sum of final demand
     data.x = ops.IOT.x_IAy(data.L, yi)
     diag_x = np.diag(data.x)
 
     data.S = ops.IOT.S(data.A, diag_x)
 
-    data.W = ops.IOT.B(data.w, diag_x)  # primary inputs
+    data.w = ops.IOT.B(data.W, inv_diag_x)  # primary inputs
 
-    data.e = ops.IOT.B(data.e, diag_x)  # emissions ext
-    data.r = ops.IOT.B(data.r, diag_x)  # resource ext
-    data.m = ops.IOT.B(data.m, diag_x)  # material ext
+    data.e = ops.IOT.B(data.E, inv_diag_x)  # emissions ext
+    data.r = ops.IOT.B(data.R, inv_diag_x)  # resource ext
+    data.m = ops.IOT.B(data.M, inv_diag_x)  # material ext
 
-    _YBe = ops.IOT.FD_EXT(data.RYBe, diag_yj)  # emissions ext
-    _YBr = ops.IOT.FD_EXT(data.RYBr, diag_yj)  # resource ext
-    _YBm = ops.IOT.FD_EXT(data.RYBm, diag_yj)  # material ext
-
-    data.YBe = _YBe["YB"]
-    data.YBr = _YBr["YB"]
-    data.YBm = _YBm["YB"]
-    data.RYBe = _YBe["RYB"]
-    data.RYBr = _YBr["RYB"]
-    data.RYBm = _YBm["RYB"]
-
-    # Characterisation
-    data.CrBe = np.matmul(data.CrBe_k, data.Be)  # emissions ext
-    data.CrBr = np.matmul(data.CrBr_k, data.Br)  # resource ext
-    data.CrBm = np.matmul(data.CrBm_k, data.Bm)  # material ext
-    data.CrE = np.matmul(data.CrE_k, data.E)  # factor inputs
-
-    data.CrYBe = np.matmul(data.CrBe_k, data.YBe)  # emissions ext
-    data.CrYBr = np.matmul(data.CrBr_k, data.YBr)  # resource ext
-    data.CrYBm = np.matmul(data.CrBm_k, data.YBm)  # material ext
-
-    data.ver = ops.verifyIOT(data.S, data.Y, data.E)  # ver_new_IOT
-
-    relabel_in_bulk(data)
 
     return(data)
 
@@ -225,13 +231,12 @@ def counterfactual_engine(M, inter, subs=False, copy=False):
     expan = expansion coef. (used only for simple transaction changes)
     """
 
-#        name = inter["inter"]
     ide = inter["ide"]
 
     y = inter["y"]
     x = inter["x"]
     a = M.iloc[y, x]
-#        test = [M.iloc[y,x]]
+
     if copy is True:
         y1 = inter["y1"]
         x1 = inter["x1"]
@@ -315,23 +320,21 @@ def make_new(fltr_policies, M, M_name):
     else:
         for l, row in fltr_policies.iterrows():
 
-            inter = row["intervention"]
-            ide = row["identifier"]  # used during debugging
+            inter = row.intervention
+            ide = row.identifier  # used during debugging
 
             # Collecting the specified coordinates for the intevention
 
             # coordinates for region and category
-            reg_o = row["reg_o"]
-            reg_d = row["reg_d"]
+            reg_o = row.reg_o
+            reg_d = row.reg_d
 
-            cat_o = row["cat_o"]
-            cat_d = row["cat_d"]
-
+            cat_o = row.cat_o
+            cat_d = row.cat_d
+            
             # Translate coordinates from str to numerical position
-
-            # get the labels from the matrix
-            ind_M = get_labels(M, 0)  # a matrix with all index labels
-            col_M = get_labels(M, 1)  # matrix with all column labels
+            
+                        
 
             o_pos = positions(ind_M, reg_o, cat_o)
             d_pos = positions(col_M, reg_d, cat_d)
