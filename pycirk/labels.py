@@ -15,6 +15,7 @@ from pandas import MultiIndex as mi
 from pandas import read_csv
 from munch import Munch
 
+
 class Labels:
     def __init__(self):
         self.country_labels = None
@@ -29,31 +30,31 @@ class Labels:
         self.Cr_M_labels = None
         self.Cr_R_labels = None
         self.Cr_W_labels = None
-        
+
     def calc_no_of_something(self, labels):
         no_of_something = len(labels.unique())
         return(no_of_something)
-        
+
     def list_of_something(self, labels):
         list_of_some = labels.unique()
         return(list_of_some)
-        
+
     def get_unique_labels(self, list_of_labels):
-        
+
         organize = dict()
         for keys, labels in list_of_labels.items():
             print(keys)
             organize[keys] = self.list_of_something(labels)
-        
-        count =  max(len(labels) for keys, labels in organize.items())
-        
+
+        count = max(len(labels) for keys, labels in organize.items())
+
         organize = Munch(organize)
         organize.count = count
-        
+
         return(organize)
-    
+
     def organize_unique_labels(self, directory):
-        
+
         labels = Munch(self.load_labels(directory))
 
         try:
@@ -70,7 +71,7 @@ class Labels:
         labels.car_res = self.get_unique_labels(labels.car_res)
         labels.car_mat = self.get_unique_labels(labels.car_mat)
         labels.car_prim = self.get_unique_labels(labels.car_prim)
-        
+
         return(labels)
 
     def load_labels(self, directory):
@@ -127,7 +128,8 @@ class Labels:
     def save_labels(self, data, directory):
 
         try:
-            self.get_labels(data["V"].T).to_csv(directory + "industry.csv", index=False)  # with unit column
+            self.get_labels(data["V"].T).to_csv(directory + "industry.csv",
+                                                index=False)
         except Exception:
             pass
 
@@ -147,9 +149,6 @@ class Labels:
             self.get_labels(data["e"]).to_csv(directory + "/emissions.csv", index=False)
             self.get_labels(data["r"]).to_csv(directory + "/resources.csv", index=False)
             self.get_labels(data["m"]).to_csv(directory + "/materials.csv", index=False)
-            
-
-
 
     def relabel_to_save(self, data, trans_method, labels_directory):
         """
@@ -163,7 +162,7 @@ class Labels:
             cat = lb.prod
         elif trans_method not in [0, 1]:
             cat = lb.ind
-            
+
         data = Munch(data)
 
         # Relabel Main IOT elements
@@ -195,7 +194,7 @@ class Labels:
 #        data.R = self.relabel(data.R, cat.iloc[:, :4], lb.res)
 #        data.M = self.relabel(data.M, cat.iloc[:, :4], lb.mat)
 
-        # Relabel characterization tables 
+        # Relabel characterization tables
         data.Cr_E_k = self.relabel(data.Cr_E_k, lb.emis, lb.car_emis)
         data.Cr_R_k = self.relabel(data.Cr_R_k, lb.res, lb.car_res)
         data.Cr_M_k = self.relabel(data.Cr_M_k, lb.mat, lb.car_mat)
@@ -208,7 +207,7 @@ class Labels:
 
         # Relabel characterized final demand extensions
         # data.Cr_YE = self.relabel(data.Cr_YE, lb.fin_dem, lb.car_emis)
-        #data.Cr_YE = self.relabel(data.Cr_YR, lb.fin_dem, lb.car_res)
+        # data.Cr_YE = self.relabel(data.Cr_YR, lb.fin_dem, lb.car_res)
         # data.Cr_YE = self.relabel(data.Cr_YM, lb.fin_dem, lb.car_mat)
 
         return(data)
@@ -234,7 +233,7 @@ class Labels:
         Processes apply_labels and apply _names together
         """
         M = df(M)
-        
+
         try:
             M = self.apply_labels(M, column_labels, axis=1)  # columns
         except Exception:

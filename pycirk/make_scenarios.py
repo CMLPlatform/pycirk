@@ -26,15 +26,17 @@ def make_counterfactuals(data, scen_no, scen_file):
     data = deepcopy(data)
 
     # Apply policy to economic matrices
-    data.S = counterfactual(scen_file, scen_no, data.S, "S")    
+    data.S = counterfactual(scen_file, scen_no, data.S, "S")
 
     # First total product output from changes in S
     x_ = ops.IOT.x(data.S, data.Y)
     diag_x_ = np.diag(x_)
     inv_diag_x_ = ops.inv(diag_x_)
-    
+
     A = ops.IOT.A(data.S, inv_diag_x_)
-    
+
+    diag_yj = np.diag(data.Y.sum(axis=0))
+
     data.A = counterfactual(scen_file, scen_no, A, "A")
     data.Y = counterfactual(scen_file, scen_no, data.Y, "Y")
 
@@ -43,20 +45,20 @@ def make_counterfactuals(data, scen_no, scen_file):
     inv_diag_x = ops.inv(diag_x)
 
     data.w = counterfactual(scen_file, scen_no, data.w, "w")
-    
+
     W = ops.IOT.R(data.w, diag_x)
     data.W = counterfactual(scen_file, scen_no, W, "W")
-    
+
     # Apply policy to intermediate extension coefficient matrices
     data.e = counterfactual(scen_file, scen_no, data.e, "e")
     data.r = counterfactual(scen_file, scen_no, data.r, "r")
     data.m = counterfactual(scen_file, scen_no, data.m, "m")
-    
+
     # Apply policy to intermediate extension matrices
     E = ops.IOT.R(data.E, diag_x)
     R = ops.IOT.R(data.R, diag_x)
     M = ops.IOT.R(data.M, diag_x)
-    
+
     data.E = counterfactual(scen_file, scen_no, E, "E")
     data.R = counterfactual(scen_file, scen_no, R, "R")
     data.M = counterfactual(scen_file, scen_no, M, "M")
@@ -64,34 +66,35 @@ def make_counterfactuals(data, scen_no, scen_file):
     # Apply policy to  final demand extension coefficient matrices
     data.Ye = counterfactual(scen_file, scen_no, data.Ye, "Ye")
     data.Yr = counterfactual(scen_file, scen_no, data.Yr, "Yr")
-    data.Ym = counterfactual(scen_file, scen_no, data.Ym, "Ym")    
-    
+    data.Ym = counterfactual(scen_file, scen_no, data.Ym, "Ym")
+
     # Apply policy to final demand extension matrices
     YE = ops.IOT.YR(data.Ye, diag_x)
     YR = ops.IOT.YR(data.Yr, diag_x)
     YM = ops.IOT.YR(data.Ym, diag_x)
-    
+
     data.YE = counterfactual(scen_file, scen_no, YE, "YE")
     data.YR = counterfactual(scen_file, scen_no, YR, "YR")
     data.YM = counterfactual(scen_file, scen_no, YM, "YM")
-        
 
     # Scenario
     data.L = ops.IOT.L(data.A)  # L from S and Y modified
-
     diag_yj = np.diag(data.Y.sum(axis=0))  # column sum of FD
+    inv_diag_yj = ops.inv(diag_yj)
     yi = np.sum(data.Y, axis=1)  # row sum of final demand
     data.x = ops.IOT.x_IAy(data.L, yi)
     diag_x = np.diag(data.x)
 
     data.S = ops.IOT.S(data.A, diag_x)
 
-    data.w = ops.IOT.B(data.W, inv_diag_x)  # primary inputs
+    data.w = ops.IOT.B(data.W, inv_diag_x)  # primary inputs coef
+    data.e = ops.IOT.B(data.E, inv_diag_x)  # emissions ext coef
+    data.r = ops.IOT.B(data.R, inv_diag_x)  # resource ext coef
+    data.m = ops.IOT.B(data.M, inv_diag_x)  # material ext coef
 
-    data.e = ops.IOT.B(data.E, inv_diag_x)  # emissions ext
-    data.r = ops.IOT.B(data.R, inv_diag_x)  # resource ext
-    data.m = ops.IOT.B(data.M, inv_diag_x)  # material ext
-
+    data.Ye = ops.IOT.B(data.YE, inv_diag_yj)  # emissions ext FD coef
+    data.Yr = ops.IOT.B(data.YR, inv_diag_yj)  # resource ext FD coef
+    data.Ym = ops.IOT.B(data.YM, inv_diag_yj)  # material ext FD coef
 
     return(data)
 
@@ -234,6 +237,7 @@ def counterfactual_engine(M, inter, subs=False, copy=False):
     ide = inter["ide"]
 
     y = inter["y"]
+    print(y)
     x = inter["x"]
     a = M.iloc[y, x]
 
@@ -331,10 +335,14 @@ def make_new(fltr_policies, M, M_name):
 
             cat_o = row.cat_o
             cat_d = row.cat_d
-            
+
+            print(cat_o)
+
             # Translate coordinates from str to numerical position
-            
-                        
+
+
+
+
 
             o_pos = positions(ind_M, reg_o, cat_o)
             d_pos = positions(col_M, reg_d, cat_d)

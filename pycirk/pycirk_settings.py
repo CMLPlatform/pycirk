@@ -19,7 +19,7 @@ import os.path as ospt
 from pycirk.make_secondary_flows import make_secondary as ms
 from pycirk.transformation_methods import Transform
 from pycirk.make_scenarios import make_counterfactuals as mc
-from pycirk.labels import Labels 
+from pycirk.labels import Labels
 from pycirk.organize_io import organizer
 
 
@@ -102,10 +102,10 @@ class Settings:
     def create_scenario_file(self):
 
         orig = os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                            "scenarios.xls"))
+                                            "scenarios.xlsx"))
 
         directory = self.file_directory()
-        file = directory + "scenarios.xls"
+        file = directory + "scenarios.xlsx"
 
         if not os.path.isfile(file):
             copyfile(orig, file)
@@ -124,7 +124,7 @@ class Settings:
 
     def scenario_file(self):
 
-        scen_file = self.file_directory() + "scenarios.xls"
+        scen_file = self.file_directory() + "scenarios.xlsx"
 
         return(scen_file)
 
@@ -208,7 +208,7 @@ class Settings:
                 IOT = SUTs.IOTpxpSTA_MSCm()
 
             del(SUTs)
-            
+
 #            IOT = lb.
 
             if self.aggregation == 0:
@@ -216,29 +216,30 @@ class Settings:
             elif self.aggregation == 1:
                 pickle_name = "pycirk//data//mrIO_V3.3" + extension
             # saving the IO tables to avoid rebuilding them all the time
-            
+
             IOT = organizer(IOT)
-            IOT = self.lb.relabel_to_save(IOT, self.method, self.directory_labels)
-            
+            IOT = self.lb.relabel_to_save(IOT, self.method,
+                                          self.directory_labels)
+
             with open(pickle_name, "wb") as w:
                 pickle.dump(IOT, w, 2)  # pickling
 
-            #os.remove(pickle_name)
+            # os.remove(pickle_name)
         elif typ == "io":
                 self.lb.save_labels(data, self.directory_labels)
                 IOT = data
                 del(data)
 
         return(IOT)
-        
-    def assign_labels_to_class(self):#, data, scen_no):
-        
+
+    def assign_labels_to_class(self):  # data, scen_no):
+
         all_labels = self.lb.organize_unique_labels(self.directory_labels)
         try:
             self.lb.country_labels = self.all_labels.main_cat.country_code
         except Exception:
             pass
-        
+
         self.lb.region_labels = all_labels.main_cat.region
         self.lb.cat_labels = all_labels.main_cat
         self.lb.W_labels = all_labels.primary
@@ -250,15 +251,13 @@ class Settings:
         self.lb.Cr_R_labels = all_labels.car_res
         self.lb.Cr_M_labels = all_labels.car_mat
         self.lb.Cr_W_labels = all_labels.car_prim
-        
+
         return(self.lb)
-    
+
     def set_scenario(self, data, scen_no):
-        
+
         scenario = mc(data, scen_no, self.scenario_file())
-        
+
         scenario = self.lb.relabel_to_save(scenario)
-        
+
         return(scenario)
-        
-        
