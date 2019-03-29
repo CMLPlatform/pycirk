@@ -16,17 +16,17 @@ from pycirk import positions
 from pycirk.fundamental_operations import Operations as ops
 from copy import deepcopy
 import warnings
-from pycirk import sherman_morrison as sher_mor
+# from pycirk import sherman_morrison as sher_mor
 
 
-def make_counterfactuals(data, scen_no, scen_file):
+def make_counterfactuals(data, scen_no, scen_file, labels):
     """
     Calculate all the counterfactual matrices for the database
     """
     data = deepcopy(data)
 
     # Apply policy to economic matrices
-    data.S = counterfactual(scen_file, scen_no, data.S, "S")
+    data.S = counterfactual(scen_file, scen_no, data.S, "S", labels)
 
     # First total product output from changes in S
     x_ = ops.IOT.x(data.S, data.Y)
@@ -37,45 +37,45 @@ def make_counterfactuals(data, scen_no, scen_file):
 
     diag_yj = np.diag(data.Y.sum(axis=0))
 
-    data.A = counterfactual(scen_file, scen_no, A, "A")
-    data.Y = counterfactual(scen_file, scen_no, data.Y, "Y")
+    data.A = counterfactual(scen_file, scen_no, A, "A", labels)
+    data.Y = counterfactual(scen_file, scen_no, data.Y, "Y", labels)
 
     x = ops.IOT.x(data.S, data.Y)
     diag_x = np.diag(x)
     inv_diag_x = ops.inv(diag_x)
 
-    data.w = counterfactual(scen_file, scen_no, data.w, "w")
+    data.w = counterfactual(scen_file, scen_no, data.w, "w", labels)
 
     W = ops.IOT.R(data.w, diag_x)
-    data.W = counterfactual(scen_file, scen_no, W, "W")
+    data.W = counterfactual(scen_file, scen_no, W, "W", labels)
 
     # Apply policy to intermediate extension coefficient matrices
-    data.e = counterfactual(scen_file, scen_no, data.e, "e")
-    data.r = counterfactual(scen_file, scen_no, data.r, "r")
-    data.m = counterfactual(scen_file, scen_no, data.m, "m")
+    data.e = counterfactual(scen_file, scen_no, data.e, "e", labels)
+    data.r = counterfactual(scen_file, scen_no, data.r, "r", labels)
+    data.m = counterfactual(scen_file, scen_no, data.m, "m", labels)
 
     # Apply policy to intermediate extension matrices
     E = ops.IOT.R(data.E, diag_x)
     R = ops.IOT.R(data.R, diag_x)
     M = ops.IOT.R(data.M, diag_x)
 
-    data.E = counterfactual(scen_file, scen_no, E, "E")
-    data.R = counterfactual(scen_file, scen_no, R, "R")
-    data.M = counterfactual(scen_file, scen_no, M, "M")
+    data.E = counterfactual(scen_file, scen_no, E, "E", labels)
+    data.R = counterfactual(scen_file, scen_no, R, "R", labels)
+    data.M = counterfactual(scen_file, scen_no, M, "M", labels)
 
     # Apply policy to  final demand extension coefficient matrices
-    data.Ye = counterfactual(scen_file, scen_no, data.Ye, "Ye")
-    data.Yr = counterfactual(scen_file, scen_no, data.Yr, "Yr")
-    data.Ym = counterfactual(scen_file, scen_no, data.Ym, "Ym")
+    data.Ye = counterfactual(scen_file, scen_no, data.Ye, "Ye", labels)
+    data.Yr = counterfactual(scen_file, scen_no, data.Yr, "Yr", labels)
+    data.Ym = counterfactual(scen_file, scen_no, data.Ym, "Ym", labels)
 
     # Apply policy to final demand extension matrices
     YE = ops.IOT.YR(data.Ye, diag_x)
     YR = ops.IOT.YR(data.Yr, diag_x)
     YM = ops.IOT.YR(data.Ym, diag_x)
 
-    data.YE = counterfactual(scen_file, scen_no, YE, "YE")
-    data.YR = counterfactual(scen_file, scen_no, YR, "YR")
-    data.YM = counterfactual(scen_file, scen_no, YM, "YM")
+    data.YE = counterfactual(scen_file, scen_no, YE, "YE", labels)
+    data.YR = counterfactual(scen_file, scen_no, YR, "YR", labels)
+    data.YM = counterfactual(scen_file, scen_no, YM, "YM", labels)
 
     # Scenario
     data.L = ops.IOT.L(data.A)  # L from S and Y modified
@@ -99,7 +99,7 @@ def make_counterfactuals(data, scen_no, scen_file):
     return(data)
 
 
-def counterfactual(scen_file, scen_no, M, M_name):
+def counterfactual(scen_file, scen_no, M, M_name, labels):
     """
     Separates policy interventions by matrix subject to intervention
     and aply policy interventions on specific matrix
@@ -128,7 +128,7 @@ def counterfactual(scen_file, scen_no, M, M_name):
                       "\n sheet: " + scen_no + "\n\n")
     else:
         fltr_pols = scenario.loc[scenario['matrix'] == M_name]
-        matrix = make_new(fltr_pols, M, M_name)
+        matrix = make_new(fltr_pols, M, M_name, labels)
 
     return (matrix)
 
@@ -303,7 +303,7 @@ def counterfactual_engine(M, inter, subs=False, copy=False):
     return(M)
 
 
-def make_new(fltr_policies, M, M_name):
+def make_new(fltr_policies, M, M_name, labels):
     """
     Calculates and reassembles
     SUT or IOT matrices based on policy scenarios
@@ -318,7 +318,22 @@ def make_new(fltr_policies, M, M_name):
 
     *x.1 and *y.1  =  coordinates for destination in substitution
     """
+    if labels.country_labels is None:
+        reg_labels = labels.region_labels
+    elif labels.country_labels is not None:
+        reg_labels = labels.country_labels
 
+    if "Y" in M_name:
+        column_labels = labels.Y_labels
+    elif M_name in ["A", "S", "L"]:
+        column_labels = labels.cat_labels
+        row_labels = labels.cat_labels
+    else:
+        name = [l for l in ["e", "m", "r", "w"] if l in M_name.lower()][0]
+        attr_name = name.upper() + "_labels"
+        row_labels = getattr(labels, attr_name)
+
+    cat_labels = labels.cat_labels
     if len(fltr_policies) == 0:
         return (M)
     else:
@@ -330,19 +345,15 @@ def make_new(fltr_policies, M, M_name):
             # Collecting the specified coordinates for the intevention
 
             # coordinates for region and category
-            reg_o = row.reg_o
-            reg_d = row.reg_d
+            # Row items => Supplied category or extension category
+            reg_o = positions.single_position(row.reg_o, reg_labels)
+            cat_o = positions.single_position(row.cat_o, row_labels)
 
-            cat_o = row.cat_o
-            cat_d = row.cat_d
-
-            print(cat_o)
+            # Column items => Consumption / manufacturing activity
+            reg_d = positions.single_position(row.reg_o, reg_labels)
+            cat_d = positions.single_position(row.cat_o, row_labels)
 
             # Translate coordinates from str to numerical position
-
-
-
-
 
             o_pos = positions(ind_M, reg_o, cat_o)
             d_pos = positions(col_M, reg_d, cat_d)

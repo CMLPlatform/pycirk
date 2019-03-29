@@ -17,43 +17,46 @@ import numpy as np
 # Maybe somebody else will want to give a crack at it
 
 
-def category_position(item, labels):
+def single_position(item, labels):
     """
     Takes a dataframe of the multiindex and identifies the position
-    of the specified values    
+    of the specified values
     """
-    
-    if item in ["All","all","ALL", np.nan]:
-        
+
+    if item in ["All", "all", "ALL", np.nan]:
         coordinate = None
         range_coordinates = None
-
     else:
-        
-        try:
-            if item in labels.characterization:
-                coordinate = [i for i, values in enumerate(labels.characterization) if item in values]
-                range_coordinates = len(labels.characterization)
-        except AttributeError:
-            
-            if item in labels.name:
-                coordinate = [i for i, values in enumerate(labels.name) if item in values]
-                range_coordinates = len(labels.names)
-            elif item in labels.synonym:
-                coordinate = [i for i, values in enumerate(labels.synonym) if item in values]
-                range_coordinates = len(labels.synonym)
-            elif item in labels.code:
-                coordinate = [i for i, values in enumerate(labels.code) if item in values]
-                range_coordinates = len(labels.code)
-            elif item in labels.country_code:
-                coordinate = [i for i, values in enumerate(labels.country_code) if item in values]
-                range_coordinates = len(labels.country_code)
-            elif item in labels.region:
-                coordinate = [i for i, values in enumerate(labels.region) if item in values]
-                range_coordinates = len(labels.region)
-    
-    set_of_coordinate = {"coordinate":coordinate, "range_coordinates":range_coordinates}
-    
+        pass
+
+    try:
+        if item in labels:
+            coordinate = [i for i, values in enumerate(labels)
+                          if item in values]
+            range_coordinates = len(labels)
+    except Exception:
+        if item in labels.name.unique():
+            coordinate = [i for i, values in enumerate(labels.name.unique())
+                          if item in values]
+            range_coordinates = len(labels.name)
+        elif item in labels.synonym.unique():
+            print("here")
+            coordinate = [i for i, values in enumerate(labels.synonym.unique())
+                          if item in values]
+            range_coordinates = len(labels.synonym)
+        elif item in labels.code.unique():
+            coordinate = [i for i, values in enumerate(labels.code.unique())
+                          if item in values]
+            range_coordinates = len(labels.code)
+    except Exception:
+        if item in labels.characterization.unique():
+            coordinate = [i for i, values in
+                          enumerate(labels.characterization.unique()) if
+                          item in values]
+            range_coordinates = len(labels.characterization)
+
+    set_of_coordinate = {"coor": coordinate, "range": range_coordinates}
+
     return(set_of_coordinate)
 
 

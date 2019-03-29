@@ -43,7 +43,6 @@ class Labels:
 
         organize = dict()
         for keys, labels in list_of_labels.items():
-            print(keys)
             organize[keys] = self.list_of_something(labels)
 
         count = max(len(labels) for keys, labels in organize.items())
