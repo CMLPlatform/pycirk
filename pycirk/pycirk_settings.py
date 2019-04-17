@@ -146,8 +146,8 @@ class Settings:
                 io_file_all = "data//mrIO_V3.3.pkl"
 
             if self.make_secondary is True:
-                io_file_bi = "data//mrIO_EU_ROW_V3.3.x.pkl"
-                io_file_all = "data//mrIO_V3.3.x.pkl"
+                io_file_bi = "data//mrIO_EU_ROW_V3.3.sm.pkl"
+                io_file_all = "data//mrIO_V3.3.sm.pkl"
 
             if self.aggregation == 0:
                 io = io_file_bi
@@ -194,7 +194,7 @@ class Settings:
         if typ == "sut":
             if self.make_secondary is True:
                 data = ms(data)
-                extension = ".x.pkl"
+                extension = ".sm.pkl"
             else:
                 extension = ".pkl"
 

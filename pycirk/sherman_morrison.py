@@ -15,6 +15,8 @@ def sherman_morrison(A, L, coefficient, coor_s, coor_m):
     u = np.zeros(len(L))
     v = np.zeros(len(L))
 
+    ones = np.ones(len(L), dtype=int)
+
     u[coor_s] = coefficient
 
     for l in coor_s:
@@ -22,8 +24,9 @@ def sherman_morrison(A, L, coefficient, coor_s, coor_m):
         v[~coor_m] = 0
         v = np.diag(-v)
         u = np.diag(u)
+        uv = u @ ones @ v
 
-        sher_mor = L - ((L @ u @ v)*L)/(1 + v @ L @ u)
+        sher_mor = L - ((uv @ v) * L) / (1 + v @ L @ u)
 
     return(sher_mor)
 

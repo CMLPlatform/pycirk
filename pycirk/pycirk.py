@@ -25,7 +25,7 @@ class Pycirk:
     aggregation = 0 is "bi-regional" (EU- ROW) or 1 is None (multi-regional 49 regions)
 
     From start you can launch all the analysis specifications listed under
-    scenarios.xls
+    scenarios.xlsx
 
     All directories and base data are specified in dirs.py
 
@@ -53,7 +53,7 @@ class Pycirk:
                                  aggregation, file)
 
         self.scen_file = Settings.scenario_file()
-        
+
         self.baseline = Settings.transform_to_io()
 
     def run_one_scenario(self, scen_no, results_only=True):
