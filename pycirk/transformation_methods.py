@@ -69,10 +69,10 @@ class Transform:
 
         w = met.B(self.W, T, self.inv_diag_q)  # primary inp. coef matrix
 
-        S = met.S(T, self.U)  # intermediates
+        Z = met.Z(T, self.U)  # intermediates
         x = ops.IOT.x_IAy(L, self.yi)
         W = ops.IOT.R(w, np.diag(x))
-        ver_base = ops.verifyIOT(S, self.Y, W)
+        ver_base = ops.verifyIOT(Z, self.Y, W)
         del(self.V)
         del(self.U)
         del(self.W)
@@ -88,7 +88,7 @@ class Transform:
 
         x = ops.IOT.x_IAy(L, self.yi)  # total product ouput
 
-        A = ops.IOT.A(S, self.inv_diag_q)
+        A = ops.IOT.A(Z, self.inv_diag_q)
 
         Ye = ops.IOT.YB(self.YE, self.inv_diag_yj)
         Yr = ops.IOT.YB(self.YR, self.inv_diag_yj)
@@ -96,7 +96,7 @@ class Transform:
 
         IOT = {"Y": self.Y,
                "L": L,
-               "S": S,
+               "Z": Z,
                "A": A,
                "w": w,
                "e": e,
@@ -121,15 +121,15 @@ class Transform:
         """
         met = ops.PxP_ITA_MSC
 
-        Z = met.Z(self.U, self.inv_diag_g)  # ind. interm. coef.
+        S = met.S(self.U, self.inv_diag_g)  # ind. interm. coef. => in EUROSTAT manual shown as S
         D = met.D(self.V, self.inv_diag_q)  # Market shares
-        A = met.A(Z, D)  # technical coefficient matrix
+        A = met.A(S, D)  # technical coefficient matrix
         L = met.L(A)  # leontief inverse
         w = met.B(self.W, D, self.inv_diag_g)  # primary inputs
         x = ops.IOT.x_IAy(L, self.yi)
         W = ops.IOT.R(w, np.diag(x))
-        S = met.S(Z, D, self.diag_q)  # intermediates
-        ver_base = ops.verifyIOT(S, self.Y, W)
+        Z = met.Z(S, D, self.diag_q)  # intermediates
+        ver_base = ops.verifyIOT(Z, self.Y, W)
         del(self.V)
         del(self.U)
         del(self.W)
@@ -145,7 +145,7 @@ class Transform:
 
         x = ops.IOT.x_IAy(L, self.yi)  # total product ouput
 
-        A = ops.IOT.A(S, self.inv_diag_q)
+        A = ops.IOT.A(Z, self.inv_diag_q)
 
         Ye = ops.IOT.YB(self.YE, self.inv_diag_yj)
         Yr = ops.IOT.YB(self.YR, self.inv_diag_yj)
@@ -153,7 +153,7 @@ class Transform:
 
         IOT = {"Y": self.Y,
                "L": L,
-               "S": S,
+               "Z": Z,
                "A": A,
                "w": w,
                "e": e,

@@ -165,7 +165,7 @@ class Labels:
         data = Munch(data)
 
         # Relabel Main IOT elements
-        data.S = self.relabel(data.S, cat.iloc[:, :4], cat)
+        data.Z = self.relabel(data.Z, cat.iloc[:, :4], cat)
         # data.L = relabel(data.L, cat.iloc[:, :4], cat.iloc[:, :4])
         # data.A = relabel(data.A, cat, cat)
         data.Y = self.relabel(data.Y, lb.fin_dem, cat)

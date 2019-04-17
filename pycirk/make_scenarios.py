@@ -26,7 +26,7 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     data = deepcopy(data)
 
     # Apply policy to economic matrices
-    data.S = counterfactual(scen_file, scen_no, data.S, "S", labels)
+    data.Z = counterfactual(scen_file, scen_no, data.S, "Z", labels)
 
     # First total product output from changes in S
     x_ = ops.IOT.x(data.S, data.Y)
@@ -325,15 +325,18 @@ def make_new(fltr_policies, M, M_name, labels):
 
     if "Y" in M_name:
         column_labels = labels.Y_labels
+        row_labels = labels.cat_labels
     elif M_name in ["A", "S", "L"]:
         column_labels = labels.cat_labels
         row_labels = labels.cat_labels
-    else:
+    
+    if M_name.lower()[0] in ["e", "m", "r", "w"]:
         name = [l for l in ["e", "m", "r", "w"] if l in M_name.lower()][0]
         attr_name = name.upper() + "_labels"
         row_labels = getattr(labels, attr_name)
 
     cat_labels = labels.cat_labels
+
     if len(fltr_policies) == 0:
         return (M)
     else:

@@ -104,14 +104,14 @@ class Operations:
 
             return (R)
 
-        def S(T, U):
+        def Z(T, U):
             """
             Intemediates
-            S = U * T
+            Z = U * T
             """
-            S = U @ T
+            Z = U @ T
 
-            return(S)
+            return(Z)
 
     class PxP_ITA_MSC:
         """
@@ -122,8 +122,9 @@ class Operations:
         # where the exceptional behaviour appeared I substituted
         # @ with np.matmul(), this is to be changed in the future
 
-        def Z(U, inv_diag_g):
+        def S(U, inv_diag_g):
             """
+            Intermediate coefficients 
             Input requirements
             Z = U * inv(diag(g))
             """
@@ -141,12 +142,12 @@ class Operations:
 
             return(D)
 
-        def A(Z, D):
+        def A(inter_coef, D):
             """
             Total requirement multipliers
             A = Z * D
             """
-            A = np.matmul(Z, D)
+            A = np.matmul(inter_coef, D)
             return(A)
 
         def L(A):
@@ -175,14 +176,14 @@ class Operations:
 
             return(R)
 
-        def S(Z, D, diag_q):
+        def Z(inter_coef, D, diag_q):
             """
             Intermediates
-            S = Z * D * diag(q)
+            Z = inter_coef * D * diag(q)
             """
-            S = np.matmul(Z, D) @ diag_q
+            Z = np.matmul(inter_coef, D) @ diag_q
 
-            return (S)
+            return (Z)
 
     class IOT:
         """
@@ -191,11 +192,11 @@ class Operations:
         but it's good to have them divided for clarity
         """
 
-        def x(S, Y):
+        def x(Z, Y):
             """
             total product output s the sum of Si and y
             """
-            q = np.sum(np.array(S), axis=1) + np.sum(np.array(Y), axis=1)
+            q = np.sum(np.array(Z), axis=1) + np.sum(np.array(Y), axis=1)
 
             return(q)
 
@@ -224,21 +225,21 @@ class Operations:
 
             return (x)
 
-        def S(A, diag_x):
+        def Z(A, diag_x):
             """
             Total product ouput
-            S = A * diag_x
+            Z = A * diag_x
             """
-            S = A @ diag_x
+            Z = A @ diag_x
 
-            return(S)
+            return(Z)
 
-        def A(S, inv_diag_x):
+        def A(Z, inv_diag_x):
             """
             Technical coefficient matrix
-            A = S * inv(diag(x))
+            A = Z * inv(diag(x))
             """
-            A = S @ inv_diag_x
+            A = Z @ inv_diag_x
 
             return(A)
 
@@ -271,17 +272,17 @@ class Operations:
             return(YR)
 
         # is this function really needed?
-        def IOT(S, Y, W, E, R, M):
+        def IOT(Z, Y, W, E, R, M):
             """
             IOT
             """
-            x = Operations.IOT.x(S, Y)  # total product output
+            x = Operations.IOT.x(Z, Y)  # total product output
             diag_x = np.diag(x)
             inv_diag_x = Operations.inv(diag_x)
 
             y = np.sum(Y, axis=1)
 
-            A = Operations.IOT.A(S, inv_diag_x)  # technical coefficient matrix
+            A = Operations.IOT.A(Z, inv_diag_x)  # technical coefficient matrix
             L = Operations.IOT.L(A)  # leontief inverse
 
             w = Operations.IOT.B(W, inv_diag_x)  # primary inputs coef
@@ -296,15 +297,15 @@ class Operations:
             m = Operations.IOT.B(M, inv_diag_x)  # Bm coefficient matrix
             M = Operations.IOT.R(m, diag_x)  # Material extension
 
-            S = Operations.IOT.S(A, diag_x)  # intermediates
+            Z = Operations.IOT.Z(A, diag_x)  # intermediates
             x = Operations.IOT.x_IAy(L, y)
 
-            ver_base = Operations.verifyIOT(S, Y, E)
+            ver_base = Operations.verifyIOT(Z, Y, E)
 
             IOT = {"A": A,
-                   "S": S,
+                   "Z": Z,
                    "L": L,
-                   "S": S,
+                   "Z": Z,
                    "Y": Y,
                    "w": w,
                    "W": W,

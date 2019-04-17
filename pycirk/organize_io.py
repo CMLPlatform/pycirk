@@ -14,7 +14,7 @@ Scope: Modelling the Circular economy in EEIO
 
 def organizer(data):
 
-    IOT = {"S": data["S"],
+    IOT = {"Z": data["Z"],
            "Y": data["Y"],
            "w": data["w"],
            "e": data["e"],
