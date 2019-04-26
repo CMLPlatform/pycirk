@@ -12,7 +12,8 @@ Scope: Modelling the Circular Economy in EEIO
 
 import pandas as pd
 import numpy as np
-from pycirk import positions
+from pycirk.positions import make_coord_array as coord
+from pycirk.positions import single_position as sing_pos
 from pycirk.fundamental_operations import Operations as ops
 from copy import deepcopy
 import warnings
@@ -26,21 +27,21 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     data = deepcopy(data)
 
     # Apply policy to economic matrices
-    data.Z = counterfactual(scen_file, scen_no, data.S, "Z", labels)
+    data.Z = counterfactual(scen_file, scen_no, data.Z, "Z", labels)
 
     # First total product output from changes in S
-    x_ = ops.IOT.x(data.S, data.Y)
+    x_ = ops.IOT.x(data.Z, data.Y)
     diag_x_ = np.diag(x_)
     inv_diag_x_ = ops.inv(diag_x_)
 
-    A = ops.IOT.A(data.S, inv_diag_x_)
+    A = ops.IOT.A(data.Z, inv_diag_x_)
 
     diag_yj = np.diag(data.Y.sum(axis=0))
 
     data.A = counterfactual(scen_file, scen_no, A, "A", labels)
     data.Y = counterfactual(scen_file, scen_no, data.Y, "Y", labels)
 
-    x = ops.IOT.x(data.S, data.Y)
+    x = ops.IOT.x(data.Z, data.Y)
     diag_x = np.diag(x)
     inv_diag_x = ops.inv(diag_x)
 
@@ -85,7 +86,7 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     data.x = ops.IOT.x_IAy(data.L, yi)
     diag_x = np.diag(data.x)
 
-    data.S = ops.IOT.S(data.A, diag_x)
+    data.Z = ops.IOT.Z(data.A, diag_x)
 
     data.w = ops.IOT.B(data.W, inv_diag_x)  # primary inputs coef
     data.e = ops.IOT.B(data.E, inv_diag_x)  # emissions ext coef
@@ -143,7 +144,7 @@ def basic_mult(ide, a, kt, kp):
     kp = penetration coefficient (level of market penet. of the policy)
     """
     if np.isnan(kt):
-        return(a)
+        d = a
     elif np.isnan(kp):
         raise ValueError("please specify penetration coefficient for" +
                          " technical change -  Policy identifier "
@@ -154,7 +155,9 @@ def basic_mult(ide, a, kt, kp):
         totk = 1 - -kt * kp
         d = a * totk
         d = np.nan_to_num(d)
-        return(d)
+        print(a, d)
+
+    return(d)
 
 
 def basic_add(ide, a, at):
@@ -162,11 +165,11 @@ def basic_add(ide, a, at):
 
     """
     if np.isnan(at):
-        return(a)
-    else:
-        d = a + at
-        d = np.nan_to_num(d)
-        return(d)
+        at = 0
+
+    a += at
+
+    return(a)
 
 
 def substitution(d, s, fx_kp):
@@ -222,8 +225,8 @@ def counterfactual_engine(M, inter, subs=False, copy=False):
 
     inter = contains all specs for the intervention
 
-    y = index coordinate
-    x = column coordinate
+    i = index coordinate
+    g = column coordinate
     ide = intervention identification number
 
     kt =  technical change coefficient
@@ -236,21 +239,21 @@ def counterfactual_engine(M, inter, subs=False, copy=False):
 
     ide = inter["ide"]
 
-    y = inter["y"]
-    print(y)
-    x = inter["x"]
-    a = M.iloc[y, x]
+    i = inter["i"]  # row
+    g = inter["g"]  # columns
+
+    a = M[i, g]
 
     if copy is True:
-        y1 = inter["y1"]
-        x1 = inter["x1"]
-        d = M.iloc[y1, x1]
+        i1 = inter["i1"]
+        g1 = inter["g1"]
+        d = M.iloc[i1, g1]
         if np.isnan(inter["swk"]):
             raise ValueError("I can't copy the values. You forgot to add" +
                              " the weighing factor for identifier no: " +
                              str(ide))
         else:
-            M.iloc[y1, x1] = copy(d, a, inter["swk"])
+            M[i1, g1] = copy(d, a, inter["swk"])
 
     else:
 
@@ -261,12 +264,12 @@ def counterfactual_engine(M, inter, subs=False, copy=False):
         i2 = basic_mult(ide, i1, int2["kt"], int1["kp"])
 
         int3 = inter["at1"]
-        i3 = basic_add(ide, i2, int3["at"])
+        i3 = basic_add(ide, i2, int3)
 
         int4 = inter["at2"]
-        i4 = basic_add(ide, i3, int4["at"])
+        i4 = basic_add(ide, i3, int4)
 
-        M.iloc[y, x] = i4
+        M[i, g] = i4
 
         if subs is True:
             # Assumption is that subsitution can only happen if
@@ -313,11 +316,14 @@ def make_new(fltr_policies, M, M_name, labels):
 
     M = matrix on which to implement the policies
 
-    x = columns (abscissa/horizontal)
-    y = rows (ordinate/vertical)
+    g = columns (abscissa/horizontal)
+    i = rows (ordinate/vertical)
 
-    *x.1 and *y.1  =  coordinates for destination in substitution
     """
+
+    M = np.array(M)
+
+    # identifying colum and index labels
     if labels.country_labels is None:
         reg_labels = labels.region_labels
     elif labels.country_labels is not None:
@@ -326,134 +332,86 @@ def make_new(fltr_policies, M, M_name, labels):
     if "Y" in M_name:
         column_labels = labels.Y_labels
         row_labels = labels.cat_labels
-    elif M_name in ["A", "S", "L"]:
+    elif M_name in ["A", "Z", "L"]:
         column_labels = labels.cat_labels
         row_labels = labels.cat_labels
-    
+
     if M_name.lower()[0] in ["e", "m", "r", "w"]:
         name = [l for l in ["e", "m", "r", "w"] if l in M_name.lower()][0]
         attr_name = name.upper() + "_labels"
         row_labels = getattr(labels, attr_name)
 
-    cat_labels = labels.cat_labels
+    no_row_labs = row_labels.count
+    no_reg_labs = len(reg_labels)
+    no_col_labs = column_labels.count
 
     if len(fltr_policies) == 0:
         return (M)
     else:
-        for l, row in fltr_policies.iterrows():
+        for l, entry in fltr_policies.iterrows():
 
-            inter = row.intervention
-            ide = row.identifier  # used during debugging
+            inter = entry.intervention
+            ide = int(entry.identifier)  # used during debugging
 
             # Collecting the specified coordinates for the intevention
 
             # coordinates for region and category
-            # Row items => Supplied category or extension category
-            reg_o = positions.single_position(row.reg_o, reg_labels)
-            cat_o = positions.single_position(row.cat_o, row_labels)
+            # Row items (i) => Supplied category or extension category
+            reg_o = sing_pos(entry.reg_o, reg_labels)
+            cat_o = sing_pos(entry.cat_o, row_labels)
 
-            # Column items => Consumption / manufacturing activity
-            reg_d = positions.single_position(row.reg_o, reg_labels)
-            cat_d = positions.single_position(row.cat_o, row_labels)
+            # Column items (g) => Consumption / manufacturing activity
+            reg_d = sing_pos(entry.reg_d, reg_labels)
+            cat_d = sing_pos(entry.cat_d, column_labels)
 
-            # Translate coordinates from str to numerical position
+            # Identify coordinates
+            orig_coor = coord(cat_o, reg_o, no_reg_labs, no_row_labs)
+            dest_coor = coord(cat_d, reg_d, no_reg_labs, no_col_labs)
 
-            o_pos = positions(ind_M, reg_o, cat_o)
-            d_pos = positions(col_M, reg_d, cat_d)
+            # organize main changes
+            kt1 = {"kt": entry.kt1, "kp": entry.kp1}
+            kt2 = {"kt": entry.kt2, "kp": entry.kp2}
 
-            # make dictionaries of all interventions
-            kt1 = {"kt": row["kt1"], "kp": row["kp1"]}
-            kt2 = {"kt": row["kt2"], "kp": row["kp2"]}
+            intervention = {"inter": inter,
+                            "ide": ide,
+                            "i": orig_coor,
+                            "g": dest_coor,
+                            "kt1": kt1,
+                            "kt2": kt2,
+                            "at1": entry.at1,
+                            "at2": entry.at2,
+                            }
 
-            at1 = {"at": row["at1"]}
-            at2 = {"at": row["at2"]}
+            substitution = False
+            copy = False
 
             # the following is only relevant for susbtitution
-            if row["Sub"] == "x":
+            if "x" in [entry.Sub, entry.Copy]:
 
-                ind_M1 = get_labels(M, 0)  # a matrix with all index labels
-                col_M1 = get_labels(M, 1)  # matrix with all column labels
+                sub_reg_o = sing_pos(entry.reg_o_sc, reg_labels)
+                sub_cat_o = sing_pos(entry.cat_o_sc, row_labels)
 
-                reg_o1 = row["reg_o.1"]
-                reg_d1 = row["reg_d.1"]
+                # Column items => Consumption / manufacturing activity
+                sub_reg_d = sing_pos(entry.reg_d_sc, reg_labels)
+                sub_cat_d = sing_pos(entry.cat_d_sc, column_labels)
 
-                cat_o1 = row["cat_o.1"]
-                cat_d1 = row["cat_d.1"]
+                # Translate coordinates from str to numerical position
+                sub_orig_coor = coord(sub_cat_o, sub_reg_o, no_reg_labs, no_row_labs)
+                sub_dest_coor = coord(sub_cat_d, sub_reg_d, no_reg_labs, no_col_labs)
 
-                o1_pos = positions(ind_M1, reg_o1, cat_o1)
-                d1_pos = positions(col_M1, reg_d1, cat_d1)
+                intervention["swk"] = entry.swk
+                intervention["i1"] = sub_orig_coor
+                intervention["g1"] = sub_dest_coor
+                intervention["sk1"] = entry.sk1
+                intervention["sk2"] = entry.sk2
+                intervention["sk3"] = entry.sk3
+                intervention["sk4"] = entry.sk4
 
-                swk = row["swk"]  # Substitution weighing coefficient
+                if entry.Copy == "x":
+                    copy = True
+                elif entry.Sub == "x":
+                    substitution = True
 
-                kt1["sk"] = row["sk1"]
-                kt2["sk"] = row["sk2"]
-
-                at1["sk"] = row["sk3"]
-                at2["sk"] = row["sk4"]
-
-                intervention = {"inter": inter,
-                                "ide": ide,
-                                "y": o_pos,
-                                "x": d_pos,
-                                "y1": o1_pos,
-                                "x1": d1_pos,
-                                "kt1": kt1,
-                                "kt2": kt2,
-                                "at1": at1,
-                                "at2": at2,
-                                "swk": swk
-                                }
-
-                substitution = True
-
-            else:
-                intervention = {"inter": inter,
-                                "ide": ide,
-                                "y": o_pos,
-                                "x": d_pos,
-                                "kt1": kt1,
-                                "kt2": kt2,
-                                "at1": at1,
-                                "at2": at2
-                                }
-
-                substitution = False
-
-            # direct copy of values to create proxies
-            if row["Copy"] == "x":
-
-                ind_M1 = get_labels(M, 0)  # a matrix with all index labels
-                col_M1 = get_labels(M, 1)  # matrix with all column labels
-
-                reg_o1 = row["reg_o.1"]
-                reg_d1 = row["reg_d.1"]
-
-                cat_o1 = row["cat_o.1"]
-                cat_d1 = row["cat_d.1"]
-
-                o1_pos = positions(ind_M1, reg_o1, cat_o1)
-                d1_pos = positions(col_M1, reg_d1, cat_d1)
-
-                swk = row["swk"]  # Substitution weighing coefficient
-
-                intervention = {"inter": inter,
-                                "ide": ide,
-                                "y": o_pos,
-                                "x": d_pos,
-                                "y1": o1_pos,
-                                "x1": d1_pos,
-                                "kt1": "",
-                                "kt2": "",
-                                "at1": "",
-                                "at2": "",
-                                "swk": swk
-                                }
-                copy = True
-
-            else:
-                copy = False
-
-#                print(ide, intervention)
 
             M = counterfactual_engine(M, intervention, substitution, copy)
 

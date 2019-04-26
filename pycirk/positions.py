@@ -25,53 +25,58 @@ def single_position(item, labels):
 
     if item in ["All", "all", "ALL", np.nan]:
         coordinate = None
-        range_coordinates = None
+    else:
+        try:
+            if item in labels:
+                ref_labels = labels
+        except Exception:
+            pass
+
+        try:
+            if item in labels.name:
+                ref_labels = labels.name
+            elif item in labels.synonym:
+                ref_labels = labels.synonym
+            elif item in labels.code:
+                ref_labels = labels.code
+        except Exception:
+            pass
+
+        try:
+            if item in labels.characterization:
+                ref_labels = labels.characterization
+        except Exception:
+            pass
+
+        coordinate = np.array([i for i, values in enumerate(ref_labels)
+                              if item in values])
+
+    return(coordinate)
+
+
+def make_coord_array(cat_coord, reg_coord, no_countries, no_categories):
+
+    if no_categories not in [7, 163, 200]:
+        no_countries = 1
     else:
         pass
 
-    try:
-        if item in labels:
-            coordinate = [i for i, values in enumerate(labels)
-                          if item in values]
-            range_coordinates = len(labels)
-    except Exception:
-        if item in labels.name.unique():
-            coordinate = [i for i, values in enumerate(labels.name.unique())
-                          if item in values]
-            range_coordinates = len(labels.name)
-        elif item in labels.synonym.unique():
-            print("here")
-            coordinate = [i for i, values in enumerate(labels.synonym.unique())
-                          if item in values]
-            range_coordinates = len(labels.synonym)
-        elif item in labels.code.unique():
-            coordinate = [i for i, values in enumerate(labels.code.unique())
-                          if item in values]
-            range_coordinates = len(labels.code)
-    except Exception:
-        if item in labels.characterization.unique():
-            coordinate = [i for i, values in
-                          enumerate(labels.characterization.unique()) if
-                          item in values]
-            range_coordinates = len(labels.characterization)
-
-    set_of_coordinate = {"coor": coordinate, "range": range_coordinates}
-
-    return(set_of_coordinate)
-
-
-def make_coord_array(coordinates, no_countries, no_categories):
-
-    n = 0
-    nn = 0
-    while n in range(len(coordinates)):
-        while nn in range(no_countries):
-            g = coordinates + no_categories * nn
+    if cat_coord is None:
+        s = np.array(range(no_categories * no_countries))
+    else:
+        n = 0
+        while n in range(no_countries):
+            g = cat_coord[0] + no_categories * n
             if "s" not in locals():
                 s = g
             else:
-                s = np.concatenate([s, g])
-            nn = nn+1
-        n = n+1
+                s = np.hstack([s, g])
+            n = n+1
+
+    if reg_coord is None:
+        pass
+    else:
+        s = np.split(s, no_countries)
+        s = np.take(s, reg_coord)
 
     return(s)
