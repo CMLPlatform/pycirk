@@ -155,7 +155,6 @@ def basic_mult(ide, a, kt, kp):
         totk = 1 - -kt * kp
         d = a * totk
         d = np.nan_to_num(d)
-        print(a, d)
 
     return(d)
 
@@ -190,7 +189,12 @@ def substitution(d, s, fx_kp):
     """
     fx_kp = fx_kp * 1e-2
     if d.shape != s.shape:  # checking whether we need to distribute values
-        s = np.sum(s.sum()) / (d.shape[0] * d.shape[1])
+        print(d.shape, s.shape)
+        print(d)
+        d = (d.shape[0] * d.shape[1])
+        mask = (d == 0)
+        d[~mask] = 1/d[~mask]
+        s = np.sum(s.sum()) * d
     else:
         pass
 
@@ -199,23 +203,7 @@ def substitution(d, s, fx_kp):
     return(ind)
 
 
-def copy(d, c, fx_kp):
-    """
-    Moves the value from one or multiple cells (in the same row or column)
-
-    Substitution: Material subsitution or certain types of rebound effects
-
-    d = transaction to expand
-    c = transaction subject to the direct policy intervention
-    fx_kp = size of c that is added on the transaction to expand d
-    """
-    fx_kp = fx_kp * 1e-2
-    ind = np.array(d) + (np.array(c) * fx_kp)
-
-    return(ind)
-
-
-def counterfactual_engine(M, inter, subs=False, copy=False):
+def counterfactual_engine(M, inter_sets, subs=False, copy=False):
     """
     This function allows for the proccessing of the specified interventions
     onto a selected matrix. It calls various functions to modify the values
@@ -237,50 +225,56 @@ def counterfactual_engine(M, inter, subs=False, copy=False):
     expan = expansion coef. (used only for simple transaction changes)
     """
 
-    ide = inter["ide"]
+    ide = inter_sets["ide"]
 
-    i = inter["i"]  # row
-    g = inter["g"]  # columns
+    i = inter_sets["i"]  # row
+    print("i",i)
+    g = inter_sets["g"]  # columns
+    print("g",g)
 
-    a = M[i, g]
+    a = M[np.ix_(i, g)]
 
     if copy is True:
-        i1 = inter["i1"]
-        g1 = inter["g1"]
-        d = M.iloc[i1, g1]
-        if np.isnan(inter["swk"]):
+        i1 = inter_sets["i1"]
+        g1 = inter_sets["g1"]
+        d = M[np.ix_(i1, g1)]
+        if np.isnan(inter_sets["swk"]):
             raise ValueError("I can't copy the values. You forgot to add" +
                              " the weighing factor for identifier no: " +
                              str(ide))
         else:
-            M[i1, g1] = copy(d, a, inter["swk"])
+            print("d", d)
+            print("a", a)
+            print("swk", type(inter_sets["swk"]))
+            print("i1", i1, "g1", g1)
+            M[np.ix_(i1, g1)] = d + (a * inter_sets["swk"]*1e-2)
 
     else:
 
-        int1 = inter["kt1"]
-        i1 = basic_mult(ide, a, int1["kt"], int1["kp"])
+        int1 = inter_sets["kt1"]
+        int1 = basic_mult(ide, a, int1["kt"], int1["kp"])
 
-        int2 = inter["kt2"]
-        i2 = basic_mult(ide, i1, int2["kt"], int1["kp"])
+        int2 = inter_sets["kt2"]
+        int2 = basic_mult(ide, int1, int2["kt"], int2["kp"])
 
-        int3 = inter["at1"]
-        i3 = basic_add(ide, i2, int3)
+        int3 = inter_sets["at1"]
+        int3 = basic_add(ide, int2, int3)
 
-        int4 = inter["at2"]
-        i4 = basic_add(ide, i3, int4)
+        int4 = inter_sets["at2"]
+        int4 = basic_add(ide, int3, int4)
 
-        M[i, g] = i4
+        M[np.ix_(i, g)] = int4
 
         if subs is True:
             # Assumption is that subsitution can only happen if
             # a transaction is reduced
-            y1 = inter["y1"]
-            x1 = inter["x1"]
+            i1 = inter_sets["i1"]
+            g1 = inter_sets["g1"]
 
-            sub = {"1": int1["sk"],
-                   "2": int2["sk"],
-                   "3": int3["sk"],
-                   "4": int4["sk"]
+            sub = {"1": inter_sets["sk1"],
+                   "2": inter_sets["sk2"],
+                   "3": inter_sets["sk3"],
+                   "4": inter_sets["sk4"]
                    }
 
             for key, value in sub.items():
@@ -290,18 +284,20 @@ def counterfactual_engine(M, inter, subs=False, copy=False):
                         ref = a  # if it is the first sub then it will look
                     # at the difference b/ the original value and 1st inter
                     else:
+                        print("and here")
                         key = int(key) - 1
-                        ref = eval("i" + str(key))
+                        ref = eval("int" + str(key))
 
-                    s = ref - eval("i" + key)
-                    d = M.iloc[y1, x1]
-                    if np.isnan(inter["swk"]):
+                    s = ref - eval("int" + str(key))
+                    d = M[np.ix_(i1, g1)]
+#                    print(i1, g1)
+                    if np.isnan(inter_sets["swk"]):
                         raise ValueError("I can't substitute the values." +
                                          "You forgot to add the weighing" +
                                          " factor for identifier no: " +
                                          str(ide))
                     else:
-                        M.iloc[y1, x1] = substitution(d, s, inter["swk"])
+                        M[np.ix_(i1, g1)] = substitution(d, s, inter_sets["swk"])
 
     return(M)
 
@@ -332,7 +328,7 @@ def make_new(fltr_policies, M, M_name, labels):
     if "Y" in M_name:
         column_labels = labels.Y_labels
         row_labels = labels.cat_labels
-    elif M_name in ["A", "Z", "L"]:
+    else:
         column_labels = labels.cat_labels
         row_labels = labels.cat_labels
 

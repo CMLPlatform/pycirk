@@ -25,6 +25,7 @@ def single_position(item, labels):
 
     if item in ["All", "all", "ALL", np.nan]:
         coordinate = None
+
     else:
         try:
             if item in labels:
@@ -77,6 +78,6 @@ def make_coord_array(cat_coord, reg_coord, no_countries, no_categories):
         pass
     else:
         s = np.split(s, no_countries)
-        s = np.take(s, reg_coord)
+        s = np.take(s, reg_coord, axis=0)[0]
 
     return(s)
