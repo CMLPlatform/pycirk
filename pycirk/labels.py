@@ -46,16 +46,19 @@ class Labels:
             organize[keys] = self.list_of_something(labels)
 
         count = max(len(labels) for keys, labels in organize.items())
-
-        organize = Munch(organize)
-        organize.count = count
-
-        return(organize)
+        organize["count"] = count
+        
+        return(Munch(organize))
 
     def organize_unique_labels(self, directory):
 
-        labels = Munch(self.load_labels(directory))
-
+        labels = self.load_labels(directory)
+        
+        for l, v in labels.items():
+            labels[l] = Munch(v)
+        
+        labels = Munch(labels)
+            
         try:
             labels.main_cat = self.get_unique_labels(labels.prod)
         except Exception:
@@ -63,7 +66,7 @@ class Labels:
 
         labels.primary = self.get_unique_labels(labels.primary)
         labels.fin_dem = self.get_unique_labels(labels.fin_dem)
-        labels.emi = self.get_unique_labels(labels.emis)
+        labels.emis = self.get_unique_labels(labels.emis)
         labels.res = self.get_unique_labels(labels.res)
         labels.mat = self.get_unique_labels(labels.mat)
         labels.car_emis = self.get_unique_labels(labels.car_emis)

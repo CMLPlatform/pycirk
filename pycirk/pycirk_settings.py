@@ -229,6 +229,8 @@ class Settings:
                 self.lb.save_labels(data, self.directory_labels)
                 IOT = data
                 del(data)
+                
+        self.assign_labels_to_class()
 
         return(IOT)
 
@@ -256,8 +258,8 @@ class Settings:
 
     def set_scenario(self, data, scen_no):
 
-        scenario = mc(data, scen_no, self.scenario_file())
+        scenario = mc(data, scen_no, self.scenario_file(), self.lb)
 
-        scenario = self.lb.relabel_to_save(scenario)
+        scenario = self.lb.relabel_to_save(scenario, self.method, "pycirk//labels/")
 
         return(scenario)

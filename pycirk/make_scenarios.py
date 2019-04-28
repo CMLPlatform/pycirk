@@ -56,27 +56,27 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     data.m = counterfactual(scen_file, scen_no, data.m, "m", labels)
 
     # Apply policy to intermediate extension matrices
-    E = ops.IOT.R(data.E, diag_x)
-    R = ops.IOT.R(data.R, diag_x)
-    M = ops.IOT.R(data.M, diag_x)
+    E = ops.IOT.R(data.e, diag_x)
+    R = ops.IOT.R(data.r, diag_x)
+    M = ops.IOT.R(data.m, diag_x)
 
     data.E = counterfactual(scen_file, scen_no, E, "E", labels)
     data.R = counterfactual(scen_file, scen_no, R, "R", labels)
     data.M = counterfactual(scen_file, scen_no, M, "M", labels)
 
     # Apply policy to  final demand extension coefficient matrices
-    data.Ye = counterfactual(scen_file, scen_no, data.Ye, "Ye", labels)
-    data.Yr = counterfactual(scen_file, scen_no, data.Yr, "Yr", labels)
-    data.Ym = counterfactual(scen_file, scen_no, data.Ym, "Ym", labels)
+    data.Ye = counterfactual(scen_file, scen_no, data.Ye, "eY", labels)
+    data.Yr = counterfactual(scen_file, scen_no, data.Yr, "rY", labels)
+    data.Ym = counterfactual(scen_file, scen_no, data.Ym, "mY", labels)
 
     # Apply policy to final demand extension matrices
-    YE = ops.IOT.YR(data.Ye, diag_x)
-    YR = ops.IOT.YR(data.Yr, diag_x)
-    YM = ops.IOT.YR(data.Ym, diag_x)
+    YE = ops.IOT.YR(data.Ye, diag_yj)
+    YR = ops.IOT.YR(data.Yr, diag_yj)
+    YM = ops.IOT.YR(data.Ym, diag_yj)
 
-    data.YE = counterfactual(scen_file, scen_no, YE, "YE", labels)
-    data.YR = counterfactual(scen_file, scen_no, YR, "YR", labels)
-    data.YM = counterfactual(scen_file, scen_no, YM, "YM", labels)
+    data.YE = counterfactual(scen_file, scen_no, YE, "EY", labels)
+    data.YR = counterfactual(scen_file, scen_no, YR, "RY", labels)
+    data.YM = counterfactual(scen_file, scen_no, YM, "MY", labels)
 
     # Scenario
     data.L = ops.IOT.L(data.A)  # L from S and Y modified
@@ -189,15 +189,12 @@ def substitution(d, s, fx_kp):
     """
     fx_kp = fx_kp * 1e-2
     if d.shape != s.shape:  # checking whether we need to distribute values
-        print(d.shape, s.shape)
-        print(d)
         d = (d.shape[0] * d.shape[1])
         mask = (d == 0)
         d[~mask] = 1/d[~mask]
         s = np.sum(s.sum()) * d
     else:
         pass
-
     ind = np.array(d) + (np.array(s) * fx_kp)
     ind = np.nan_to_num(ind)
     return(ind)
@@ -228,9 +225,7 @@ def counterfactual_engine(M, inter_sets, subs=False, copy=False):
     ide = inter_sets["ide"]
 
     i = inter_sets["i"]  # row
-    print("i",i)
     g = inter_sets["g"]  # columns
-    print("g",g)
 
     a = M[np.ix_(i, g)]
 
@@ -243,10 +238,6 @@ def counterfactual_engine(M, inter_sets, subs=False, copy=False):
                              " the weighing factor for identifier no: " +
                              str(ide))
         else:
-            print("d", d)
-            print("a", a)
-            print("swk", type(inter_sets["swk"]))
-            print("i1", i1, "g1", g1)
             M[np.ix_(i1, g1)] = d + (a * inter_sets["swk"]*1e-2)
 
     else:
@@ -284,7 +275,6 @@ def counterfactual_engine(M, inter_sets, subs=False, copy=False):
                         ref = a  # if it is the first sub then it will look
                     # at the difference b/ the original value and 1st inter
                     else:
-                        print("and here")
                         key = int(key) - 1
                         ref = eval("int" + str(key))
 
@@ -331,8 +321,9 @@ def make_new(fltr_policies, M, M_name, labels):
     else:
         column_labels = labels.cat_labels
         row_labels = labels.cat_labels
-
-    if M_name.lower()[0] in ["e", "m", "r", "w"]:
+    
+    if any(True for l in M_name.lower() if l in ["e", "m", "r", "w"]):
+        
         name = [l for l in ["e", "m", "r", "w"] if l in M_name.lower()][0]
         attr_name = name.upper() + "_labels"
         row_labels = getattr(labels, attr_name)
@@ -340,6 +331,7 @@ def make_new(fltr_policies, M, M_name, labels):
     no_row_labs = row_labels.count
     no_reg_labs = len(reg_labels)
     no_col_labs = column_labels.count
+    
 
     if len(fltr_policies) == 0:
         return (M)
@@ -355,7 +347,6 @@ def make_new(fltr_policies, M, M_name, labels):
             # Row items (i) => Supplied category or extension category
             reg_o = sing_pos(entry.reg_o, reg_labels)
             cat_o = sing_pos(entry.cat_o, row_labels)
-
             # Column items (g) => Consumption / manufacturing activity
             reg_d = sing_pos(entry.reg_d, reg_labels)
             cat_d = sing_pos(entry.cat_d, column_labels)
