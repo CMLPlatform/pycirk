@@ -253,23 +253,23 @@ class Operations:
 
             return(L)
 
-        def YB(YR, inv_diag_yj):
+        def bY(RY, inv_diag_yj):
             """
             Calculates intensities of extensions in final demand
-            Method for transformation matrix of YB
+            Method for transformation matrix of bY
             (e.g. final demand emissions)
             """
-            YB = YR @ inv_diag_yj
+            bY = RY @ inv_diag_yj
 
-            return(YB)
+            return(bY)
 
-        def YR(YB, diag_yj):
+        def RY(bY, diag_yj):
             """
             Caclculates absolute extensions in final demand
             """
-            YR = YB @ diag_yj
+            RY = bY @ diag_yj
 
-            return(YR)
+            return(RY)
 
         # is this function really needed?
         def IOT(Z, Y, W, E, R, M):
@@ -320,3 +320,20 @@ class Operations:
                    }
 
             return(IOT)
+    
+    def calculate_characterized(data):
+        
+        data.Cr_E = data.Cr_E_k @ data.E
+        data.Cr_M = data.Cr_M_k @ data.M
+        data.Cr_R = data.Cr_R_k @ data.R
+        data.Cr_W = data.Cr_W_k @ data.W
+        
+        data.Cr_EY = data.Cr_E_k @ data.EY
+        data.Cr_MY = data.Cr_M_k @ data.MY
+        data.Cr_RY = data.Cr_R_k @ data.RY
+        
+        data.Cr_tot_E = data.Cr_E.sum(axis=1) + data.Cr_EY.sum(axis=1)
+        data.Cr_tot_M = data.Cr_M.sum(axis=1) + data.Cr_MY.sum(axis=1)
+        data.Cr_tot_R = data.Cr_R.sum(axis=1) + data.Cr_RY.sum(axis=1)
+        
+        return(data)

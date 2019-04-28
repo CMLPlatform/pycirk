@@ -39,11 +39,18 @@ class Labels:
         list_of_some = labels.unique()
         return(list_of_some)
 
-    def get_unique_labels(self, list_of_labels):
-
+    def get_unique_labels(self, list_of_labels, for_units=True):
         organize = dict()
+
         for keys, labels in list_of_labels.items():
-            organize[keys] = self.list_of_something(labels)
+            if for_units is True:
+                organize[keys] = self.list_of_something(labels)
+            elif for_units is False:
+                if keys == "unit":
+                    organize[keys] = labels
+                else:
+                    organize[keys] = self.list_of_something(labels)
+            
 
         count = max(len(labels) for keys, labels in organize.items())
         organize["count"] = count
@@ -66,13 +73,14 @@ class Labels:
 
         labels.primary = self.get_unique_labels(labels.primary)
         labels.fin_dem = self.get_unique_labels(labels.fin_dem)
-        labels.emis = self.get_unique_labels(labels.emis)
-        labels.res = self.get_unique_labels(labels.res)
-        labels.mat = self.get_unique_labels(labels.mat)
-        labels.car_emis = self.get_unique_labels(labels.car_emis)
-        labels.car_res = self.get_unique_labels(labels.car_res)
-        labels.car_mat = self.get_unique_labels(labels.car_mat)
-        labels.car_prim = self.get_unique_labels(labels.car_prim)
+        
+        labels.emis = self.get_unique_labels(labels.emis, False)
+        labels.res = self.get_unique_labels(labels.res, False)
+        labels.mat = self.get_unique_labels(labels.mat, False)
+        labels.car_emis = self.get_unique_labels(labels.car_emis, False)
+        labels.car_res = self.get_unique_labels(labels.car_res, False)
+        labels.car_mat = self.get_unique_labels(labels.car_mat, False)
+        labels.car_prim = self.get_unique_labels(labels.car_prim, False)
 
         return(labels)
 
@@ -130,7 +138,7 @@ class Labels:
     def save_labels(self, data, directory):
 
         try:
-            self.get_labels(data["V"].T).to_csv(directory + "industry.csv",
+            self.get_labels(data["V"].T).to_csv(directory + "/industry.csv",
                                                 index=False)
         except Exception:
             pass
@@ -169,48 +177,24 @@ class Labels:
 
         # Relabel Main IOT elements
         data.Z = self.relabel(data.Z, cat.iloc[:, :4], cat)
-        # data.L = relabel(data.L, cat.iloc[:, :4], cat.iloc[:, :4])
-        # data.A = relabel(data.A, cat, cat)
         data.Y = self.relabel(data.Y, lb.fin_dem, cat)
-        # data.W = relabel(data.W, cat.iloc[:, :4], lb.primary)
-        data.w = self.relabel(data.w, cat, lb.primary)
+        data.W = self.relabel(data.W, cat.iloc[:, :4], lb.primary)
 
-        # Labeling final demand extensions' intensities
-        data.Ye = self.relabel(data.Ye, lb.fin_dem, lb.emis)
-        data.Yr = self.relabel(data.Yr, lb.fin_dem, lb.res)
-        data.Ym = self.relabel(data.Ym, lb.fin_dem, lb.mat)
+        # Labeling final demand extensions'
+        data.EY = self.relabel(data.EY, lb.fin_dem, lb.emis)
+        data.RY = self.relabel(data.RY, lb.fin_dem, lb.res)
+        data.MY = self.relabel(data.MY, lb.fin_dem, lb.mat)
 
-        # Inter-trans extensions' intensities
-        data.e = self.relabel(data.e, cat, lb.emis)
-        data.r = self.relabel(data.r, cat, lb.res)
-        data.m = self.relabel(data.m, cat, lb.mat)
-
-        # label q
-        # data.x = self.relabel(data.x, "x", cat)
-        # label balance verification
-        # ver_label = "balance (x_out/x_in) - % - 100=balanced - 0=NaN no values"
-        # data.ver_base = self.relabel(data.ver_base, ver_label, cat.iloc[:, :4])
-
-        # Relabel Inter-trans extensions
-#        data.E = self.relabel(data.E, cat.iloc[:, :4], lb.emis)
-#        data.R = self.relabel(data.R, cat.iloc[:, :4], lb.res)
-#        data.M = self.relabel(data.M, cat.iloc[:, :4], lb.mat)
+        # Inter-trans extensions' 
+        data.E = self.relabel(data.E, cat, lb.emis)
+        data.R = self.relabel(data.R, cat, lb.res)
+        data.M = self.relabel(data.M, cat, lb.mat)
 
         # Relabel characterization tables
         data.Cr_E_k = self.relabel(data.Cr_E_k, lb.emis, lb.car_emis)
         data.Cr_R_k = self.relabel(data.Cr_R_k, lb.res, lb.car_res)
         data.Cr_M_k = self.relabel(data.Cr_M_k, lb.mat, lb.car_mat)
         data.Cr_W_k = self.relabel(data.Cr_W_k, lb.primary, lb.car_prim)
-
-        # Labeling final demand extensions
-#        data.YE = self.relabel(data.YE, lb.fin_dem.iloc[:, :4], lb.emis)
-#        data.YR = self.relabel(data.YR, lb.fin_dem.iloc[:, :4], lb.res)
-#        data.YM = self.relabel(data.YM, lb.fin_dem.iloc[:, :4], lb.mat)
-
-        # Relabel characterized final demand extensions
-        # data.Cr_YE = self.relabel(data.Cr_YE, lb.fin_dem, lb.car_emis)
-        # data.Cr_YE = self.relabel(data.Cr_YR, lb.fin_dem, lb.car_res)
-        # data.Cr_YE = self.relabel(data.Cr_YM, lb.fin_dem, lb.car_mat)
 
         return(data)
 
@@ -244,3 +228,44 @@ class Labels:
         M = self.apply_labels(M, index_labels, axis=0)  # index
 
         return(M)
+
+    def identify_labels(self, M_name):
+        
+            # identifying colum and index labels
+        if self.country_labels is None:
+            reg_labels = self.region_labels
+        elif self.country_labels is not None:
+            reg_labels = self.country_labels
+    
+        if "Y" in M_name:
+            column_labels = self.Y_labels
+            row_labels = self.cat_labels
+        else:
+            column_labels = self.cat_labels
+            row_labels = self.cat_labels
+        
+        name = ""
+        
+        if "Cr" in M_name:
+            name = "Cr_"
+            M_name = M_name[2:]
+        
+        if any(True for l in M_name.lower() if l in ["e", "m", "r", "w"]):
+            name_2 = [l for l in ["e", "m", "r", "w"] if l in M_name.lower()][0].upper()
+            
+            
+            attr_name = name + name_2 + "_labels"
+            row_labels = eval("self." + attr_name)
+    
+        no_row_labs = row_labels.count
+        no_reg_labs = len(reg_labels)
+        no_col_labs = column_labels.count
+        
+        output = {"reg_labels": reg_labels,
+                  "g_labels": column_labels,
+                  "i_labels": row_labels,
+                  "no_i": no_row_labs,
+                  "no_g": no_col_labs,
+                  "no_reg": no_reg_labs}
+        
+        return(output)

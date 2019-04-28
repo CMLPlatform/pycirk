@@ -12,45 +12,43 @@ Scope: Modelling the Circular Economy in EEIO
 
 import numpy as np
 
-# Started doing some generalization work, but still in the process
-# I don't know whether it's worth the effort.
-# Maybe somebody else will want to give a crack at it
-
 
 def single_position(item, labels):
     """
     Takes a dataframe of the multiindex and identifies the position
     of the specified values
     """
-
+    
+    
     if item in ["All", "all", "ALL", np.nan]:
         coordinate = None
 
     else:
         try:
             if item in labels:
-                ref_labels = labels
+                ref_labels = labels.copy()
         except Exception:
             pass
 
         try:
             if item in labels.name:
-                ref_labels = labels.name
+                ref_labels = labels.name.copy()
             elif item in labels.synonym:
-                ref_labels = labels.synonym
+                ref_labels = labels.synonym.copy()
             elif item in labels.code:
-                ref_labels = labels.code
+                ref_labels = labels.code.copy()
         except Exception:
             pass
 
         try:
             if item in labels.characterization:
-                ref_labels = labels.characterization
+                ref_labels = labels.characterization.copy()
         except Exception:
             pass
-
+        
         coordinate = np.array([i for i, values in enumerate(ref_labels)
                               if item in values])
+
 
     return(coordinate)
 
@@ -69,7 +67,7 @@ def make_coord_array(cat_coord, reg_coord, no_countries, no_categories):
         while n in range(no_countries):
             g = cat_coord[0] + no_categories * n
             if "s" not in locals():
-                s = g
+                s = [g]
             else:
                 s = np.hstack([s, g])
             n = n+1

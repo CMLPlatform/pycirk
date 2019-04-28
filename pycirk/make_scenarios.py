@@ -37,6 +37,7 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     A = ops.IOT.A(data.Z, inv_diag_x_)
 
     diag_yj = np.diag(data.Y.sum(axis=0))
+    inv_diag_yj = ops.inv(diag_yj)
 
     data.A = counterfactual(scen_file, scen_no, A, "A", labels)
     data.Y = counterfactual(scen_file, scen_no, data.Y, "Y", labels)
@@ -45,38 +46,38 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     diag_x = np.diag(x)
     inv_diag_x = ops.inv(diag_x)
 
-    data.w = counterfactual(scen_file, scen_no, data.w, "w", labels)
+    data.W = counterfactual(scen_file, scen_no, data.W, "W", labels)
 
-    W = ops.IOT.R(data.w, diag_x)
-    data.W = counterfactual(scen_file, scen_no, W, "W", labels)
+    w = ops.IOT.B(data.W, inv_diag_x)
+    data.w = counterfactual(scen_file, scen_no, w, "w", labels)
 
     # Apply policy to intermediate extension coefficient matrices
-    data.e = counterfactual(scen_file, scen_no, data.e, "e", labels)
-    data.r = counterfactual(scen_file, scen_no, data.r, "r", labels)
-    data.m = counterfactual(scen_file, scen_no, data.m, "m", labels)
+    data.E = counterfactual(scen_file, scen_no, data.E, "E", labels)
+    data.R = counterfactual(scen_file, scen_no, data.R, "R", labels)
+    data.M = counterfactual(scen_file, scen_no, data.M, "M", labels)
 
     # Apply policy to intermediate extension matrices
-    E = ops.IOT.R(data.e, diag_x)
-    R = ops.IOT.R(data.r, diag_x)
-    M = ops.IOT.R(data.m, diag_x)
+    e = ops.IOT.B(data.E, diag_x)
+    r = ops.IOT.B(data.R, diag_x)
+    m = ops.IOT.B(data.M, diag_x)
 
-    data.E = counterfactual(scen_file, scen_no, E, "E", labels)
-    data.R = counterfactual(scen_file, scen_no, R, "R", labels)
-    data.M = counterfactual(scen_file, scen_no, M, "M", labels)
+    data.e = counterfactual(scen_file, scen_no, e, "e", labels)
+    data.r = counterfactual(scen_file, scen_no, r, "r", labels)
+    data.m = counterfactual(scen_file, scen_no, m, "m", labels)
 
     # Apply policy to  final demand extension coefficient matrices
-    data.Ye = counterfactual(scen_file, scen_no, data.Ye, "eY", labels)
-    data.Yr = counterfactual(scen_file, scen_no, data.Yr, "rY", labels)
-    data.Ym = counterfactual(scen_file, scen_no, data.Ym, "mY", labels)
+    data.EY = counterfactual(scen_file, scen_no, data.EY, "EY", labels)
+    data.RY = counterfactual(scen_file, scen_no, data.RY, "RY", labels)
+    data.MY = counterfactual(scen_file, scen_no, data.MY, "MY", labels)
 
     # Apply policy to final demand extension matrices
-    YE = ops.IOT.YR(data.Ye, diag_yj)
-    YR = ops.IOT.YR(data.Yr, diag_yj)
-    YM = ops.IOT.YR(data.Ym, diag_yj)
+    eY = ops.IOT.bY(data.EY, inv_diag_yj)
+    rY = ops.IOT.bY(data.RY, inv_diag_yj)
+    mY = ops.IOT.bY(data.MY, inv_diag_yj)
 
-    data.YE = counterfactual(scen_file, scen_no, YE, "EY", labels)
-    data.YR = counterfactual(scen_file, scen_no, YR, "RY", labels)
-    data.YM = counterfactual(scen_file, scen_no, YM, "MY", labels)
+    data.eY = counterfactual(scen_file, scen_no, eY, "eY", labels)
+    data.rY = counterfactual(scen_file, scen_no, rY, "rY", labels)
+    data.mY = counterfactual(scen_file, scen_no, mY, "mY", labels)
 
     # Scenario
     data.L = ops.IOT.L(data.A)  # L from S and Y modified
@@ -88,15 +89,15 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
 
     data.Z = ops.IOT.Z(data.A, diag_x)
 
-    data.w = ops.IOT.B(data.W, inv_diag_x)  # primary inputs coef
-    data.e = ops.IOT.B(data.E, inv_diag_x)  # emissions ext coef
-    data.r = ops.IOT.B(data.R, inv_diag_x)  # resource ext coef
-    data.m = ops.IOT.B(data.M, inv_diag_x)  # material ext coef
+    data.W = ops.IOT.R(data.w, diag_x)  # primary inputs coef
+    data.E = ops.IOT.R(data.e, diag_x)  # emissions ext coef
+    data.R = ops.IOT.R(data.r, diag_x)  # resource ext coef
+    data.M = ops.IOT.R(data.m, diag_x)  # material ext coef
 
-    data.Ye = ops.IOT.B(data.YE, inv_diag_yj)  # emissions ext FD coef
-    data.Yr = ops.IOT.B(data.YR, inv_diag_yj)  # resource ext FD coef
-    data.Ym = ops.IOT.B(data.YM, inv_diag_yj)  # material ext FD coef
-
+    data.EY = ops.IOT.RY(data.eY, diag_yj)  # emissions ext FD coef
+    data.RY = ops.IOT.RY(data.rY, diag_yj)  # resource ext FD coef
+    data.MY = ops.IOT.RY(data.mY, diag_yj)  # material ext FD coef
+    
     return(data)
 
 
@@ -112,15 +113,15 @@ def counterfactual(scen_file, scen_no, M, M_name, labels):
 
     if type(scen_no) is int:
         scen_no = "scenario_" + str(scen_no)
-
+        
     elif scen_no.startswith("scenario_"):
         pass
     else:
         raise KeyError("only integer or explicit name (scenario_x)" +
                        "are allowed")
+        
 
-    scenario = pd.read_excel(scen_file, sheet_name=scen_no, header=1,
-                             index=None)
+    scenario = pd.read_excel(scen_file, sheet_name=scen_no, header=1, index=None)
 
     if scenario["matrix"].isnull().values.all():
         matrix = M
@@ -309,28 +310,14 @@ def make_new(fltr_policies, M, M_name, labels):
 
     M = np.array(M)
 
-    # identifying colum and index labels
-    if labels.country_labels is None:
-        reg_labels = labels.region_labels
-    elif labels.country_labels is not None:
-        reg_labels = labels.country_labels
-
-    if "Y" in M_name:
-        column_labels = labels.Y_labels
-        row_labels = labels.cat_labels
-    else:
-        column_labels = labels.cat_labels
-        row_labels = labels.cat_labels
+    spec_labels = labels.identify_labels(M_name)
     
-    if any(True for l in M_name.lower() if l in ["e", "m", "r", "w"]):
-        
-        name = [l for l in ["e", "m", "r", "w"] if l in M_name.lower()][0]
-        attr_name = name.upper() + "_labels"
-        row_labels = getattr(labels, attr_name)
-
-    no_row_labs = row_labels.count
-    no_reg_labs = len(reg_labels)
-    no_col_labs = column_labels.count
+    reg_labels = spec_labels["reg_labels"]
+    row_labels = spec_labels["i_labels"]
+    column_labels = spec_labels["g_labels"]
+    no_row_labs = spec_labels["no_i"]
+    no_col_labs = spec_labels["no_g"]
+    no_reg_labs = spec_labels["no_reg"]
     
 
     if len(fltr_policies) == 0:

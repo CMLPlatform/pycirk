@@ -13,164 +13,89 @@ import warnings
 import pandas as pd
 from pandas import DataFrame as df
 from pandas import MultiIndex as mi
-from pycirk import positions
+import numpy as np
+from pycirk.positions import make_coord_array as coord
+from pycirk.positions import single_position as sing_pos
+from pycirk.fundamental_operations import Operations as ops
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
-class Results:
+def iter_thru_for_results(data, analysis_specs, scen_no, labels):
     """
-    Launches analysis, collects and assembles all results
+    filter policy interventions from scenario file according to specified
+    matrix and return the respective matrix with it
+    Output only specified (see scenario.xls) results to be analysed
     """
-    def __init__(self, scen_file, make_secondary, exists):
+    results = []
 
-        sheet_names = self.scen_file.sheet_names
-        self.sheets = [f for f in sheet_names if f.startswith("scenario_")]
-        self.analysis_sheet = pd.read_excel(self.scen_file, "analyse", header=1)
-        self.exists = exists
-
-    def one_scen(self, IOT, scen_no=None, results_only=True):
-        """
-        Display results for baseline or specific scenario
-        """
-        results = self.iter_thru_for_results(IOT)
-        if results_only is True:
-            sc = results
-            # return(sc)
-            if scen_no not in [0, "baseline", "base", None]:
-                sc.columns = ["sc_" + str(scen_no)]
-            else:
-                sc.columns = ["baseline"]
-
-        elif results_only is False:
-            if scen_no not in [0, "baseline", "base", None]:
-                results.columns = ["sc_" + str(scen_no)]
-                s_nam = "scenario_" + str(scen_no)
-                sc["settings"] = pd.read_excel(self.scen_file, s_nam, header=1)
-            else:
-                results.columns = ["baseline"]
-            sc["results"] = results
-
-        return(sc)
-
-    def retrieve_specified_data(self, data, spec_row):
-        """
-        Separate, collect and rename results for base and scenarios according
-        to specifications under th sheet "analysis" in scenarios.xls
-
-        data = any IOT table
-        spec_row = row in the scenarios sheet specifying settings
-        """
-
-        pd.options.display.float_format = '{:,.4f}'.format
-
-        D = df()
-
-        M_name = spec_row["matrix"]  # matrix of reference
-        o_p = spec_row["o_p"]  # category of exiobase to analyse (rows)
-        o_r = spec_row["o_r"]  # region of exiobase to analyse (rows)
-
-        d_p = spec_row["d_p"]  # baseline cat. for comparison (columns)
-        d_r = spec_row["d_r"]  # baseline reg. for comparison (columns)
-
-        if pd.isna(o_p) is True:
-            o_p = "All"
-
-        if pd.isna(o_r) is True:
-            o_r = "All"
-
-        if pd.isna(d_p) is True:
-            d_p = "All"
-
-        if pd.isna(d_r) is True:
-            d_r = "All"
-
-        # doing some general checking of the inputs
-        if "Y" in M_name:
-            if any(item in d_p for item in ["I_", "F_"]) is False:
-                if pd.isna(d_p) is True:
-                    raise ValueError("If the matrix concerns final demand" +
-                                     "d_p can only be on of Final Dem. cat." +
-                                     "(e.g. F_HOUS or I_EXP). You selected "
-                                     + d_p)
-                else:
-                    d_p = "All"
-        M = data[M_name]  # Call specific matrix from which to select
-
-# =============================================================================
-#          getting the labels so I can look through them later
-#          Note to self, this is the second or third time I repeat these
-#          lines "ind" and "col" maybe I should just write a function for it
-# =============================================================================
-        ind = M.index.to_frame(False)
-        col = M.columns.to_frame(False)
-
-        o = positions(ind, o_r, o_p)  # finding the positions
-        d = positions(col, d_r, d_p)
-        key = [M_name, o_p, o_r, d_p, d_r]  # make labels for results
-
-        if o.size == 0:
-            select = M.iloc[:, d]
-        elif d.size == 0:
-            select = M.iloc[o, :]
+    for l, v in analysis_specs.iterrows():
+        res = retrieve_specified_data(data, v, labels)
+        if len(results) == 0:
+            results = res
         else:
-            select = M.iloc[o, d]
+            results = pd.concat([results, res], axis=0)
+            
+    if scen_no not in [0, "baseline", "base", None]:
+        results.columns = ["sc_" + str(scen_no)]
+    else:
+        results.columns = ["baseline"]
 
-# =============================================================================
-#         This part sums the results. If I didn't sum them, I couldn't
-#         provide I nice summary at the end. If the user wants to look at
-#         disaggregated data, they can just output the full tables and
-#         look through them themselves
-# =============================================================================
 
-        select = df([select.values.sum()])
+    return(results)
 
-        #  relabelling
-        try:
-            # this is added to make sure that results concerning coefficients
-            # show the correct unit
-            # if the unit is not specified then it will place an empty str
-            units = ind["unit"].iloc[o].drop_duplicates().values.item(0)
-            if M_name.startswith(("R", "A")):
-                if units != "":
-                    units = units + "/M.EUR"
-                else:
-                    pass
-            else:
-                pass
+def retrieve_specified_data(data, spec_row, labels):
+    """
+    Separate, collect and rename results for base and scenarios according
+    to specifications under th sheet "analysis" in scenarios.xls
 
-            key.append(units)
+    data = any IOT table
+    spec_row = row in the scenarios sheet specifying settings
+    """
 
-        except Exception:
-            key.append("")
+    pd.options.display.float_format = '{:,.4f}'.format
 
-        key_names = ["matrix", "o_category", "o_region", "d_category",
-                     "d_region", "unit"]
+    M_name = spec_row.matrix  # matrix of reference
+    
+    if "Cr" in M_name:
+        data = ops.calculate_characterized(data)
+    
+    M = np.array(data[M_name])  # Call specific matrix from which to select        
 
-        key = df(str(l) for l in key)  # just labelling
+    spec_labels = labels.identify_labels(M_name)
+    
+    reg_labels = spec_labels["reg_labels"]
+    row_labels = spec_labels["i_labels"]
+    column_labels = spec_labels["g_labels"]
+    no_row_labs = spec_labels["no_i"]
+    no_col_labs = spec_labels["no_g"]
+    no_reg_labs = spec_labels["no_reg"]
+    
+    i_cat = spec_row.o_p  # rows
+    i_reg = spec_row.o_r
 
-        select = select.reset_index(drop=True)
-        select.columns = mi.from_arrays(key.values, names=key_names)
+    g_cat = spec_row.d_p  # columns
+    g_reg = spec_row.d_r  
 
-        if D.size == 0:
-            D = select
-        else:
-            D = pd.concat([D, select], axis=1)
+    cat_o = sing_pos(i_cat, row_labels)
+    reg_o = sing_pos(i_reg, reg_labels)
+    # Column items (g) => Consumption / manufacturing activity
+    cat_d = sing_pos(g_cat, column_labels)
+    reg_d = sing_pos(g_reg, reg_labels)
 
-        return(D)
+    # Identify coordinates
+    i = coord(cat_o, reg_o, no_reg_labs, no_row_labs)
+    g = coord(cat_d, reg_d, no_reg_labs, no_col_labs)
 
-    def iter_thru_for_results(self, data):
-        """
-        filter policy interventions from scenario file according to specified
-        matrix and return the respective matrix with it
-        Output only specified (see scenario.xls) results to be analysed
-        """
-        results = df()
+    if "tot" in M_name:
+        select = df([M[i].sum()])
+    else:
+        select = df([M[np.ix_(i, g)].sum()])
 
-        for l, v in self.analysis_sheet.iterrows():
-            res = self.retrieve_specified_data(data, v)
-            if results.size == 0:
-                results = res
-            else:
-                results = pd.concat([results, res], axis=1)
+    key_names = ["matrix", "i_category", "i_region", "g_category",
+                 "g_region", "unit"]
+        
+    index_label = [M_name, i_cat, i_reg, g_cat, g_reg, str(row_labels.unit[cat_o])]
+    
+    select.index = mi.from_tuples([index_label], names=key_names)
 
-        return(results)
+    return(select)

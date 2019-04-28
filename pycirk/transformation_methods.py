@@ -26,11 +26,11 @@ class Transform:
         self.Y = SUTs["Y"]  # Final demand
         self.W = SUTs["W"]  # Primary input
         self.E = SUTs["E"]  # emissions extension
-        self.YE = SUTs["YE"]  # emissions extension final demand
+        self.EY = SUTs["YE"]  # emissions extension final demand
         self.R = SUTs["R"]  # Resources extension
-        self.YR = SUTs["YR"]  # Resources extension final demand
+        self.RY = SUTs["YR"]  # Resources extension final demand
         self.M = SUTs["M"]  # Materials extension
-        self.YM = SUTs["YM"]  # Materials extension final demand
+        self.MY = SUTs["YM"]  # Materials extension final demand
 
         self.Cr_E_k = SUTs["Cr_E_k"]  # Charact coefficients emissions
         self.Cr_R_k = SUTs["Cr_R_k"]  # Charact coefficients resources
@@ -79,32 +79,35 @@ class Transform:
 
         e = met.B(self.E, T, self.inv_diag_q)  # emis coef. matrix
         del(self.E)
+        E = met.R(e, np.diag(x))
 
         r = met.B(self.R, T, self.inv_diag_q)  # resour coef. matrix
         del(self.R)
-
+        R = met.R(r, np.diag(x))
+        
         m = met.B(self.M, T, self.inv_diag_q)  # mater coef. matrix
         del(self.M)
+        M = met.R(m, np.diag(x))
 
         x = ops.IOT.x_IAy(L, self.yi)  # total product ouput
 
         A = ops.IOT.A(Z, self.inv_diag_q)
 
-        Ye = ops.IOT.YB(self.YE, self.inv_diag_yj)
-        Yr = ops.IOT.YB(self.YR, self.inv_diag_yj)
-        Ym = ops.IOT.YB(self.YM, self.inv_diag_yj)
+#        eY = ops.IOT.bY(self.EY, self.inv_diag_yj)
+#        rY = ops.IOT.bY(self.RY, self.inv_diag_yj)
+#        mY = ops.IOT.bY(self.MY, self.inv_diag_yj)
 
         IOT = {"Y": self.Y,
                "L": L,
                "Z": Z,
                "A": A,
-               "w": w,
-               "e": e,
-               "Ye": Ye,
-               "r": r,
-               "Yr": Yr,
-               "m": m,
-               "Ym": Ym,
+               "W": W,
+               "E": E,
+               "EY": self.EY,
+               "R": R,
+               "RY": self.RY,
+               "M": M,
+               "MY": self.MY,
                "Cr_E_k": self.Cr_E_k,
                "Cr_M_k": self.Cr_M_k,
                "Cr_R_k": self.Cr_R_k,
@@ -136,32 +139,35 @@ class Transform:
 
         e = met.B(self.E, D, self.inv_diag_g)  # emis coef. matrix
         del(self.E)
+        E = met.R(e, np.diag(x))
 
         r = met.B(self.R, D, self.inv_diag_g)  # resour coef. matrix
         del(self.R)
+        R = met.R(r, np.diag(x))
 
         m = met.B(self.M, D, self.inv_diag_g)  # mater coef. matrix
         del(self.M)
+        M = met.R(m, np.diag(x))
 
         x = ops.IOT.x_IAy(L, self.yi)  # total product ouput
 
         A = ops.IOT.A(Z, self.inv_diag_q)
 
-        Ye = ops.IOT.YB(self.YE, self.inv_diag_yj)
-        Yr = ops.IOT.YB(self.YR, self.inv_diag_yj)
-        Ym = ops.IOT.YB(self.YM, self.inv_diag_yj)
+#        eY = ops.IOT.bY(self.EY, self.inv_diag_yj)
+#        rY = ops.IOT.bY(self.RY, self.inv_diag_yj)
+#        mY = ops.IOT.bY(self.MY, self.inv_diag_yj)
 
         IOT = {"Y": self.Y,
                "L": L,
                "Z": Z,
                "A": A,
-               "w": w,
-               "e": e,
-               "Ye": Ye,
-               "r": r,
-               "Yr": Yr,
-               "m": m,
-               "Ym": Ym,
+               "W": W,
+               "E": E,
+               "EY": self.EY,
+               "R": R,
+               "RY": self.RY,
+               "M": M,
+               "MY": self.MY,
                "Cr_E_k": self.Cr_E_k,
                "Cr_M_k": self.Cr_M_k,
                "Cr_R_k": self.Cr_R_k,

@@ -263,3 +263,11 @@ class Settings:
         scenario = self.lb.relabel_to_save(scenario, self.method, "pycirk//labels/")
 
         return(scenario)
+    
+    
+    
+    def load_results_params(self, baseline=False):
+        
+        res = pd.read_excel(self.scenario_file(), sheet_name="analyse", header=3)
+        
+        return(res)
