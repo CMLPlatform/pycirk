@@ -18,8 +18,7 @@ def single_position(item, labels):
     Takes a dataframe of the multiindex and identifies the position
     of the specified values
     """
-    
-    
+
     if item in ["All", "all", "ALL", np.nan]:
         coordinate = None
 
@@ -45,10 +44,9 @@ def single_position(item, labels):
                 ref_labels = labels.characterization.copy()
         except Exception:
             pass
-        
+
         coordinate = np.array([i for i, values in enumerate(ref_labels)
                               if item in values])
-
 
     return(coordinate)
 
@@ -77,5 +75,22 @@ def make_coord_array(cat_coord, reg_coord, no_countries, no_categories):
     else:
         s = np.split(s, no_countries)
         s = np.take(s, reg_coord, axis=0)[0]
+
+    return(s)
+
+
+def make_coord_array_for_make_sec(coordinates, no_countries, no_categories):
+
+    n = 0
+    nn = 0
+    while n in range(len(coordinates)):
+        while nn in range(no_countries):
+            g = coordinates + no_categories * nn
+            if "s" not in locals():
+                s = g
+            else:
+                s = np.concatenate([s, g])
+            nn = nn+1
+        n = n+1
 
     return(s)

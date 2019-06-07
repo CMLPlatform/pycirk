@@ -50,30 +50,27 @@ class Labels:
                     organize[keys] = labels
                 else:
                     organize[keys] = self.list_of_something(labels)
-            
 
         count = max(len(labels) for keys, labels in organize.items())
         organize["count"] = count
-        
+
         return(Munch(organize))
 
     def organize_unique_labels(self, directory):
 
         labels = self.load_labels(directory)
-        
+
         for l, v in labels.items():
             labels[l] = Munch(v)
-        
+
         labels = Munch(labels)
-            
-        try:
-            labels.main_cat = self.get_unique_labels(labels.prod)
-        except Exception:
-            labels.main_cat = self.get_unique_labels(labels.ind)
+
+        labels.main_cat = self.get_unique_labels(labels.prod)
+        #labels.main_cat = self.get_unique_labels(labels.ind)
 
         labels.primary = self.get_unique_labels(labels.primary)
         labels.fin_dem = self.get_unique_labels(labels.fin_dem)
-        
+
         labels.emis = self.get_unique_labels(labels.emis, False)
         labels.res = self.get_unique_labels(labels.res, False)
         labels.mat = self.get_unique_labels(labels.mat, False)
@@ -185,7 +182,7 @@ class Labels:
         data.RY = self.relabel(data.RY, lb.fin_dem, lb.res)
         data.MY = self.relabel(data.MY, lb.fin_dem, lb.mat)
 
-        # Inter-trans extensions' 
+        # Inter-trans extensions'
         data.E = self.relabel(data.E, cat, lb.emis)
         data.R = self.relabel(data.R, cat, lb.res)
         data.M = self.relabel(data.M, cat, lb.mat)
@@ -213,7 +210,6 @@ class Labels:
 
         return(matrix)
 
-
     def relabel(self, M, column_labels, index_labels):
         """
         Processes apply_labels and apply _names together
@@ -230,42 +226,42 @@ class Labels:
         return(M)
 
     def identify_labels(self, M_name):
-        
+
             # identifying colum and index labels
         if self.country_labels is None:
             reg_labels = self.region_labels
         elif self.country_labels is not None:
             reg_labels = self.country_labels
-    
+
         if "Y" in M_name:
             column_labels = self.Y_labels
             row_labels = self.cat_labels
         else:
             column_labels = self.cat_labels
             row_labels = self.cat_labels
-        
+
         name = ""
-        
+
         if "Cr" in M_name:
             name = "Cr_"
             M_name = M_name[2:]
-        
+
         if any(True for l in M_name.lower() if l in ["e", "m", "r", "w"]):
             name_2 = [l for l in ["e", "m", "r", "w"] if l in M_name.lower()][0].upper()
-            
-            
+
+
             attr_name = name + name_2 + "_labels"
             row_labels = eval("self." + attr_name)
-    
+
         no_row_labs = row_labels.count
         no_reg_labs = len(reg_labels)
         no_col_labs = column_labels.count
-        
+
         output = {"reg_labels": reg_labels,
                   "g_labels": column_labels,
                   "i_labels": row_labels,
                   "no_i": no_row_labs,
                   "no_g": no_col_labs,
                   "no_reg": no_reg_labs}
-        
+
         return(output)

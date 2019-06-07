@@ -34,14 +34,14 @@ def iter_thru_for_results(data, analysis_specs, scen_no, labels):
             results = res
         else:
             results = pd.concat([results, res], axis=0)
-            
+
     if scen_no not in [0, "baseline", "base", None]:
         results.columns = ["sc_" + str(scen_no)]
     else:
         results.columns = ["baseline"]
 
-
     return(results)
+
 
 def retrieve_specified_data(data, spec_row, labels):
     """
@@ -55,29 +55,101 @@ def retrieve_specified_data(data, spec_row, labels):
     pd.options.display.float_format = '{:,.4f}'.format
 
     M_name = spec_row.matrix  # matrix of reference
-    
-    if "Cr" in M_name:
-        data = ops.calculate_characterized(data)
-    
-    M = np.array(data[M_name])  # Call specific matrix from which to select        
+
+#    if "Cr" in M_name:
+#        data = ops.calculate_characterized(data)
+
+    M = np.array(data[M_name])  # Call specific matrix from which to select
 
     spec_labels = labels.identify_labels(M_name)
-    
+
     reg_labels = spec_labels["reg_labels"]
     row_labels = spec_labels["i_labels"]
     column_labels = spec_labels["g_labels"]
     no_row_labs = spec_labels["no_i"]
     no_col_labs = spec_labels["no_g"]
     no_reg_labs = spec_labels["no_reg"]
-    
+
     i_cat = spec_row.o_p  # rows
     i_reg = spec_row.o_r
 
     g_cat = spec_row.d_p  # columns
-    g_reg = spec_row.d_r  
+    g_reg = spec_row.d_r
 
+    print(i_cat, len(row_labels))
     cat_o = sing_pos(i_cat, row_labels)
     reg_o = sing_pos(i_reg, reg_labels)
+    # Column items (g) => Consumption / manufacturing activity
+    cat_d = sing_pos(g_cat, column_labels)
+    reg_d = sing_pos(g_reg, reg_labels)
+
+    # Identify coordinates
+    i = coord(cat_o, reg_o, no_reg_labs, no_row_labs)
+    g = coord(cat_d, reg_d, no_reg_labs, no_col_labs)
+
+    if "tot" in M_name:
+        print("here")
+        select = df([M[i].sum()])
+    else:
+        select = df([M[np.ix_(i, g)].sum()])
+
+    print(select)
+
+    key_names = ["matrix", "i_category", "i_region", "g_category",
+                 "g_region", "unit"]
+
+    try:
+        unit = str(row_labels.unit[cat_o].iloc[0])
+    except Exception:
+        unit = str(row_labels.unit[cat_o])
+
+    print(i)
+    print(len(g))
+    print(unit)
+
+    index_label = [M_name, i_cat, i_reg, g_cat, g_reg, unit]
+
+    select.index = mi.from_tuples([index_label], names=key_names)
+
+    return(select)
+
+def SUTs_retrieve_specified_data(data, spec_row, labels):
+    """
+    Separate, collect and rename results for base and scenarios according
+    to specifications under th sheet "analysis" in scenarios.xls
+
+    data = any IOT table
+    spec_row = row in the scenarios sheet specifying settings
+    """
+
+    pd.options.display.float_format = '{:,.4f}'.format
+
+    M_name = spec_row.matrix  # matrix of reference
+
+    if "Cr" in M_name:
+        data = ops.calculate_characterized(data)
+
+    M = np.array(data[M_name])  # Call specific matrix from which to select
+
+    spec_labels = labels.identify_labels(M_name)
+
+    reg_labels = spec_labels["reg_labels"]
+    row_labels = spec_labels["i_labels"]
+    column_labels = spec_labels["g_labels"]
+    no_row_labs = spec_labels["no_i"]
+    no_col_labs = spec_labels["no_g"]
+    no_reg_labs = spec_labels["no_reg"]
+
+    i_cat = spec_row.o_p  # rows
+    i_reg = spec_row.o_r
+
+    g_cat = spec_row.d_p  # columns
+    g_reg = spec_row.d_r
+
+    print(i_cat, len(row_labels))
+    cat_o = sing_pos(i_cat, row_labels)
+    reg_o = sing_pos(i_reg, reg_labels)
+
     # Column items (g) => Consumption / manufacturing activity
     cat_d = sing_pos(g_cat, column_labels)
     reg_d = sing_pos(g_reg, reg_labels)
@@ -93,9 +165,9 @@ def retrieve_specified_data(data, spec_row, labels):
 
     key_names = ["matrix", "i_category", "i_region", "g_category",
                  "g_region", "unit"]
-        
+
     index_label = [M_name, i_cat, i_reg, g_cat, g_reg, str(row_labels.unit[cat_o])]
-    
+
     select.index = mi.from_tuples([index_label], names=key_names)
 
     return(select)

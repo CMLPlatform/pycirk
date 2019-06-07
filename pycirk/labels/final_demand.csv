@@ -1,15 +1,344 @@
-region,code,name,synonym,unit
-EU,y01,Final consumption expenditure by households,F_HOUS,M.EUR
-EU,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
-EU,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
-EU,y04,Gross fixed capital formation,I_GFCF,M.EUR
-EU,y05.a,Changes in inventories,I_CHIN,M.EUR
-EU,y05.b,Changes in valuables,I_CHVA,M.EUR
-EU,y06,Export,I_EXP,M.EUR
-ROW,y01,Final consumption expenditure by households,F_HOUS,M.EUR
-ROW,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
-ROW,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
-ROW,y04,Gross fixed capital formation,I_GFCF,M.EUR
-ROW,y05.a,Changes in inventories,I_CHIN,M.EUR
-ROW,y05.b,Changes in valuables,I_CHVA,M.EUR
-ROW,y06,Export,I_EXP,M.EUR
+region,country_code,country_name,CountryGroup,CountryGroupName,code,name,synonym,unit
+EU,AT,Austria,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,AT,Austria,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,AT,Austria,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,AT,Austria,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,AT,Austria,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,AT,Austria,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,AT,Austria,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,BE,Belgium,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,BE,Belgium,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,BE,Belgium,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,BE,Belgium,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,BE,Belgium,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,BE,Belgium,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,BE,Belgium,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,BG,Bulgaria,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,BG,Bulgaria,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,BG,Bulgaria,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,BG,Bulgaria,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,BG,Bulgaria,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,BG,Bulgaria,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,BG,Bulgaria,Europe,WE,y06,Export,I_EXP,M.EUR
+ROW,CY,Cyprus,Middle East,WM,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,CY,Cyprus,Middle East,WM,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,CY,Cyprus,Middle East,WM,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,CY,Cyprus,Middle East,WM,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,CY,Cyprus,Middle East,WM,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,CY,Cyprus,Middle East,WM,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,CY,Cyprus,Middle East,WM,y06,Export,I_EXP,M.EUR
+EU,CZ,Czech Republic,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,CZ,Czech Republic,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,CZ,Czech Republic,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,CZ,Czech Republic,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,CZ,Czech Republic,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,CZ,Czech Republic,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,CZ,Czech Republic,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,DE,Germany,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,DE,Germany,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,DE,Germany,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,DE,Germany,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,DE,Germany,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,DE,Germany,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,DE,Germany,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,DK,Denmark,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,DK,Denmark,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,DK,Denmark,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,DK,Denmark,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,DK,Denmark,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,DK,Denmark,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,DK,Denmark,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,EE,Estonia,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,EE,Estonia,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,EE,Estonia,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,EE,Estonia,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,EE,Estonia,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,EE,Estonia,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,EE,Estonia,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,ES,Spain,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,ES,Spain,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,ES,Spain,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,ES,Spain,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,ES,Spain,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,ES,Spain,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,ES,Spain,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,FI,Finland,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,FI,Finland,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,FI,Finland,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,FI,Finland,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,FI,Finland,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,FI,Finland,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,FI,Finland,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,FR,France,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,FR,France,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,FR,France,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,FR,France,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,FR,France,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,FR,France,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,FR,France,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,GR,Greece,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,GR,Greece,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,GR,Greece,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,GR,Greece,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,GR,Greece,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,GR,Greece,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,GR,Greece,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,HR,Croatia,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,HR,Croatia,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,HR,Croatia,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,HR,Croatia,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,HR,Croatia,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,HR,Croatia,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,HR,Croatia,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,HU,Hungary,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,HU,Hungary,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,HU,Hungary,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,HU,Hungary,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,HU,Hungary,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,HU,Hungary,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,HU,Hungary,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,IE,Ireland,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,IE,Ireland,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,IE,Ireland,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,IE,Ireland,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,IE,Ireland,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,IE,Ireland,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,IE,Ireland,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,IT,Italy,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,IT,Italy,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,IT,Italy,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,IT,Italy,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,IT,Italy,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,IT,Italy,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,IT,Italy,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,LT,Lithuania,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,LT,Lithuania,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,LT,Lithuania,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,LT,Lithuania,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,LT,Lithuania,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,LT,Lithuania,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,LT,Lithuania,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,LU,Luxembourg,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,LU,Luxembourg,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,LU,Luxembourg,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,LU,Luxembourg,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,LU,Luxembourg,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,LU,Luxembourg,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,LU,Luxembourg,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,LV,Latvia,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,LV,Latvia,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,LV,Latvia,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,LV,Latvia,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,LV,Latvia,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,LV,Latvia,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,LV,Latvia,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,MT,Malta,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,MT,Malta,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,MT,Malta,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,MT,Malta,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,MT,Malta,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,MT,Malta,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,MT,Malta,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,NL,Netherlands,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,NL,Netherlands,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,NL,Netherlands,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,NL,Netherlands,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,NL,Netherlands,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,NL,Netherlands,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,NL,Netherlands,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,PL,Poland,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,PL,Poland,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,PL,Poland,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,PL,Poland,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,PL,Poland,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,PL,Poland,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,PL,Poland,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,PT,Portugal,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,PT,Portugal,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,PT,Portugal,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,PT,Portugal,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,PT,Portugal,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,PT,Portugal,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,PT,Portugal,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,RO,Romania,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,RO,Romania,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,RO,Romania,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,RO,Romania,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,RO,Romania,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,RO,Romania,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,RO,Romania,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,SE,Sweden,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,SE,Sweden,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,SE,Sweden,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,SE,Sweden,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,SE,Sweden,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,SE,Sweden,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,SE,Sweden,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,SI,Slovenia,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,SI,Slovenia,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,SI,Slovenia,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,SI,Slovenia,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,SI,Slovenia,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,SI,Slovenia,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,SI,Slovenia,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,SK,Slovakia,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,SK,Slovakia,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,SK,Slovakia,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,SK,Slovakia,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,SK,Slovakia,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,SK,Slovakia,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,SK,Slovakia,Europe,WE,y06,Export,I_EXP,M.EUR
+EU,GB,United Kingdom,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,GB,United Kingdom,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,GB,United Kingdom,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,GB,United Kingdom,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,GB,United Kingdom,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,GB,United Kingdom,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,GB,United Kingdom,Europe,WE,y06,Export,I_EXP,M.EUR
+ROW,US,United States,America,WL,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,US,United States,America,WL,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,US,United States,America,WL,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,US,United States,America,WL,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,US,United States,America,WL,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,US,United States,America,WL,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,US,United States,America,WL,y06,Export,I_EXP,M.EUR
+ROW,JP,Japan,Asia and Pacific,WA,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,JP,Japan,Asia and Pacific,WA,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,JP,Japan,Asia and Pacific,WA,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,JP,Japan,Asia and Pacific,WA,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,JP,Japan,Asia and Pacific,WA,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,JP,Japan,Asia and Pacific,WA,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,JP,Japan,Asia and Pacific,WA,y06,Export,I_EXP,M.EUR
+ROW,CN,China,Asia and Pacific,WA,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,CN,China,Asia and Pacific,WA,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,CN,China,Asia and Pacific,WA,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,CN,China,Asia and Pacific,WA,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,CN,China,Asia and Pacific,WA,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,CN,China,Asia and Pacific,WA,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,CN,China,Asia and Pacific,WA,y06,Export,I_EXP,M.EUR
+ROW,CA,Canada,America,WL,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,CA,Canada,America,WL,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,CA,Canada,America,WL,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,CA,Canada,America,WL,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,CA,Canada,America,WL,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,CA,Canada,America,WL,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,CA,Canada,America,WL,y06,Export,I_EXP,M.EUR
+ROW,KR,South Korea,Asia and Pacific,WA,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,KR,South Korea,Asia and Pacific,WA,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,KR,South Korea,Asia and Pacific,WA,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,KR,South Korea,Asia and Pacific,WA,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,KR,South Korea,Asia and Pacific,WA,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,KR,South Korea,Asia and Pacific,WA,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,KR,South Korea,Asia and Pacific,WA,y06,Export,I_EXP,M.EUR
+ROW,BR,Brazil,America,WL,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,BR,Brazil,America,WL,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,BR,Brazil,America,WL,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,BR,Brazil,America,WL,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,BR,Brazil,America,WL,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,BR,Brazil,America,WL,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,BR,Brazil,America,WL,y06,Export,I_EXP,M.EUR
+ROW,IN,India,Asia and Pacific,WA,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,IN,India,Asia and Pacific,WA,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,IN,India,Asia and Pacific,WA,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,IN,India,Asia and Pacific,WA,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,IN,India,Asia and Pacific,WA,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,IN,India,Asia and Pacific,WA,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,IN,India,Asia and Pacific,WA,y06,Export,I_EXP,M.EUR
+ROW,MX,Mexico,America,WL,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,MX,Mexico,America,WL,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,MX,Mexico,America,WL,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,MX,Mexico,America,WL,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,MX,Mexico,America,WL,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,MX,Mexico,America,WL,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,MX,Mexico,America,WL,y06,Export,I_EXP,M.EUR
+EU,RU,Russia,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,RU,Russia,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,RU,Russia,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,RU,Russia,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,RU,Russia,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,RU,Russia,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,RU,Russia,Europe,WE,y06,Export,I_EXP,M.EUR
+ROW,AU,Australia,Asia and Pacific,WA,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,AU,Australia,Asia and Pacific,WA,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,AU,Australia,Asia and Pacific,WA,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,AU,Australia,Asia and Pacific,WA,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,AU,Australia,Asia and Pacific,WA,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,AU,Australia,Asia and Pacific,WA,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,AU,Australia,Asia and Pacific,WA,y06,Export,I_EXP,M.EUR
+EU,CH,Switzerland,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,CH,Switzerland,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,CH,Switzerland,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,CH,Switzerland,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,CH,Switzerland,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,CH,Switzerland,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,CH,Switzerland,Europe,WE,y06,Export,I_EXP,M.EUR
+ROW,TR,Turkey,Middle East,WM,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,TR,Turkey,Middle East,WM,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,TR,Turkey,Middle East,WM,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,TR,Turkey,Middle East,WM,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,TR,Turkey,Middle East,WM,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,TR,Turkey,Middle East,WM,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,TR,Turkey,Middle East,WM,y06,Export,I_EXP,M.EUR
+ROW,TW,Taiwan,Asia and Pacific,WA,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,TW,Taiwan,Asia and Pacific,WA,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,TW,Taiwan,Asia and Pacific,WA,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,TW,Taiwan,Asia and Pacific,WA,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,TW,Taiwan,Asia and Pacific,WA,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,TW,Taiwan,Asia and Pacific,WA,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,TW,Taiwan,Asia and Pacific,WA,y06,Export,I_EXP,M.EUR
+EU,NO,Norway,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,NO,Norway,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,NO,Norway,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,NO,Norway,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,NO,Norway,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,NO,Norway,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,NO,Norway,Europe,WE,y06,Export,I_EXP,M.EUR
+ROW,ID,Indonesia,Asia and Pacific,WA,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,ID,Indonesia,Asia and Pacific,WA,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,ID,Indonesia,Asia and Pacific,WA,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,ID,Indonesia,Asia and Pacific,WA,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,ID,Indonesia,Asia and Pacific,WA,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,ID,Indonesia,Asia and Pacific,WA,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,ID,Indonesia,Asia and Pacific,WA,y06,Export,I_EXP,M.EUR
+ROW,ZA,South Africa,Africa,WF,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,ZA,South Africa,Africa,WF,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,ZA,South Africa,Africa,WF,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,ZA,South Africa,Africa,WF,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,ZA,South Africa,Africa,WF,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,ZA,South Africa,Africa,WF,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,ZA,South Africa,Africa,WF,y06,Export,I_EXP,M.EUR
+ROW,WA,RoW Asia and Pacific,Asia and Pacific,WA,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,WA,RoW Asia and Pacific,Asia and Pacific,WA,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,WA,RoW Asia and Pacific,Asia and Pacific,WA,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,WA,RoW Asia and Pacific,Asia and Pacific,WA,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,WA,RoW Asia and Pacific,Asia and Pacific,WA,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,WA,RoW Asia and Pacific,Asia and Pacific,WA,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,WA,RoW Asia and Pacific,Asia and Pacific,WA,y06,Export,I_EXP,M.EUR
+ROW,WL,RoW America,America,WL,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,WL,RoW America,America,WL,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,WL,RoW America,America,WL,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,WL,RoW America,America,WL,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,WL,RoW America,America,WL,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,WL,RoW America,America,WL,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,WL,RoW America,America,WL,y06,Export,I_EXP,M.EUR
+EU,WE,RoW Europe,Europe,WE,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+EU,WE,RoW Europe,Europe,WE,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+EU,WE,RoW Europe,Europe,WE,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+EU,WE,RoW Europe,Europe,WE,y04,Gross fixed capital formation,I_GFCF,M.EUR
+EU,WE,RoW Europe,Europe,WE,y05.a,Changes in inventories,I_CHIN,M.EUR
+EU,WE,RoW Europe,Europe,WE,y05.b,Changes in valuables,I_CHVA,M.EUR
+EU,WE,RoW Europe,Europe,WE,y06,Export,I_EXP,M.EUR
+ROW,WF,RoW Africa,Africa,WF,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,WF,RoW Africa,Africa,WF,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,WF,RoW Africa,Africa,WF,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,WF,RoW Africa,Africa,WF,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,WF,RoW Africa,Africa,WF,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,WF,RoW Africa,Africa,WF,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,WF,RoW Africa,Africa,WF,y06,Export,I_EXP,M.EUR
+ROW,WM,RoW Middle East,Middle East,WM,y01,Final consumption expenditure by households,F_HOUS,M.EUR
+ROW,WM,RoW Middle East,Middle East,WM,y02.a,Final consumption expenditure by non-profit organisations serving households (NPISH),F_NPSH,M.EUR
+ROW,WM,RoW Middle East,Middle East,WM,y02.b,Final consumption expenditure by government,F_GOVE,M.EUR
+ROW,WM,RoW Middle East,Middle East,WM,y04,Gross fixed capital formation,I_GFCF,M.EUR
+ROW,WM,RoW Middle East,Middle East,WM,y05.a,Changes in inventories,I_CHIN,M.EUR
+ROW,WM,RoW Middle East,Middle East,WM,y05.b,Changes in valuables,I_CHVA,M.EUR
+ROW,WM,RoW Middle East,Middle East,WM,y06,Export,I_EXP,M.EUR

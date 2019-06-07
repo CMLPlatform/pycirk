@@ -84,7 +84,7 @@ class Transform:
         r = met.B(self.R, T, self.inv_diag_q)  # resour coef. matrix
         del(self.R)
         R = met.R(r, np.diag(x))
-        
+
         m = met.B(self.M, T, self.inv_diag_q)  # mater coef. matrix
         del(self.M)
         M = met.R(m, np.diag(x))

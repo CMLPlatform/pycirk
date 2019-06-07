@@ -124,7 +124,7 @@ class Operations:
 
         def S(U, inv_diag_g):
             """
-            Intermediate coefficients 
+            Intermediate coefficients
             Input requirements
             Z = U * inv(diag(g))
             """
@@ -320,20 +320,20 @@ class Operations:
                    }
 
             return(IOT)
-    
+
     def calculate_characterized(data):
-        
+
         data.Cr_E = data.Cr_E_k @ data.E
         data.Cr_M = data.Cr_M_k @ data.M
         data.Cr_R = data.Cr_R_k @ data.R
         data.Cr_W = data.Cr_W_k @ data.W
-        
+
         data.Cr_EY = data.Cr_E_k @ data.EY
         data.Cr_MY = data.Cr_M_k @ data.MY
         data.Cr_RY = data.Cr_R_k @ data.RY
-        
+
         data.Cr_tot_E = data.Cr_E.sum(axis=1) + data.Cr_EY.sum(axis=1)
         data.Cr_tot_M = data.Cr_M.sum(axis=1) + data.Cr_MY.sum(axis=1)
         data.Cr_tot_R = data.Cr_R.sum(axis=1) + data.Cr_RY.sum(axis=1)
-        
+
         return(data)

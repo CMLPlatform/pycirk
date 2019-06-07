@@ -229,7 +229,7 @@ class Settings:
                 self.lb.save_labels(data, self.directory_labels)
                 IOT = data
                 del(data)
-                
+
         self.assign_labels_to_class()
 
         return(IOT)
@@ -237,9 +237,12 @@ class Settings:
     def assign_labels_to_class(self):  # data, scen_no):
 
         all_labels = self.lb.organize_unique_labels(self.directory_labels)
+
         try:
-            self.lb.country_labels = self.all_labels.main_cat.country_code
+            print("here")
+            self.lb.country_labels = all_labels.main_cat.country_code
         except Exception:
+            print("here2")
             pass
 
         self.lb.region_labels = all_labels.main_cat.region
@@ -263,11 +266,11 @@ class Settings:
         scenario = self.lb.relabel_to_save(scenario, self.method, "pycirk//labels/")
 
         return(scenario)
-    
-    
-    
+
+
+
     def load_results_params(self, baseline=False):
-        
+
         res = pd.read_excel(self.scenario_file(), sheet_name="analyse", header=3)
-        
+
         return(res)

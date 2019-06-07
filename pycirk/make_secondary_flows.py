@@ -63,8 +63,8 @@ def make_secondary(data):
 
     no_countries = int(len(Y)/200)
 
-    prod_or = pos.make_coord_array(products, no_countries, 200)
-    ind_or = pos.make_coord_array(industries, no_countries, 163)
+    prod_or = pos.make_coord_array_for_make_sec(products, no_countries, 200)
+    ind_or = pos.make_coord_array_for_make_sec(industries, no_countries, 163)
 
     moved = allocate_sec_mat(V, U, Y, prod_or, ind_or)
 
