@@ -30,7 +30,7 @@ class Save:
                             str(now.hour), str(now.minute)])
 
         self.directory_or = directory
-        self.directory_out = directory + self.time + "/"
+        self.directory_out = os.path.join(directory, "output", self.time)
 
         if int(method) == 0:
             self.method = "(0) IOTpxpSTA_MSCm"
@@ -65,9 +65,9 @@ class Save:
         if scen_no in ["baseline", 0, "base"]:
             scen_no = "baseline"
             path = self.directory_out + "baseline" + "/"
-        elif scen_no.startswith("sc"):
+        elif scen_no > 0:
             scen_no = str(scen_no)
-            path = self.directory_out + "scenario_" + scen_no[3:] + "/"
+            path = os.path.join(self.directory_out, "_".join(["scenario", scen_no]))
         else:
             path = self.directory_out
 
@@ -78,16 +78,12 @@ class Save:
 
         for l, value in data.items():
             if scen_no == "baseline" or scen_no.startswith("sc"):
-                    value.to_csv(path_or_buf=path +
-                                 "_".join([scen_no, l, self.time]) + ".txt")
+                    value.to_csv(os.path.join(path, "_".join([scen_no, l]), ".txt"))
             else:
-                value.to_csv(path_or_buf=self.directory_out +
-                             "_".join([self.time, l]) + ".txt")
+                value.to_csv(path + l + ".txt")
+        copyfile(self.directory_or + "scenarios.xlsx", os.path.join(path, "scenarios.xlsx"))
 
-        copyfile(self.directory_or + "../scenarios.xls", self.directory_out +
-                 "_".join([self.time, "scenario_settings"]) + ".xls")
-
-        w = open(self.directory_out + self.time + "_data.pkl", "wb")
+        w = open(path + "data.pkl", "wb")
         pk.dump(data, w, 2)
 
         w.close()

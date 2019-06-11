@@ -28,7 +28,7 @@ class Settings:
     This class allows for to specify the settings for pycirk.
     """
     def __init__(self, method=0, make_secondary=False, save_directory="",
-                 aggregation=0, file=None, test=False):
+                 aggregation=1, file=None, test=False):
 
         self.method = int(method)  # 0 or 1
         self.make_secondary = make_secondary
@@ -149,11 +149,11 @@ class Settings:
                 io_file_bi = "data//mrIO_EU_ROW_V3.3.sm.pkl"
                 io_file_all = "data//mrIO_V3.3.sm.pkl"
 
-            if self.aggregation == 0:
+            if self.aggregation == 1:
                 io = io_file_bi
                 sut = "data//mrSUT_EU_ROW_V3.3.pkl"
 
-            elif self.aggregation == 1:
+            elif self.aggregation == 0:
                 io = io_file_all
                 sut = "data//mrSUT_V3.3.pkl"
 
@@ -211,10 +211,10 @@ class Settings:
 
 #            IOT = lb.
 
-            if self.aggregation == 0:
-                pickle_name = "pycirk//data//mrIO_EU_ROW_V3.3" + extension
-            elif self.aggregation == 1:
+            if self.aggregation in [0, None]:
                 pickle_name = "pycirk//data//mrIO_V3.3" + extension
+            elif self.aggregation == 1:
+                pickle_name = "pycirk//data//mrIO_EU_ROW_V3.3" + extension
             # saving the IO tables to avoid rebuilding them all the time
 
             IOT = organizer(IOT)
@@ -239,10 +239,8 @@ class Settings:
         all_labels = self.lb.organize_unique_labels(self.directory_labels)
 
         try:
-            print("here")
             self.lb.country_labels = all_labels.main_cat.country_code
         except Exception:
-            print("here2")
             pass
 
         self.lb.region_labels = all_labels.main_cat.region
@@ -260,17 +258,23 @@ class Settings:
         return(self.lb)
 
     def set_scenario(self, data, scen_no):
-
-        scenario = mc(data, scen_no, self.scenario_file(), self.lb)
+        
+        if scen_no == 0:
+            scenario = self.transform_to_io() # I will likely delete this later
+        else:
+            scenario = mc(data, scen_no, self.scenario_file(), self.lb)
 
         scenario = self.lb.relabel_to_save(scenario, self.method, "pycirk//labels/")
 
         return(scenario)
 
+    def load_results_params(self):
 
+        res_par = pd.read_excel(self.scenario_file(), sheet_name="analyse", header=3)
 
-    def load_results_params(self, baseline=False):
-
-        res = pd.read_excel(self.scenario_file(), sheet_name="analyse", header=3)
-
-        return(res)
+        return(res_par)
+    
+    def number_scenarios(self):
+        scen_file = pd.ExcelFile(self.scenario_file())
+        scenarios = [l for l in scen_file.sheet_names if l.startswith("scenario_")]
+        return(len(scenarios))
