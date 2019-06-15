@@ -24,80 +24,81 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     """
     Calculate all the counterfactual matrices for the database
     """
+    # set basic data and variables
     data = deepcopy(data)
 
-    # Apply policy to economic matrices
-    data.Z = counterfactual(scen_file, scen_no, data.Z, "Z", labels)
-
-    # First total product output from changes in S
     x_ = ops.IOT.x(data.Z, data.Y)
     diag_x_ = np.diag(x_)
     inv_diag_x_ = ops.inv(diag_x_)
 
-    A = ops.IOT.A(data.Z, inv_diag_x_)
-
     diag_yj = np.diag(data.Y.sum(axis=0))
     inv_diag_yj = ops.inv(diag_yj)
 
+    w = ops.IOT.B(data.W, inv_diag_x_)
+    e = ops.IOT.B(data.E, inv_diag_x_)
+    r = ops.IOT.B(data.R, inv_diag_x_)
+    m = ops.IOT.B(data.M, inv_diag_x_)
+
+    eY = ops.IOT.bY(data.EY, inv_diag_yj)
+    rY = ops.IOT.bY(data.RY, inv_diag_yj)
+    mY = ops.IOT.bY(data.MY, inv_diag_yj)
+
+    data.Z = counterfactual(scen_file, scen_no, data.Z, "Z", labels)
+    inv_diag_x_int = np.diag(ops.inv(ops.IOT.x(data.Z, data.Y)))
+
+    A = ops.IOT.A(data.Z, inv_diag_x_int)
     data.A = counterfactual(scen_file, scen_no, A, "A", labels)
+
     data.Y = counterfactual(scen_file, scen_no, data.Y, "Y", labels)
 
-    x = ops.IOT.x(data.Z, data.Y)
-    diag_x = np.diag(x)
-    inv_diag_x = ops.inv(diag_x)
+    L = ops.IOT.L(data.A)
+
+    x_new = ops.IOT.x_IAy(L, data.Y.sum(1))
+    diag_x_new = np.diag(x_new)
+
+    diag_yj_new = np.diag(data.Y.sum(axis=0))
+
+    # Apply policy to economic matrices
+
+    # Apply policy to intermediate extension intensities
+    data.w = counterfactual(scen_file, scen_no, w, "w", labels)
+    data.e = counterfactual(scen_file, scen_no, e, "e", labels)
+    data.r = counterfactual(scen_file, scen_no, r, "r", labels)
+    data.m = counterfactual(scen_file, scen_no, m, "m", labels)
+
+    # Apply policy to final demand extension intensities
+
+    data.eY = counterfactual(scen_file, scen_no, eY, "eY", labels)
+    data.rY = counterfactual(scen_file, scen_no, rY, "rY", labels)
+    data.mY = counterfactual(scen_file, scen_no, mY, "mY", labels)
+
+    data.Z = ops.IOT.Z(data.A, diag_x_new)
+
+    data.W = ops.IOT.R(data.w, diag_x_new)  # primary inputs coef
+
+    data.E = ops.IOT.R(data.e, diag_x_new)  # emissions ext coef
+
+    data.R = ops.IOT.R(data.r, diag_x_new)  # resource ext coef
+    data.M = ops.IOT.R(data.m, diag_x_new)  # material ext coef
+
+    data.EY = ops.IOT.RY(data.eY, diag_yj_new)  # emissions ext FD coef
+    data.RY = ops.IOT.RY(data.rY, diag_yj_new)  # resource ext FD coef
+    data.MY = ops.IOT.RY(data.mY, diag_yj_new)  # material ext FD coef
 
     data.W = counterfactual(scen_file, scen_no, data.W, "W", labels)
-
-    w = ops.IOT.B(data.W, inv_diag_x)
-    data.w = counterfactual(scen_file, scen_no, w, "w", labels)
 
     # Apply policy to intermediate extension coefficient matrices
     data.E = counterfactual(scen_file, scen_no, data.E, "E", labels)
     data.R = counterfactual(scen_file, scen_no, data.R, "R", labels)
     data.M = counterfactual(scen_file, scen_no, data.M, "M", labels)
 
-    # Apply policy to intermediate extension matrices
-    e = ops.IOT.B(data.E, diag_x)
-    r = ops.IOT.B(data.R, diag_x)
-    m = ops.IOT.B(data.M, diag_x)
-
-    data.e = counterfactual(scen_file, scen_no, e, "e", labels)
-    data.r = counterfactual(scen_file, scen_no, r, "r", labels)
-    data.m = counterfactual(scen_file, scen_no, m, "m", labels)
-
     # Apply policy to  final demand extension coefficient matrices
     data.EY = counterfactual(scen_file, scen_no, data.EY, "EY", labels)
     data.RY = counterfactual(scen_file, scen_no, data.RY, "RY", labels)
     data.MY = counterfactual(scen_file, scen_no, data.MY, "MY", labels)
 
-    # Apply policy to final demand extension matrices
-    eY = ops.IOT.bY(data.EY, inv_diag_yj)
-    rY = ops.IOT.bY(data.RY, inv_diag_yj)
-    mY = ops.IOT.bY(data.MY, inv_diag_yj)
+    print((1-np.sum(x_)/np.sum(x_new))*100)
 
-    data.eY = counterfactual(scen_file, scen_no, eY, "eY", labels)
-    data.rY = counterfactual(scen_file, scen_no, rY, "rY", labels)
-    data.mY = counterfactual(scen_file, scen_no, mY, "mY", labels)
-
-    # Scenario
-    data.L = ops.IOT.L(data.A)  # L from S and Y modified
-    diag_yj = np.diag(data.Y.sum(axis=0))  # column sum of FD
-    inv_diag_yj = ops.inv(diag_yj)
-    yi = np.sum(data.Y, axis=1)  # row sum of final demand
-    data.x = ops.IOT.x_IAy(data.L, yi)
-    diag_x = np.diag(data.x)
-
-    data.Z = ops.IOT.Z(data.A, diag_x)
-
-    data.W = ops.IOT.R(data.w, diag_x)  # primary inputs coef
-    data.E = ops.IOT.R(data.e, diag_x)  # emissions ext coef
-    data.R = ops.IOT.R(data.r, diag_x)  # resource ext coef
-    data.M = ops.IOT.R(data.m, diag_x)  # material ext coef
-
-    data.EY = ops.IOT.RY(data.eY, diag_yj)  # emissions ext FD coef
-    data.RY = ops.IOT.RY(data.rY, diag_yj)  # resource ext FD coef
-    data.MY = ops.IOT.RY(data.mY, diag_yj)  # material ext FD coef
-    
     return(data)
 
 
@@ -113,13 +114,13 @@ def counterfactual(scen_file, scen_no, M, M_name, labels):
 
     if type(scen_no) is int:
         scen_no = "scenario_" + str(scen_no)
-        
+
     elif scen_no.startswith("scenario_"):
         pass
     else:
         raise KeyError("only integer or explicit name (scenario_x)" +
                        "are allowed")
-        
+
 
     scenario = pd.read_excel(scen_file, sheet_name=scen_no, header=1, index=None)
 
@@ -311,14 +312,13 @@ def make_new(fltr_policies, M, M_name, labels):
     M = np.array(M)
 
     spec_labels = labels.identify_labels(M_name)
-    
+
     reg_labels = spec_labels["reg_labels"]
     row_labels = spec_labels["i_labels"]
     column_labels = spec_labels["g_labels"]
     no_row_labs = spec_labels["no_i"]
     no_col_labs = spec_labels["no_g"]
     no_reg_labs = spec_labels["no_reg"]
-    
 
     if len(fltr_policies) == 0:
         return (M)
@@ -336,12 +336,12 @@ def make_new(fltr_policies, M, M_name, labels):
             cat_o = sing_pos(entry.cat_o, row_labels)
             # Column items (g) => Consumption / manufacturing activity
             reg_d = sing_pos(entry.reg_d, reg_labels)
+
             cat_d = sing_pos(entry.cat_d, column_labels)
 
             # Identify coordinates
             orig_coor = coord(cat_o, reg_o, no_reg_labs, no_row_labs)
             dest_coor = coord(cat_d, reg_d, no_reg_labs, no_col_labs)
-
             # organize main changes
             kt1 = {"kt": entry.kt1, "kp": entry.kp1}
             kt2 = {"kt": entry.kt2, "kp": entry.kp2}
