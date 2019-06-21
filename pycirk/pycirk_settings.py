@@ -198,6 +198,7 @@ class Settings:
             else:
                 extension = ".pkl"
 
+            # SUTs = mc()
             SUTs = Transform(data)
             self.lb.save_labels(data, self.directory_labels)
             del(data)
@@ -234,17 +235,37 @@ class Settings:
 
         return(IOT)
 
+    def set_SUTs(self):
+        if self.aggregation == 1:
+            loc = "data//mrSUT_EU_ROW_V3.3.pkl"
+
+        elif self.aggregation == 0:
+            loc = "data//mrSUT_V3.3.pkl"
+
+        loc = ospt.abspath(ospt.join(ospt.dirname(__file__), loc))
+
+        try:
+            data = self.load_dataset(loc)
+        except Exception:
+            raise FileNotFoundError("Your database could not be opened" +
+                                    " check your file:\n\n" + loc)
+
+        SUTs = Transform(data)
+
+        return(SUTs)
+
     def assign_labels_to_class(self):  # data, scen_no):
 
         all_labels = self.lb.organize_unique_labels(self.directory_labels)
 
         try:
-            self.lb.country_labels = all_labels.main_cat.country_code
+            self.lb.country_labels = all_labels.products.country_code
         except Exception:
             pass
 
-        self.lb.region_labels = all_labels.main_cat.region
-        self.lb.cat_labels = all_labels.main_cat
+        self.lb.region_labels = all_labels.products.region
+        self.lb.product_labels = all_labels.products
+        self.lb.industry_labels = all_labels.industries
         self.lb.W_labels = all_labels.primary
         self.lb.E_labels = all_labels.emis
         self.lb.R_labels = all_labels.res
@@ -257,10 +278,21 @@ class Settings:
 
         return(self.lb)
 
-    def set_scenario(self, data, scen_no):
-        
+    def set_IO_scenario(self, data, scen_no):
+
         if scen_no == 0:
             scenario = self.transform_to_io() # I will likely delete this later
+        else:
+            scenario = mc(data, scen_no, self.scenario_file(), self.lb)
+
+        scenario = self.lb.relabel_to_save(scenario, self.method, "pycirk//labels/")
+
+        return(scenario)
+
+    def set_SUTs_scenario(self, data, scen_no):
+
+        if scen_no == 0:
+            scenario = data # I will likely delete this later
         else:
             scenario = mc(data, scen_no, self.scenario_file(), self.lb)
 
@@ -273,7 +305,7 @@ class Settings:
         res_par = pd.read_excel(self.scenario_file(), sheet_name="analyse", header=3)
 
         return(res_par)
-    
+
     def number_scenarios(self):
         scen_file = pd.ExcelFile(self.scenario_file())
         scenarios = [l for l in scen_file.sheet_names if l.startswith("scenario_")]

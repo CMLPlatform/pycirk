@@ -20,7 +20,8 @@ class Labels:
     def __init__(self):
         self.country_labels = None
         self.region_labels = None
-        self.cat_labels = None  # products or industries
+        self.product_labels = None
+        self.industry_labels = None
         self.W_labels = None
         self.E_labels = None
         self.R_labels = None
@@ -65,8 +66,8 @@ class Labels:
 
         labels = Munch(labels)
 
-        labels.main_cat = self.get_unique_labels(labels.prod)
-        #labels.main_cat = self.get_unique_labels(labels.ind)
+        labels.products = self.get_unique_labels(labels.prod)
+        labels.industries = self.get_unique_labels(labels.ind)
 
         labels.primary = self.get_unique_labels(labels.primary)
         labels.fin_dem = self.get_unique_labels(labels.fin_dem)
@@ -138,7 +139,8 @@ class Labels:
             self.get_labels(data["V"].T).to_csv(directory + "/industry.csv",
                                                 index=False)
         except Exception:
-            pass
+            self.get_labels(data["V"]).to_csv(directory + "/industry.csv",
+                                                index=False)
 
         self.get_labels(data["Cr_E_k"]).to_csv(directory + "/charact_emissions.csv", index=False)
         self.get_labels(data["Cr_R_k"]).to_csv(directory + "/charact_resources.csv", index=False)
@@ -235,10 +237,13 @@ class Labels:
 
         if "Y" in M_name:
             column_labels = self.Y_labels
-            row_labels = self.cat_labels
+            row_labels = self.product_labels
         else:
-            column_labels = self.cat_labels
-            row_labels = self.cat_labels
+            column_labels = self.product_labels
+            row_labels = self.product_labels
+
+        if M_name in ["V", "U"]:
+            column_labels = self.industry_labels
 
         name = ""
 

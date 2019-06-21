@@ -20,84 +20,97 @@ import warnings
 # from pycirk import sherman_morrison as sher_mor
 
 
-def make_counterfactuals(data, scen_no, scen_file, labels):
+def make_counterfactuals(data, scen_no, scen_file, labels, SUTorIO=1):
     """
     Calculate all the counterfactual matrices for the database
     """
     # set basic data and variables
-    data = deepcopy(data)
+    if SUTorIO == 0:
 
-    x_ = ops.IOT.x(data.Z, data.Y)
-    diag_x_ = np.diag(x_)
-    inv_diag_x_ = ops.inv(diag_x_)
+        Vcounter = counterfactual
 
-    diag_yj = np.diag(data.Y.sum(axis=0))
-    inv_diag_yj = ops.inv(diag_yj)
+        data.V = SUTs["V"]  # Supply matrix
+        data.U = SUTs["U"]  # Intermediate use
+        data.W = SUTs["W"]  # Primary input
+        data.E = SUTs["E"]  # emissions extension
+        self.R = SUTs["R"]  # Resources extension
+        self.M = SUTs["M"]  # Materials extension
 
-    w = ops.IOT.B(data.W, inv_diag_x_)
-    e = ops.IOT.B(data.E, inv_diag_x_)
-    r = ops.IOT.B(data.R, inv_diag_x_)
-    m = ops.IOT.B(data.M, inv_diag_x_)
 
-    eY = ops.IOT.bY(data.EY, inv_diag_yj)
-    rY = ops.IOT.bY(data.RY, inv_diag_yj)
-    mY = ops.IOT.bY(data.MY, inv_diag_yj)
+    elif SUTorIO == 1:
+        data = deepcopy(data)
 
-    data.Z = counterfactual(scen_file, scen_no, data.Z, "Z", labels)
-    inv_diag_x_int = np.diag(ops.inv(ops.IOT.x(data.Z, data.Y)))
+        x_ = ops.IOT.x(data.Z, data.Y)
+        diag_x_ = np.diag(x_)
+        inv_diag_x_ = ops.inv(diag_x_)
 
-    A = ops.IOT.A(data.Z, inv_diag_x_int)
-    data.A = counterfactual(scen_file, scen_no, A, "A", labels)
+        diag_yj = np.diag(data.Y.sum(axis=0))
+        inv_diag_yj = ops.inv(diag_yj)
 
-    data.Y = counterfactual(scen_file, scen_no, data.Y, "Y", labels)
+        w = ops.IOT.B(data.W, inv_diag_x_)
+        e = ops.IOT.B(data.E, inv_diag_x_)
+        r = ops.IOT.B(data.R, inv_diag_x_)
+        m = ops.IOT.B(data.M, inv_diag_x_)
 
-    L = ops.IOT.L(data.A)
+        eY = ops.IOT.bY(data.EY, inv_diag_yj)
+        rY = ops.IOT.bY(data.RY, inv_diag_yj)
+        mY = ops.IOT.bY(data.MY, inv_diag_yj)
 
-    x_new = ops.IOT.x_IAy(L, data.Y.sum(1))
-    diag_x_new = np.diag(x_new)
+        data.Z = counterfactual(scen_file, scen_no, data.Z, "Z", labels)
+        inv_diag_x_int = np.diag(ops.inv(ops.IOT.x(data.Z, data.Y)))
 
-    diag_yj_new = np.diag(data.Y.sum(axis=0))
+        A = ops.IOT.A(data.Z, inv_diag_x_int)
+        data.A = counterfactual(scen_file, scen_no, A, "A", labels)
 
-    # Apply policy to economic matrices
+        data.Y = counterfactual(scen_file, scen_no, data.Y, "Y", labels)
 
-    # Apply policy to intermediate extension intensities
-    data.w = counterfactual(scen_file, scen_no, w, "w", labels)
-    data.e = counterfactual(scen_file, scen_no, e, "e", labels)
-    data.r = counterfactual(scen_file, scen_no, r, "r", labels)
-    data.m = counterfactual(scen_file, scen_no, m, "m", labels)
+        L = ops.IOT.L(data.A)
 
-    # Apply policy to final demand extension intensities
+        x_new = ops.IOT.x_IAy(L, data.Y.sum(1))
+        diag_x_new = np.diag(x_new)
 
-    data.eY = counterfactual(scen_file, scen_no, eY, "eY", labels)
-    data.rY = counterfactual(scen_file, scen_no, rY, "rY", labels)
-    data.mY = counterfactual(scen_file, scen_no, mY, "mY", labels)
+        diag_yj_new = np.diag(data.Y.sum(axis=0))
 
-    data.Z = ops.IOT.Z(data.A, diag_x_new)
+        # Apply policy to economic matrices
 
-    data.W = ops.IOT.R(data.w, diag_x_new)  # primary inputs coef
+        # Apply policy to intermediate extension intensities
+        data.w = counterfactual(scen_file, scen_no, w, "w", labels)
+        data.e = counterfactual(scen_file, scen_no, e, "e", labels)
+        data.r = counterfactual(scen_file, scen_no, r, "r", labels)
+        data.m = counterfactual(scen_file, scen_no, m, "m", labels)
 
-    data.E = ops.IOT.R(data.e, diag_x_new)  # emissions ext coef
+        # Apply policy to final demand extension intensities
 
-    data.R = ops.IOT.R(data.r, diag_x_new)  # resource ext coef
-    data.M = ops.IOT.R(data.m, diag_x_new)  # material ext coef
+        data.eY = counterfactual(scen_file, scen_no, eY, "eY", labels)
+        data.rY = counterfactual(scen_file, scen_no, rY, "rY", labels)
+        data.mY = counterfactual(scen_file, scen_no, mY, "mY", labels)
 
-    data.EY = ops.IOT.RY(data.eY, diag_yj_new)  # emissions ext FD coef
-    data.RY = ops.IOT.RY(data.rY, diag_yj_new)  # resource ext FD coef
-    data.MY = ops.IOT.RY(data.mY, diag_yj_new)  # material ext FD coef
+        data.Z = ops.IOT.Z(data.A, diag_x_new)
 
-    data.W = counterfactual(scen_file, scen_no, data.W, "W", labels)
+        data.W = ops.IOT.R(data.w, diag_x_new)  # primary inputs coef
 
-    # Apply policy to intermediate extension coefficient matrices
-    data.E = counterfactual(scen_file, scen_no, data.E, "E", labels)
-    data.R = counterfactual(scen_file, scen_no, data.R, "R", labels)
-    data.M = counterfactual(scen_file, scen_no, data.M, "M", labels)
+        data.E = ops.IOT.R(data.e, diag_x_new)  # emissions ext coef
 
-    # Apply policy to  final demand extension coefficient matrices
-    data.EY = counterfactual(scen_file, scen_no, data.EY, "EY", labels)
-    data.RY = counterfactual(scen_file, scen_no, data.RY, "RY", labels)
-    data.MY = counterfactual(scen_file, scen_no, data.MY, "MY", labels)
+        data.R = ops.IOT.R(data.r, diag_x_new)  # resource ext coef
+        data.M = ops.IOT.R(data.m, diag_x_new)  # material ext coef
 
-    print((1-np.sum(x_)/np.sum(x_new))*100)
+        data.EY = ops.IOT.RY(data.eY, diag_yj_new)  # emissions ext FD coef
+        data.RY = ops.IOT.RY(data.rY, diag_yj_new)  # resource ext FD coef
+        data.MY = ops.IOT.RY(data.mY, diag_yj_new)  # material ext FD coef
+
+        data.W = counterfactual(scen_file, scen_no, data.W, "W", labels)
+
+        # Apply policy to intermediate extension coefficient matrices
+        data.E = counterfactual(scen_file, scen_no, data.E, "E", labels)
+        data.R = counterfactual(scen_file, scen_no, data.R, "R", labels)
+        data.M = counterfactual(scen_file, scen_no, data.M, "M", labels)
+
+        # Apply policy to  final demand extension coefficient matrices
+        data.EY = counterfactual(scen_file, scen_no, data.EY, "EY", labels)
+        data.RY = counterfactual(scen_file, scen_no, data.RY, "RY", labels)
+        data.MY = counterfactual(scen_file, scen_no, data.MY, "MY", labels)
+
+        print((1-np.sum(x_)/np.sum(x_new))*100)
 
     return(data)
 
