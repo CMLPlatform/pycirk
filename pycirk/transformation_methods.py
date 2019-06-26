@@ -12,6 +12,7 @@ Scope:  Modelling the Circular economy in EEIO
 import numpy as np
 from pycirk.fundamental_operations import Operations as ops
 
+
 class Transform:
     """
     Transforms SUTs to IOT an calcualate extensions
@@ -92,10 +93,6 @@ class Transform:
 
         A = ops.IOT.A(Z, self.inv_diag_q)
 
-#        eY = ops.IOT.bY(self.EY, self.inv_diag_yj)
-#        rY = ops.IOT.bY(self.RY, self.inv_diag_yj)
-#        mY = ops.IOT.bY(self.MY, self.inv_diag_yj)
-
         IOT = {"Y": self.Y,
                "L": L,
                "Z": Z,
@@ -151,10 +148,6 @@ class Transform:
         x = ops.IOT.x_IAy(L, self.yi)  # total product ouput
 
         A = ops.IOT.A(Z, self.inv_diag_q)
-
-#        eY = ops.IOT.bY(self.EY, self.inv_diag_yj)
-#        rY = ops.IOT.bY(self.RY, self.inv_diag_yj)
-#        mY = ops.IOT.bY(self.MY, self.inv_diag_yj)
 
         IOT = {"Y": self.Y,
                "L": L,

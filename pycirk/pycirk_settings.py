@@ -18,7 +18,7 @@ from shutil import copyfile
 import os.path as ospt
 from pycirk.make_secondary_flows import make_secondary as ms
 from pycirk.transformation_methods import Transform
-from pycirk.make_scenarios import make_counterfactuals as mc
+from pycirk.make_scenarios import make_counterfactuals, make_counterfactuals_SUT
 from pycirk.labels import Labels
 from pycirk.organize_io import organizer
 
@@ -283,7 +283,7 @@ class Settings:
         if scen_no == 0:
             scenario = self.transform_to_io() # I will likely delete this later
         else:
-            scenario = mc(data, scen_no, self.scenario_file(), self.lb)
+            scenario = make_counterfactuals(data, scen_no, self.scenario_file(), self.lb)
 
         scenario = self.lb.relabel_to_save(scenario, self.method, "pycirk//labels/")
 
@@ -294,7 +294,7 @@ class Settings:
         if scen_no == 0:
             scenario = data # I will likely delete this later
         else:
-            scenario = mc(data, scen_no, self.scenario_file(), self.lb)
+            scenario = make_counterfactuals_SUT(data, scen_no, self.scenario_file(), self.lb)
 
         scenario = self.lb.relabel_to_save(scenario, self.method, "pycirk//labels/")
 

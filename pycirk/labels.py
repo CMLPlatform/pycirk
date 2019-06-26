@@ -139,8 +139,7 @@ class Labels:
             self.get_labels(data["V"].T).to_csv(directory + "/industry.csv",
                                                 index=False)
         except Exception:
-            self.get_labels(data["V"]).to_csv(directory + "/industry.csv",
-                                                index=False)
+            pass
 
         self.get_labels(data["Cr_E_k"]).to_csv(directory + "/charact_emissions.csv", index=False)
         self.get_labels(data["Cr_R_k"]).to_csv(directory + "/charact_resources.csv", index=False)
@@ -174,10 +173,15 @@ class Labels:
 
         data = Munch(data)
 
-        # Relabel Main IOT elements
-        data.Z = self.relabel(data.Z, cat.iloc[:, :4], cat)
-        data.Y = self.relabel(data.Y, lb.fin_dem, cat)
-        data.W = self.relabel(data.W, cat.iloc[:, :4], lb.primary)
+        try:
+            # Relabel Main IOT elements
+            data.Z = self.relabel(data.Z, cat.iloc[:, :4], cat)
+            data.Y = self.relabel(data.Y, lb.fin_dem, cat)
+            data.W = self.relabel(data.W, cat.iloc[:, :4], lb.primary)
+        except Exception:
+            cat = lb.ind
+            prod = lb.prod
+            data.V = self.relabel(data.V, cat, prod)
 
         # Labeling final demand extensions'
         data.EY = self.relabel(data.EY, lb.fin_dem, lb.emis)
