@@ -277,6 +277,7 @@ def substitution(d, s, fx_kp):
     if d.shape != s.shape:  # checking whether we need to distribute values
         d = (d.shape[0] * d.shape[1])
         mask = (d == 0)
+        print(type(d), d)
         d[~mask] = 1/d[~mask]
         s = np.sum(s.sum()) * d
     else:
@@ -411,6 +412,7 @@ def make_new(fltr_policies, M, M_name, labels):
 
             inter = entry.intervention
             ide = int(entry.identifier)  # used during debugging
+            print(ide)
 
             # Collecting the specified coordinates for the intevention
 
