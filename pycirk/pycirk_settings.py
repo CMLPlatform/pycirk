@@ -57,12 +57,17 @@ class Settings:
         """
         General labelling of the project
         """
+        if int(self.method) == 0:
+            method = "(0) IOTpxpSTA_MSCm"
+        elif int(self.method) == 1:
+            method = "(1) IOTpxpSTA_TCm"
 
         if test is True:  # test-path with test scenarios
             print("Running in test mode")
-            specs = {"research": "test",
-                     "name": "test",
-                     "institution": "test",
+            specs = {"Research": "test",
+                     "Name": "test",
+                     "Organization": "test",
+                     "Method": method
                      }
 
         if test is False:
@@ -72,6 +77,7 @@ class Settings:
             specs = {"research": research,
                      "name": name,
                      "institution": institution,
+                     "method": method
                      }
 
         return(specs)

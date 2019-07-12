@@ -12,98 +12,67 @@ Scope: Modelling circular economy policies in EEIOA
 """
 import os
 import datetime
+import pandas as pd
 import pickle as pk
 from shutil import copyfile
 from pandas import DataFrame as df
+from openpyxl import load_workbook
 now = datetime.datetime.now()
 
-
-class Save:
+def save_outputs(results, directory, specs, scen_no, data=None):
     """
-    Contains various methods to output results from analysis and modelling
+    It saves results into a previously specified directory
     """
+    date = "_".join([str(now.year), str(now.month), str(now.day)])
+    time = "_".join([str(now.hour), str(now.minute)])
+    directory_or = directory
+    directory_out = os.path.join(directory, "output_" + date)
+    print(directory_out)
 
-    def __init__(self, specs, directory, method):
+    if scen_no in ["baseline", 0, "base"]:
+        scen_no = "baseline"
+        path = os.path.join(directory_out, "baseline", time)
+    elif scen_no > 0:
+        scen_no = "scenario_" + str(scen_no)
+        specs["scenario_number"] = scen_no
+        path = os.path.join(directory_out, "_".join([str(scen_no)]), time)
 
-        s = "_"
-        self.time = s.join([str(now.year), str(now.month), str(now.day),
-                            str(now.hour), str(now.minute)])
+    if not os.path.exists(path):
+        os.makedirs(path)
 
-        self.directory_or = directory
-        self.directory_out = os.path.join(directory, "output", self.time)
+    specs = add_date_to_gen_specs(specs)
 
-        if int(method) == 0:
-            self.method = "(0) IOTpxpSTA_MSCm"
-        elif int(method) == 1:
-            self.method = "(1) IOTpxpSTA_TCm"
-        self.year, self.month, self.day = str(now.date()).split("-")
+    copyfile(directory_or + "scenarios.xlsx", os.path.join(path, "results_and_settings.xlsx"))
 
-        self.specs = specs
+    with pd.ExcelWriter(path + "/" + "results_and_settings.xlsx", engine="openpyxl") as writer:
+        writer.book = load_workbook(path + "/" +"results_and_settings.xlsx")
+        specs.to_excel(writer, sheet_name="General", startrow=1, startcol=1)
+        results.to_excel(writer, "Results", startrow=1, startcol=1, merge=False)
+        writer
 
-    def gen_specs(self, scen_no):
-        """
-        Assembles general specifications e.g. authors, institution etc
-        """
 
-        research = self.specs["research"]
-        name = self.specs["name"]
-        institution = self.specs["institution"]
-
-        index = ["Research", "Name", "Institution", "Date [d-m-y]",
-                 "Scenario no", "Method"]
-        timemark = "/".join([self.day, self.month, self.year])
-        general = df([research, name, institution, timemark, scen_no,
-                     self.method], index=index, columns=["General_info"])
-
-        return(general)
-
-    def save_(self, data, scen_no):
-        """
-        It saves results into a previously specified directory
-        """
-
-        if scen_no in ["baseline", 0, "base"]:
-            scen_no = "baseline"
-            path = self.directory_out + "baseline" + "/"
-        elif scen_no > 0:
-            scen_no = str(scen_no)
-            path = os.path.join(self.directory_out, "_".join(["scenario", scen_no]))
-        else:
-            path = self.directory_out
-
-        if not os.path.exists(path):
-            os.makedirs(path)
-
-        data["specs"] = self.gen_specs(scen_no)
-
-        for l, value in data.items():
-            if scen_no == "baseline" or scen_no.startswith("sc"):
-                    value.to_csv(os.path.join(path, "_".join([scen_no, l]), ".txt"))
-            else:
-                value.to_csv(path + l + ".txt")
-        copyfile(self.directory_or + "scenarios.xlsx", os.path.join(path, "scenarios.xlsx"))
-
-        w = open(path + "data.pkl", "wb")
+    if data is not None:
+        w = open(path + "/"+ "data.pkl", "wb")
         pk.dump(data, w, 2)
 
         w.close()
 
-    def save_everything(self, data):
-        """
-        saves all scenarios + baseline + comparable file
-        """
-        for l, v in data.items():
-            out = self.save_(v, l)
+def add_date_to_gen_specs(specs):
+    """
+    Assembles general specifications e.g. authors, institution etc
+    """
+    year, month, day = str(now.date()).split("-")
 
-        return(out)
+    timemark = "/".join([day, month, year])
 
-    def save_results(self, data):
-        """
-        Save one excel with all results
-        """
-        data = {"results": data}
+    specs["timemark"] = timemark
 
-        out = self.save_(data, "summary_results")
+    #index = ["Research", "Name", "Institution", "Method", "Date [d-m-y]"]
 
-        return(out)
 
+    specs = df([specs]).T #, columns=index, index=["General_info"])
+    specs.columns = ["General_info"]
+    print(specs)
+
+
+    return(specs)

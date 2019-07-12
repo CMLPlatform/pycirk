@@ -10,10 +10,11 @@ Scope: Modelling the Circular Economy in EEIO
 @institution:Leiden University CML
 """
 import pandas as pd
-from pycirk.save_utils import Save
+from pycirk.save_utils import save_outputs
 from pycirk import results
 from pycirk.pycirk_settings import Settings
 from pycirk.make_scenarios import make_counterfactuals as mcf
+
 
 class Main:
     """
@@ -31,8 +32,8 @@ class Main:
         1 = Prod X Prod Ind-Tech Assumption Market Share Coeff method
 
     make_secondary : bool
-        modifies SUT so that secondary technologies which process scrap materials
-        into primary materials are also available in the IO tables
+        modifies SUT so that secondary technologies which process scrap
+        materials into primary materials are also available in the IO tables
         False = Don't modify
         True = Modify
 
@@ -44,8 +45,8 @@ class Main:
         1 = bi-regional (EU- ROW)
 
     file : bool, str
-        allows you to specify where the dataset is placed. None will use the default
-        location within the installed package
+        allows you to specify where the dataset is placed. None will use the
+        default location within the installed package
 
 
     Methods
@@ -136,7 +137,7 @@ class Main:
         return(output)
 
 
-    def save_scenario(self, scen_no, specs=None):
+    def save_scenario_results(self, scen_no):
         """
         Output all results in a table
         """
@@ -145,9 +146,10 @@ class Main:
         else:
             pass
 
-        init_save = Save(self.specs, self.settings.file_directory(), self.method)
         scenario = self.scenario_results(scen_no)
-        init_save.save_(scenario, scen_no)
+
+        save_outputs(scenario, self.settings.file_directory(), self.specs, scen_no)
+
 
     def save_all_scenarios(self):
         """

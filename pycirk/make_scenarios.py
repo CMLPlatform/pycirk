@@ -19,6 +19,39 @@ from copy import deepcopy
 import warnings
 # from pycirk import sherman_morrison as sher_mor
 
+def balancing_operation(V, U, Y, W):
+    """
+    Re-balancing of supply-use tables after data changes
+
+    Parameters
+    ----------
+    V (supply) : numpy.array
+
+    U (use) : numpy.array
+
+    Y (final_demand) : numpy.array
+
+    W (primary_inputs) : numpy.array
+
+    Output
+    ------
+    output : dict
+
+    It outputs a dictionary containing a re-balanced supply-use tables system
+    where:
+        V = supply table
+
+        U = use table
+
+        Y = final demand
+
+        W = primary inputs
+
+    """
+
+    return
+
+
 def make_counterfactuals_SUT(data, scen_no, scen_file, labels):
 
     met = ops.PxP_ITA_MSC
@@ -30,19 +63,23 @@ def make_counterfactuals_SUT(data, scen_no, scen_file, labels):
     S = met.S(data.U, data.inv_diag_g)  # industry coefficients for intermediate use table
 
     # Start first from a supply approach
-        # Supply matrix counterfactual
+    # Supply matrix counterfactual
     data.V =  counterfactual(scen_file, scen_no, data.V, "V", labels)
-        # new total industry output
+    # new total industry output
     g_ = np.sum(data.V, axis=0)
-        # industry use coefficients counterfactual
+    # industry use coefficients counterfactual
     S_ = counterfactual(scen_file, scen_no, S, "S", labels)
+
     data.U = counterfactual(scen_file, scen_no, S_ @ np.diag(g_), "U", labels)  # industry use transactions counterfactual
+
     W_ = np.array(ops.IOT.R(w, np.diag(g_)))
+
     _g_ = np.array(W_[:9].sum(0)) + data.U.sum(0)  # recalculate total industry output
 
-    g_dif = np.multiply(_g_, ops.inv(data.g))  # calculate the difference between original and new total industry input
+    g_dif = np.multiply(_g_, ops.inv(g))  # calculate the difference between original and new total industry input
 
     # print([round((1-l)*100,4) for l in g_dif if 1-l>.5e-3 and l!=0])
+
     data.Y = counterfactual(scen_file, scen_no, data.Y, "Y", labels)  # Final demand counterfactual
 
     q_ = np.sum(data.U, axis=1) + np.sum(data.Y, axis=1)
