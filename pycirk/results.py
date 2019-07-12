@@ -59,9 +59,6 @@ def retrieve_specified_data(data, spec_row, labels):
     if "Cr" in M_name:
         data = ops.calculate_characterized(data)
 
-    if "Cr_tot_E" in M_name:
-        print(M_name, data[M_name].iloc[5])
-
     M = np.array(data[M_name])  # Call specific matrix from which to select
 
     spec_labels = labels.identify_labels(M_name)
@@ -91,9 +88,7 @@ def retrieve_specified_data(data, spec_row, labels):
 
         g = coord(cat_d, reg_d, no_reg_labs, no_col_labs)
     except UnboundLocalError:
-        raise UnboundLocalError("\nThe specified coordinates to retrieve results are wrong" +
-              "\nPlease check that name and matrix in your scenarios.xlsx file are correct" +
-              "\nCheck: " + M_name + ", " + i_cat)
+        raise ValueError(f"\nThe specified coordinates to retrieve results are wrong.\nPlease check that name and matrix in your scenarios.xlsx file are correct.\nCheck: {M_name, i_cat}")
 
 
     if "tot" in M_name:
@@ -108,7 +103,7 @@ def retrieve_specified_data(data, spec_row, labels):
     try:
         unit = str(row_labels.unit[cat_o].iloc[0])
     except Exception:
-        unit = str(row_labels.unit[cat_o])
+        unit = str(row_labels.unit[0])
 
     index_label = [M_name, i_cat, i_reg, g_cat, g_reg, unit]
 

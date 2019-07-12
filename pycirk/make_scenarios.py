@@ -42,7 +42,7 @@ def make_counterfactuals_SUT(data, scen_no, scen_file, labels):
 
     g_dif = np.multiply(_g_, ops.inv(data.g))  # calculate the difference between original and new total industry input
 
-    print([round((1-l)*100,4) for l in g_dif if 1-l>.5e-3 and l!=0])
+    # print([round((1-l)*100,4) for l in g_dif if 1-l>.5e-3 and l!=0])
     data.Y = counterfactual(scen_file, scen_no, data.Y, "Y", labels)  # Final demand counterfactual
 
     q_ = np.sum(data.U, axis=1) + np.sum(data.Y, axis=1)
@@ -181,7 +181,7 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     data.RY = counterfactual(scen_file, scen_no, data.RY, "RY", labels)
     data.MY = counterfactual(scen_file, scen_no, data.MY, "MY", labels)
 
-    print((1-np.sum(x_)/np.sum(x_new))*100)
+    #print((1-np.sum(x_)/np.sum(x_new))*100)
 
     return(data)
 
@@ -275,16 +275,14 @@ def substitution(d, s, fx_kp):
     """
     fx_kp = fx_kp * 1e-2
     if d.shape != s.shape:  # checking whether we need to distribute values
-        d = (d.shape[0] * d.shape[1])
+
         mask = (d == 0)
-        print(type(d), d)
-        d[~mask] = 1/d[~mask]
-        s = np.sum(s.sum()) * d
+        no_non_zeros = np.count_nonzero(d)
+        d[~mask] = d[~mask] + (np.sum(s.sum())/no_non_zeros) * fx_kp
     else:
-        pass
-    ind = np.array(d) + (np.array(s) * fx_kp)
-    ind = np.nan_to_num(ind)
-    return(ind)
+        d = d + np.array(s) * fx_kp
+
+    return(d)
 
 
 def counterfactual_engine(M, inter_sets, subs=False, copy=False):
@@ -321,9 +319,7 @@ def counterfactual_engine(M, inter_sets, subs=False, copy=False):
         g1 = inter_sets["g1"]
         d = M[np.ix_(i1, g1)]
         if np.isnan(inter_sets["swk"]):
-            raise ValueError("I can't copy the values. You forgot to add" +
-                             " the weighing factor for identifier no: " +
-                             str(ide))
+            raise ValueError(f"I can't copy the values. You forgot to add the weighing factor for identifier no: {ide}")
         else:
             M[np.ix_(i1, g1)] = d + (a * inter_sets["swk"]*1e-2)
 
@@ -367,14 +363,11 @@ def counterfactual_engine(M, inter_sets, subs=False, copy=False):
 
                     s = ref - eval("int" + str(key))
                     d = M[np.ix_(i1, g1)]
-#                    print(i1, g1)
                     if np.isnan(inter_sets["swk"]):
-                        raise ValueError("I can't substitute the values." +
-                                         "You forgot to add the weighing" +
-                                         " factor for identifier no: " +
-                                         str(ide))
+                        raise ValueError(f"I can't substitute the values. You forgot to add the weighing factor for identifier no: {ide}")
                     else:
-                        M[np.ix_(i1, g1)] = substitution(d, s, inter_sets["swk"])
+                        hey = substitution(d, s, inter_sets["swk"])
+                        M[np.ix_(i1, g1)] = hey
 
     return(M)
 
@@ -411,8 +404,7 @@ def make_new(fltr_policies, M, M_name, labels):
         for l, entry in fltr_policies.iterrows():
 
             inter = entry.intervention
-            ide = int(entry.identifier)  # used during debugging
-            print(ide)
+            ide = entry.identifier  # used during debugging
 
             # Collecting the specified coordinates for the intevention
 
@@ -421,13 +413,15 @@ def make_new(fltr_policies, M, M_name, labels):
             reg_o = sing_pos(entry.reg_o, reg_labels)
             cat_o = sing_pos(entry.cat_o, row_labels)
             # Column items (g) => Consumption / manufacturing activity
-            reg_d = sing_pos(entry.reg_d, reg_labels)
+            try:
+                reg_d = sing_pos(entry.reg_d, reg_labels)
+                cat_d = sing_pos(entry.cat_d, column_labels)
+                # Identify coordinates
+                orig_coor = coord(cat_o, reg_o, no_reg_labs, no_row_labs)
+                dest_coor = coord(cat_d, reg_d, no_reg_labs, no_col_labs)
+            except Exception:
+                raise ValueError(f"Check in this entry for potential coordinate errors in your scenario settings:\n{entry} ")
 
-            cat_d = sing_pos(entry.cat_d, column_labels)
-
-            # Identify coordinates
-            orig_coor = coord(cat_o, reg_o, no_reg_labs, no_row_labs)
-            dest_coor = coord(cat_d, reg_d, no_reg_labs, no_col_labs)
             # organize main changes
             kt1 = {"kt": entry.kt1, "kp": entry.kp1}
             kt2 = {"kt": entry.kt2, "kp": entry.kp2}

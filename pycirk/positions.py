@@ -44,7 +44,6 @@ def single_position(item, labels):
                 ref_labels = labels.characterization.copy()
         except Exception:
             pass
-
         coordinate = np.array([i for i, values in enumerate(ref_labels)
                               if item in values])
 
