@@ -26,6 +26,41 @@ from pycirk.organize_io import organizer
 class Settings:
     """
     This class allows for to specify the settings for pycirk.
+
+    Parameters
+    ----------
+
+    method : int
+        SUTs to IO transformation methods
+
+        0 = Prod X Prod Ind-Tech Assumption Technical Coeff method
+
+        1 = Prod X Prod Ind-Tech Assumption Market Share Coeff method
+
+    make_secondary : bool
+        modifies SUT so that secondary technologies which process scrap
+        materials into primary materials are also available in the IO tables
+
+        False = Don't modify
+
+        True = Modify
+
+    save_directory : str
+        directory in which you want to work and save your results
+
+    aggregation : int, bool
+
+        0 = None (multi-regional 49 regions)
+
+        1 = bi-regional (EU- ROW)
+
+    file : bool, str
+        allows you to specify where the dataset is placed. None will use the
+        default location within the installed package
+
+    test : bool
+        if set to true it will run the test settings under under pycirk//tests
+
     """
     def __init__(self, method=0, make_secondary=False, save_directory="",
                  aggregation=1, file=None, test=False):
@@ -59,6 +94,7 @@ class Settings:
         """
         if int(self.method) == 0:
             method = "(0) IOTpxpSTA_MSCm"
+
         elif int(self.method) == 1:
             method = "(1) IOTpxpSTA_TCm"
 
@@ -70,7 +106,7 @@ class Settings:
                      "Method": method
                      }
 
-        if test is False:
+        elif test is False:
             name = input("Author's name:\n")  # e.g. "Franco Donati"
             research = input("Project name:\n")  # e.g. "Modelling the CE"
             institution = input("Institution:\n")  # e.g."Leiden Univ. CML"
@@ -106,12 +142,16 @@ class Settings:
         return(directory)
 
     def create_scenario_file(self):
+        """
+        It creates a new scenario file by copying the original from
+        pycirk directory to the new working directory specified by the user
+        """
 
         orig = os.path.abspath(os.path.join(os.path.dirname(__file__),
                                             "scenarios.xlsx"))
 
         directory = self.file_directory()
-        file = directory + "scenarios.xlsx"
+        file = os.path.join(directory, "scenarios.xlsx")
 
         if not os.path.isfile(file):
             copyfile(orig, file)
@@ -120,8 +160,12 @@ class Settings:
               "\n\nReturn to this script after you're done.")
 
     def create_output_folder(self):
+        """
+        It creates an output folder where to save analytical results
+        This is placed in the user's working directory
+        """
 
-        output_folder = self.file_directory() + "/outputs/"
+        output_folder = os.path.join(self.file_directory(), "outputs")
 
         if os.path.isdir(output_folder) is True:
             pass
@@ -129,18 +173,32 @@ class Settings:
             os.makedirs(output_folder)
 
     def scenario_file(self):
+        """
+        It returns where the working scenarios.xlsx file is located
+        """
 
-        scen_file = self.file_directory() + "scenarios.xlsx"
+        scen_file = os.path.join(self.file_directory(), "scenarios.xlsx")
 
         return(scen_file)
 
     def load_dataset(self, data):
+        """
+        It loads the baseline dataset
+        """
 
         data = pd.read_pickle(data)
 
         return(data)
 
     def check_dataset_location(self):
+        """
+        It identifies where the baseline dataset is located and whether it is
+        present in the directory.
+
+        Output
+        ------
+        A dictionary containing location "loc" and type of format (SUT or IO)
+        """
 
         if self.file is not None:
             data_loc = {"loc": self.file, "type": np.nan}
@@ -185,6 +243,23 @@ class Settings:
         return(data_loc)
 
     def transform_to_io(self):
+        """
+        Transforms the SUT dataset into an IO system
+
+        If the user specified to make secondary material processing apparent
+        then it will launch the function to modify the database
+
+        If an IO from the same transformation method exists, then it will load
+        that one instead
+
+        If a pre-existing IO is not present then it will save the transformed
+        dataset in the directory. This is done to spead up processing time.
+
+        Output
+        ------
+        An object containing all the fundamental IO matrices to begin the
+        analysis and scenarios.
+        """
 
         dataset_spec = self.check_dataset_location()
 
@@ -242,6 +317,7 @@ class Settings:
         return(IOT)
 
     def set_SUTs(self):
+
         if self.aggregation == 1:
             loc = "data//mrSUT_EU_ROW_V3.3.pkl"
 

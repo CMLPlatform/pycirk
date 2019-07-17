@@ -28,44 +28,47 @@ class Main:
     ----------
     method : int
         SUTs to IO transformation methods
+
         0 = Prod X Prod Ind-Tech Assumption Technical Coeff method
+
         1 = Prod X Prod Ind-Tech Assumption Market Share Coeff method
 
     make_secondary : bool
         modifies SUT so that secondary technologies which process scrap
         materials into primary materials are also available in the IO tables
+
         False = Don't modify
+
         True = Modify
 
     save_directory : str
         directory in which you want to work and save your results
 
     aggregation : int, bool
+
         0 = None (multi-regional 49 regions)
+
         1 = bi-regional (EU- ROW)
 
     file : bool, str
         allows you to specify where the dataset is placed. None will use the
         default location within the installed package
 
+    test : bool
+        if set to true it will run the test settings under under pycirk//tests
 
     Methods
     ----------
     scenario_results : int
         Allows to calculate the results for a given specified scenario
+
         0 = baseline data
 
     all_results :
         Retrieves all results for all specified scenarios and baseline
 
-    save_scenario : int
-        save a scenario and specific results
-
-    save_results :
+    save_results : int and bool
         save all specified analytical results from all scenario and baseline
-
-    save_all:
-        Runs save_results + save_scenario for all specified scenarios
 
 
     Outputs
@@ -83,10 +86,10 @@ class Main:
 
     """
     def __init__(self, method=0, make_secondary=False, save_directory="",
-                 aggregation=1, file=None):
+                 aggregation=1, file=None, test=False):
 
         self.settings = Settings(method, make_secondary, save_directory,
-                                 aggregation, file)
+                                 aggregation, file, test)
 
         self.settings.create_scenario_file()
 
@@ -99,9 +102,12 @@ class Main:
 
         self.method = method
 
-        self.specs = None
+        if test is False:
+            self.specs = None
+        else:
+            self.specs = self.settings.project_specs(test=True)
 
-    def scenario_results(self, scen_no):
+    def scenario_results(self, scen_no, output_dataset=False):
         """
         Run to output results of a specified scenario
 
@@ -111,9 +117,13 @@ class Main:
             0 = baseline
             1-n = specified scenarios
 
+        output_datase: bool
+            If true it will output a dictionary containing all IOT tables in pd.DataFrames
+
         Output
         ------
-        specified results in DataFrame form
+        specified results in DataFrame form or a dictionary containing results
+        and a dictionary of dataframes containing IO matrices
 
         """
         if scen_no in [0, "baseline", "base", None]:
@@ -124,9 +134,20 @@ class Main:
 
         output = results.iter_thru_for_results(IO, self.analysis_specs,
                                                scen_no, self.labels)
+        if output_dataset is True:
+            output = {"res": output, "data": IO}
+
         return(output)
 
     def all_results(self):
+        """
+        Process all scenarios and collects their results together with
+        Baseline analysis results
+
+        Output
+        ------
+        It outputs a pandas.DataFrame with all results
+        """
 
         output = self.scenario_results(0)
 
@@ -137,33 +158,59 @@ class Main:
         return(output)
 
 
-    def save_scenario_results(self, scen_no):
+    def save_results(self, scen_no=None, output_dataset=False):
         """
-        Output all results in a table
+        Saves all results in excel format for info and results or in
+        pickle format for the dataset
+
+        Parameters
+        ----------
+        scen_no: int
+            0 = baseline
+
+            1-n = specified scenarios
+
+        output_datase: bool
+            If true it will output a dictionary containing all IOT tables in
+            pd.DataFrames
+
+        Output
+        ------
+        Default values will save all results from the all_results method
+        and they will output only scenario.xlsx and info_and_results.xlsx
+
+        Output_dataset is only possible when scen_no is specified
+        in which case it would save also a data.pkl file
+
+        scenarios.xlsx : excel file
+            scenario settings excel file used for the analysis in the same
+            output directory with the results
+
+        info_and_results.xlsx : excel file
+            excel file containing general info about project plus the
+            results from the analysis
+
+        data.pkl : pickle file
+            new modified IO dataset in pickle format
+            This is only possible if outputting single scenario (scen_no != None)
+
         """
         if self.specs is None:
             self.specs = self.settings.project_specs()
         else:
             pass
 
-        scenario = self.scenario_results(scen_no)
+        if type(scen_no) is int:
+            scenario = self.scenario_results(scen_no, output_dataset)
+            data = None
+        elif scen_no is None:
+            scenario = self.all_results()
+            data = None
+        if output_dataset is True:
+            scenario = self.scenario_results(scen_no, output_dataset)
+            data = scenario["data"]
+            scenario = scenario["res"]
 
-        save_outputs(scenario, self.settings.file_directory(), self.specs, scen_no)
 
-
-    def save_all_scenarios(self):
-        """
-        Save all results in separate files and sheets
-        data e.g. all_results.all_tables
-        """
-        init_save = Save(self.specs, self.save_directory, self.method)
-        data = self.init_res.table_res(False)
-        init_save.save_everything(data)
-
-    def save_results(self):
-        """
-        Save results
-        """
-        init_save = Save(self.specs, self.save_directory, self.method)
-        data = self.all_results()
-        init_save.save_results(data)
+        save_outputs(scenario, self.settings.file_directory(), self.specs,
+                     scen_no, data)

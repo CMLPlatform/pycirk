@@ -246,7 +246,7 @@ class Labels:
             column_labels = self.product_labels
             row_labels = self.product_labels
 
-        if M_name in ["V", "U"]:
+        if M_name in ["V", "U", "S", "D"]:
             column_labels = self.industry_labels
 
         name = ""

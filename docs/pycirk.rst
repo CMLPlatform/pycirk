@@ -4,6 +4,14 @@ pycirk package
 Submodules
 ----------
 
+pycirk.for\_testing module
+--------------------------
+
+.. automodule:: pycirk.for_testing
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pycirk.fundamental\_operations module
 -------------------------------------
 
@@ -16,6 +24,14 @@ pycirk.labels module
 --------------------
 
 .. automodule:: pycirk.labels
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pycirk.make\_graphs module
+--------------------------
+
+.. automodule:: pycirk.make_graphs
     :members:
     :undoc-members:
     :show-inheritance:

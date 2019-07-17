@@ -17,6 +17,22 @@ def single_position(item, labels):
     """
     Takes a dataframe of the multiindex and identifies the position
     of the specified values
+
+    Parameters
+    ----------
+
+    item : str
+        The label the user is looking for
+
+    labels : obj
+        An object cointaining a set of labels
+        (as specified in the labels.py module)
+
+    Output
+    ------
+    An numpy.array containing the coordinate of a specific label
+    or None in case of there is no specified label
+
     """
 
     if item in ["All", "all", "ALL", np.nan]:
@@ -46,11 +62,36 @@ def single_position(item, labels):
             pass
         coordinate = np.array([i for i, values in enumerate(ref_labels)
                               if item in values])
-
     return(coordinate)
 
 
 def make_coord_array(cat_coord, reg_coord, no_countries, no_categories):
+    """
+    It creates an an array of coordinates based on the specification of the
+    users.
+
+    Parameters
+    ----------
+    cat_coord : int, numpy.array, bool
+        the numerical coordinate of a specific category belonging to a matrix
+        in the IO or SUT system. If None is passed then it will return an
+        array of all coordinates in range no_categories.
+
+    reg_coord : int, numpy.array, bool
+        the numerical coordinate of a specific region in the IO or SUT system.
+        If None is passed then it will return an array of all coordinates in
+        range no_countries.
+
+    no_countries : int
+        the total number of countries or regions in the dataset
+
+    no_categories : int
+        the total number of categories referring one axis in the chosen matrix
+
+    Output
+    ------
+    A numpy.array referring to each coordinate point specified by the user
+    """
 
     if no_categories not in [7, 163, 200]:
         no_countries = 1
@@ -79,6 +120,25 @@ def make_coord_array(cat_coord, reg_coord, no_countries, no_categories):
 
 
 def make_coord_array_for_make_sec(coordinates, no_countries, no_categories):
+    """
+    It creates an an array of coordinates based on the total location
+    of secondary materials and processing categories
+
+    Parameters
+    ----------
+    coordinates : int, numpy.array
+        the numerical coordinate of secondary categories belonging to the SUT system
+
+    no_countries : int
+        the total number of countries or regions in the dataset
+
+    no_categories : int
+        the total number of categories referring one axis in the chosen matrix
+
+    Output
+    ------
+    A numpy.array referring to each coordinate point
+    """
 
     n = 0
     nn = 0
