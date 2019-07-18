@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import click
-from pycirk import Main
+from pycirk import Launch
 
 
 @click.command()
@@ -9,7 +9,7 @@ from pycirk import Main
 @click.option('--aggregation', '-ag', help='1 = bi-regional (EU-ROW) or 0 = None (49 regions)')
 @click.option('--make_secondary', '-ms', help='False=no, True=yes - modifies SUT so that secondary materials are apparent in IOT (False or True)')
 @click.option('--scenario', '-sc', help='all, 1, 2,...')
-@click.option('--save', '-s', help='False=no, True=yes)
+@click.option('--save', '-s', help='False=no, True=yes')
 @click.option('--output_dataset', '-od', help='False=no, True=yes')
 def main(transf_method, save_directory="", aggregation="1", make_secondary=False,
          scenario="all", save=False, output_dataset=False):
@@ -19,7 +19,7 @@ def main(transf_method, save_directory="", aggregation="1", make_secondary=False
     Analysis (EXIOBASE V3.3, 2011)
     """
 
-    initialize = Main(transf_method, seve_directory, aggregation, make_secondary)
+    initialize = Launch(transf_method, save_directory, aggregation, make_secondary)
     input("\npress enter to confirm that the scenario is set")
 
     if scenario == "all":

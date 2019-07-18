@@ -9,7 +9,7 @@ import pycirk
 
 @pytest.fixture
 def initialise_method():
-    return(pycirk.Main("test"))
+    return(pycirk.Launch("test"))
 
 def test_all_results_method0():
     """Sample pytest test function with the pytest fixture as an argument."""
