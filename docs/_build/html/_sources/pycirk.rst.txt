@@ -4,6 +4,14 @@ pycirk package
 Submodules
 ----------
 
+pycirk.cli module
+-----------------
+
+.. automodule:: pycirk.cli
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pycirk.fundamental\_operations module
 -------------------------------------
 
@@ -56,14 +64,6 @@ pycirk.pycirk module
 --------------------
 
 .. automodule:: pycirk.pycirk
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pycirk.pycirk\_cli module
--------------------------
-
-.. automodule:: pycirk.pycirk_cli
     :members:
     :undoc-members:
     :show-inheritance:

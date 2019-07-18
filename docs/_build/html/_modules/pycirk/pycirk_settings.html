@@ -99,14 +99,14 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">make_secondary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_directory</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
                  <span class="n">aggregation</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">test</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">method</span><span class="p">)</span>  <span class="c1"># 0 or 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>  <span class="c1"># 0 or 1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">make_secondary</span> <span class="o">=</span> <span class="n">make_secondary</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span> <span class="o">=</span> <span class="n">save_directory</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">test</span> <span class="o">=</span> <span class="n">test</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">aggregation</span> <span class="o">=</span> <span class="n">aggregation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lb</span> <span class="o">=</span> <span class="n">Labels</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">directory_labels</span> <span class="o">=</span> <span class="s2">&quot;pycirk//labels&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">directory_labels</span> <span class="o">=</span> <span class="n">ospt</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">ospt</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ospt</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;labels&quot;</span><span class="p">))</span>
 
 <div class="viewcode-block" id="Settings.check_expand_directory"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.check_expand_directory">[docs]</a>    <span class="k">def</span> <span class="nf">check_expand_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -141,6 +141,7 @@
                      <span class="p">}</span>
 
         <span class="k">elif</span> <span class="n">test</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please enter your project information</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Author&#39;s name:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># e.g. &quot;Franco Donati&quot;</span>
             <span class="n">research</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Project name:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># e.g. &quot;Modelling the CE&quot;</span>
             <span class="n">institution</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Institution:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># e.g.&quot;Leiden Univ. CML&quot;</span>
@@ -152,28 +153,23 @@
 
         <span class="k">return</span><span class="p">(</span><span class="n">specs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Settings.file_directory"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.file_directory">[docs]</a>    <span class="k">def</span> <span class="nf">file_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Settings.set_save_directory"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.set_save_directory">[docs]</a>    <span class="k">def</span> <span class="nf">set_save_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        It specifies where the scenario file for input is</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">test</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;tests/&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;tests/&quot;</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">test</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
 
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                <span class="n">directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_expand_directory</span><span class="p">(</span><span class="s2">&quot;~/Documents/pycirk/&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">g</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">,</span> <span class="s2">&quot;Documents&quot;</span><span class="p">,</span> <span class="s2">&quot;pycirk&quot;</span><span class="p">)</span>
 
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                    <span class="k">pass</span>
-                <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_expand_directory</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 
-                <span class="n">directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span>
-
-        <span class="k">return</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span></div>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Settings.create_scenario_file"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.create_scenario_file">[docs]</a>    <span class="k">def</span> <span class="nf">create_scenario_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -184,14 +180,14 @@
         <span class="n">orig</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span>
                                             <span class="s2">&quot;scenarios.xlsx&quot;</span><span class="p">))</span>
 
-        <span class="n">directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_directory</span><span class="p">()</span>
-        <span class="n">file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s2">&quot;scenarios.xlsx&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_save_directory</span><span class="p">()</span>
+        <span class="n">file_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span><span class="p">,</span> <span class="s2">&quot;scenarios.xlsx&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
-            <span class="n">copyfile</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_dir</span><span class="p">):</span>
+            <span class="n">copyfile</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">)</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Please open &quot;</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="s2">&quot; to set your analysis and scenarios.&quot;</span><span class="p">,</span>
-              <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Return to this script after you&#39;re done.&quot;</span><span class="p">)</span></div>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Please open &quot;</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">,</span> <span class="s2">&quot; to set your analysis and scenarios.&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Return to this script after you&#39;re done.&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Settings.create_output_folder"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.create_output_folder">[docs]</a>    <span class="k">def</span> <span class="nf">create_output_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -211,7 +207,7 @@
 <span class="sd">        It returns where the working scenarios.xlsx file is located</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">scen_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_directory</span><span class="p">(),</span> <span class="s2">&quot;scenarios.xlsx&quot;</span><span class="p">)</span>
+        <span class="n">scen_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span><span class="p">,</span> <span class="s2">&quot;scenarios.xlsx&quot;</span><span class="p">)</span>
 
         <span class="k">return</span><span class="p">(</span><span class="n">scen_file</span><span class="p">)</span></div>
 

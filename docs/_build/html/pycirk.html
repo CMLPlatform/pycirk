@@ -38,6 +38,9 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="module-pycirk.cli">
+<span id="pycirk-cli-module"></span><h2>pycirk.cli module<a class="headerlink" href="#module-pycirk.cli" title="Permalink to this headline">¶</a></h2>
+</div>
 <div class="section" id="module-pycirk.fundamental_operations">
 <span id="pycirk-fundamental-operations-module"></span><h2>pycirk.fundamental_operations module<a class="headerlink" href="#module-pycirk.fundamental_operations" title="Permalink to this headline">¶</a></h2>
 <p>Created on Wed Nov 2 12:05:08 2016</p>
@@ -655,7 +658,7 @@ or None in case of there is no specified label</p>
 &#64;institution:Leiden University CML</p>
 <dl class="class">
 <dt id="pycirk.pycirk.Launch">
-<em class="property">class </em><code class="descclassname">pycirk.pycirk.</code><code class="descname">Launch</code><span class="sig-paren">(</span><em>method=0</em>, <em>make_secondary=False</em>, <em>save_directory=''</em>, <em>aggregation=1</em>, <em>file=None</em>, <em>test=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk.html#Launch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk.Launch" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pycirk.pycirk.</code><code class="descname">Launch</code><span class="sig-paren">(</span><em>method=0</em>, <em>make_secondary=False</em>, <em>save_directory=None</em>, <em>aggregation=1</em>, <em>file=None</em>, <em>test=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk.html#Launch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk.Launch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Pycirk’s main class and methods</p>
 <p>Initialize the pycirk programme to make EEIO scenarios and analysis.
@@ -765,9 +768,6 @@ and a dictionary of dataframes containing IO matrices</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-pycirk.pycirk_cli">
-<span id="pycirk-pycirk-cli-module"></span><h2>pycirk.pycirk_cli module<a class="headerlink" href="#module-pycirk.pycirk_cli" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="module-pycirk.pycirk_settings">
 <span id="pycirk-pycirk-settings-module"></span><h2>pycirk.pycirk_settings module<a class="headerlink" href="#module-pycirk.pycirk_settings" title="Permalink to this headline">¶</a></h2>
 <p>Created on Wed Feb 20 16:29:23 2019</p>
@@ -841,12 +841,6 @@ pycirk directory to the new working directory specified by the user</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pycirk.pycirk_settings.Settings.file_directory">
-<code class="descname">file_directory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk_settings.html#Settings.file_directory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk_settings.Settings.file_directory" title="Permalink to this definition">¶</a></dt>
-<dd><p>It specifies where the scenario file for input is</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="pycirk.pycirk_settings.Settings.load_dataset">
 <code class="descname">load_dataset</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk_settings.html#Settings.load_dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk_settings.Settings.load_dataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>It loads the baseline dataset</p>
@@ -888,6 +882,12 @@ pycirk directory to the new working directory specified by the user</p>
 <dt id="pycirk.pycirk_settings.Settings.set_SUTs_scenario">
 <code class="descname">set_SUTs_scenario</code><span class="sig-paren">(</span><em>data</em>, <em>scen_no</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk_settings.html#Settings.set_SUTs_scenario"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk_settings.Settings.set_SUTs_scenario" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="pycirk.pycirk_settings.Settings.set_save_directory">
+<code class="descname">set_save_directory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk_settings.html#Settings.set_save_directory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk_settings.Settings.set_save_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>It specifies where the scenario file for input is</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pycirk.pycirk_settings.Settings.transform_to_io">
