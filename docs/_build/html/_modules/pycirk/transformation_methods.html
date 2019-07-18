@@ -1,0 +1,282 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pycirk.transformation_methods &#8212; pycirk 1.5.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pycirk.transformation_methods</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding:  utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Mon Feb  6 12: 29: 47 2017</span>
+
+<span class="sd">Description:  Uses methods within SUTops to calculate IOT and Extensions</span>
+
+<span class="sd">Scope:  Modelling the Circular economy in EEIO</span>
+
+<span class="sd">@author:  Franco Donati</span>
+<span class="sd">@institution:  Leiden University CML</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pycirk.fundamental_operations</span> <span class="k">import</span> <span class="n">Operations</span> <span class="k">as</span> <span class="n">ops</span>
+
+
+<div class="viewcode-block" id="Transform"><a class="viewcode-back" href="../../pycirk.html#pycirk.transformation_methods.Transform">[docs]</a><span class="k">class</span> <span class="nc">Transform</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transforms SUTs to IOT an calcualate extensions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">SUTs</span><span class="p">):</span>
+
+        <span class="c1"># Baseline monetary data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span>  <span class="c1"># Supply matrix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">U</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;U&quot;</span><span class="p">]</span>  <span class="c1"># Intermediate use</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span>  <span class="c1"># Final demand</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;W&quot;</span><span class="p">]</span>  <span class="c1"># Primary input</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;E&quot;</span><span class="p">]</span>  <span class="c1"># emissions extension</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">EY</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;YE&quot;</span><span class="p">]</span>  <span class="c1"># emissions extension final demand</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>  <span class="c1"># Resources extension</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RY</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;YR&quot;</span><span class="p">]</span>  <span class="c1"># Resources extension final demand</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">]</span>  <span class="c1"># Materials extension</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MY</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;YM&quot;</span><span class="p">]</span>  <span class="c1"># Materials extension final demand</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Cr_E_k</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;Cr_E_k&quot;</span><span class="p">]</span>  <span class="c1"># Charact coefficients emissions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Cr_R_k</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;Cr_R_k&quot;</span><span class="p">]</span>  <span class="c1"># Charact coefficients resources</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Cr_M_k</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;Cr_M_k&quot;</span><span class="p">]</span>  <span class="c1"># Charact coefficients materials</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Cr_W_k</span> <span class="o">=</span> <span class="n">SUTs</span><span class="p">[</span><span class="s2">&quot;Cr_W_k&quot;</span><span class="p">]</span>  <span class="c1"># Charact coefficients factor inputs</span>
+
+        <span class="c1"># baseline variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># row sum of final demand</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>  <span class="c1"># col sum of final demand</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># total product output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># total industry output</span>
+
+        <span class="c1"># bv diagonals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diag_q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="p">)</span>  <span class="c1"># diagonal of q</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diag_g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">)</span>  <span class="c1"># diagonal of g</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diag_yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yi</span><span class="p">)</span>  <span class="c1"># diagonal of yi</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diag_yj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yj</span><span class="p">)</span>  <span class="c1"># diagonal of yj</span>
+
+        <span class="c1"># bv inverses</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_yi</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diag_yi</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_yj</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diag_yj</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diag_q</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diag_g</span><span class="p">)</span>
+
+        <span class="k">del</span><span class="p">(</span><span class="n">SUTs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Transform.IOTpxpSTA_TCm"><a class="viewcode-back" href="../../pycirk.html#pycirk.transformation_methods.Transform.IOTpxpSTA_TCm">[docs]</a>    <span class="k">def</span> <span class="nf">IOTpxpSTA_TCm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        IOT prod x prod Single tech Industry-technology assumption</span>
+<span class="sd">        Technical coef method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">met</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">PxP_ITA_TC</span>
+
+        <span class="n">T</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">T</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># transformation matrix</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">L</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">U</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># leontief inverse</span>
+
+        <span class="n">w</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># primary inp. coef matrix</span>
+
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">U</span><span class="p">)</span>  <span class="c1"># intermediates</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">x_IAy</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yi</span><span class="p">)</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">ver_base</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">verifyIOT</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">)</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">U</span><span class="p">)</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="n">e</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># emis coef. matrix</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">)</span>
+        <span class="n">E</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># resour coef. matrix</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">)</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+        <span class="n">m</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># mater coef. matrix</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">)</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">x_IAy</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yi</span><span class="p">)</span>  <span class="c1"># total product ouput</span>
+
+        <span class="n">A</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>
+
+        <span class="n">IOT</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span>
+               <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="n">L</span><span class="p">,</span>
+               <span class="s2">&quot;Z&quot;</span><span class="p">:</span> <span class="n">Z</span><span class="p">,</span>
+               <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span>
+               <span class="s2">&quot;W&quot;</span><span class="p">:</span> <span class="n">W</span><span class="p">,</span>
+               <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="n">E</span><span class="p">,</span>
+               <span class="s2">&quot;EY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">EY</span><span class="p">,</span>
+               <span class="s2">&quot;R&quot;</span><span class="p">:</span> <span class="n">R</span><span class="p">,</span>
+               <span class="s2">&quot;RY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">RY</span><span class="p">,</span>
+               <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="n">M</span><span class="p">,</span>
+               <span class="s2">&quot;MY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">MY</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_E_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_E_k</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_M_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_M_k</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_R_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_R_k</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_W_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_W_k</span><span class="p">,</span>
+               <span class="s2">&quot;ver_base&quot;</span><span class="p">:</span> <span class="n">ver_base</span>
+               <span class="p">}</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">IOT</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Transform.IOTpxpSTA_MSCm"><a class="viewcode-back" href="../../pycirk.html#pycirk.transformation_methods.Transform.IOTpxpSTA_MSCm">[docs]</a>    <span class="k">def</span> <span class="nf">IOTpxpSTA_MSCm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        IOT prod x prod Single tech Industry-technology assumption</span>
+<span class="sd">        Market share coef method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">met</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">PxP_ITA_MSC</span>
+
+        <span class="n">S</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">U</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># ind. interm. coef. =&gt; in EUROSTAT manual shown as S</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">D</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>  <span class="c1"># Market shares</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>  <span class="c1"># technical coefficient matrix</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">L</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>  <span class="c1"># leontief inverse</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># primary inputs</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">x_IAy</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yi</span><span class="p">)</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diag_q</span><span class="p">)</span>  <span class="c1"># intermediates</span>
+        <span class="n">ver_base</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">verifyIOT</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">)</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">U</span><span class="p">)</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="n">e</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># emis coef. matrix</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">)</span>
+        <span class="n">E</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># resour coef. matrix</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">)</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+        <span class="n">m</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># mater coef. matrix</span>
+        <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">)</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">x_IAy</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yi</span><span class="p">)</span>  <span class="c1"># total product ouput</span>
+
+        <span class="n">A</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>
+
+        <span class="n">IOT</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span>
+               <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="n">L</span><span class="p">,</span>
+               <span class="s2">&quot;Z&quot;</span><span class="p">:</span> <span class="n">Z</span><span class="p">,</span>
+               <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span>
+               <span class="s2">&quot;W&quot;</span><span class="p">:</span> <span class="n">W</span><span class="p">,</span>
+               <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="n">E</span><span class="p">,</span>
+               <span class="s2">&quot;EY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">EY</span><span class="p">,</span>
+               <span class="s2">&quot;R&quot;</span><span class="p">:</span> <span class="n">R</span><span class="p">,</span>
+               <span class="s2">&quot;RY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">RY</span><span class="p">,</span>
+               <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="n">M</span><span class="p">,</span>
+               <span class="s2">&quot;MY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">MY</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_E_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_E_k</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_M_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_M_k</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_R_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_R_k</span><span class="p">,</span>
+               <span class="s2">&quot;Cr_W_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_W_k</span><span class="p">,</span>
+               <span class="s2">&quot;ver_base&quot;</span><span class="p">:</span> <span class="n">ver_base</span>
+               <span class="p">}</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">IOT</span><span class="p">)</span></div></div>
+
+        <span class="c1"># Add here more transformation methods for industry-by-industry</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pycirk</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">pycirk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">pycirk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Franco Donati.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

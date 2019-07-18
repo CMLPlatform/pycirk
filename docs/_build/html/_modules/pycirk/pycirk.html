@@ -1,0 +1,326 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pycirk.pycirk &#8212; pycirk 1.5.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pycirk.pycirk</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Tue Nov 15 16:29:23 2016</span>
+
+<span class="sd">Description: Outputting scenarios</span>
+
+<span class="sd">Scope: Modelling the Circular Economy in EEIO</span>
+
+<span class="sd">@author:Franco Donati</span>
+<span class="sd">@institution:Leiden University CML</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pycirk.save_utils</span> <span class="k">import</span> <span class="n">save_outputs</span>
+<span class="kn">from</span> <span class="nn">pycirk</span> <span class="k">import</span> <span class="n">results</span>
+<span class="kn">from</span> <span class="nn">pycirk.pycirk_settings</span> <span class="k">import</span> <span class="n">Settings</span>
+<span class="kn">from</span> <span class="nn">pycirk.make_scenarios</span> <span class="k">import</span> <span class="n">make_counterfactuals</span> <span class="k">as</span> <span class="n">mcf</span>
+
+
+<div class="viewcode-block" id="Launch"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Launch">[docs]</a><span class="k">class</span> <span class="nc">Launch</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pycirk&#39;s main class and methods</span>
+
+<span class="sd">    Initialize the pycirk programme to make EEIO scenarios and analysis.</span>
+<span class="sd">    From here, you can launch all the analysis specifications listed under</span>
+<span class="sd">    scenarios.xlsx</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    method : int</span>
+<span class="sd">        SUTs to IO transformation methods</span>
+
+<span class="sd">        0 = Prod X Prod Ind-Tech Assumption Technical Coeff method</span>
+
+<span class="sd">        1 = Prod X Prod Ind-Tech Assumption Market Share Coeff method</span>
+
+<span class="sd">    make_secondary : bool</span>
+<span class="sd">        modifies SUT so that secondary technologies which process scrap</span>
+<span class="sd">        materials into primary materials are also available in the IO tables</span>
+
+<span class="sd">        False = Don&#39;t modify</span>
+
+<span class="sd">        True = Modify</span>
+
+<span class="sd">    save_directory : str</span>
+<span class="sd">        directory in which you want to work and save your results</span>
+
+<span class="sd">    aggregation : int, bool</span>
+
+<span class="sd">        0 = None (multi-regional 49 regions)</span>
+
+<span class="sd">        1 = bi-regional (EU- ROW)</span>
+
+<span class="sd">    file : bool, str</span>
+<span class="sd">        allows you to specify where the dataset is placed. None will use the</span>
+<span class="sd">        default location within the installed package</span>
+
+<span class="sd">    test : bool</span>
+<span class="sd">        if set to true it will run the test settings under under pycirk//tests</span>
+
+<span class="sd">    Methods</span>
+<span class="sd">    ----------</span>
+<span class="sd">    scenario_results : int</span>
+<span class="sd">        Allows to calculate the results for a given specified scenario</span>
+
+<span class="sd">        0 = baseline data</span>
+
+<span class="sd">    all_results :</span>
+<span class="sd">        Retrieves all results for all specified scenarios and baseline</span>
+
+<span class="sd">    save_results : int and bool</span>
+<span class="sd">        save all specified analytical results from all scenario and baseline</span>
+
+
+<span class="sd">    Outputs</span>
+<span class="sd">    -------</span>
+<span class="sd">    analysis.xlsx : excel file</span>
+<span class="sd">        to be found under the default folder on the specified directory</span>
+<span class="sd">        it allows to specify the parameters for your scenario and analysis</span>
+
+<span class="sd">    IO tables : pkl</span>
+<span class="sd">        IO tables of the specified scenarios, these are located in the output</span>
+<span class="sd">        folder in the save directory</span>
+
+<span class="sd">    results : DataFrame</span>
+<span class="sd">        results gathered from the processed scenarios and baseline</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">make_secondary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_directory</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                 <span class="n">aggregation</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">test</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">Settings</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">make_secondary</span><span class="p">,</span> <span class="n">save_directory</span><span class="p">,</span>
+                                 <span class="n">aggregation</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">create_scenario_file</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">scenario_file</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">analysis_specs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">load_results_params</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">baseline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">transform_to_io</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">lb</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+
+        <span class="k">if</span> <span class="n">test</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">specs</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">specs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">project_specs</span><span class="p">(</span><span class="n">test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Launch.scenario_results"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Launch.scenario_results">[docs]</a>    <span class="k">def</span> <span class="nf">scenario_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">output_dataset</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run to output results of a specified scenario</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        scen_no: int</span>
+<span class="sd">            0 = baseline</span>
+<span class="sd">            1-n = specified scenarios</span>
+
+<span class="sd">        output_datase: bool</span>
+<span class="sd">            If true it will output a dictionary containing all IOT tables in pd.DataFrames</span>
+
+<span class="sd">        Output</span>
+<span class="sd">        ------</span>
+<span class="sd">        specified results in DataFrame form or a dictionary containing results</span>
+<span class="sd">        and a dictionary of dataframes containing IO matrices</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">scen_no</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;baseline&quot;</span><span class="p">,</span> <span class="s2">&quot;base&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+            <span class="n">scen_no</span> <span class="o">=</span> <span class="s2">&quot;baseline&quot;</span>
+            <span class="n">IO</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">baseline</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">IO</span> <span class="o">=</span> <span class="n">mcf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">baseline</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scen_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">iter_thru_for_results</span><span class="p">(</span><span class="n">IO</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">analysis_specs</span><span class="p">,</span>
+                                               <span class="n">scen_no</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">output_dataset</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;res&quot;</span><span class="p">:</span> <span class="n">output</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">IO</span><span class="p">}</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Launch.all_results"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Launch.all_results">[docs]</a>    <span class="k">def</span> <span class="nf">all_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process all scenarios and collects their results together with</span>
+<span class="sd">        Baseline analysis results</span>
+
+<span class="sd">        Output</span>
+<span class="sd">        ------</span>
+<span class="sd">        It outputs a pandas.DataFrame with all results</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_results</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">number_scenarios</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">l</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">scen_res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_results</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">output</span><span class="p">,</span> <span class="n">scen_res</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Launch.save_results"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Launch.save_results">[docs]</a>    <span class="k">def</span> <span class="nf">save_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_no</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_dataset</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves all results in excel format for info and results or in</span>
+<span class="sd">        pickle format for the dataset</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        scen_no: int</span>
+<span class="sd">            0 = baseline</span>
+
+<span class="sd">            1-n = specified scenarios</span>
+
+<span class="sd">        output_datase: bool</span>
+<span class="sd">            If true it will output a dictionary containing all IOT tables in</span>
+<span class="sd">            pd.DataFrames</span>
+
+<span class="sd">        Output</span>
+<span class="sd">        ------</span>
+<span class="sd">        Default values will save all results from the all_results method</span>
+<span class="sd">        and they will output only scenario.xlsx and info_and_results.xlsx</span>
+
+<span class="sd">        Output_dataset is only possible when scen_no is specified</span>
+<span class="sd">        in which case it would save also a data.pkl file</span>
+
+<span class="sd">        scenarios.xlsx : excel file</span>
+<span class="sd">            scenario settings excel file used for the analysis in the same</span>
+<span class="sd">            output directory with the results</span>
+
+<span class="sd">        info_and_results.xlsx : excel file</span>
+<span class="sd">            excel file containing general info about project plus the</span>
+<span class="sd">            results from the analysis</span>
+
+<span class="sd">        data.pkl : pickle file</span>
+<span class="sd">            new modified IO dataset in pickle format</span>
+<span class="sd">            This is only possible if outputting single scenario (scen_no != None)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">specs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">specs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">project_specs</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">scen_no</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="n">scenario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_results</span><span class="p">(</span><span class="n">scen_no</span><span class="p">,</span> <span class="n">output_dataset</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">scen_no</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scenario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_results</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">output_dataset</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">scenario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_results</span><span class="p">(</span><span class="n">scen_no</span><span class="p">,</span> <span class="n">output_dataset</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">scenario</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
+            <span class="n">scenario</span> <span class="o">=</span> <span class="n">scenario</span><span class="p">[</span><span class="s2">&quot;res&quot;</span><span class="p">]</span>
+
+
+        <span class="n">save_outputs</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">file_directory</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">specs</span><span class="p">,</span>
+                     <span class="n">scen_no</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pycirk</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">pycirk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">pycirk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Franco Donati.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
