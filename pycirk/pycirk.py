@@ -16,7 +16,7 @@ from pycirk.pycirk_settings import Settings
 from pycirk.make_scenarios import make_counterfactuals as mcf
 
 
-class Main:
+class Launch:
     """
     Pycirk's main class and methods
 

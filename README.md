@@ -27,7 +27,7 @@ or
 
 
 Once you have a copy of the source, you can install it with:
-	
+
     $ python setup.py install
 
 
@@ -38,10 +38,10 @@ Once you have a copy of the source, you can install it with:
 	import pycirk
 
 ### Initialize
-    
-    s = pycirk.Start(method, directory, aggregation, make_secondary)
 
-### set your scenarios and analysis 
+    s = pycirk.Launch(method, directory, aggregation, make_secondary)
+
+### set your scenarios and analysis
 
 1. Open scenarios.xls in the directory that was specified
 2. From there you can specify interventions and parameters for the analysis
@@ -51,9 +51,8 @@ Once you have a copy of the source, you can install it with:
 
 Run one specific scenario
 
-    s.run_one_scenario(scen_no, results_only=[False, True]) 
+    s.scenario_results(scen_no, output_dataset)
     (0 = baseline)
-
 
 Run all scenarios
 
@@ -61,18 +60,10 @@ Run all scenarios
 
 ### save scenarios
 
-Save one specific scenario
+Save your results
 
-    s.save_one_scenario(scen_no, results_only=[False, True])
+    s.save_results()
 
-Save the summary of your results 
-    
-    s.save_results() 
-
-Save your entire project
-
-    s.save_everything()
-    
 
 ### Use from command line
 
@@ -83,24 +74,24 @@ Usage: pycirk [OPTIONS]
 Console script for pycirk. A software to model policy and technological
 interventions in Environmentally Extended Input-Output Analysis (EXIOBASE
 V3.3, 2011)
-    
+
 Options:
 
 | Command                    | Variables                            |
 |----------------------------|--------------------------------------|
 |  -tm, --transf_method TEXT | 0 = PXP ITA_TC; 1 = PXP ITA_MSC      |
 |  -dr, --directory TEXT     | if left black it will be default     |
+|  -ag, --aggregation        | 1 = bi-regional (EU-ROW)             |
+|                            | 0 = None (49 regions)                |
 |  -sc, --scenario TEXT      | all, 1, 2,... accepted - 0=baseline  |
-|  -s, --save TEXT           | 0=no, [1-n]=scenario, "all"=save all |
+|  -s, --save TEXT           | False=no, True=yes                   |
+|  -od, --output_dataset     | False=no, True=yes                   |
 |  --help                    | Show this message and exit.          |
 
 
 Command example
 
-    pycirk -tm 0 -dr "" -sc "all" -s "all"
-
-
-
+    pycirk -tm 0 -dr "" -sc "1" -s True -od False
 
 ## Features
 
@@ -117,14 +108,24 @@ Examples of policies that can be modelled through the software:
 The tables in which it is possible to apply changes:
 
 - total requirement matrix (A)
-- intermediate transactions (S)
+- intermediate transactions (Z)
 - final demand (Y)
-- primary inputs coefficients (RE)
-- emission intermediate extentions coefficients (RBe)
-- material intermediate extensions coefficients (RBm)
-- resource intermediate extensions coefficients (RBr)
-- emission final demand extension coefficients (RYBe)
-- material final demand extension coefficients (RYBm)
+- primary inputs (W)
+
+- emission intermediate extentions (E)
+- material intermediate extensions (M)
+- resource intermediate extensions (R)
+- emission final demand extension (EY)
+- material final demand extension (MY)
+- resource final demand extensions (RY)
+
+- primary inputs coefficients (w)
+- emission intermediate extentions coefficients (e)
+- material intermediate extensions coefficients (m)
+- resource intermediate extensions coefficients (r)
+- emission final demand extension coefficients (eY)
+- material final demand extension coefficients (mY)
+- resource final demand extensions coefficients (rY)
 
 It is possible to specify:
 
