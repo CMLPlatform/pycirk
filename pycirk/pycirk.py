@@ -85,7 +85,7 @@ class Launch:
         results gathered from the processed scenarios and baseline
 
     """
-    def __init__(self, method=0, make_secondary=False, save_directory="",
+    def __init__(self, method=0, make_secondary=False, save_directory=None,
                  aggregation=1, file=None, test=False):
 
         self.settings = Settings(method, make_secondary, save_directory,

@@ -72,7 +72,7 @@ class Settings:
         self.test = test
         self.aggregation = aggregation
         self.lb = Labels()
-        self.directory_labels = "pycirk//labels"
+        self.directory_labels = ospt.abspath(ospt.join(ospt.dirname(__file__), "labels"))
 
     def check_expand_directory(self, directory):
         """
@@ -118,28 +118,26 @@ class Settings:
 
         return(specs)
 
-    def file_directory(self):
+    def set_save_directory(self):
         """
         It specifies where the scenario file for input is
         """
 
         if self.test is True:
-            directory = os.path.abspath("tests/")
+            self.save_directory = os.path.abspath("tests/")
 
         elif self.test is False:
 
-            if self.save_directory == "":
-                directory = self.check_expand_directory("~/Documents/pycirk/")
-
-            elif self.save_directory != "":
-                if os.path.isdir(self.save_directory) is True:
-                    pass
-                elif os.path.isdir(self.save_directory) is False:
+            if self.save_directory == "" or self.save_directory is None:
+                g = os.path.join("~", "Documents", "pycirk")
+                
+                self.save_directory = self.check_expand_directory(g)
+                
+                if os.path.isdir(self.save_directory) is False:
                     os.makedirs(self.save_directory)
 
-                directory = self.save_directory
 
-        return(directory)
+
 
     def create_scenario_file(self):
         """
@@ -150,13 +148,13 @@ class Settings:
         orig = os.path.abspath(os.path.join(os.path.dirname(__file__),
                                             "scenarios.xlsx"))
 
-        directory = self.file_directory()
-        file = os.path.join(directory, "scenarios.xlsx")
+        self.set_save_directory()
+        file_dir = os.path.join(self.save_directory, "scenarios.xlsx")
 
-        if not os.path.isfile(file):
-            copyfile(orig, file)
+        if not os.path.isfile(file_dir):
+            copyfile(orig, file_dir)
 
-        print("\nPlease open ", file, " to set your analysis and scenarios.",
+        print("\nPlease open ", file_dir, " to set your analysis and scenarios.",
               "\n\nReturn to this script after you're done.")
 
     def create_output_folder(self):
@@ -177,7 +175,7 @@ class Settings:
         It returns where the working scenarios.xlsx file is located
         """
 
-        scen_file = os.path.join(self.file_directory(), "scenarios.xlsx")
+        scen_file = os.path.join(self.save_directory, "scenarios.xlsx")
 
         return(scen_file)
 
