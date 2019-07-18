@@ -130,14 +130,11 @@ class Settings:
 
             if self.save_directory == "" or self.save_directory is None:
                 g = os.path.join("~", "Documents", "pycirk")
-                
+
                 self.save_directory = self.check_expand_directory(g)
-                
+
                 if os.path.isdir(self.save_directory) is False:
                     os.makedirs(self.save_directory)
-
-
-
 
     def create_scenario_file(self):
         """
