@@ -1,3 +1,7 @@
-pandas=<0.22.0
-numpy=<1.14.0
-xlrd =<1.1.0
+pandas==0.22.0
+numpy==1.14.0
+xlrd==1.1.0
+openpyxl==2.6.2
+munch==2.3.2
+
+

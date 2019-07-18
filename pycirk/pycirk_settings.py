@@ -65,7 +65,7 @@ class Settings:
     def __init__(self, method=0, make_secondary=False, save_directory="",
                  aggregation=1, file=None, test=False):
 
-        self.method = int(method)  # 0 or 1
+        self.method = method  # 0 or 1
         self.make_secondary = make_secondary
         self.file = file
         self.save_directory = save_directory
@@ -107,6 +107,7 @@ class Settings:
                      }
 
         elif test is False:
+            print("Please enter your project information\n")
             name = input("Author's name:\n")  # e.g. "Franco Donati"
             research = input("Project name:\n")  # e.g. "Modelling the CE"
             institution = input("Institution:\n")  # e.g."Leiden Univ. CML"
@@ -152,7 +153,7 @@ class Settings:
             copyfile(orig, file_dir)
 
         print("\nPlease open ", file_dir, " to set your analysis and scenarios.",
-              "\n\nReturn to this script after you're done.")
+              "\nReturn to this script after you're done.")
 
     def create_output_folder(self):
         """

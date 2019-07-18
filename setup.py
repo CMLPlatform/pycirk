@@ -37,7 +37,7 @@ setup(
                 "Extended Input-Output Analysis (EXIOBASE V3.3)",
     entry_points={
         'console_scripts': [
-            'pycirk=pycirk.pycirk_cli:main',
+            'pycirk=pycirk.cli:main',
         ],
     },
 

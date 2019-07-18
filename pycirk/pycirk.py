@@ -212,5 +212,5 @@ class Launch:
             scenario = scenario["res"]
 
 
-        save_outputs(scenario, self.settings.file_directory(), self.specs,
+        save_outputs(scenario, self.settings.save_directory, self.specs,
                      scen_no, data)
