@@ -1,6 +1,6 @@
 # pycirk
 
-_A software to model Circular Economy policy and technological interventions in Environmentally Extended Input-Output Analysis starting from SUTs (EXIOBASE V3.3)_
+_A python package to model Circular Economy policy and technological interventions in Environmentally Extended Input-Output Analysis starting from SUTs (EXIOBASE V3.3)_
 
 [![DOI](https://zenodo.org/badge/157891556.svg)](https://zenodo.org/badge/latestdoi/157891556)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
