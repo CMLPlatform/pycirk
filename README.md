@@ -30,6 +30,14 @@ Once you have a copy of the source, you can install it with:
 
     $ python setup.py install
 
+### Data
+
+You can download the biregional or multiregional database by following this link
+
+https://fdonaticml.stackstorage.com/s/OEPbzJQgdIcsAn1
+
+You need to place the data inside the package
+e.g. /home/UserName/.local/lib/python3.6/site-packages/pycirk/data
 
 ## Usage
 
