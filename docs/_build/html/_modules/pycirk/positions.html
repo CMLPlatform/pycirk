@@ -70,7 +70,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;ALL&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]:</span>
-        <span class="n">coordinate</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">else</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -94,10 +94,9 @@
                 <span class="n">ref_labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">characterization</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">pass</span>
-        <span class="n">coordinate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">)</span>
-                              <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">values</span><span class="p">])</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">coordinate</span><span class="p">)</span></div>
-
+        
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ref_labels</span><span class="p">)</span>
+                              <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">values</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="make_coord_array"><a class="viewcode-back" href="../../pycirk.html#pycirk.positions.make_coord_array">[docs]</a><span class="k">def</span> <span class="nf">make_coord_array</span><span class="p">(</span><span class="n">cat_coord</span><span class="p">,</span> <span class="n">reg_coord</span><span class="p">,</span> <span class="n">no_countries</span><span class="p">,</span> <span class="n">no_categories</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -145,13 +144,10 @@
             <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span>
 
     <span class="k">if</span> <span class="n">reg_coord</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">s</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">no_countries</span><span class="p">)</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">reg_coord</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
-
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">reg_coord</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="make_coord_array_for_make_sec"><a class="viewcode-back" href="../../pycirk.html#pycirk.positions.make_coord_array_for_make_sec">[docs]</a><span class="k">def</span> <span class="nf">make_coord_array_for_make_sec</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">no_countries</span><span class="p">,</span> <span class="n">no_categories</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -186,7 +182,7 @@
             <span class="n">nn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">+</span><span class="mi">1</span>
         <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span>
 
-    <span class="k">return</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">s</span></div>
 </pre></div>
 
           </div>

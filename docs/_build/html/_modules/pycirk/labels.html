@@ -67,17 +67,29 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">Cr_W_labels</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="Labels.calc_no_of_something"><a class="viewcode-back" href="../../pycirk.html#pycirk.labels.Labels.calc_no_of_something">[docs]</a>    <span class="k">def</span> <span class="nf">calc_no_of_something</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-        <span class="n">no_of_something</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-        <span class="k">return</span><span class="p">(</span><span class="n">no_of_something</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A general method to calculate the number of unique entries contained</span>
+<span class="sd">        in a series </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="Labels.list_of_something"><a class="viewcode-back" href="../../pycirk.html#pycirk.labels.Labels.list_of_something">[docs]</a>    <span class="k">def</span> <span class="nf">list_of_something</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-        <span class="n">list_of_some</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-        <span class="k">return</span><span class="p">(</span><span class="n">list_of_some</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A general method to return a list of unique entries contained in a series</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">labels</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Labels.get_unique_labels"><a class="viewcode-back" href="../../pycirk.html#pycirk.labels.Labels.get_unique_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_unique_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_of_labels</span><span class="p">,</span> <span class="n">for_units</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Labels.get_unique_labels"><a class="viewcode-back" href="../../pycirk.html#pycirk.labels.Labels.get_unique_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_unique_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe_of_labels</span><span class="p">,</span> <span class="n">for_units</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates all unique entries (labels) contained in a dataframe and</span>
+<span class="sd">        puts them together with their units and total count of unique entries</span>
+<span class="sd">        </span>
+<span class="sd">        It returns an object... which is munched, not a pretty solution but it</span>
+<span class="sd">        works ok for now. Please consider refactoring in the future</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">organize</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
-        <span class="k">for</span> <span class="n">keys</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">list_of_labels</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">keys</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">dataframe_of_labels</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">for_units</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">organize</span><span class="p">[</span><span class="n">keys</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_of_something</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">for_units</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -89,7 +101,7 @@
         <span class="n">count</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="k">for</span> <span class="n">keys</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">organize</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
         <span class="n">organize</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
 
-        <span class="k">return</span><span class="p">(</span><span class="n">Munch</span><span class="p">(</span><span class="n">organize</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="n">Munch</span><span class="p">(</span><span class="n">organize</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Labels.organize_unique_labels"><a class="viewcode-back" href="../../pycirk.html#pycirk.labels.Labels.organize_unique_labels">[docs]</a>    <span class="k">def</span> <span class="nf">organize_unique_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
 
@@ -114,7 +126,7 @@
         <span class="n">labels</span><span class="o">.</span><span class="n">car_mat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_unique_labels</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">car_mat</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="n">labels</span><span class="o">.</span><span class="n">car_prim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_unique_labels</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">car_prim</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
-        <span class="k">return</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">labels</span></div>
 
 <div class="viewcode-block" id="Labels.load_labels"><a class="viewcode-back" href="../../pycirk.html#pycirk.labels.Labels.load_labels">[docs]</a>    <span class="k">def</span> <span class="nf">load_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
 
@@ -139,35 +151,36 @@
         <span class="n">car_mat</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/charact_materials.csv&quot;</span><span class="p">)</span>
         <span class="n">car_prim</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/charact_factor_inputs.csv&quot;</span><span class="p">)</span>
 
-        <span class="n">labels</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ind&quot;</span><span class="p">:</span> <span class="n">ind</span><span class="p">,</span>
-                  <span class="s2">&quot;prod&quot;</span><span class="p">:</span> <span class="n">prod</span><span class="p">,</span>
-                  <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="n">primary</span><span class="p">,</span>
-                  <span class="s2">&quot;fin_dem&quot;</span><span class="p">:</span> <span class="n">fin_dem</span><span class="p">,</span>
-                  <span class="s2">&quot;emis&quot;</span><span class="p">:</span> <span class="n">emis</span><span class="p">,</span>
-                  <span class="s2">&quot;res&quot;</span><span class="p">:</span> <span class="n">res</span><span class="p">,</span>
-                  <span class="s2">&quot;mat&quot;</span><span class="p">:</span> <span class="n">mat</span><span class="p">,</span>
-                  <span class="s2">&quot;car_emis&quot;</span><span class="p">:</span> <span class="n">car_emis</span><span class="p">,</span>
-                  <span class="s2">&quot;car_res&quot;</span><span class="p">:</span> <span class="n">car_res</span><span class="p">,</span>
-                  <span class="s2">&quot;car_mat&quot;</span><span class="p">:</span> <span class="n">car_mat</span><span class="p">,</span>
-                  <span class="s2">&quot;car_prim&quot;</span><span class="p">:</span> <span class="n">car_prim</span><span class="p">}</span>
-        <span class="k">return</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;ind&quot;</span><span class="p">:</span> <span class="n">ind</span><span class="p">,</span>
+                <span class="s2">&quot;prod&quot;</span><span class="p">:</span> <span class="n">prod</span><span class="p">,</span>
+                <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="n">primary</span><span class="p">,</span>
+                <span class="s2">&quot;fin_dem&quot;</span><span class="p">:</span> <span class="n">fin_dem</span><span class="p">,</span>
+                <span class="s2">&quot;emis&quot;</span><span class="p">:</span> <span class="n">emis</span><span class="p">,</span>
+                <span class="s2">&quot;res&quot;</span><span class="p">:</span> <span class="n">res</span><span class="p">,</span>
+                <span class="s2">&quot;mat&quot;</span><span class="p">:</span> <span class="n">mat</span><span class="p">,</span>
+                <span class="s2">&quot;car_emis&quot;</span><span class="p">:</span> <span class="n">car_emis</span><span class="p">,</span>
+                <span class="s2">&quot;car_res&quot;</span><span class="p">:</span> <span class="n">car_res</span><span class="p">,</span>
+                <span class="s2">&quot;car_mat&quot;</span><span class="p">:</span> <span class="n">car_mat</span><span class="p">,</span>
+                <span class="s2">&quot;car_prim&quot;</span><span class="p">:</span> <span class="n">car_prim</span><span class="p">}</span></div>
 
 <div class="viewcode-block" id="Labels.get_labels"><a class="viewcode-back" href="../../pycirk.html#pycirk.labels.Labels.get_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Collects labels from a dataframe</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">output</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
+            <span class="k">return</span> <span class="n">matrix</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="c1"># print(&quot;ind&quot;,matrix.index[0])</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="c1"># this exception is here only in the case the multi-index is</span>
             <span class="c1"># as a list or flat strings instead of an actual multi-index</span>
-            <span class="n">output</span> <span class="o">=</span> <span class="n">df</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">matrix</span><span class="o">.</span><span class="n">index</span><span class="p">))</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-        <span class="k">return</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div>
+            <span class="c1"># it is not the case with our EXIOBASE database but future </span>
+            <span class="c1">#adaptation to include other databases may require it </span>
+            <span class="k">return</span> <span class="n">df</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">matrix</span><span class="o">.</span><span class="n">index</span><span class="p">))</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Labels.save_labels"><a class="viewcode-back" href="../../pycirk.html#pycirk.labels.Labels.save_labels">[docs]</a>    <span class="k">def</span> <span class="nf">save_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        saves the labels of the database in the labels directory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">get_labels</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/industry.csv&quot;</span><span class="p">,</span>
@@ -181,6 +194,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">get_labels</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Cr_W_k&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/charact_factor_inputs.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_labels</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/products.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># with unit column</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_labels</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/final_demand.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">get_labels</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;W&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/factor_inputs.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">get_labels</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;E&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/emissions.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -233,7 +247,7 @@
         <span class="n">data</span><span class="o">.</span><span class="n">Cr_M_k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relabel</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Cr_M_k</span><span class="p">,</span> <span class="n">lb</span><span class="o">.</span><span class="n">mat</span><span class="p">,</span> <span class="n">lb</span><span class="o">.</span><span class="n">car_mat</span><span class="p">)</span>
         <span class="n">data</span><span class="o">.</span><span class="n">Cr_W_k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relabel</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Cr_W_k</span><span class="p">,</span> <span class="n">lb</span><span class="o">.</span><span class="n">primary</span><span class="p">,</span> <span class="n">lb</span><span class="o">.</span><span class="n">car_prim</span><span class="p">)</span>
 
-        <span class="k">return</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">data</span></div>
 
 <div class="viewcode-block" id="Labels.apply_labels"><a class="viewcode-back" href="../../pycirk.html#pycirk.labels.Labels.apply_labels">[docs]</a>    <span class="k">def</span> <span class="nf">apply_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -248,8 +262,8 @@
             <span class="n">matrix</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
             <span class="n">matrix</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">columns</span>
 
-        <span class="k">return</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span></div>
-
+        <span class="k">return</span> <span class="n">matrix</span></div>
+               
 <div class="viewcode-block" id="Labels.relabel"><a class="viewcode-back" href="../../pycirk.html#pycirk.labels.Labels.relabel">[docs]</a>    <span class="k">def</span> <span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">column_labels</span><span class="p">,</span> <span class="n">index_labels</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Processes apply_labels and apply _names together</span>
@@ -261,13 +275,16 @@
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="c1"># in case a string is passed for column label for a vector</span>
             <span class="n">M</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">column_labels</span><span class="p">]</span>
-        <span class="n">M</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_labels</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">index_labels</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># index</span>
-
-        <span class="k">return</span><span class="p">(</span><span class="n">M</span><span class="p">)</span></div>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_labels</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">index_labels</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># index</span></div>
 
 <div class="viewcode-block" id="Labels.identify_labels"><a class="viewcode-back" href="../../pycirk.html#pycirk.labels.Labels.identify_labels">[docs]</a>    <span class="k">def</span> <span class="nf">identify_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">M_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A method to understand what type of labels are being handled depending</span>
+<span class="sd">        on the name of the matrix in dataframe type that is being passed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-            <span class="c1"># identifying colum and index labels</span>
+        <span class="c1"># identifying colum and index labels</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">country_labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">reg_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">region_labels</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">country_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -300,14 +317,12 @@
         <span class="n">no_reg_labs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reg_labels</span><span class="p">)</span>
         <span class="n">no_col_labs</span> <span class="o">=</span> <span class="n">column_labels</span><span class="o">.</span><span class="n">count</span>
 
-        <span class="n">output</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;reg_labels&quot;</span><span class="p">:</span> <span class="n">reg_labels</span><span class="p">,</span>
-                  <span class="s2">&quot;g_labels&quot;</span><span class="p">:</span> <span class="n">column_labels</span><span class="p">,</span>
-                  <span class="s2">&quot;i_labels&quot;</span><span class="p">:</span> <span class="n">row_labels</span><span class="p">,</span>
-                  <span class="s2">&quot;no_i&quot;</span><span class="p">:</span> <span class="n">no_row_labs</span><span class="p">,</span>
-                  <span class="s2">&quot;no_g&quot;</span><span class="p">:</span> <span class="n">no_col_labs</span><span class="p">,</span>
-                  <span class="s2">&quot;no_reg&quot;</span><span class="p">:</span> <span class="n">no_reg_labs</span><span class="p">}</span>
-
-        <span class="k">return</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;reg_labels&quot;</span><span class="p">:</span> <span class="n">reg_labels</span><span class="p">,</span>
+                <span class="s2">&quot;g_labels&quot;</span><span class="p">:</span> <span class="n">column_labels</span><span class="p">,</span>
+                <span class="s2">&quot;i_labels&quot;</span><span class="p">:</span> <span class="n">row_labels</span><span class="p">,</span>
+                <span class="s2">&quot;no_i&quot;</span><span class="p">:</span> <span class="n">no_row_labs</span><span class="p">,</span>
+                <span class="s2">&quot;no_g&quot;</span><span class="p">:</span> <span class="n">no_col_labs</span><span class="p">,</span>
+                <span class="s2">&quot;no_reg&quot;</span><span class="p">:</span> <span class="n">no_reg_labs</span><span class="p">}</span></div></div>
 </pre></div>
 
           </div>

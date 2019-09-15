@@ -52,7 +52,7 @@
 <span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">ospt</span>
 <span class="kn">from</span> <span class="nn">pycirk.make_secondary_flows</span> <span class="k">import</span> <span class="n">make_secondary</span> <span class="k">as</span> <span class="n">ms</span>
 <span class="kn">from</span> <span class="nn">pycirk.transformation_methods</span> <span class="k">import</span> <span class="n">Transform</span>
-<span class="kn">from</span> <span class="nn">pycirk.make_scenarios</span> <span class="k">import</span> <span class="n">make_counterfactuals</span><span class="p">,</span> <span class="n">make_counterfactuals_SUT</span>
+<span class="kn">from</span> <span class="nn">pycirk.make_scenarios</span> <span class="k">import</span> <span class="n">make_counterfactuals</span>
 <span class="kn">from</span> <span class="nn">pycirk.labels</span> <span class="k">import</span> <span class="n">Labels</span>
 <span class="kn">from</span> <span class="nn">pycirk.organize_io</span> <span class="k">import</span> <span class="n">organizer</span>
 
@@ -114,17 +114,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="s2">&quot;linux&quot;</span> <span class="ow">in</span> <span class="n">platform</span> <span class="ow">or</span> <span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;darwin&quot;</span><span class="p">:</span>
-            <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="s2">&quot;win&quot;</span> <span class="ow">in</span> <span class="n">platform</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">platform</span> <span class="o">!=</span> <span class="s2">&quot;darwin&quot;</span><span class="p">:</span>
-                <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
-
-        <span class="k">return</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span></div>
+                <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Settings.project_specs"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.project_specs">[docs]</a>    <span class="k">def</span> <span class="nf">project_specs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        General labelling of the project</span>
+<span class="sd">        General specifications for the project, they are also used to mark</span>
+<span class="sd">        the output files</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;(0) IOTpxpSTA_MSCm&quot;</span>
@@ -150,12 +149,12 @@
                      <span class="s2">&quot;institution&quot;</span><span class="p">:</span> <span class="n">institution</span><span class="p">,</span>
                      <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="n">method</span>
                      <span class="p">}</span>
-
-        <span class="k">return</span><span class="p">(</span><span class="n">specs</span><span class="p">)</span></div>
+            
+        <span class="k">return</span> <span class="n">specs</span></div>
 
 <div class="viewcode-block" id="Settings.set_save_directory"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.set_save_directory">[docs]</a>    <span class="k">def</span> <span class="nf">set_save_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        It specifies where the scenario file for input is</span>
+<span class="sd">        It specifies where the scenario file for input is located</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">test</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -186,7 +185,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_dir</span><span class="p">):</span>
             <span class="n">copyfile</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">)</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Please open &quot;</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">,</span> <span class="s2">&quot; to set your analysis and scenarios.&quot;</span><span class="p">,</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Please open </span><span class="si">{file_dir}</span><span class="s2"> to set your analysis and scenarios.&quot;</span><span class="p">,</span>
               <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Return to this script after you&#39;re done.&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Settings.create_output_folder"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.create_output_folder">[docs]</a>    <span class="k">def</span> <span class="nf">create_output_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -207,23 +206,20 @@
 <span class="sd">        It returns where the working scenarios.xlsx file is located</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">scen_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span><span class="p">,</span> <span class="s2">&quot;scenarios.xlsx&quot;</span><span class="p">)</span>
-
-        <span class="k">return</span><span class="p">(</span><span class="n">scen_file</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_directory</span><span class="p">,</span> <span class="s2">&quot;scenarios.xlsx&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Settings.load_dataset"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.load_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">load_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        It loads the baseline dataset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-        <span class="k">return</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Settings.check_dataset_location"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.check_dataset_location">[docs]</a>    <span class="k">def</span> <span class="nf">check_dataset_location</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        It identifies where the baseline dataset is located and whether it is</span>
-<span class="sd">        present in the directory.</span>
+<span class="sd">        present in the directory. If an IO database was already created in the</span>
+<span class="sd">        past then it will just return it&#39;s location and type instead of</span>
+<span class="sd">        transforming the SUTs into IOT anew</span>
 
 <span class="sd">        Output</span>
 <span class="sd">        ------</span>
@@ -231,7 +227,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">data_loc</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">}</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">}</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 
@@ -255,7 +251,7 @@
             <span class="n">sut</span> <span class="o">=</span> <span class="n">ospt</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">ospt</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ospt</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">sut</span><span class="p">))</span>
 
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">io</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">sut</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;Download database from exiobase.eu &quot;</span> <span class="o">+</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;Download database from repository &quot;</span> <span class="o">+</span>
                                         <span class="s2">&quot;or ask for a copy through &quot;</span> <span class="o">+</span>
                                         <span class="s2">&quot;f.donati@cml.leidenuniv.nl &quot;</span> <span class="o">+</span>
                                         <span class="s2">&quot;and add it to &quot;</span> <span class="o">+</span>
@@ -268,9 +264,7 @@
                 <span class="n">data</span> <span class="o">=</span> <span class="n">sut</span>
                 <span class="n">typ</span> <span class="o">=</span> <span class="s2">&quot;sut&quot;</span>
 
-            <span class="n">data_loc</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">typ</span><span class="p">}</span>
-
-        <span class="k">return</span><span class="p">(</span><span class="n">data_loc</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">typ</span><span class="p">}</span></div>
 
 <div class="viewcode-block" id="Settings.transform_to_io"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.transform_to_io">[docs]</a>    <span class="k">def</span> <span class="nf">transform_to_io</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -309,19 +303,16 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">extension</span> <span class="o">=</span> <span class="s2">&quot;.pkl&quot;</span>
 
-            <span class="c1"># SUTs = mc()</span>
             <span class="n">SUTs</span> <span class="o">=</span> <span class="n">Transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="o">.</span><span class="n">save_labels</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory_labels</span><span class="p">)</span>
             <span class="k">del</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="c1">#  Transform SUT to IOT</span>
+            <span class="c1">#  Transform SUT to IOT</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">IOT</span> <span class="o">=</span> <span class="n">SUTs</span><span class="o">.</span><span class="n">IOTpxpSTA_TCm</span><span class="p">()</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">IOT</span> <span class="o">=</span> <span class="n">SUTs</span><span class="o">.</span><span class="n">IOTpxpSTA_MSCm</span><span class="p">()</span>
 
             <span class="k">del</span><span class="p">(</span><span class="n">SUTs</span><span class="p">)</span>
-
-<span class="c1">#            IOT = lb.</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggregation</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
                 <span class="n">pickle_name</span> <span class="o">=</span> <span class="s2">&quot;pycirk//data//mrIO_V3.3&quot;</span> <span class="o">+</span> <span class="n">extension</span>
@@ -336,7 +327,6 @@
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pickle_name</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">w</span><span class="p">:</span>
                 <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">IOT</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># pickling</span>
 
-            <span class="c1"># os.remove(pickle_name)</span>
         <span class="k">elif</span> <span class="n">typ</span> <span class="o">==</span> <span class="s2">&quot;io&quot;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="o">.</span><span class="n">save_labels</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory_labels</span><span class="p">)</span>
                 <span class="n">IOT</span> <span class="o">=</span> <span class="n">data</span>
@@ -344,10 +334,10 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assign_labels_to_class</span><span class="p">()</span>
 
-        <span class="k">return</span><span class="p">(</span><span class="n">IOT</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">IOT</span></div>
 
 <div class="viewcode-block" id="Settings.set_SUTs"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.set_SUTs">[docs]</a>    <span class="k">def</span> <span class="nf">set_SUTs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
+        
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggregation</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">loc</span> <span class="o">=</span> <span class="s2">&quot;data//mrSUT_EU_ROW_V3.3.pkl&quot;</span>
 
@@ -361,12 +351,15 @@
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;Your database could not be opened&quot;</span> <span class="o">+</span>
                                     <span class="s2">&quot; check your file:</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">loc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
-        <span class="n">SUTs</span> <span class="o">=</span> <span class="n">Transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-        <span class="k">return</span><span class="p">(</span><span class="n">SUTs</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Settings.assign_labels_to_class"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.assign_labels_to_class">[docs]</a>    <span class="k">def</span> <span class="nf">assign_labels_to_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># data, scen_no):</span>
+<div class="viewcode-block" id="Settings.assign_labels_to_class"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.assign_labels_to_class">[docs]</a>    <span class="k">def</span> <span class="nf">assign_labels_to_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assigns all labels to their respective attributes in the Labels class</span>
+<span class="sd">        These are used througout the program to find coordinates and </span>
+<span class="sd">        label results</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">all_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="o">.</span><span class="n">organize_unique_labels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory_labels</span><span class="p">)</span>
 
@@ -386,42 +379,37 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="o">.</span><span class="n">Cr_E_labels</span> <span class="o">=</span> <span class="n">all_labels</span><span class="o">.</span><span class="n">car_emis</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="o">.</span><span class="n">Cr_R_labels</span> <span class="o">=</span> <span class="n">all_labels</span><span class="o">.</span><span class="n">car_res</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="o">.</span><span class="n">Cr_M_labels</span> <span class="o">=</span> <span class="n">all_labels</span><span class="o">.</span><span class="n">car_mat</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="o">.</span><span class="n">Cr_W_labels</span> <span class="o">=</span> <span class="n">all_labels</span><span class="o">.</span><span class="n">car_prim</span>
-
-        <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="o">.</span><span class="n">Cr_W_labels</span> <span class="o">=</span> <span class="n">all_labels</span><span class="o">.</span><span class="n">car_prim</span></div>
 
 <div class="viewcode-block" id="Settings.set_IO_scenario"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.set_IO_scenario">[docs]</a>    <span class="k">def</span> <span class="nf">set_IO_scenario</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class the functions to modify the IO database according to your</span>
+<span class="sd">        scenario specifications</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">scen_no</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">scenario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_to_io</span><span class="p">()</span> <span class="c1"># I will likely delete this later</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">scenario</span> <span class="o">=</span> <span class="n">make_counterfactuals</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_file</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">)</span>
 
-        <span class="n">scenario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="o">.</span><span class="n">relabel_to_save</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s2">&quot;pycirk//labels/&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="o">.</span><span class="n">relabel_to_save</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s2">&quot;pycirk//labels/&quot;</span><span class="p">)</span></div>
 
-        <span class="k">return</span><span class="p">(</span><span class="n">scenario</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Settings.set_SUTs_scenario"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.set_SUTs_scenario">[docs]</a>    <span class="k">def</span> <span class="nf">set_SUTs_scenario</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">):</span>
-
-        <span class="k">if</span> <span class="n">scen_no</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">scenario</span> <span class="o">=</span> <span class="n">data</span> <span class="c1"># I will likely delete this later</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">scenario</span> <span class="o">=</span> <span class="n">make_counterfactuals_SUT</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_file</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">)</span>
-
-        <span class="n">scenario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="o">.</span><span class="n">relabel_to_save</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s2">&quot;pycirk//labels/&quot;</span><span class="p">)</span>
-
-        <span class="k">return</span><span class="p">(</span><span class="n">scenario</span><span class="p">)</span></div>
+<span class="c1">#    def set_SUTs_scenario(self, data, scen_no):</span>
+<span class="c1">#</span>
+<span class="c1">#        if scen_no == 0:</span>
+<span class="c1">#            scenario = data # I will likely delete this later</span>
+<span class="c1">#        else:</span>
+<span class="c1">#            scenario = make_counterfactuals_SUT(data, scen_no, self.scenario_file(), self.lb)</span>
+<span class="c1">#</span>
+<span class="c1">#        return self.lb.relabel_to_save(scenario, self.method, &quot;pycirk//labels/&quot;)</span>
 
 <div class="viewcode-block" id="Settings.load_results_params"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.load_results_params">[docs]</a>    <span class="k">def</span> <span class="nf">load_results_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="n">res_par</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scenario_file</span><span class="p">(),</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;analyse&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-
-        <span class="k">return</span><span class="p">(</span><span class="n">res_par</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scenario_file</span><span class="p">(),</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;analyse&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Settings.number_scenarios"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk_settings.Settings.number_scenarios">[docs]</a>    <span class="k">def</span> <span class="nf">number_scenarios</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">scen_file</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scenario_file</span><span class="p">())</span>
         <span class="n">scenarios</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">scen_file</span><span class="o">.</span><span class="n">sheet_names</span> <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;scenario_&quot;</span><span class="p">)]</span>
-        <span class="k">return</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scenarios</span><span class="p">))</span></div></div>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">scenarios</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>

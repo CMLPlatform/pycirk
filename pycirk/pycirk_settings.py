@@ -217,7 +217,7 @@ class Settings:
             sut = ospt.abspath(ospt.join(ospt.dirname(__file__), sut))
 
             if os.path.exists(io) is False and os.path.exists(sut) is False:
-                raise FileNotFoundError("Download database from exiobase.eu " +
+                raise FileNotFoundError("Download database from repository " +
                                         "or ask for a copy through " +
                                         "f.donati@cml.leidenuniv.nl " +
                                         "and add it to " +
@@ -360,14 +360,14 @@ class Settings:
 
         return self.lb.relabel_to_save(scenario, self.method, "pycirk//labels/")
 
-    def set_SUTs_scenario(self, data, scen_no):
-
-        if scen_no == 0:
-            scenario = data # I will likely delete this later
-        else:
-            scenario = make_counterfactuals_SUT(data, scen_no, self.scenario_file(), self.lb)
-
-        return self.lb.relabel_to_save(scenario, self.method, "pycirk//labels/")
+#    def set_SUTs_scenario(self, data, scen_no):
+#
+#        if scen_no == 0:
+#            scenario = data # I will likely delete this later
+#        else:
+#            scenario = make_counterfactuals_SUT(data, scen_no, self.scenario_file(), self.lb)
+#
+#        return self.lb.relabel_to_save(scenario, self.method, "pycirk//labels/")
 
     def load_results_params(self):
         return pd.read_excel(self.scenario_file(), sheet_name="analyse", header=3)

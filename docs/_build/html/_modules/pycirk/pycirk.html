@@ -48,6 +48,7 @@
 <span class="kn">from</span> <span class="nn">pycirk</span> <span class="k">import</span> <span class="n">results</span>
 <span class="kn">from</span> <span class="nn">pycirk.pycirk_settings</span> <span class="k">import</span> <span class="n">Settings</span>
 <span class="kn">from</span> <span class="nn">pycirk.make_scenarios</span> <span class="k">import</span> <span class="n">make_counterfactuals</span> <span class="k">as</span> <span class="n">mcf</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">glob</span>
 
 
 <div class="viewcode-block" id="Launch"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Launch">[docs]</a><span class="k">class</span> <span class="nc">Launch</span><span class="p">:</span>
@@ -171,7 +172,7 @@
         <span class="k">if</span> <span class="n">output_dataset</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;res&quot;</span><span class="p">:</span> <span class="n">output</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">IO</span><span class="p">}</span>
 
-        <span class="k">return</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">output</span></div>
 
 <div class="viewcode-block" id="Launch.all_results"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Launch.all_results">[docs]</a>    <span class="k">def</span> <span class="nf">all_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -189,7 +190,8 @@
             <span class="k">if</span> <span class="n">l</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">scen_res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario_results</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
                 <span class="n">output</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">output</span><span class="p">,</span> <span class="n">scen_res</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div>
+        
+        <span class="k">return</span> <span class="n">output</span></div>
 
 
 <div class="viewcode-block" id="Launch.save_results"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Launch.save_results">[docs]</a>    <span class="k">def</span> <span class="nf">save_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scen_no</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_dataset</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -215,7 +217,7 @@
 
 <span class="sd">        Output_dataset is only possible when scen_no is specified</span>
 <span class="sd">        in which case it would save also a data.pkl file</span>
-
+<span class="sd">        </span>
 <span class="sd">        scenarios.xlsx : excel file</span>
 <span class="sd">            scenario settings excel file used for the analysis in the same</span>
 <span class="sd">            output directory with the results</span>
@@ -247,7 +249,15 @@
 
 
         <span class="n">save_outputs</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">save_directory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">specs</span><span class="p">,</span>
-                     <span class="n">scen_no</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div></div>
+                     <span class="n">scen_no</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="Launch.delete_previous_IO_builds"><a class="viewcode-back" href="../../pycirk.html#pycirk.pycirk.Launch.delete_previous_IO_builds">[docs]</a>    <span class="k">def</span> <span class="nf">delete_previous_IO_builds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call this method if you want to elinate all previous </span>
+<span class="sd">        IO databases created by pycirk. SUTs database is not affected.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;pycirk//data//mrIO*&quot;</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> </div></div>
 </pre></div>
 
           </div>

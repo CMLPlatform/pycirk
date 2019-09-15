@@ -127,25 +127,23 @@
 
         <span class="n">A</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>
 
-        <span class="n">IOT</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span>
-               <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="n">L</span><span class="p">,</span>
-               <span class="s2">&quot;Z&quot;</span><span class="p">:</span> <span class="n">Z</span><span class="p">,</span>
-               <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span>
-               <span class="s2">&quot;W&quot;</span><span class="p">:</span> <span class="n">W</span><span class="p">,</span>
-               <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="n">E</span><span class="p">,</span>
-               <span class="s2">&quot;EY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">EY</span><span class="p">,</span>
-               <span class="s2">&quot;R&quot;</span><span class="p">:</span> <span class="n">R</span><span class="p">,</span>
-               <span class="s2">&quot;RY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">RY</span><span class="p">,</span>
-               <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="n">M</span><span class="p">,</span>
-               <span class="s2">&quot;MY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">MY</span><span class="p">,</span>
-               <span class="s2">&quot;Cr_E_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_E_k</span><span class="p">,</span>
-               <span class="s2">&quot;Cr_M_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_M_k</span><span class="p">,</span>
-               <span class="s2">&quot;Cr_R_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_R_k</span><span class="p">,</span>
-               <span class="s2">&quot;Cr_W_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_W_k</span><span class="p">,</span>
-               <span class="s2">&quot;ver_base&quot;</span><span class="p">:</span> <span class="n">ver_base</span>
-               <span class="p">}</span>
-
-        <span class="k">return</span><span class="p">(</span><span class="n">IOT</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span>
+                <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="n">L</span><span class="p">,</span>
+                <span class="s2">&quot;Z&quot;</span><span class="p">:</span> <span class="n">Z</span><span class="p">,</span>
+                <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span>
+                <span class="s2">&quot;W&quot;</span><span class="p">:</span> <span class="n">W</span><span class="p">,</span>
+                <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="n">E</span><span class="p">,</span>
+                <span class="s2">&quot;EY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">EY</span><span class="p">,</span>
+                <span class="s2">&quot;R&quot;</span><span class="p">:</span> <span class="n">R</span><span class="p">,</span>
+                <span class="s2">&quot;RY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">RY</span><span class="p">,</span>
+                <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="n">M</span><span class="p">,</span>
+                <span class="s2">&quot;MY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">MY</span><span class="p">,</span>
+                <span class="s2">&quot;Cr_E_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_E_k</span><span class="p">,</span>
+                <span class="s2">&quot;Cr_M_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_M_k</span><span class="p">,</span>
+                <span class="s2">&quot;Cr_R_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_R_k</span><span class="p">,</span>
+                <span class="s2">&quot;Cr_W_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_W_k</span><span class="p">,</span>
+                <span class="s2">&quot;ver_base&quot;</span><span class="p">:</span> <span class="n">ver_base</span>
+                <span class="p">}</span></div>
 
 <div class="viewcode-block" id="Transform.IOTpxpSTA_MSCm"><a class="viewcode-back" href="../../pycirk.html#pycirk.transformation_methods.Transform.IOTpxpSTA_MSCm">[docs]</a>    <span class="k">def</span> <span class="nf">IOTpxpSTA_MSCm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -183,25 +181,23 @@
 
         <span class="n">A</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_diag_q</span><span class="p">)</span>
 
-        <span class="n">IOT</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span>
-               <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="n">L</span><span class="p">,</span>
-               <span class="s2">&quot;Z&quot;</span><span class="p">:</span> <span class="n">Z</span><span class="p">,</span>
-               <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span>
-               <span class="s2">&quot;W&quot;</span><span class="p">:</span> <span class="n">W</span><span class="p">,</span>
-               <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="n">E</span><span class="p">,</span>
-               <span class="s2">&quot;EY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">EY</span><span class="p">,</span>
-               <span class="s2">&quot;R&quot;</span><span class="p">:</span> <span class="n">R</span><span class="p">,</span>
-               <span class="s2">&quot;RY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">RY</span><span class="p">,</span>
-               <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="n">M</span><span class="p">,</span>
-               <span class="s2">&quot;MY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">MY</span><span class="p">,</span>
-               <span class="s2">&quot;Cr_E_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_E_k</span><span class="p">,</span>
-               <span class="s2">&quot;Cr_M_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_M_k</span><span class="p">,</span>
-               <span class="s2">&quot;Cr_R_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_R_k</span><span class="p">,</span>
-               <span class="s2">&quot;Cr_W_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_W_k</span><span class="p">,</span>
-               <span class="s2">&quot;ver_base&quot;</span><span class="p">:</span> <span class="n">ver_base</span>
-               <span class="p">}</span>
-
-        <span class="k">return</span><span class="p">(</span><span class="n">IOT</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span>
+                <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="n">L</span><span class="p">,</span>
+                <span class="s2">&quot;Z&quot;</span><span class="p">:</span> <span class="n">Z</span><span class="p">,</span>
+                <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span>
+                <span class="s2">&quot;W&quot;</span><span class="p">:</span> <span class="n">W</span><span class="p">,</span>
+                <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="n">E</span><span class="p">,</span>
+                <span class="s2">&quot;EY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">EY</span><span class="p">,</span>
+                <span class="s2">&quot;R&quot;</span><span class="p">:</span> <span class="n">R</span><span class="p">,</span>
+                <span class="s2">&quot;RY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">RY</span><span class="p">,</span>
+                <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="n">M</span><span class="p">,</span>
+                <span class="s2">&quot;MY&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">MY</span><span class="p">,</span>
+                <span class="s2">&quot;Cr_E_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_E_k</span><span class="p">,</span>
+                <span class="s2">&quot;Cr_M_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_M_k</span><span class="p">,</span>
+                <span class="s2">&quot;Cr_R_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_R_k</span><span class="p">,</span>
+                <span class="s2">&quot;Cr_W_k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cr_W_k</span><span class="p">,</span>
+                <span class="s2">&quot;ver_base&quot;</span><span class="p">:</span> <span class="n">ver_base</span>
+                <span class="p">}</span></div></div>
 
         <span class="c1"># Add here more transformation methods for industry-by-industry</span>
 </pre></div>

@@ -56,9 +56,8 @@
 
 <div class="viewcode-block" id="iter_thru_for_results"><a class="viewcode-back" href="../../pycirk.html#pycirk.results.iter_thru_for_results">[docs]</a><span class="k">def</span> <span class="nf">iter_thru_for_results</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">analysis_specs</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    filter policy interventions from scenario file according to specified</span>
-<span class="sd">    matrix and return the respective matrix with it</span>
-<span class="sd">    Output only specified (see scenario.xls) results to be analysed</span>
+<span class="sd">    It uses your analytical specification on scenarios.xlxl</span>
+<span class="sd">    to return a dataframe of the desired results</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -73,8 +72,8 @@
         <span class="n">results</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sc_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">scen_no</span><span class="p">)]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">results</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;baseline&quot;</span><span class="p">]</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div>
+    
+    <span class="k">return</span> <span class="n">results</span></div>
 
 
 <div class="viewcode-block" id="retrieve_specified_data"><a class="viewcode-back" href="../../pycirk.html#pycirk.results.retrieve_specified_data">[docs]</a><span class="k">def</span> <span class="nf">retrieve_specified_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">spec_row</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
@@ -143,8 +142,7 @@
 
     <span class="n">select</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">([</span><span class="n">index_label</span><span class="p">],</span> <span class="n">names</span><span class="o">=</span><span class="n">key_names</span><span class="p">)</span>
 
-    <span class="k">return</span><span class="p">(</span><span class="n">select</span><span class="p">)</span></div>
-
+    <span class="k">return</span> <span class="n">select</span></div>
 </pre></div>
 
           </div>

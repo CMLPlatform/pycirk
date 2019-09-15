@@ -286,7 +286,9 @@ axis = 1 =&gt; columns</p>
 <dl class="method">
 <dt id="pycirk.labels.Labels.calc_no_of_something">
 <code class="descname">calc_no_of_something</code><span class="sig-paren">(</span><em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.calc_no_of_something"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.calc_no_of_something" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>A general method to calculate the number of unique entries contained
+in a series</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pycirk.labels.Labels.get_labels">
@@ -296,18 +298,25 @@ axis = 1 =&gt; columns</p>
 
 <dl class="method">
 <dt id="pycirk.labels.Labels.get_unique_labels">
-<code class="descname">get_unique_labels</code><span class="sig-paren">(</span><em>list_of_labels</em>, <em>for_units=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.get_unique_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.get_unique_labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descname">get_unique_labels</code><span class="sig-paren">(</span><em>dataframe_of_labels</em>, <em>for_units=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.get_unique_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.get_unique_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates all unique entries (labels) contained in a dataframe and
+puts them together with their units and total count of unique entries</p>
+<p>It returns an object… which is munched, not a pretty solution but it
+works ok for now. Please consider refactoring in the future</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pycirk.labels.Labels.identify_labels">
 <code class="descname">identify_labels</code><span class="sig-paren">(</span><em>M_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.identify_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.identify_labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>A method to understand what type of labels are being handled depending
+on the name of the matrix in dataframe type that is being passed</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pycirk.labels.Labels.list_of_something">
 <code class="descname">list_of_something</code><span class="sig-paren">(</span><em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.list_of_something"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.list_of_something" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>A general method to return a list of unique entries contained in a series</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pycirk.labels.Labels.load_labels">
@@ -335,7 +344,8 @@ axis = 1 =&gt; columns</p>
 <dl class="method">
 <dt id="pycirk.labels.Labels.save_labels">
 <code class="descname">save_labels</code><span class="sig-paren">(</span><em>data</em>, <em>directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/labels.html#Labels.save_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.labels.Labels.save_labels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>saves the labels of the database in the labels directory</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -347,25 +357,6 @@ axis = 1 =&gt; columns</p>
 <p>Scope: Modelling the Circular Economy in EEIO</p>
 <p>&#64;author: Franco Donati
 &#64;institution: Leiden University CML</p>
-<dl class="function">
-<dt id="pycirk.make_scenarios.balancing_operation">
-<code class="descclassname">pycirk.make_scenarios.</code><code class="descname">balancing_operation</code><span class="sig-paren">(</span><em>V</em>, <em>U</em>, <em>Y</em>, <em>W</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/make_scenarios.html#balancing_operation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.make_scenarios.balancing_operation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Re-balancing of supply-use tables after data changes</p>
-<p>V (supply) : numpy.array</p>
-<p>U (use) : numpy.array</p>
-<p>Y (final_demand) : numpy.array</p>
-<p>W (primary_inputs) : numpy.array</p>
-<p>output : dict</p>
-<p>It outputs a dictionary containing a re-balanced supply-use tables system
-where:</p>
-<blockquote>
-<div><p>V = supply table</p>
-<p>U = use table</p>
-<p>Y = final demand</p>
-<p>W = primary inputs</p>
-</div></blockquote>
-</dd></dl>
-
 <dl class="function">
 <dt id="pycirk.make_scenarios.basic_add">
 <code class="descclassname">pycirk.make_scenarios.</code><code class="descname">basic_add</code><span class="sig-paren">(</span><em>a</em>, <em>at</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/make_scenarios.html#basic_add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.make_scenarios.basic_add" title="Permalink to this definition">¶</a></dt>
@@ -458,23 +449,6 @@ according to specifications in scenarios.xlsx</dd>
 <dd>an object containing all labels for the IO matrices</dd>
 </dl>
 <p>An object contaning a mofified IO system</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pycirk.make_scenarios.make_counterfactuals_SUT">
-<code class="descclassname">pycirk.make_scenarios.</code><code class="descname">make_counterfactuals_SUT</code><span class="sig-paren">(</span><em>data</em>, <em>scen_no</em>, <em>scen_file</em>, <em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/make_scenarios.html#make_counterfactuals_SUT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.make_scenarios.make_counterfactuals_SUT" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate all the counterfactual SUT matrices</p>
-<dl class="docutils">
-<dt>data <span class="classifier-delimiter">:</span> <span class="classifier">obj</span></dt>
-<dd>An object containing all necessary matrices of the SUT system</dd>
-<dt>scen_no <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>the identification number of the scenario to reference in scen_file</dd>
-<dt>scen_file <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd>the directory where the scenarios.xlsx file is store</dd>
-<dt>labels <span class="classifier-delimiter">:</span> <span class="classifier">obj</span></dt>
-<dd>an object containing all labels for the SUT matrices</dd>
-</dl>
-<p>An object contaning a mofified SUT system</p>
 </dd></dl>
 
 <dl class="function">
@@ -720,6 +694,13 @@ Baseline analysis results</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pycirk.pycirk.Launch.delete_previous_IO_builds">
+<code class="descname">delete_previous_IO_builds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk.html#Launch.delete_previous_IO_builds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk.Launch.delete_previous_IO_builds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call this method if you want to elinate all previous 
+IO databases created by pycirk. SUTs database is not affected.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="pycirk.pycirk.Launch.save_results">
 <code class="descname">save_results</code><span class="sig-paren">(</span><em>scen_no=None</em>, <em>output_dataset=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk.html#Launch.save_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk.Launch.save_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves all results in excel format for info and results or in
@@ -810,13 +791,18 @@ default location within the installed package</dd>
 <dl class="method">
 <dt id="pycirk.pycirk_settings.Settings.assign_labels_to_class">
 <code class="descname">assign_labels_to_class</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk_settings.html#Settings.assign_labels_to_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk_settings.Settings.assign_labels_to_class" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Assigns all labels to their respective attributes in the Labels class
+These are used througout the program to find coordinates and 
+label results</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pycirk.pycirk_settings.Settings.check_dataset_location">
 <code class="descname">check_dataset_location</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk_settings.html#Settings.check_dataset_location"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk_settings.Settings.check_dataset_location" title="Permalink to this definition">¶</a></dt>
 <dd><p>It identifies where the baseline dataset is located and whether it is
-present in the directory.</p>
+present in the directory. If an IO database was already created in the
+past then it will just return it’s location and type instead of
+transforming the SUTs into IOT anew</p>
 <p>A dictionary containing location “loc” and type of format (SUT or IO)</p>
 </dd></dl>
 
@@ -859,7 +845,8 @@ pycirk directory to the new working directory specified by the user</p>
 <dl class="method">
 <dt id="pycirk.pycirk_settings.Settings.project_specs">
 <code class="descname">project_specs</code><span class="sig-paren">(</span><em>test=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk_settings.html#Settings.project_specs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk_settings.Settings.project_specs" title="Permalink to this definition">¶</a></dt>
-<dd><p>General labelling of the project</p>
+<dd><p>General specifications for the project, they are also used to mark
+the output files</p>
 </dd></dl>
 
 <dl class="method">
@@ -871,7 +858,9 @@ pycirk directory to the new working directory specified by the user</p>
 <dl class="method">
 <dt id="pycirk.pycirk_settings.Settings.set_IO_scenario">
 <code class="descname">set_IO_scenario</code><span class="sig-paren">(</span><em>data</em>, <em>scen_no</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk_settings.html#Settings.set_IO_scenario"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk_settings.Settings.set_IO_scenario" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Class the functions to modify the IO database according to your
+scenario specifications</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pycirk.pycirk_settings.Settings.set_SUTs">
@@ -879,14 +868,9 @@ pycirk directory to the new working directory specified by the user</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="pycirk.pycirk_settings.Settings.set_SUTs_scenario">
-<code class="descname">set_SUTs_scenario</code><span class="sig-paren">(</span><em>data</em>, <em>scen_no</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk_settings.html#Settings.set_SUTs_scenario"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk_settings.Settings.set_SUTs_scenario" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
 <dt id="pycirk.pycirk_settings.Settings.set_save_directory">
 <code class="descname">set_save_directory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/pycirk_settings.html#Settings.set_save_directory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.pycirk_settings.Settings.set_save_directory" title="Permalink to this definition">¶</a></dt>
-<dd><p>It specifies where the scenario file for input is</p>
+<dd><p>It specifies where the scenario file for input is located</p>
 </dd></dl>
 
 <dl class="method">
@@ -916,9 +900,8 @@ analysis and scenarios.</p>
 <dl class="function">
 <dt id="pycirk.results.iter_thru_for_results">
 <code class="descclassname">pycirk.results.</code><code class="descname">iter_thru_for_results</code><span class="sig-paren">(</span><em>data</em>, <em>analysis_specs</em>, <em>scen_no</em>, <em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycirk/results.html#iter_thru_for_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycirk.results.iter_thru_for_results" title="Permalink to this definition">¶</a></dt>
-<dd><p>filter policy interventions from scenario file according to specified
-matrix and return the respective matrix with it
-Output only specified (see scenario.xls) results to be analysed</p>
+<dd><p>It uses your analytical specification on scenarios.xlxl
+to return a dataframe of the desired results</p>
 </dd></dl>
 
 <dl class="function">

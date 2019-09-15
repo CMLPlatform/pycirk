@@ -39,7 +39,7 @@ Once you have a copy of the source, you can install it with:
 
 ### Initialize
 
-    s = pycirk.Launch(method, directory, aggregation, make_secondary)
+    my_work = pycirk.Launch(method, directory, aggregation, make_secondary)
 
 ### set your scenarios and analysis
 
@@ -51,18 +51,18 @@ Once you have a copy of the source, you can install it with:
 
 Run one specific scenario
 
-    s.scenario_results(scen_no, output_dataset)
+    my_work.scenario_results(scen_no, output_dataset)
     (0 = baseline)
 
 Run all scenarios
 
-    s.all_results()
+    my_work.all_results()
 
 ### save scenarios
 
 Save your results
 
-    s.save_results()
+    my_work.save_results()
 
 
 ### Use from command line

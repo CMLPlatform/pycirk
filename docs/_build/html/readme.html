@@ -35,7 +35,7 @@
             
   <div class="section" id="pycirk">
 <h1>pycirk<a class="headerlink" href="#pycirk" title="Permalink to this headline">¶</a></h1>
-<p><em>A software to model Circular Economy policy and technological interventions in Environmentally Extended Input-Output Analysis starting from SUTs (EXIOBASE V3.3)</em></p>
+<p><em>A python package to model Circular Economy policy and technological interventions in Environmentally Extended Input-Output Analysis starting from SUTs (EXIOBASE V3.3)</em></p>
 <a class="reference external image-reference" href="https://zenodo.org/badge/latestdoi/157891556"><img alt="https://zenodo.org/badge/157891556.svg" src="https://zenodo.org/badge/157891556.svg" /></a>
 <a class="reference external image-reference" href="https://www.gnu.org/licenses/gpl-3.0"><img alt="https://img.shields.io/badge/License-GPL%20v3-blue.svg" src="https://img.shields.io/badge/License-GPL%20v3-blue.svg" /></a>
 <a class="reference external image-reference" href="resources/docs/CONTRIBUTING.md)"><img alt="https://img.shields.io/badge/contributions-welcome-brightgreen.svg" src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg" /></a>
@@ -71,7 +71,7 @@
 <div class="section" id="initialize">
 <h3>2.2. Initialize<a class="headerlink" href="#initialize" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div>s = pycirk.Launch(method, directory, aggregation)</div></blockquote>
+<div>my_work = pycirk.Launch(method, directory, aggregation)</div></blockquote>
 </div>
 <div class="section" id="set-your-scenarios-and-analysis">
 <h3>2.3. set your scenarios and analysis<a class="headerlink" href="#set-your-scenarios-and-analysis" title="Permalink to this headline">¶</a></h3>
@@ -85,17 +85,17 @@
 <h3>2.4. Run scenarios<a class="headerlink" href="#run-scenarios" title="Permalink to this headline">¶</a></h3>
 <p>Run one specific scenario</p>
 <blockquote>
-<div>s.scenario_results(scen_no, output_dataset)
+<div>my_work.scenario_results(scen_no, output_dataset)
 (0 = baseline)</div></blockquote>
 <p>Run all scenarios</p>
 <blockquote>
-<div>s.all_results()</div></blockquote>
+<div>my_work.all_results()</div></blockquote>
 </div>
 <div class="section" id="save-scenarios">
 <h3>2.5. save scenarios<a class="headerlink" href="#save-scenarios" title="Permalink to this headline">¶</a></h3>
 <p>Save your results</p>
 <blockquote>
-<div>s.save_results()</div></blockquote>
+<div>my_work.save_results()</div></blockquote>
 <p>2.6. Use from command line</p>
 <p>2.6.1. pycirk –help</p>
 <p>Usage: pycirk [OPTIONS]</p>

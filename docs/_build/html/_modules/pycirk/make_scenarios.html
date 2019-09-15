@@ -43,7 +43,6 @@
 <span class="sd">@author: Franco Donati</span>
 <span class="sd">@institution: Leiden University CML</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">pycirk.positions</span> <span class="k">import</span> <span class="n">make_coord_array</span> <span class="k">as</span> <span class="n">coord</span>
@@ -51,107 +50,6 @@
 <span class="kn">from</span> <span class="nn">pycirk.fundamental_operations</span> <span class="k">import</span> <span class="n">Operations</span> <span class="k">as</span> <span class="n">ops</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="c1"># from pycirk import sherman_morrison as sher_mor  # currently under development</span>
-
-<div class="viewcode-block" id="make_counterfactuals_SUT"><a class="viewcode-back" href="../../pycirk.html#pycirk.make_scenarios.make_counterfactuals_SUT">[docs]</a><span class="k">def</span> <span class="nf">make_counterfactuals_SUT</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">scen_file</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate all the counterfactual SUT matrices</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    data : obj</span>
-<span class="sd">        An object containing all necessary matrices of the SUT system</span>
-
-<span class="sd">    scen_no : int</span>
-<span class="sd">        the identification number of the scenario to reference in scen_file</span>
-
-<span class="sd">    scen_file : str</span>
-<span class="sd">        the directory where the scenarios.xlsx file is store</span>
-
-<span class="sd">    labels : obj</span>
-<span class="sd">        an object containing all labels for the SUT matrices</span>
-
-<span class="sd">    Outputs</span>
-<span class="sd">    -------</span>
-<span class="sd">    An object contaning a mofified SUT system</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">met</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">PxP_ITA_MSC</span>
-
-    <span class="n">w</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># Primary input coef</span>
-    <span class="n">e</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># emissions extension coef</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span> <span class="c1"># Resources extension coef</span>
-    <span class="n">m</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span> <span class="c1"># Materials extension coef</span>
-    <span class="n">S</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">U</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">inv_diag_g</span><span class="p">)</span>  <span class="c1"># industry coefficients for intermediate use table</span>
-
-    <span class="c1"># Start first from a supply approach</span>
-    <span class="c1"># Supply matrix counterfactual</span>
-    <span class="n">data</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span>  <span class="n">counterfactual</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="s2">&quot;V&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-    <span class="c1"># new total industry output</span>
-    <span class="n">g1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="c1"># industry use coefficients counterfactual</span>
-    <span class="n">S_</span> <span class="o">=</span> <span class="n">counterfactual</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-
-    <span class="n">data</span><span class="o">.</span><span class="n">U</span> <span class="o">=</span> <span class="n">counterfactual</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">S_</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">g1</span><span class="p">),</span> <span class="s2">&quot;U&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>  <span class="c1"># industry use transactions counterfactual</span>
-
-    <span class="n">W_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">g1</span><span class="p">)))</span>
-
-    <span class="n">g2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">W_</span><span class="p">[:</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">U</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># recalculate total industry output</span>
-
-    <span class="n">g_dif</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">g2</span><span class="p">,</span> <span class="n">ops</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">g1</span><span class="p">))</span><span class="o">*</span><span class="mi">100</span>  <span class="c1"># calculate the difference between original and new total industry input</span>
-
-    <span class="c1"># print([round((1-l)*100,4) for l in g_dif if 1-l&gt;.5e-3 and l!=0])</span>
-    <span class="n">q2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">U</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="c1"># updating the supply table to match the new total industry input</span>
-    <span class="n">D</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">D</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">ops</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">V</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">))))</span>
-    <span class="n">data</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">D</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">q2</span><span class="p">)</span>
-
-    <span class="n">q1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># total product output</span>
-
-    <span class="n">q_dif</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">q2</span><span class="p">,</span> <span class="n">ops</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">q1</span><span class="p">))</span>
-
-    <span class="n">g1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">V</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">data</span><span class="o">.</span><span class="n">E</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-
-    <span class="n">data</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-
-    <span class="n">data</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="n">met</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-
-
-    <span class="k">return</span><span class="p">(</span><span class="n">IOT</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="balancing_operation"><a class="viewcode-back" href="../../pycirk.html#pycirk.make_scenarios.balancing_operation">[docs]</a><span class="k">def</span> <span class="nf">balancing_operation</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Re-balancing of supply-use tables after data changes</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    V (supply) : numpy.array</span>
-
-<span class="sd">    U (use) : numpy.array</span>
-
-<span class="sd">    Y (final_demand) : numpy.array</span>
-
-<span class="sd">    W (primary_inputs) : numpy.array</span>
-
-<span class="sd">    Output</span>
-<span class="sd">    ------</span>
-<span class="sd">    output : dict</span>
-
-<span class="sd">    It outputs a dictionary containing a re-balanced supply-use tables system</span>
-<span class="sd">    where:</span>
-<span class="sd">        V = supply table</span>
-
-<span class="sd">        U = use table</span>
-
-<span class="sd">        Y = final demand</span>
-
-<span class="sd">        W = primary inputs</span>
-
-<span class="sd">    &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="make_counterfactuals"><a class="viewcode-back" href="../../pycirk.html#pycirk.make_scenarios.make_counterfactuals">[docs]</a><span class="k">def</span> <span class="nf">make_counterfactuals</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">scen_file</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
@@ -251,7 +149,7 @@
 
 <span class="c1">#    print((1-np.sum(x_)/np.sum(x_new))*100)</span>
 
-    <span class="k">return</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">data</span></div>
 
 
 <div class="viewcode-block" id="counterfactual"><a class="viewcode-back" href="../../pycirk.html#pycirk.make_scenarios.counterfactual">[docs]</a><span class="k">def</span> <span class="nf">counterfactual</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">M_name</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
@@ -298,8 +196,7 @@
         <span class="n">filtered_changes</span> <span class="o">=</span> <span class="n">scenario</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">scenario</span><span class="p">[</span><span class="s1">&#39;matrix&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">M_name</span><span class="p">]</span>
         <span class="n">matrix</span> <span class="o">=</span> <span class="n">make_new</span><span class="p">(</span><span class="n">filtered_changes</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">M_name</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 
-
-    <span class="k">return</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">matrix</span></div>
 
 
 <div class="viewcode-block" id="basic_mult"><a class="viewcode-back" href="../../pycirk.html#pycirk.make_scenarios.basic_mult">[docs]</a><span class="k">def</span> <span class="nf">basic_mult</span><span class="p">(</span><span class="n">ide</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">kt</span><span class="p">,</span> <span class="n">kp</span><span class="p">):</span>
@@ -340,7 +237,7 @@
         <span class="n">d</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">totk</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 
-    <span class="k">return</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">d</span></div>
 
 
 <div class="viewcode-block" id="basic_add"><a class="viewcode-back" href="../../pycirk.html#pycirk.make_scenarios.basic_add">[docs]</a><span class="k">def</span> <span class="nf">basic_add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">at</span><span class="p">):</span>
@@ -398,8 +295,8 @@
         <span class="n">d</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="o">/</span><span class="n">no_non_zeros</span><span class="p">)</span> <span class="o">*</span> <span class="n">fx_kp</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">d</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">*</span> <span class="n">fx_kp</span>
+    <span class="k">return</span> <span class="n">d</span></div>
 
-    <span class="k">return</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="counterfactual_engine"><a class="viewcode-back" href="../../pycirk.html#pycirk.make_scenarios.counterfactual_engine">[docs]</a><span class="k">def</span> <span class="nf">counterfactual_engine</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">inter_sets</span><span class="p">,</span> <span class="n">subs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -507,7 +404,7 @@
                         <span class="n">hey</span> <span class="o">=</span> <span class="n">substitution</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">inter_sets</span><span class="p">[</span><span class="s2">&quot;swk&quot;</span><span class="p">])</span>
                         <span class="n">M</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">(</span><span class="n">i1</span><span class="p">,</span> <span class="n">g1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">hey</span>
 
-    <span class="k">return</span><span class="p">(</span><span class="n">M</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">M</span></div>
 
 
 <div class="viewcode-block" id="make_new"><a class="viewcode-back" href="../../pycirk.html#pycirk.make_scenarios.make_new">[docs]</a><span class="k">def</span> <span class="nf">make_new</span><span class="p">(</span><span class="n">filtered_changes</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">M_name</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
@@ -619,7 +516,114 @@
 
             <span class="n">M</span> <span class="o">=</span> <span class="n">counterfactual_engine</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">intervention</span><span class="p">,</span> <span class="n">substitution</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span>
 
-    <span class="k">return</span><span class="p">(</span><span class="n">M</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">M</span></div>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># =============================================================================</span>
+<span class="c1"># # Here I put work that I started but I still need to finish</span>
+<span class="c1"># =============================================================================</span>
+<span class="c1"># =============================================================================</span>
+<span class="c1"># =============================================================================</span>
+<span class="c1"># </span>
+<span class="c1"># </span>
+<span class="c1"># def make_counterfactuals_SUT(data, scen_no, scen_file, labels):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Calculate all the counterfactual SUT matrices</span>
+<span class="c1"># </span>
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     data : obj</span>
+<span class="c1">#         An object containing all necessary matrices of the SUT system</span>
+<span class="c1"># </span>
+<span class="c1">#     scen_no : int</span>
+<span class="c1">#         the identification number of the scenario to reference in scen_file</span>
+<span class="c1"># </span>
+<span class="c1">#     scen_file : str</span>
+<span class="c1">#         the directory where the scenarios.xlsx file is store</span>
+<span class="c1"># </span>
+<span class="c1">#     labels : obj</span>
+<span class="c1">#         an object containing all labels for the SUT matrices</span>
+<span class="c1"># </span>
+<span class="c1">#     Outputs</span>
+<span class="c1">#     -------</span>
+<span class="c1">#     An object contaning a mofified SUT system</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1"># </span>
+<span class="c1">#     met = ops.PxP_ITA_MSC</span>
+<span class="c1"># </span>
+<span class="c1">#     w = ops.IOT.B(data.W, data.inv_diag_g)  # Primary input coef</span>
+<span class="c1">#     e = ops.IOT.B(data.E, data.inv_diag_g)  # emissions extension coef</span>
+<span class="c1">#     r = ops.IOT.B(data.R, data.inv_diag_g) # Resources extension coef</span>
+<span class="c1">#     m = ops.IOT.B(data.M, data.inv_diag_g) # Materials extension coef</span>
+<span class="c1">#     S = met.S(data.U, data.inv_diag_g)  # industry coefficients for intermediate use table</span>
+<span class="c1"># </span>
+<span class="c1">#     # Start first from a supply approach</span>
+<span class="c1">#     # Supply matrix counterfactual</span>
+<span class="c1">#     data.V =  counterfactual(scen_file, scen_no, data.V, &quot;V&quot;, labels)</span>
+<span class="c1">#     # new total industry output</span>
+<span class="c1">#     g1 = np.sum(data.V, axis=0)</span>
+<span class="c1">#     # industry use coefficients counterfactual</span>
+<span class="c1">#     S_ = counterfactual(scen_file, scen_no, S, &quot;S&quot;, labels)</span>
+<span class="c1"># </span>
+<span class="c1">#     data.U = counterfactual(scen_file, scen_no, S_ @ np.diag(g1), &quot;U&quot;, labels)  # industry use transactions counterfactual</span>
+<span class="c1"># </span>
+<span class="c1">#     W_ = np.array(ops.IOT.R(w, np.diag(g1)))</span>
+<span class="c1"># </span>
+<span class="c1">#     g2 = np.array(W_[:9].sum(0)) + data.U.sum(0)  # recalculate total industry output</span>
+<span class="c1"># </span>
+<span class="c1">#     g_dif = np.multiply(g2, ops.inv(g1))*100  # calculate the difference between original and new total industry input</span>
+<span class="c1"># </span>
+<span class="c1">#     # print([round((1-l)*100,4) for l in g_dif if 1-l&gt;.5e-3 and l!=0])</span>
+<span class="c1">#     q2 = np.sum(data.U, axis=1) + np.sum(data.Y, axis=1)</span>
+<span class="c1"># </span>
+<span class="c1">#     # updating the supply table to match the new total industry input</span>
+<span class="c1">#     D = met.D(data.V, np.diag(ops.inv(data.V.sum(1))))</span>
+<span class="c1">#     data.V = D @ np.diag(q2)</span>
+<span class="c1"># </span>
+<span class="c1">#     q1 = np.sum(data.V, axis=0)  # total product output</span>
+<span class="c1"># </span>
+<span class="c1">#     q_dif = np.multiply(q2, ops.inv(q1))</span>
+<span class="c1"># </span>
+<span class="c1">#     g1 = np.sum(data.V, axis=1)</span>
+<span class="c1"># </span>
+<span class="c1">#     data.E = met.R(e, np.diag(x))</span>
+<span class="c1"># </span>
+<span class="c1">#     data.R = met.R(r, np.diag(x))</span>
+<span class="c1"># </span>
+<span class="c1">#     data.M = met.R(m, np.diag(x))</span>
+<span class="c1"># </span>
+<span class="c1"># </span>
+<span class="c1">#     return(IOT)</span>
+<span class="c1"># def balancing_operation(V, U, Y, W):</span>
+<span class="c1">#    &quot;&quot;&quot;</span>
+<span class="c1">#    Re-balancing of supply-use tables after data changes</span>
+<span class="c1">#</span>
+<span class="c1">#    Parameters</span>
+<span class="c1">#    ----------</span>
+<span class="c1">#    V (supply) : numpy.array</span>
+<span class="c1">#</span>
+<span class="c1">#    U (use) : numpy.array</span>
+<span class="c1">#</span>
+<span class="c1">#    Y (final_demand) : numpy.array</span>
+<span class="c1">#</span>
+<span class="c1">#    W (primary_inputs) : numpy.array</span>
+<span class="c1">#</span>
+<span class="c1">#    Output</span>
+<span class="c1">#    ------</span>
+<span class="c1">#    output : dict</span>
+<span class="c1">#</span>
+<span class="c1">#    It outputs a dictionary containing a re-balanced supply-use tables system</span>
+<span class="c1">#    where:</span>
+<span class="c1">#        V = supply table</span>
+<span class="c1">#</span>
+<span class="c1">#        U = use table</span>
+<span class="c1">#</span>
+<span class="c1">#        Y = final demand</span>
+<span class="c1">#</span>
+<span class="c1">#        W = primary inputs</span>
+<span class="c1">#</span>
+<span class="c1">#    &quot;&quot;&quot;</span>
+<span class="c1"># =============================================================================</span>
 </pre></div>
 
           </div>
