@@ -6,7 +6,7 @@ _A python package to model Circular Economy policy and technological interventio
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](resources/docs/CONTRIBUTING.md)
 
-Documentation: https://cmlplatform.github.io/pycirk/
+Documentation: https://pycirk.readthedocs.io/en/latest/readme.html
 
 ## Installation
 

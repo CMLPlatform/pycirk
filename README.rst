@@ -14,7 +14,7 @@ pycirk
    :target: resources/docs/CONTRIBUTING.md)
 
 
-| Documentation: https://cmlplatform.github.io/pycirk/
+| Documentation: https://pycirk.readthedocs.io/en/latest/readme.html
 
 10.5281/zenodo.1492957
 
