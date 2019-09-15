@@ -105,4 +105,4 @@ def add_date_to_gen_specs(specs):
     specs = df([specs]).T
     specs.columns = ["General_info"]
 
-    return(specs)
+    return specs

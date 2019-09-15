@@ -26,8 +26,7 @@ class Operations:
         """
         mask = (x == 0)
         x[~mask] = 1/x[~mask]
-
-        return(x)
+        return x
 
     def delta_Y(Y, Yalt):
         """
@@ -35,9 +34,7 @@ class Operations:
         Y = final demand baseline
         Yalt = final demand scenario
         """
-        delta_Y = Y - Yalt
-
-        return (delta_Y)
+        return Y - Yalt
 
     def delta_x(L, Lalt, y):
         """
@@ -45,17 +42,15 @@ class Operations:
         L = Leontief of baseline
         Lalt = Leontief of scenario
         """
-        delta_x = (L-Lalt) @ y
-
-        return (delta_x)
+        return (L-Lalt) @ y
 
     def verifyIOT(S, Y, W):
         x_out = np.sum(np.array(S), axis=1) + np.sum(np.array(Y), axis=1)
         x_in = np.sum(S, axis=0) + np.sum(W[:9], axis=0)
         with np.errstate(divide="ignore", invalid="ignore"):
             ver = x_out/x_in * 100
-        ver = np.nan_to_num(ver)
-        return(ver)
+        
+        return np.nan_to_num(ver)
 
     class PxP_ITA_TC:
         """
@@ -69,9 +64,7 @@ class Operations:
             T = inv(diag(g)) * V
             """
             # V.transpose because it's in MAKE table instead of SUPPLY
-            T = inv_diag_g @ V.transpose()
-
-            return (T)
+            return inv_diag_g @ V.transpose()
 
         def L(U, T, inv_diag_q):
             """
@@ -84,34 +77,27 @@ class Operations:
             A = U @ T @ inv_diag_q  # technical coefficient matrix
             A = np.nan_to_num(A)
             IA = np.identity(len(A)) - A
-            L = ln.inv(IA)
-
-            return(L)
+            return ln.inv(IA)
 
         def B(R, T, inv_diag_q):
             """
             Calculates extension intensity
             """
             RT = R @ T
-            B = RT @ inv_diag_q  # Input coefficients
-            return (B)
+            return RT @ inv_diag_q  # Input coefficients
 
         def R(B, diag_q):
             """
             Calculates absolute extensions
             """
-            R = B @ diag_q
-
-            return (R)
+            return B @ diag_q
 
         def Z(T, U):
             """
             Intemediates
             Z = U * T
             """
-            Z = U @ T
-
-            return(Z)
+            return U @ T
 
     class PxP_ITA_MSC:
         """
@@ -128,9 +114,7 @@ class Operations:
             Input requirements
             Z = U * inv(diag(g))
             """
-            Z = U @ inv_diag_g
-
-            return(Z)
+            return U @ inv_diag_g
 
         def D(V, inv_diag_q):
             """
@@ -138,17 +122,14 @@ class Operations:
             D = V * inv(diag(q))
             """
             # V.transpose because it's in MAKE table instead of SUPPLY
-            D = V.transpose() @ inv_diag_q
-
-            return(D)
+            return V.transpose() @ inv_diag_q
 
         def A(inter_coef, D):
             """
             Total requirement multipliers
             A = Z * D
             """
-            A = np.matmul(inter_coef, D)
-            return(A)
+            return np.matmul(inter_coef, D)
 
         def L(A):
             """
@@ -156,34 +137,27 @@ class Operations:
             L = (I-A)^-1
             """
             IA = np.identity(len(A)) - A
-            L = ln.inv(IA)
-
-            return(L)
+            return ln.inv(IA)
 
         def B(R, D, inv_diag_g):
             """
             Calculates extensions intensities
             """
             B_ = R @ inv_diag_g
-            B = np.matmul(B_, D)
-            return(B)
+            return np.matmul(B_, D)
 
         def R(B, diag_q):
             """
             Calculates absolute extensions
             """
-            R = B @ diag_q
-
-            return(R)
+            return B @ diag_q
 
         def Z(inter_coef, D, diag_q):
             """
             Intermediates
             Z = inter_coef * D * diag(q)
             """
-            Z = np.matmul(inter_coef, D) @ diag_q
-
-            return (Z)
+            return np.matmul(inter_coef, D) @ diag_q
 
     class IOT:
         """
@@ -196,52 +170,40 @@ class Operations:
             """
             total product output s the sum of Si and y
             """
-            q = np.sum(np.array(Z), axis=1) + np.sum(np.array(Y), axis=1)
-
-            return(q)
+            return np.sum(np.array(Z), axis=1) + np.sum(np.array(Y), axis=1)
 
         def B(R, inv_diag_x):
             """
             Calculates extensions intensities
             """
-            B = R @ inv_diag_x
-
-            return(B)
+            return R @ inv_diag_x
 
         def R(B, diag_x):
             """
             Calculates absolute extensions
             """
-            R = B @ diag_x
-
-            return(R)
+            return B @ diag_x
 
         def x_IAy(L, y):
             """
             Total product ouput
             x = inv(I - A) * yi
             """
-            x = np.dot(L, y)
-
-            return (x)
+            return np.dot(L, y)
 
         def Z(A, diag_x):
             """
             Total product ouput
             Z = A * diag_x
             """
-            Z = A @ diag_x
-
-            return(Z)
+            return A @ diag_x
 
         def A(Z, inv_diag_x):
             """
             Technical coefficient matrix
             A = Z * inv(diag(x))
             """
-            A = Z @ inv_diag_x
-
-            return(A)
+            return Z @ inv_diag_x
 
         def L(A):
             """
@@ -249,9 +211,7 @@ class Operations:
             L = (I-A)^-1
             """
             IA = np.identity(len(A)) - A
-            L = ln.inv(IA)
-
-            return(L)
+            return ln.inv(IA)
 
         def bY(RY, inv_diag_yj):
             """
@@ -259,17 +219,13 @@ class Operations:
             Method for transformation matrix of bY
             (e.g. final demand emissions)
             """
-            bY = RY @ inv_diag_yj
-
-            return(bY)
+            return RY @ inv_diag_yj
 
         def RY(bY, diag_yj):
             """
             Caclculates absolute extensions in final demand
             """
-            RY = bY @ diag_yj
-
-            return(RY)
+            return bY @ diag_yj
 
         # is this function really needed?
         def IOT(Z, Y, W, E, R, M):
@@ -302,24 +258,22 @@ class Operations:
 
             ver_base = Operations.verifyIOT(Z, Y, E)
 
-            IOT = {"A": A,
-                   "Z": Z,
-                   "L": L,
-                   "Z": Z,
-                   "Y": Y,
-                   "w": w,
-                   "W": W,
-                   "x": x,
-                   "E": E,
-                   "e": e,
-                   "R": R,
-                   "r": r,
-                   "M": M,
-                   "m": m,
-                   "ver_base": ver_base
-                   }
-
-            return(IOT)
+            return {"A": A,
+                    "Z": Z,
+                    "L": L,
+                    "Z": Z,
+                    "Y": Y,
+                    "w": w,
+                    "W": W,
+                    "x": x,
+                    "E": E,
+                    "e": e,
+                    "R": R,
+                    "r": r,
+                    "M": M,
+                    "m": m,
+                    "ver_base": ver_base
+                    }
 
     def calculate_characterized(data):
 
@@ -336,4 +290,4 @@ class Operations:
         data.Cr_tot_M = data.Cr_M.sum(axis=1) + data.Cr_MY.sum(axis=1)
         data.Cr_tot_R = data.Cr_R.sum(axis=1) + data.Cr_RY.sum(axis=1)
 
-        return(data)
+        return data

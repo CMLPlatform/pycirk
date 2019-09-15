@@ -36,7 +36,7 @@ def single_position(item, labels):
     """
 
     if item in ["All", "all", "ALL", np.nan]:
-        coordinate = None
+        return None
 
     else:
         try:
@@ -60,10 +60,9 @@ def single_position(item, labels):
                 ref_labels = labels.characterization.copy()
         except Exception:
             pass
-        coordinate = np.array([i for i, values in enumerate(ref_labels)
+        
+        return np.array([i for i, values in enumerate(ref_labels)
                               if item in values])
-    return(coordinate)
-
 
 def make_coord_array(cat_coord, reg_coord, no_countries, no_categories):
     """
@@ -111,13 +110,10 @@ def make_coord_array(cat_coord, reg_coord, no_countries, no_categories):
             n = n+1
 
     if reg_coord is None:
-        pass
+        return s
     else:
         s = np.split(s, no_countries)
-        s = np.take(s, reg_coord, axis=0)[0]
-
-    return(s)
-
+        return np.take(s, reg_coord, axis=0)[0]
 
 def make_coord_array_for_make_sec(coordinates, no_countries, no_categories):
     """
@@ -152,4 +148,4 @@ def make_coord_array_for_make_sec(coordinates, no_countries, no_categories):
             nn = nn+1
         n = n+1
 
-    return(s)
+    return s

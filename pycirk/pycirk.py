@@ -14,6 +14,7 @@ from pycirk.save_utils import save_outputs
 from pycirk import results
 from pycirk.pycirk_settings import Settings
 from pycirk.make_scenarios import make_counterfactuals as mcf
+import os, glob
 
 
 class Launch:
@@ -137,7 +138,7 @@ class Launch:
         if output_dataset is True:
             output = {"res": output, "data": IO}
 
-        return(output)
+        return output
 
     def all_results(self):
         """
@@ -155,7 +156,8 @@ class Launch:
             if l != 0:
                 scen_res = self.scenario_results(l)
                 output = pd.concat([output, scen_res], axis=1)
-        return(output)
+        
+        return output
 
 
     def save_results(self, scen_no=None, output_dataset=False):
@@ -181,7 +183,7 @@ class Launch:
 
         Output_dataset is only possible when scen_no is specified
         in which case it would save also a data.pkl file
-
+        
         scenarios.xlsx : excel file
             scenario settings excel file used for the analysis in the same
             output directory with the results
@@ -214,3 +216,11 @@ class Launch:
 
         save_outputs(scenario, self.settings.save_directory, self.specs,
                      scen_no, data)
+        
+    def delete_previous_IO_builds(self):
+        """
+        Call this method if you want to elinate all previous 
+        IO databases created by pycirk. SUTs database is not affected.
+        """
+        for filename in glob.glob("pycirk//data//mrIO*"):
+            os.remove(filename) 

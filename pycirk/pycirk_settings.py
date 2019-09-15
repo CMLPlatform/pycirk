@@ -18,7 +18,7 @@ from shutil import copyfile
 import os.path as ospt
 from pycirk.make_secondary_flows import make_secondary as ms
 from pycirk.transformation_methods import Transform
-from pycirk.make_scenarios import make_counterfactuals, make_counterfactuals_SUT
+from pycirk.make_scenarios import make_counterfactuals
 from pycirk.labels import Labels
 from pycirk.organize_io import organizer
 
@@ -80,17 +80,16 @@ class Settings:
         """
 
         if "linux" in platform or platform == "darwin":
-            directory = os.path.expanduser(directory)
+            return os.path.expanduser(directory)
 
         elif "win" in platform:
             if platform != "darwin":
-                directory = os.path.expanduser(directory)
-
-        return(directory)
+                return os.path.expanduser(directory)
 
     def project_specs(self, test=False):
         """
-        General labelling of the project
+        General specifications for the project, they are also used to mark
+        the output files
         """
         if int(self.method) == 0:
             method = "(0) IOTpxpSTA_MSCm"
@@ -116,12 +115,12 @@ class Settings:
                      "institution": institution,
                      "method": method
                      }
-
-        return(specs)
+            
+        return specs
 
     def set_save_directory(self):
         """
-        It specifies where the scenario file for input is
+        It specifies where the scenario file for input is located
         """
 
         if self.test is True:
@@ -152,7 +151,7 @@ class Settings:
         if not os.path.isfile(file_dir):
             copyfile(orig, file_dir)
 
-        print("\nPlease open ", file_dir, " to set your analysis and scenarios.",
+        print(f"\nPlease open {file_dir} to set your analysis and scenarios.",
               "\nReturn to this script after you're done.")
 
     def create_output_folder(self):
@@ -173,23 +172,20 @@ class Settings:
         It returns where the working scenarios.xlsx file is located
         """
 
-        scen_file = os.path.join(self.save_directory, "scenarios.xlsx")
-
-        return(scen_file)
+        return os.path.join(self.save_directory, "scenarios.xlsx")
 
     def load_dataset(self, data):
         """
         It loads the baseline dataset
         """
-
-        data = pd.read_pickle(data)
-
-        return(data)
+        return pd.read_pickle(data)
 
     def check_dataset_location(self):
         """
         It identifies where the baseline dataset is located and whether it is
-        present in the directory.
+        present in the directory. If an IO database was already created in the
+        past then it will just return it's location and type instead of
+        transforming the SUTs into IOT anew
 
         Output
         ------
@@ -197,7 +193,7 @@ class Settings:
         """
 
         if self.file is not None:
-            data_loc = {"loc": self.file, "type": np.nan}
+            return {"loc": self.file, "type": np.nan}
 
         if self.file is None:
 
@@ -234,9 +230,7 @@ class Settings:
                 data = sut
                 typ = "sut"
 
-            data_loc = {"loc": data, "type": typ}
-
-        return(data_loc)
+            return {"loc": data, "type": typ}
 
     def transform_to_io(self):
         """
@@ -275,19 +269,16 @@ class Settings:
             else:
                 extension = ".pkl"
 
-            # SUTs = mc()
             SUTs = Transform(data)
             self.lb.save_labels(data, self.directory_labels)
             del(data)
-        #  Transform SUT to IOT
+            #  Transform SUT to IOT
             if self.method == 0:
                 IOT = SUTs.IOTpxpSTA_TCm()
             elif self.method == 1:
                 IOT = SUTs.IOTpxpSTA_MSCm()
 
             del(SUTs)
-
-#            IOT = lb.
 
             if self.aggregation in [0, None]:
                 pickle_name = "pycirk//data//mrIO_V3.3" + extension
@@ -302,7 +293,6 @@ class Settings:
             with open(pickle_name, "wb") as w:
                 pickle.dump(IOT, w, 2)  # pickling
 
-            # os.remove(pickle_name)
         elif typ == "io":
                 self.lb.save_labels(data, self.directory_labels)
                 IOT = data
@@ -310,10 +300,10 @@ class Settings:
 
         self.assign_labels_to_class()
 
-        return(IOT)
+        return IOT
 
     def set_SUTs(self):
-
+        
         if self.aggregation == 1:
             loc = "data//mrSUT_EU_ROW_V3.3.pkl"
 
@@ -327,12 +317,15 @@ class Settings:
         except Exception:
             raise FileNotFoundError("Your database could not be opened" +
                                     " check your file:\n\n" + loc)
+        return Transform(data)
 
-        SUTs = Transform(data)
 
-        return(SUTs)
-
-    def assign_labels_to_class(self):  # data, scen_no):
+    def assign_labels_to_class(self):
+        """
+        Assigns all labels to their respective attributes in the Labels class
+        These are used througout the program to find coordinates and 
+        label results
+        """
 
         all_labels = self.lb.organize_unique_labels(self.directory_labels)
 
@@ -354,18 +347,18 @@ class Settings:
         self.lb.Cr_M_labels = all_labels.car_mat
         self.lb.Cr_W_labels = all_labels.car_prim
 
-        return(self.lb)
-
     def set_IO_scenario(self, data, scen_no):
+        """
+        Class the functions to modify the IO database according to your
+        scenario specifications
+        """
 
         if scen_no == 0:
             scenario = self.transform_to_io() # I will likely delete this later
         else:
             scenario = make_counterfactuals(data, scen_no, self.scenario_file(), self.lb)
 
-        scenario = self.lb.relabel_to_save(scenario, self.method, "pycirk//labels/")
-
-        return(scenario)
+        return self.lb.relabel_to_save(scenario, self.method, "pycirk//labels/")
 
     def set_SUTs_scenario(self, data, scen_no):
 
@@ -374,17 +367,12 @@ class Settings:
         else:
             scenario = make_counterfactuals_SUT(data, scen_no, self.scenario_file(), self.lb)
 
-        scenario = self.lb.relabel_to_save(scenario, self.method, "pycirk//labels/")
-
-        return(scenario)
+        return self.lb.relabel_to_save(scenario, self.method, "pycirk//labels/")
 
     def load_results_params(self):
-
-        res_par = pd.read_excel(self.scenario_file(), sheet_name="analyse", header=3)
-
-        return(res_par)
+        return pd.read_excel(self.scenario_file(), sheet_name="analyse", header=3)
 
     def number_scenarios(self):
         scen_file = pd.ExcelFile(self.scenario_file())
         scenarios = [l for l in scen_file.sheet_names if l.startswith("scenario_")]
-        return(len(scenarios))
+        return len(scenarios)

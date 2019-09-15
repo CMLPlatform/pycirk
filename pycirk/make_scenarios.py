@@ -9,7 +9,6 @@ Scope: Modelling the Circular Economy in EEIO
 @author: Franco Donati
 @institution: Leiden University CML
 """
-
 import pandas as pd
 import numpy as np
 from pycirk.positions import make_coord_array as coord
@@ -17,107 +16,6 @@ from pycirk.positions import single_position as sing_pos
 from pycirk.fundamental_operations import Operations as ops
 from copy import deepcopy
 import warnings
-# from pycirk import sherman_morrison as sher_mor  # currently under development
-
-def make_counterfactuals_SUT(data, scen_no, scen_file, labels):
-    """
-    Calculate all the counterfactual SUT matrices
-
-    Parameters
-    ----------
-    data : obj
-        An object containing all necessary matrices of the SUT system
-
-    scen_no : int
-        the identification number of the scenario to reference in scen_file
-
-    scen_file : str
-        the directory where the scenarios.xlsx file is store
-
-    labels : obj
-        an object containing all labels for the SUT matrices
-
-    Outputs
-    -------
-    An object contaning a mofified SUT system
-    """
-
-    met = ops.PxP_ITA_MSC
-
-    w = ops.IOT.B(data.W, data.inv_diag_g)  # Primary input coef
-    e = ops.IOT.B(data.E, data.inv_diag_g)  # emissions extension coef
-    r = ops.IOT.B(data.R, data.inv_diag_g) # Resources extension coef
-    m = ops.IOT.B(data.M, data.inv_diag_g) # Materials extension coef
-    S = met.S(data.U, data.inv_diag_g)  # industry coefficients for intermediate use table
-
-    # Start first from a supply approach
-    # Supply matrix counterfactual
-    data.V =  counterfactual(scen_file, scen_no, data.V, "V", labels)
-    # new total industry output
-    g1 = np.sum(data.V, axis=0)
-    # industry use coefficients counterfactual
-    S_ = counterfactual(scen_file, scen_no, S, "S", labels)
-
-    data.U = counterfactual(scen_file, scen_no, S_ @ np.diag(g1), "U", labels)  # industry use transactions counterfactual
-
-    W_ = np.array(ops.IOT.R(w, np.diag(g1)))
-
-    g2 = np.array(W_[:9].sum(0)) + data.U.sum(0)  # recalculate total industry output
-
-    g_dif = np.multiply(g2, ops.inv(g1))*100  # calculate the difference between original and new total industry input
-
-    # print([round((1-l)*100,4) for l in g_dif if 1-l>.5e-3 and l!=0])
-    q2 = np.sum(data.U, axis=1) + np.sum(data.Y, axis=1)
-
-    # updating the supply table to match the new total industry input
-    D = met.D(data.V, np.diag(ops.inv(data.V.sum(1))))
-    data.V = D @ np.diag(q2)
-
-    q1 = np.sum(data.V, axis=0)  # total product output
-
-    q_dif = np.multiply(q2, ops.inv(q1))
-
-    g1 = np.sum(data.V, axis=1)
-
-    data.E = met.R(e, np.diag(x))
-
-    data.R = met.R(r, np.diag(x))
-
-    data.M = met.R(m, np.diag(x))
-
-
-    return(IOT)
-
-
-def balancing_operation(V, U, Y, W):
-    """
-    Re-balancing of supply-use tables after data changes
-
-    Parameters
-    ----------
-    V (supply) : numpy.array
-
-    U (use) : numpy.array
-
-    Y (final_demand) : numpy.array
-
-    W (primary_inputs) : numpy.array
-
-    Output
-    ------
-    output : dict
-
-    It outputs a dictionary containing a re-balanced supply-use tables system
-    where:
-        V = supply table
-
-        U = use table
-
-        Y = final demand
-
-        W = primary inputs
-
-    """
 
 
 def make_counterfactuals(data, scen_no, scen_file, labels):
@@ -217,7 +115,7 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
 
 #    print((1-np.sum(x_)/np.sum(x_new))*100)
 
-    return(data)
+    return data
 
 
 def counterfactual(scen_file, scen_no, M, M_name, labels):
@@ -264,8 +162,7 @@ def counterfactual(scen_file, scen_no, M, M_name, labels):
         filtered_changes = scenario.loc[scenario['matrix'] == M_name]
         matrix = make_new(filtered_changes, M, M_name, labels)
 
-
-    return(matrix)
+    return matrix
 
 
 def basic_mult(ide, a, kt, kp):
@@ -306,7 +203,7 @@ def basic_mult(ide, a, kt, kp):
         d = a * totk
         d = np.nan_to_num(d)
 
-    return(d)
+    return d
 
 
 def basic_add(a, at):
@@ -364,8 +261,8 @@ def substitution(d, s, fx_kp):
         d[~mask] = d[~mask] + (np.sum(s.sum())/no_non_zeros) * fx_kp
     else:
         d = d + np.array(s) * fx_kp
+    return d
 
-    return(d)
 
 
 def counterfactual_engine(M, inter_sets, subs=False, copy=False):
@@ -473,7 +370,7 @@ def counterfactual_engine(M, inter_sets, subs=False, copy=False):
                         hey = substitution(d, s, inter_sets["swk"])
                         M[np.ix_(i1, g1)] = hey
 
-    return(M)
+    return M
 
 
 def make_new(filtered_changes, M, M_name, labels):
@@ -585,4 +482,111 @@ def make_new(filtered_changes, M, M_name, labels):
 
             M = counterfactual_engine(M, intervention, substitution, copy)
 
-    return(M)
+    return M
+
+# =============================================================================
+# =============================================================================
+# # Here I put work that I started but I still need to finish
+# =============================================================================
+# =============================================================================
+# =============================================================================
+# 
+# 
+# def make_counterfactuals_SUT(data, scen_no, scen_file, labels):
+#     """
+#     Calculate all the counterfactual SUT matrices
+# 
+#     Parameters
+#     ----------
+#     data : obj
+#         An object containing all necessary matrices of the SUT system
+# 
+#     scen_no : int
+#         the identification number of the scenario to reference in scen_file
+# 
+#     scen_file : str
+#         the directory where the scenarios.xlsx file is store
+# 
+#     labels : obj
+#         an object containing all labels for the SUT matrices
+# 
+#     Outputs
+#     -------
+#     An object contaning a mofified SUT system
+#     """
+# 
+#     met = ops.PxP_ITA_MSC
+# 
+#     w = ops.IOT.B(data.W, data.inv_diag_g)  # Primary input coef
+#     e = ops.IOT.B(data.E, data.inv_diag_g)  # emissions extension coef
+#     r = ops.IOT.B(data.R, data.inv_diag_g) # Resources extension coef
+#     m = ops.IOT.B(data.M, data.inv_diag_g) # Materials extension coef
+#     S = met.S(data.U, data.inv_diag_g)  # industry coefficients for intermediate use table
+# 
+#     # Start first from a supply approach
+#     # Supply matrix counterfactual
+#     data.V =  counterfactual(scen_file, scen_no, data.V, "V", labels)
+#     # new total industry output
+#     g1 = np.sum(data.V, axis=0)
+#     # industry use coefficients counterfactual
+#     S_ = counterfactual(scen_file, scen_no, S, "S", labels)
+# 
+#     data.U = counterfactual(scen_file, scen_no, S_ @ np.diag(g1), "U", labels)  # industry use transactions counterfactual
+# 
+#     W_ = np.array(ops.IOT.R(w, np.diag(g1)))
+# 
+#     g2 = np.array(W_[:9].sum(0)) + data.U.sum(0)  # recalculate total industry output
+# 
+#     g_dif = np.multiply(g2, ops.inv(g1))*100  # calculate the difference between original and new total industry input
+# 
+#     # print([round((1-l)*100,4) for l in g_dif if 1-l>.5e-3 and l!=0])
+#     q2 = np.sum(data.U, axis=1) + np.sum(data.Y, axis=1)
+# 
+#     # updating the supply table to match the new total industry input
+#     D = met.D(data.V, np.diag(ops.inv(data.V.sum(1))))
+#     data.V = D @ np.diag(q2)
+# 
+#     q1 = np.sum(data.V, axis=0)  # total product output
+# 
+#     q_dif = np.multiply(q2, ops.inv(q1))
+# 
+#     g1 = np.sum(data.V, axis=1)
+# 
+#     data.E = met.R(e, np.diag(x))
+# 
+#     data.R = met.R(r, np.diag(x))
+# 
+#     data.M = met.R(m, np.diag(x))
+# 
+# 
+#     return(IOT)
+# def balancing_operation(V, U, Y, W):
+#    """
+#    Re-balancing of supply-use tables after data changes
+#
+#    Parameters
+#    ----------
+#    V (supply) : numpy.array
+#
+#    U (use) : numpy.array
+#
+#    Y (final_demand) : numpy.array
+#
+#    W (primary_inputs) : numpy.array
+#
+#    Output
+#    ------
+#    output : dict
+#
+#    It outputs a dictionary containing a re-balanced supply-use tables system
+#    where:
+#        V = supply table
+#
+#        U = use table
+#
+#        Y = final demand
+#
+#        W = primary inputs
+#
+#    """
+# =============================================================================

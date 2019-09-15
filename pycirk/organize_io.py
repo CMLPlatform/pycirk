@@ -14,19 +14,17 @@ Scope: Modelling the Circular economy in EEIO
 
 def organizer(data):
 
-    IOT = {"Z": data["Z"],
-           "Y": data["Y"],
-           "W": data["W"],
-           "E": data["E"],
-           "R": data["R"],
-           "M": data["M"],
-           "EY": data["EY"],
-           "RY": data["RY"],
-           "MY": data["MY"],
-           "Cr_E_k": data["Cr_E_k"],
-           "Cr_M_k": data["Cr_M_k"],
-           "Cr_R_k": data["Cr_R_k"],
-           "Cr_W_k": data["Cr_W_k"]
-           }
-
-    return(IOT)
+    return {"Z": data["Z"],
+            "Y": data["Y"],
+            "W": data["W"],
+            "E": data["E"],
+            "R": data["R"],
+            "M": data["M"],
+            "EY": data["EY"],
+            "RY": data["RY"],
+            "MY": data["MY"],
+            "Cr_E_k": data["Cr_E_k"],
+            "Cr_M_k": data["Cr_M_k"],
+            "Cr_R_k": data["Cr_R_k"],
+            "Cr_W_k": data["Cr_W_k"]
+            }

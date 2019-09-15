@@ -22,9 +22,8 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 def iter_thru_for_results(data, analysis_specs, scen_no, labels):
     """
-    filter policy interventions from scenario file according to specified
-    matrix and return the respective matrix with it
-    Output only specified (see scenario.xls) results to be analysed
+    It uses your analytical specification on scenarios.xlxl
+    to return a dataframe of the desired results
     """
     results = []
 
@@ -39,8 +38,8 @@ def iter_thru_for_results(data, analysis_specs, scen_no, labels):
         results.columns = ["sc_" + str(scen_no)]
     else:
         results.columns = ["baseline"]
-
-    return(results)
+    
+    return results
 
 
 def retrieve_specified_data(data, spec_row, labels):
@@ -109,5 +108,4 @@ def retrieve_specified_data(data, spec_row, labels):
 
     select.index = mi.from_tuples([index_label], names=key_names)
 
-    return(select)
-
+    return select

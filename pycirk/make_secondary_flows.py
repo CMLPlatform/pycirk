@@ -74,7 +74,7 @@ def make_secondary(data):
     data["V"] = V
     data["U"] = U
 
-    return(data)
+    return data
 
 
 def allocate_sec_mat(V, U, Y, prod_or, ind_or):
@@ -141,10 +141,8 @@ def allocate_sec_mat(V, U, Y, prod_or, ind_or):
 
     V.iloc[prod_or, des_ind_col_pos] = 0
 
-    output = {"V": V,
-              "U": U,
-              "Y": Y}
-
     print('splitting off secondary materials ready')
 
-    return output
+    return {"V": V,
+            "U": U,
+            "Y": Y}

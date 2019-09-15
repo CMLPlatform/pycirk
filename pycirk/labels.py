@@ -33,17 +33,29 @@ class Labels:
         self.Cr_W_labels = None
 
     def calc_no_of_something(self, labels):
-        no_of_something = len(labels.unique())
-        return(no_of_something)
+        """
+        A general method to calculate the number of unique entries contained
+        in a series 
+        """
+        return len(labels.unique())
 
     def list_of_something(self, labels):
-        list_of_some = labels.unique()
-        return(list_of_some)
+        """
+        A general method to return a list of unique entries contained in a series
+        """
+        return labels.unique()
 
-    def get_unique_labels(self, list_of_labels, for_units=True):
+    def get_unique_labels(self, dataframe_of_labels, for_units=True):
+        """
+        Calculates all unique entries (labels) contained in a dataframe and
+        puts them together with their units and total count of unique entries
+        
+        It returns an object... which is munched, not a pretty solution but it
+        works ok for now. Please consider refactoring in the future
+        """
         organize = dict()
 
-        for keys, labels in list_of_labels.items():
+        for keys, labels in dataframe_of_labels.items():
             if for_units is True:
                 organize[keys] = self.list_of_something(labels)
             elif for_units is False:
@@ -55,7 +67,7 @@ class Labels:
         count = max(len(labels) for keys, labels in organize.items())
         organize["count"] = count
 
-        return(Munch(organize))
+        return Munch(organize)
 
     def organize_unique_labels(self, directory):
 
@@ -80,7 +92,7 @@ class Labels:
         labels.car_mat = self.get_unique_labels(labels.car_mat, False)
         labels.car_prim = self.get_unique_labels(labels.car_prim, False)
 
-        return(labels)
+        return labels
 
     def load_labels(self, directory):
 
@@ -105,35 +117,36 @@ class Labels:
         car_mat = read_csv(directory + "/charact_materials.csv")
         car_prim = read_csv(directory + "/charact_factor_inputs.csv")
 
-        labels = {"ind": ind,
-                  "prod": prod,
-                  "primary": primary,
-                  "fin_dem": fin_dem,
-                  "emis": emis,
-                  "res": res,
-                  "mat": mat,
-                  "car_emis": car_emis,
-                  "car_res": car_res,
-                  "car_mat": car_mat,
-                  "car_prim": car_prim}
-        return(labels)
+        return {"ind": ind,
+                "prod": prod,
+                "primary": primary,
+                "fin_dem": fin_dem,
+                "emis": emis,
+                "res": res,
+                "mat": mat,
+                "car_emis": car_emis,
+                "car_res": car_res,
+                "car_mat": car_mat,
+                "car_prim": car_prim}
 
     def get_labels(self, matrix):
         """
         Collects labels from a dataframe
         """
         try:
-            output = matrix.index.to_frame(index=False)
-
+            return matrix.index.to_frame(index=False)
             # print("ind",matrix.index[0])
         except Exception:
             # this exception is here only in the case the multi-index is
             # as a list or flat strings instead of an actual multi-index
-            output = df(list(matrix.index)).copy()
-
-        return(output)
+            # it is not the case with our EXIOBASE database but future 
+            #adaptation to include other databases may require it 
+            return df(list(matrix.index)).copy()
 
     def save_labels(self, data, directory):
+        """
+        saves the labels of the database in the labels directory
+        """
 
         try:
             self.get_labels(data["V"].T).to_csv(directory + "/industry.csv",
@@ -147,6 +160,7 @@ class Labels:
         self.get_labels(data["Cr_W_k"]).to_csv(directory + "/charact_factor_inputs.csv", index=False)
         self.get_labels(data["Y"]).to_csv(directory + "/products.csv", index=False)  # with unit column
         self.get_labels(data["Y"].T).to_csv(directory + "/final_demand.csv", index=False)
+        
         try:
             self.get_labels(data["W"]).to_csv(directory + "/factor_inputs.csv", index=False)
             self.get_labels(data["E"]).to_csv(directory + "/emissions.csv", index=False)
@@ -199,7 +213,7 @@ class Labels:
         data.Cr_M_k = self.relabel(data.Cr_M_k, lb.mat, lb.car_mat)
         data.Cr_W_k = self.relabel(data.Cr_W_k, lb.primary, lb.car_prim)
 
-        return(data)
+        return data
 
     def apply_labels(self, matrix, labels, axis=0):
         """
@@ -214,8 +228,8 @@ class Labels:
             matrix.columns = mi.from_arrays(labels.values.T)
             matrix.columns.names = labels.columns
 
-        return(matrix)
-
+        return matrix
+               
     def relabel(self, M, column_labels, index_labels):
         """
         Processes apply_labels and apply _names together
@@ -227,13 +241,16 @@ class Labels:
         except Exception:
             # in case a string is passed for column label for a vector
             M.columns = [column_labels]
-        M = self.apply_labels(M, index_labels, axis=0)  # index
-
-        return(M)
+        
+        return self.apply_labels(M, index_labels, axis=0)  # index
 
     def identify_labels(self, M_name):
+        """
+        A method to understand what type of labels are being handled depending
+        on the name of the matrix in dataframe type that is being passed
+        """
 
-            # identifying colum and index labels
+        # identifying colum and index labels
         if self.country_labels is None:
             reg_labels = self.region_labels
         elif self.country_labels is not None:
@@ -266,11 +283,9 @@ class Labels:
         no_reg_labs = len(reg_labels)
         no_col_labs = column_labels.count
 
-        output = {"reg_labels": reg_labels,
-                  "g_labels": column_labels,
-                  "i_labels": row_labels,
-                  "no_i": no_row_labs,
-                  "no_g": no_col_labs,
-                  "no_reg": no_reg_labs}
-
-        return(output)
+        return {"reg_labels": reg_labels,
+                "g_labels": column_labels,
+                "i_labels": row_labels,
+                "no_i": no_row_labs,
+                "no_g": no_col_labs,
+                "no_reg": no_reg_labs}

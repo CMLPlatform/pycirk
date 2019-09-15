@@ -93,25 +93,23 @@ class Transform:
 
         A = ops.IOT.A(Z, self.inv_diag_q)
 
-        IOT = {"Y": self.Y,
-               "L": L,
-               "Z": Z,
-               "A": A,
-               "W": W,
-               "E": E,
-               "EY": self.EY,
-               "R": R,
-               "RY": self.RY,
-               "M": M,
-               "MY": self.MY,
-               "Cr_E_k": self.Cr_E_k,
-               "Cr_M_k": self.Cr_M_k,
-               "Cr_R_k": self.Cr_R_k,
-               "Cr_W_k": self.Cr_W_k,
-               "ver_base": ver_base
-               }
-
-        return(IOT)
+        return {"Y": self.Y,
+                "L": L,
+                "Z": Z,
+                "A": A,
+                "W": W,
+                "E": E,
+                "EY": self.EY,
+                "R": R,
+                "RY": self.RY,
+                "M": M,
+                "MY": self.MY,
+                "Cr_E_k": self.Cr_E_k,
+                "Cr_M_k": self.Cr_M_k,
+                "Cr_R_k": self.Cr_R_k,
+                "Cr_W_k": self.Cr_W_k,
+                "ver_base": ver_base
+                }
 
     def IOTpxpSTA_MSCm(self):
         """
@@ -149,24 +147,22 @@ class Transform:
 
         A = ops.IOT.A(Z, self.inv_diag_q)
 
-        IOT = {"Y": self.Y,
-               "L": L,
-               "Z": Z,
-               "A": A,
-               "W": W,
-               "E": E,
-               "EY": self.EY,
-               "R": R,
-               "RY": self.RY,
-               "M": M,
-               "MY": self.MY,
-               "Cr_E_k": self.Cr_E_k,
-               "Cr_M_k": self.Cr_M_k,
-               "Cr_R_k": self.Cr_R_k,
-               "Cr_W_k": self.Cr_W_k,
-               "ver_base": ver_base
-               }
-
-        return(IOT)
+        return {"Y": self.Y,
+                "L": L,
+                "Z": Z,
+                "A": A,
+                "W": W,
+                "E": E,
+                "EY": self.EY,
+                "R": R,
+                "RY": self.RY,
+                "M": M,
+                "MY": self.MY,
+                "Cr_E_k": self.Cr_E_k,
+                "Cr_M_k": self.Cr_M_k,
+                "Cr_R_k": self.Cr_R_k,
+                "Cr_W_k": self.Cr_W_k,
+                "ver_base": ver_base
+                }
 
         # Add here more transformation methods for industry-by-industry
