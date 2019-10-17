@@ -8,6 +8,10 @@ _A python package to model Circular Economy policy and technological interventio
 
 Documentation: https://pycirk.readthedocs.io/en/latest/readme.html
 
+To cite the use of the software in your research please use the following publication
+"Modeling the circular economy in environmentally extended input-output tables: Methods, software and case study"
+10.1016/j.resconrec.2019.104508
+
 ## Installation
 
 ### Stable release
