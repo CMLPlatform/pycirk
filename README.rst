@@ -18,9 +18,11 @@ pycirk
 
 10.5281/zenodo.1492957
 
-To cite the use of the software in your research please use the following publication
+To cite the use of the software in your research please use the following publication:
+
 "Modeling the circular economy in environmentally extended input-output tables: Methods, software and case study"
-10.1016/j.resconrec.2019.104508
+
+https://doi.org/10.1016/j.resconrec.2019.104508
 
 ===============
 1. Installation
