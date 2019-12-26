@@ -62,9 +62,10 @@ class Settings:
         if set to true it will run the test settings under under pycirk//tests
 
     """
-    def __init__(self, method=0, make_secondary=False, save_directory="",
+    def __init__(self, method=0, hybrid=False, make_secondary=False, save_directory="",
                  aggregation=1, file=None, test=False):
-
+        
+        self.hybrid = hybrid
         self.method = method  # 0 or 1
         self.make_secondary = make_secondary
         self.file = file
@@ -91,11 +92,14 @@ class Settings:
         General specifications for the project, they are also used to mark
         the output files
         """
-        if int(self.method) == 0:
-            method = "(0) IOTpxpSTA_MSCm"
-
-        elif int(self.method) == 1:
-            method = "(1) IOTpxpSTA_TCm"
+        if self.hybrid is True:
+            method = "mrHIOT_2011"
+        else:
+            if int(self.method) == 0:
+                method = "(0) IOTpxpSTA_MSCm"
+    
+            elif int(self.method) == 1:
+                method = "(1) IOTpxpSTA_TCm"
 
         if test is True:  # test-path with test scenarios
             print("Running in test mode")
@@ -196,22 +200,26 @@ class Settings:
             return {"loc": self.file, "type": np.nan}
 
         if self.file is None:
+            
+            if self.hybrid is True:
+                io = "data//mrHIOTs_2011.pkl"
+            else:
 
-            if self.method in [0, 1]:
-                io_file_bi = "data//mrIO_EU_ROW_V3.3.pkl"
-                io_file_all = "data//mrIO_V3.3.pkl"
+                if self.method in [0, 1]:
+                    io_file_bi = "data//mrIO_EU_ROW_V3.3.pkl"
+                    io_file_all = "data//mrIO_V3.3.pkl"
+    
+                if self.make_secondary is True:
+                    io_file_bi = "data//mrIO_EU_ROW_V3.3.sm.pkl"
+                    io_file_all = "data//mrIO_V3.3.sm.pkl"
 
-            if self.make_secondary is True:
-                io_file_bi = "data//mrIO_EU_ROW_V3.3.sm.pkl"
-                io_file_all = "data//mrIO_V3.3.sm.pkl"
-
-            if self.aggregation == 1:
-                io = io_file_bi
-                sut = "data//mrSUT_EU_ROW_V3.3.pkl"
-
-            elif self.aggregation == 0:
-                io = io_file_all
-                sut = "data//mrSUT_V3.3.pkl"
+                if self.aggregation == 1:
+                    io = io_file_bi
+                    sut = "data//mrSUT_EU_ROW_V3.3.pkl"
+    
+                elif self.aggregation == 0:
+                    io = io_file_all
+                    sut = "data//mrSUT_V3.3.pkl"
 
             io = ospt.abspath(ospt.join(ospt.dirname(__file__), io))
             sut = ospt.abspath(ospt.join(ospt.dirname(__file__), sut))
@@ -232,7 +240,7 @@ class Settings:
 
             return {"loc": data, "type": typ}
 
-    def transform_to_io(self):
+    def load_IO_or_transform_to_IO(self):
         """
         Transforms the SUT dataset into an IO system
 
@@ -261,42 +269,44 @@ class Settings:
         except Exception:
             raise FileNotFoundError("Your database could not be opened" +
                                     " check your file:\n\n" + loc)
+            
+        if self.hybrid is True:
 
-        if typ == "sut":
-            if self.make_secondary is True:
-                data = ms(data)
-                extension = ".sm.pkl"
-            else:
-                extension = ".pkl"
-
-            SUTs = Transform(data)
-            self.lb.save_labels(data, self.directory_labels)
-            del(data)
-            #  Transform SUT to IOT
-            if self.method == 0:
-                IOT = SUTs.IOTpxpSTA_TCm()
-            elif self.method == 1:
-                IOT = SUTs.IOTpxpSTA_MSCm()
-
-            del(SUTs)
-
-            if self.aggregation in [0, None]:
-                pickle_name = "pycirk//data//mrIO_V3.3" + extension
-            elif self.aggregation == 1:
-                pickle_name = "pycirk//data//mrIO_EU_ROW_V3.3" + extension
-            # saving the IO tables to avoid rebuilding them all the time
-
-            IOT = organizer(IOT)
-            IOT = self.lb.relabel_to_save(IOT, self.method,
-                                          self.directory_labels)
-
-            with open(pickle_name, "wb") as w:
-                pickle.dump(IOT, w, 2)  # pickling
-
-        elif typ == "io":
+        else:   
+            if typ == "sut":
+                if self.make_secondary is True:
+                    data = ms(data)
+                    extension = ".sm.pkl"
+                else:
+                    extension = ".pkl"
+    
+                SUTs = Transform(data)
                 self.lb.save_labels(data, self.directory_labels)
-                IOT = data
                 del(data)
+                #  Transform SUT to IOT
+                if self.method == 0:
+                    IOT = SUTs.IOTpxpSTA_TCm()
+                elif self.method == 1:
+                    IOT = SUTs.IOTpxpSTA_MSCm()
+    
+                del(SUTs)
+                if self.aggregation in [0, None]:
+                    pickle_name = "pycirk//data//mrIO_V3.3" + extension
+                elif self.aggregation == 1:
+                    pickle_name = "pycirk//data//mrIO_EU_ROW_V3.3" + extension
+                # saving the IO tables to avoid rebuilding them all the time
+    
+                IOT = organizer(IOT)
+                IOT = self.lb.relabel_to_save(IOT, self.method,
+                                              self.directory_labels)
+    
+                with open(pickle_name, "wb") as w:
+                    pickle.dump(IOT, w, 2)  # pickling
+    
+            elif typ == "io":
+                    self.lb.save_labels(data, self.directory_labels)
+                    IOT = data
+                    del(data)
 
         self.assign_labels_to_class()
 
@@ -354,7 +364,7 @@ class Settings:
         """
 
         if scen_no == 0:
-            scenario = self.transform_to_io() # I will likely delete this later
+            scenario = self.load_IO_or_transform_to_IO() # I will likely delete this later
         else:
             scenario = make_counterfactuals(data, scen_no, self.scenario_file(), self.lb)
 
