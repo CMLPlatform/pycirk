@@ -90,6 +90,7 @@ def allocate_sec_mat(V, U, Y, prod_or, ind_or):
     V = V.copy()
     U = U.copy()
     Y = Y.copy()
+    
 
     # position of the secondary material
     des_prod_ix_pos = prod_or + 1
@@ -98,7 +99,7 @@ def allocate_sec_mat(V, U, Y, prod_or, ind_or):
     # getting the value of secondary material from the supply table
     # which is placed on the primary material row
     misplaced = V.iloc[prod_or, des_ind_col_pos]
-
+    
     # placing the misplaced value to the secondary material row
     V.iloc[des_prod_ix_pos, des_ind_col_pos] = np.array(misplaced)
 
@@ -131,17 +132,17 @@ def allocate_sec_mat(V, U, Y, prod_or, ind_or):
 
     eye = np.identity(len(ratio_prim_sec))
 
-    U.iloc[prod_or] = (eye - ratio_prim_sec) @ prim_sec_use_trans
+    U.iloc[prod_or] = (eye - ratio_prim_sec) @ np.array(prim_sec_use_trans)
 
-    U.iloc[des_prod_ix_pos] = ratio_prim_sec @ prim_sec_use_trans
+    U.iloc[des_prod_ix_pos] = ratio_prim_sec @ np.array(prim_sec_use_trans)
 
-    Y.iloc[prod_or] = (eye - ratio_prim_sec) @ prim_sec_fin_dem_trans
+    Y.iloc[prod_or] = (eye - ratio_prim_sec) @ np.array(prim_sec_fin_dem_trans)
 
-    Y.iloc[des_prod_ix_pos] = ratio_prim_sec @ prim_sec_fin_dem_trans
+    Y.iloc[des_prod_ix_pos] = ratio_prim_sec @ np.array(prim_sec_fin_dem_trans)
 
     V.iloc[prod_or, des_ind_col_pos] = 0
 
-    print('splitting off secondary materials ready')
+    print('splitting off secondary materials completed')
 
     return {"V": V,
             "U": U,

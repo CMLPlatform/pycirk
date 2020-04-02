@@ -96,24 +96,26 @@ def make_coord_array(cat_coord, reg_coord, no_countries, no_categories):
         no_countries = 1
     else:
         pass
-
+    
     if cat_coord is None:
         s = np.array(range(no_categories * no_countries))
     else:
         n = 0
         while n in range(no_countries):
+
             g = cat_coord[0] + no_categories * n
             if "s" not in locals():
-                s = [g]
+                s = np.array([g])
             else:
-                s = np.hstack([s, g])
+                s = np.append(s, g)
             n = n+1
-
+    
     if reg_coord is None:
         return s
     else:
-        s = np.split(s, no_countries)
-        return np.take(s, reg_coord, axis=0)[0]
+        s = np.split(s, no_countries)    
+        s = s[reg_coord[0]]
+        return s
 
 def make_coord_array_for_make_sec(coordinates, no_countries, no_categories):
     """

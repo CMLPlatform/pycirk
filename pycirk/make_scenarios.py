@@ -41,7 +41,7 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     An object contaning a mofified IO system
     """
     # set basic data and variables
-
+    print(f"Scenario {scen_no} started")
     data = deepcopy(data)
 
     x_ = ops.IOT.x(data.Z, data.Y)
@@ -65,6 +65,7 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     inv_diag_x_int = np.diag(ops.inv(ops.IOT.x(data.Z, data.Y)))
 
     A = ops.IOT.A(data.Z, inv_diag_x_int)
+
     data.A = counterfactual(scen_file, scen_no, A, "A", labels)
 
     data.Y = counterfactual(scen_file, scen_no, data.Y, "Y", labels)
@@ -72,6 +73,7 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     L = ops.IOT.L(data.A)
 
     x_new = ops.IOT.x_IAy(L, data.Y.sum(1))
+    
     diag_x_new = np.diag(x_new)
 
     diag_yj_new = np.diag(data.Y.sum(axis=0))
@@ -107,13 +109,13 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     data.E = counterfactual(scen_file, scen_no, data.E, "E", labels)
     data.R = counterfactual(scen_file, scen_no, data.R, "R", labels)
     data.M = counterfactual(scen_file, scen_no, data.M, "M", labels)
-
     # Apply policy to  final demand extension coefficient matrices
     data.EY = counterfactual(scen_file, scen_no, data.EY, "EY", labels)
     data.RY = counterfactual(scen_file, scen_no, data.RY, "RY", labels)
     data.MY = counterfactual(scen_file, scen_no, data.MY, "MY", labels)
 
-#    print((1-np.sum(x_)/np.sum(x_new))*100)
+    #print((1-np.sum(x_)/np.sum(x_new))*100)
+    print(f"Scenario {scen_no} completed")
 
     return data
 
@@ -147,8 +149,7 @@ def counterfactual(scen_file, scen_no, M, M_name, labels):
     elif scen_no.startswith("scenario_"):
         pass
     else:
-        raise KeyError("only integer or explicit name (scenario_x)" +
-                       "are allowed")
+        raise KeyError("only integer or explicit name (scenario_x) are allowed")
 
 
     scenario = pd.read_excel(scen_file, sheet_name=scen_no, header=1, index=None)
@@ -339,7 +340,6 @@ def counterfactual_engine(M, inter_sets, subs=False, copy=False):
 
         int4 = inter_sets["at2"]
         int4 = basic_add(int3, int4)
-
         M[np.ix_(i, g)] = int4
 
         if subs is True:
@@ -422,7 +422,7 @@ def make_new(filtered_changes, M, M_name, labels):
             try:
                 change_type = entry.change_type
                 ide = entry.identifier  # used during debugging
-
+    
                 # Collecting the specified coordinates for the intevention
                 # coordinates for region and category
                 # Row items (i) => Supplied category or extension category
@@ -433,11 +433,14 @@ def make_new(filtered_changes, M, M_name, labels):
                 cat_d = sing_pos(entry.cat_d, column_labels)
                 # Identify coordinates
                 orig_coor = coord(cat_o, reg_o, no_reg_labs, no_row_labs)
+                #print(f"row\n ide: {ide}, row: {entry.reg_o}, {entry.cat_o}, {orig_coor}")
                 dest_coor = coord(cat_d, reg_d, no_reg_labs, no_col_labs)
+                #print(f"columns\n ide: {ide}, column: {entry.reg_d}, {entry.cat_d}, {dest_coor}")
+                
                 # organize main changes
                 kt1 = {"kt": entry.kt1, "kp": entry.kp1}
                 kt2 = {"kt": entry.kt2, "kp": entry.kp2}
-
+    
                 intervention = {"change_type": change_type,
                                 "ide": ide,
                                 "i": orig_coor,
@@ -447,24 +450,24 @@ def make_new(filtered_changes, M, M_name, labels):
                                 "at1": entry.at1,
                                 "at2": entry.at2,
                                 }
-
+    
                 substitution = False
                 copy = False
-
+    
                 # the following is only relevant for susbtitution
                 if "x" in [entry.Sub, entry.Copy]:
-
+    
                     sub_reg_o = sing_pos(entry.reg_o_sc, reg_labels)
                     sub_cat_o = sing_pos(entry.cat_o_sc, row_labels)
-
+    
                     # Column items => Consumption / manufacturing activity
                     sub_reg_d = sing_pos(entry.reg_d_sc, reg_labels)
                     sub_cat_d = sing_pos(entry.cat_d_sc, column_labels)
-
+    
                     # Translate coordinates from str to numerical position
                     sub_orig_coor = coord(sub_cat_o, sub_reg_o, no_reg_labs, no_row_labs)
                     sub_dest_coor = coord(sub_cat_d, sub_reg_d, no_reg_labs, no_col_labs)
-
+    
                     intervention["swk"] = entry.swk
                     intervention["i1"] = sub_orig_coor
                     intervention["g1"] = sub_dest_coor
@@ -472,7 +475,7 @@ def make_new(filtered_changes, M, M_name, labels):
                     intervention["sk2"] = entry.sk2
                     intervention["sk3"] = entry.sk3
                     intervention["sk4"] = entry.sk4
-
+    
                     if entry.Copy == "x":
                         copy = True
                     elif entry.Sub == "x":
@@ -481,112 +484,5 @@ def make_new(filtered_changes, M, M_name, labels):
                 raise ValueError(f"Check in this entry for potential coordinate errors in your scenario settings:\n{entry} ")
 
             M = counterfactual_engine(M, intervention, substitution, copy)
-
+    
     return M
-
-# =============================================================================
-# =============================================================================
-# # Here I put work that I started but I still need to finish
-# =============================================================================
-# =============================================================================
-# =============================================================================
-# 
-# 
-# def make_counterfactuals_SUT(data, scen_no, scen_file, labels):
-#     """
-#     Calculate all the counterfactual SUT matrices
-# 
-#     Parameters
-#     ----------
-#     data : obj
-#         An object containing all necessary matrices of the SUT system
-# 
-#     scen_no : int
-#         the identification number of the scenario to reference in scen_file
-# 
-#     scen_file : str
-#         the directory where the scenarios.xlsx file is store
-# 
-#     labels : obj
-#         an object containing all labels for the SUT matrices
-# 
-#     Outputs
-#     -------
-#     An object contaning a mofified SUT system
-#     """
-# 
-#     met = ops.PxP_ITA_MSC
-# 
-#     w = ops.IOT.B(data.W, data.inv_diag_g)  # Primary input coef
-#     e = ops.IOT.B(data.E, data.inv_diag_g)  # emissions extension coef
-#     r = ops.IOT.B(data.R, data.inv_diag_g) # Resources extension coef
-#     m = ops.IOT.B(data.M, data.inv_diag_g) # Materials extension coef
-#     S = met.S(data.U, data.inv_diag_g)  # industry coefficients for intermediate use table
-# 
-#     # Start first from a supply approach
-#     # Supply matrix counterfactual
-#     data.V =  counterfactual(scen_file, scen_no, data.V, "V", labels)
-#     # new total industry output
-#     g1 = np.sum(data.V, axis=0)
-#     # industry use coefficients counterfactual
-#     S_ = counterfactual(scen_file, scen_no, S, "S", labels)
-# 
-#     data.U = counterfactual(scen_file, scen_no, S_ @ np.diag(g1), "U", labels)  # industry use transactions counterfactual
-# 
-#     W_ = np.array(ops.IOT.R(w, np.diag(g1)))
-# 
-#     g2 = np.array(W_[:9].sum(0)) + data.U.sum(0)  # recalculate total industry output
-# 
-#     g_dif = np.multiply(g2, ops.inv(g1))*100  # calculate the difference between original and new total industry input
-# 
-#     # print([round((1-l)*100,4) for l in g_dif if 1-l>.5e-3 and l!=0])
-#     q2 = np.sum(data.U, axis=1) + np.sum(data.Y, axis=1)
-# 
-#     # updating the supply table to match the new total industry input
-#     D = met.D(data.V, np.diag(ops.inv(data.V.sum(1))))
-#     data.V = D @ np.diag(q2)
-# 
-#     q1 = np.sum(data.V, axis=0)  # total product output
-# 
-#     q_dif = np.multiply(q2, ops.inv(q1))
-# 
-#     g1 = np.sum(data.V, axis=1)
-# 
-#     data.E = met.R(e, np.diag(x))
-# 
-#     data.R = met.R(r, np.diag(x))
-# 
-#     data.M = met.R(m, np.diag(x))
-# 
-# 
-#     return(IOT)
-# def balancing_operation(V, U, Y, W):
-#    """
-#    Re-balancing of supply-use tables after data changes
-#
-#    Parameters
-#    ----------
-#    V (supply) : numpy.array
-#
-#    U (use) : numpy.array
-#
-#    Y (final_demand) : numpy.array
-#
-#    W (primary_inputs) : numpy.array
-#
-#    Output
-#    ------
-#    output : dict
-#
-#    It outputs a dictionary containing a re-balanced supply-use tables system
-#    where:
-#        V = supply table
-#
-#        U = use table
-#
-#        Y = final demand
-#
-#        W = primary inputs
-#
-#    """
-# =============================================================================

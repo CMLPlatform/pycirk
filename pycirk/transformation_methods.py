@@ -21,16 +21,16 @@ class Transform:
     def __init__(self, SUTs):
 
         # Baseline monetary data
-        self.V = SUTs["V"]  # Supply matrix
-        self.U = SUTs["U"]  # Intermediate use
-        self.Y = SUTs["Y"]  # Final demand
-        self.W = SUTs["W"]  # Primary input
-        self.E = SUTs["E"]  # emissions extension
-        self.EY = SUTs["YE"]  # emissions extension final demand
-        self.R = SUTs["R"]  # Resources extension
-        self.RY = SUTs["YR"]  # Resources extension final demand
-        self.M = SUTs["M"]  # Materials extension
-        self.MY = SUTs["YM"]  # Materials extension final demand
+        self.V = np.array(SUTs["V"])  # Supply matrix
+        self.U = np.array(SUTs["U"])  # Intermediate use
+        self.Y = np.array(SUTs["Y"])  # Final demand
+        self.W = np.array(SUTs["W"])  # Primary input
+        self.E = np.array(SUTs["E"])  # emissions extension
+        self.EY = np.array(SUTs["YE"])  # emissions extension final demand
+        self.R = np.array(SUTs["R"])  # Resources extension
+        self.RY = np.array(SUTs["YR"])  # Resources extension final demand
+        self.M = np.array(SUTs["M"])  # Materials extension
+        self.MY = np.array(SUTs["YM"])  # Materials extension final demand
 
         self.Cr_E_k = SUTs["Cr_E_k"]  # Charact coefficients emissions
         self.Cr_R_k = SUTs["Cr_R_k"]  # Charact coefficients resources
@@ -89,8 +89,6 @@ class Transform:
         del(self.M)
         M = met.R(m, np.diag(x))
 
-        x = ops.IOT.x_IAy(L, self.yi)  # total product ouput
-
         A = ops.IOT.A(Z, self.inv_diag_q)
 
         return {"Y": self.Y,
@@ -121,11 +119,12 @@ class Transform:
         S = met.S(self.U, self.inv_diag_g)  # ind. interm. coef. => in EUROSTAT manual shown as S
         D = met.D(self.V, self.inv_diag_q)  # Market shares
         A = met.A(S, D)  # technical coefficient matrix
+        
         L = met.L(A)  # leontief inverse
         w = met.B(self.W, D, self.inv_diag_g)  # primary inputs
         x = ops.IOT.x_IAy(L, self.yi)
         W = ops.IOT.R(w, np.diag(x))
-        Z = met.Z(S, D, self.diag_q)  # intermediates
+        Z = met.Z(S, D, np.diag(x))  # intermediates
         ver_base = ops.verifyIOT(Z, self.Y, W)
         del(self.V)
         del(self.U)
@@ -142,10 +141,6 @@ class Transform:
         m = met.B(self.M, D, self.inv_diag_g)  # mater coef. matrix
         del(self.M)
         M = met.R(m, np.diag(x))
-
-        x = ops.IOT.x_IAy(L, self.yi)  # total product ouput
-
-        A = ops.IOT.A(Z, self.inv_diag_q)
 
         return {"Y": self.Y,
                 "L": L,

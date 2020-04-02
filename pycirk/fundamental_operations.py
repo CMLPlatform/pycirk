@@ -129,7 +129,7 @@ class Operations:
             Total requirement multipliers
             A = Z * D
             """
-            return np.matmul(inter_coef, D)
+            return inter_coef @ D
 
         def L(A):
             """
@@ -157,7 +157,7 @@ class Operations:
             Intermediates
             Z = inter_coef * D * diag(q)
             """
-            return np.matmul(inter_coef, D) @ diag_q
+            return inter_coef @ D @ diag_q
 
     class IOT:
         """
@@ -170,7 +170,7 @@ class Operations:
             """
             total product output s the sum of Si and y
             """
-            return np.sum(np.array(Z), axis=1) + np.sum(np.array(Y), axis=1)
+            return np.sum(Z, axis=1) + np.sum(Y, axis=1)
 
         def B(R, inv_diag_x):
             """
@@ -189,7 +189,7 @@ class Operations:
             Total product ouput
             x = inv(I - A) * yi
             """
-            return np.dot(L, y)
+            return L @ y
 
         def Z(A, diag_x):
             """
@@ -257,7 +257,7 @@ class Operations:
             x = Operations.IOT.x_IAy(L, y)
 
             ver_base = Operations.verifyIOT(Z, Y, E)
-
+            
             return {"A": A,
                     "Z": Z,
                     "L": L,
@@ -277,17 +277,13 @@ class Operations:
 
     def calculate_characterized(data):
 
-        data.Cr_E = data.Cr_E_k @ np.array(data.E)
-        data.Cr_M = data.Cr_M_k @ np.array(data.M)
-        data.Cr_R = data.Cr_R_k @ np.array(data.R)
-        data.Cr_W = data.Cr_W_k @ np.array(data.W)
-
-        data.Cr_EY = data.Cr_E_k @ np.array(data.EY)
-        data.Cr_MY = data.Cr_M_k @ np.array(data.MY)
-        data.Cr_RY = data.Cr_R_k @ np.array(data.RY)
-
-        data.Cr_tot_E = data.Cr_E.sum(axis=1) + data.Cr_EY.sum(axis=1)
-        data.Cr_tot_M = data.Cr_M.sum(axis=1) + data.Cr_MY.sum(axis=1)
-        data.Cr_tot_R = data.Cr_R.sum(axis=1) + data.Cr_RY.sum(axis=1)
+        data.Cr_E = data.Cr_E_k @ data.E
+        data.Cr_M = data.Cr_M_k @ data.M
+        data.Cr_R = data.Cr_R_k @ data.R
+        data.Cr_W = data.Cr_W_k @ data.W
+        
+        data.Cr_EY = data.Cr_E_k @ data.EY
+        data.Cr_MY = data.Cr_M_k @ data.MY
+        data.Cr_RY = data.Cr_R_k @ data.RY
 
         return data

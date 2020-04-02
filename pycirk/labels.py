@@ -64,35 +64,40 @@ class Labels:
                 else:
                     organize[keys] = self.list_of_something(labels)
 
-        count = max(len(labels) for keys, labels in organize.items())
-        organize["count"] = count
-
+        try:
+            organize["count"] = len(organize["synonym"])
+        except KeyError:
+            organize["count"] = len(organize["characterization"])
+            
         return Munch(organize)
 
     def organize_unique_labels(self, directory):
 
-        labels = self.load_labels(directory)
+        lbl = self.load_labels(directory)
 
-        for l, v in labels.items():
-            labels[l] = Munch(v)
+        self.product_labels = self.get_unique_labels(lbl["prod"])
+        try:
+            self.industry_labels = self.get_unique_labels(lbl["ind"])
+        except AttributeError:
+            pass
+        
+        try:
+            self.country_labels = self.product_labels.country_code
+        except Exception:
+            pass
 
-        labels = Munch(labels)
+        self.region_labels = self.product_labels.region
 
-        labels.products = self.get_unique_labels(labels.prod)
-        labels.industries = self.get_unique_labels(labels.ind)
+        self.W_labels = self.get_unique_labels(lbl["primary"])
+        self.Y_labels = self.get_unique_labels(lbl["fin_dem"])
+        self.E_labels = self.get_unique_labels(lbl["emis"], False)
+        self.R_labels = self.get_unique_labels(lbl["res"], False)
+        self.M_labels = self.get_unique_labels(lbl["mat"], False)
+        self.Cr_E_labels = self.get_unique_labels(lbl["car_emis"], False)
+        self.Cr_R_labels = self.get_unique_labels(lbl["car_res"], False)
+        self.Cr_M_labels = self.get_unique_labels(lbl["car_mat"], False)
+        self.Cr_W_labels = self.get_unique_labels(lbl["car_prim"], False)
 
-        labels.primary = self.get_unique_labels(labels.primary)
-        labels.fin_dem = self.get_unique_labels(labels.fin_dem)
-
-        labels.emis = self.get_unique_labels(labels.emis, False)
-        labels.res = self.get_unique_labels(labels.res, False)
-        labels.mat = self.get_unique_labels(labels.mat, False)
-        labels.car_emis = self.get_unique_labels(labels.car_emis, False)
-        labels.car_res = self.get_unique_labels(labels.car_res, False)
-        labels.car_mat = self.get_unique_labels(labels.car_mat, False)
-        labels.car_prim = self.get_unique_labels(labels.car_prim, False)
-
-        return labels
 
     def load_labels(self, directory):
 
@@ -278,7 +283,7 @@ class Labels:
 
             attr_name = name + name_2 + "_labels"
             row_labels = eval("self." + attr_name)
-
+        
         no_row_labs = row_labels.count
         no_reg_labs = len(reg_labels)
         no_col_labs = column_labels.count

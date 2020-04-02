@@ -255,7 +255,7 @@ class Settings:
 
         loc = dataset_spec["loc"]
         typ = dataset_spec["type"]
-
+        
         try:
             data = self.load_dataset(loc)
         except Exception:
@@ -298,7 +298,7 @@ class Settings:
                 IOT = data
                 del(data)
 
-        self.assign_labels_to_class()
+        self.lb.organize_unique_labels(self.directory_labels)
 
         return IOT
 
@@ -319,33 +319,7 @@ class Settings:
                                     " check your file:\n\n" + loc)
         return Transform(data)
 
-
-    def assign_labels_to_class(self):
-        """
-        Assigns all labels to their respective attributes in the Labels class
-        These are used througout the program to find coordinates and 
-        label results
-        """
-
-        all_labels = self.lb.organize_unique_labels(self.directory_labels)
-
-        try:
-            self.lb.country_labels = all_labels.products.country_code
-        except Exception:
-            pass
-
-        self.lb.region_labels = all_labels.products.region
-        self.lb.product_labels = all_labels.products
-        self.lb.industry_labels = all_labels.industries
-        self.lb.W_labels = all_labels.primary
-        self.lb.E_labels = all_labels.emis
-        self.lb.R_labels = all_labels.res
-        self.lb.M_labels = all_labels.mat
-        self.lb.Y_labels = all_labels.fin_dem
-        self.lb.Cr_E_labels = all_labels.car_emis
-        self.lb.Cr_R_labels = all_labels.car_res
-        self.lb.Cr_M_labels = all_labels.car_mat
-        self.lb.Cr_W_labels = all_labels.car_prim
+ 
 
     def set_IO_scenario(self, data, scen_no):
         """
