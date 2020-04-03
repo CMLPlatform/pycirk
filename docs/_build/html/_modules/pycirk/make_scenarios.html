@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>pycirk.make_scenarios &#8212; pycirk 1.5.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -13,6 +11,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -75,7 +74,7 @@
 <span class="sd">    An object contaning a mofified IO system</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># set basic data and variables</span>
-
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Scenario </span><span class="si">{scen_no}</span><span class="s2"> started&quot;</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="n">x_</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">Y</span><span class="p">)</span>
@@ -99,6 +98,7 @@
     <span class="n">inv_diag_x_int</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">ops</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">Y</span><span class="p">)))</span>
 
     <span class="n">A</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span> <span class="n">inv_diag_x_int</span><span class="p">)</span>
+
     <span class="n">data</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="n">counterfactual</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 
     <span class="n">data</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">counterfactual</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
@@ -106,6 +106,7 @@
     <span class="n">L</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">L</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">A</span><span class="p">)</span>
 
     <span class="n">x_new</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">IOT</span><span class="o">.</span><span class="n">x_IAy</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">Y</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    
     <span class="n">diag_x_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x_new</span><span class="p">)</span>
 
     <span class="n">diag_yj_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Y</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
@@ -141,13 +142,13 @@
     <span class="n">data</span><span class="o">.</span><span class="n">E</span> <span class="o">=</span> <span class="n">counterfactual</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
     <span class="n">data</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">counterfactual</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
     <span class="n">data</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="n">counterfactual</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-
     <span class="c1"># Apply policy to  final demand extension coefficient matrices</span>
     <span class="n">data</span><span class="o">.</span><span class="n">EY</span> <span class="o">=</span> <span class="n">counterfactual</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">EY</span><span class="p">,</span> <span class="s2">&quot;EY&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
     <span class="n">data</span><span class="o">.</span><span class="n">RY</span> <span class="o">=</span> <span class="n">counterfactual</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">RY</span><span class="p">,</span> <span class="s2">&quot;RY&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
     <span class="n">data</span><span class="o">.</span><span class="n">MY</span> <span class="o">=</span> <span class="n">counterfactual</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="n">scen_no</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">MY</span><span class="p">,</span> <span class="s2">&quot;MY&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 
-<span class="c1">#    print((1-np.sum(x_)/np.sum(x_new))*100)</span>
+    <span class="c1">#print((1-np.sum(x_)/np.sum(x_new))*100)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Scenario </span><span class="si">{scen_no}</span><span class="s2"> completed&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">data</span></div>
 
@@ -181,8 +182,7 @@
     <span class="k">elif</span> <span class="n">scen_no</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;scenario_&quot;</span><span class="p">):</span>
         <span class="k">pass</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;only integer or explicit name (scenario_x)&quot;</span> <span class="o">+</span>
-                       <span class="s2">&quot;are allowed&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;only integer or explicit name (scenario_x) are allowed&quot;</span><span class="p">)</span>
 
 
     <span class="n">scenario</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">scen_file</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="n">scen_no</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -373,7 +373,6 @@
 
         <span class="n">int4</span> <span class="o">=</span> <span class="n">inter_sets</span><span class="p">[</span><span class="s2">&quot;at2&quot;</span><span class="p">]</span>
         <span class="n">int4</span> <span class="o">=</span> <span class="n">basic_add</span><span class="p">(</span><span class="n">int3</span><span class="p">,</span> <span class="n">int4</span><span class="p">)</span>
-
         <span class="n">M</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">g</span><span class="p">)]</span> <span class="o">=</span> <span class="n">int4</span>
 
         <span class="k">if</span> <span class="n">subs</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -456,7 +455,7 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">change_type</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">change_type</span>
                 <span class="n">ide</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">identifier</span>  <span class="c1"># used during debugging</span>
-
+    
                 <span class="c1"># Collecting the specified coordinates for the intevention</span>
                 <span class="c1"># coordinates for region and category</span>
                 <span class="c1"># Row items (i) =&gt; Supplied category or extension category</span>
@@ -467,11 +466,14 @@
                 <span class="n">cat_d</span> <span class="o">=</span> <span class="n">sing_pos</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">cat_d</span><span class="p">,</span> <span class="n">column_labels</span><span class="p">)</span>
                 <span class="c1"># Identify coordinates</span>
                 <span class="n">orig_coor</span> <span class="o">=</span> <span class="n">coord</span><span class="p">(</span><span class="n">cat_o</span><span class="p">,</span> <span class="n">reg_o</span><span class="p">,</span> <span class="n">no_reg_labs</span><span class="p">,</span> <span class="n">no_row_labs</span><span class="p">)</span>
+                <span class="c1">#print(f&quot;row\n ide: {ide}, row: {entry.reg_o}, {entry.cat_o}, {orig_coor}&quot;)</span>
                 <span class="n">dest_coor</span> <span class="o">=</span> <span class="n">coord</span><span class="p">(</span><span class="n">cat_d</span><span class="p">,</span> <span class="n">reg_d</span><span class="p">,</span> <span class="n">no_reg_labs</span><span class="p">,</span> <span class="n">no_col_labs</span><span class="p">)</span>
+                <span class="c1">#print(f&quot;columns\n ide: {ide}, column: {entry.reg_d}, {entry.cat_d}, {dest_coor}&quot;)</span>
+                
                 <span class="c1"># organize main changes</span>
                 <span class="n">kt1</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;kt&quot;</span><span class="p">:</span> <span class="n">entry</span><span class="o">.</span><span class="n">kt1</span><span class="p">,</span> <span class="s2">&quot;kp&quot;</span><span class="p">:</span> <span class="n">entry</span><span class="o">.</span><span class="n">kp1</span><span class="p">}</span>
                 <span class="n">kt2</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;kt&quot;</span><span class="p">:</span> <span class="n">entry</span><span class="o">.</span><span class="n">kt2</span><span class="p">,</span> <span class="s2">&quot;kp&quot;</span><span class="p">:</span> <span class="n">entry</span><span class="o">.</span><span class="n">kp2</span><span class="p">}</span>
-
+    
                 <span class="n">intervention</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;change_type&quot;</span><span class="p">:</span> <span class="n">change_type</span><span class="p">,</span>
                                 <span class="s2">&quot;ide&quot;</span><span class="p">:</span> <span class="n">ide</span><span class="p">,</span>
                                 <span class="s2">&quot;i&quot;</span><span class="p">:</span> <span class="n">orig_coor</span><span class="p">,</span>
@@ -481,24 +483,24 @@
                                 <span class="s2">&quot;at1&quot;</span><span class="p">:</span> <span class="n">entry</span><span class="o">.</span><span class="n">at1</span><span class="p">,</span>
                                 <span class="s2">&quot;at2&quot;</span><span class="p">:</span> <span class="n">entry</span><span class="o">.</span><span class="n">at2</span><span class="p">,</span>
                                 <span class="p">}</span>
-
+    
                 <span class="n">substitution</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="n">copy</span> <span class="o">=</span> <span class="kc">False</span>
-
+    
                 <span class="c1"># the following is only relevant for susbtitution</span>
                 <span class="k">if</span> <span class="s2">&quot;x&quot;</span> <span class="ow">in</span> <span class="p">[</span><span class="n">entry</span><span class="o">.</span><span class="n">Sub</span><span class="p">,</span> <span class="n">entry</span><span class="o">.</span><span class="n">Copy</span><span class="p">]:</span>
-
+    
                     <span class="n">sub_reg_o</span> <span class="o">=</span> <span class="n">sing_pos</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">reg_o_sc</span><span class="p">,</span> <span class="n">reg_labels</span><span class="p">)</span>
                     <span class="n">sub_cat_o</span> <span class="o">=</span> <span class="n">sing_pos</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">cat_o_sc</span><span class="p">,</span> <span class="n">row_labels</span><span class="p">)</span>
-
+    
                     <span class="c1"># Column items =&gt; Consumption / manufacturing activity</span>
                     <span class="n">sub_reg_d</span> <span class="o">=</span> <span class="n">sing_pos</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">reg_d_sc</span><span class="p">,</span> <span class="n">reg_labels</span><span class="p">)</span>
                     <span class="n">sub_cat_d</span> <span class="o">=</span> <span class="n">sing_pos</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">cat_d_sc</span><span class="p">,</span> <span class="n">column_labels</span><span class="p">)</span>
-
+    
                     <span class="c1"># Translate coordinates from str to numerical position</span>
                     <span class="n">sub_orig_coor</span> <span class="o">=</span> <span class="n">coord</span><span class="p">(</span><span class="n">sub_cat_o</span><span class="p">,</span> <span class="n">sub_reg_o</span><span class="p">,</span> <span class="n">no_reg_labs</span><span class="p">,</span> <span class="n">no_row_labs</span><span class="p">)</span>
                     <span class="n">sub_dest_coor</span> <span class="o">=</span> <span class="n">coord</span><span class="p">(</span><span class="n">sub_cat_d</span><span class="p">,</span> <span class="n">sub_reg_d</span><span class="p">,</span> <span class="n">no_reg_labs</span><span class="p">,</span> <span class="n">no_col_labs</span><span class="p">)</span>
-
+    
                     <span class="n">intervention</span><span class="p">[</span><span class="s2">&quot;swk&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">swk</span>
                     <span class="n">intervention</span><span class="p">[</span><span class="s2">&quot;i1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_orig_coor</span>
                     <span class="n">intervention</span><span class="p">[</span><span class="s2">&quot;g1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_dest_coor</span>
@@ -506,7 +508,7 @@
                     <span class="n">intervention</span><span class="p">[</span><span class="s2">&quot;sk2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">sk2</span>
                     <span class="n">intervention</span><span class="p">[</span><span class="s2">&quot;sk3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">sk3</span>
                     <span class="n">intervention</span><span class="p">[</span><span class="s2">&quot;sk4&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">sk4</span>
-
+    
                     <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">Copy</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span>
                         <span class="n">copy</span> <span class="o">=</span> <span class="kc">True</span>
                     <span class="k">elif</span> <span class="n">entry</span><span class="o">.</span><span class="n">Sub</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span>
@@ -515,115 +517,8 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Check in this entry for potential coordinate errors in your scenario settings:</span><span class="se">\n</span><span class="si">{entry}</span><span class="s2"> &quot;</span><span class="p">)</span>
 
             <span class="n">M</span> <span class="o">=</span> <span class="n">counterfactual_engine</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">intervention</span><span class="p">,</span> <span class="n">substitution</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span>
-
+    
     <span class="k">return</span> <span class="n">M</span></div>
-
-<span class="c1"># =============================================================================</span>
-<span class="c1"># =============================================================================</span>
-<span class="c1"># # Here I put work that I started but I still need to finish</span>
-<span class="c1"># =============================================================================</span>
-<span class="c1"># =============================================================================</span>
-<span class="c1"># =============================================================================</span>
-<span class="c1"># </span>
-<span class="c1"># </span>
-<span class="c1"># def make_counterfactuals_SUT(data, scen_no, scen_file, labels):</span>
-<span class="c1">#     &quot;&quot;&quot;</span>
-<span class="c1">#     Calculate all the counterfactual SUT matrices</span>
-<span class="c1"># </span>
-<span class="c1">#     Parameters</span>
-<span class="c1">#     ----------</span>
-<span class="c1">#     data : obj</span>
-<span class="c1">#         An object containing all necessary matrices of the SUT system</span>
-<span class="c1"># </span>
-<span class="c1">#     scen_no : int</span>
-<span class="c1">#         the identification number of the scenario to reference in scen_file</span>
-<span class="c1"># </span>
-<span class="c1">#     scen_file : str</span>
-<span class="c1">#         the directory where the scenarios.xlsx file is store</span>
-<span class="c1"># </span>
-<span class="c1">#     labels : obj</span>
-<span class="c1">#         an object containing all labels for the SUT matrices</span>
-<span class="c1"># </span>
-<span class="c1">#     Outputs</span>
-<span class="c1">#     -------</span>
-<span class="c1">#     An object contaning a mofified SUT system</span>
-<span class="c1">#     &quot;&quot;&quot;</span>
-<span class="c1"># </span>
-<span class="c1">#     met = ops.PxP_ITA_MSC</span>
-<span class="c1"># </span>
-<span class="c1">#     w = ops.IOT.B(data.W, data.inv_diag_g)  # Primary input coef</span>
-<span class="c1">#     e = ops.IOT.B(data.E, data.inv_diag_g)  # emissions extension coef</span>
-<span class="c1">#     r = ops.IOT.B(data.R, data.inv_diag_g) # Resources extension coef</span>
-<span class="c1">#     m = ops.IOT.B(data.M, data.inv_diag_g) # Materials extension coef</span>
-<span class="c1">#     S = met.S(data.U, data.inv_diag_g)  # industry coefficients for intermediate use table</span>
-<span class="c1"># </span>
-<span class="c1">#     # Start first from a supply approach</span>
-<span class="c1">#     # Supply matrix counterfactual</span>
-<span class="c1">#     data.V =  counterfactual(scen_file, scen_no, data.V, &quot;V&quot;, labels)</span>
-<span class="c1">#     # new total industry output</span>
-<span class="c1">#     g1 = np.sum(data.V, axis=0)</span>
-<span class="c1">#     # industry use coefficients counterfactual</span>
-<span class="c1">#     S_ = counterfactual(scen_file, scen_no, S, &quot;S&quot;, labels)</span>
-<span class="c1"># </span>
-<span class="c1">#     data.U = counterfactual(scen_file, scen_no, S_ @ np.diag(g1), &quot;U&quot;, labels)  # industry use transactions counterfactual</span>
-<span class="c1"># </span>
-<span class="c1">#     W_ = np.array(ops.IOT.R(w, np.diag(g1)))</span>
-<span class="c1"># </span>
-<span class="c1">#     g2 = np.array(W_[:9].sum(0)) + data.U.sum(0)  # recalculate total industry output</span>
-<span class="c1"># </span>
-<span class="c1">#     g_dif = np.multiply(g2, ops.inv(g1))*100  # calculate the difference between original and new total industry input</span>
-<span class="c1"># </span>
-<span class="c1">#     # print([round((1-l)*100,4) for l in g_dif if 1-l&gt;.5e-3 and l!=0])</span>
-<span class="c1">#     q2 = np.sum(data.U, axis=1) + np.sum(data.Y, axis=1)</span>
-<span class="c1"># </span>
-<span class="c1">#     # updating the supply table to match the new total industry input</span>
-<span class="c1">#     D = met.D(data.V, np.diag(ops.inv(data.V.sum(1))))</span>
-<span class="c1">#     data.V = D @ np.diag(q2)</span>
-<span class="c1"># </span>
-<span class="c1">#     q1 = np.sum(data.V, axis=0)  # total product output</span>
-<span class="c1"># </span>
-<span class="c1">#     q_dif = np.multiply(q2, ops.inv(q1))</span>
-<span class="c1"># </span>
-<span class="c1">#     g1 = np.sum(data.V, axis=1)</span>
-<span class="c1"># </span>
-<span class="c1">#     data.E = met.R(e, np.diag(x))</span>
-<span class="c1"># </span>
-<span class="c1">#     data.R = met.R(r, np.diag(x))</span>
-<span class="c1"># </span>
-<span class="c1">#     data.M = met.R(m, np.diag(x))</span>
-<span class="c1"># </span>
-<span class="c1"># </span>
-<span class="c1">#     return(IOT)</span>
-<span class="c1"># def balancing_operation(V, U, Y, W):</span>
-<span class="c1">#    &quot;&quot;&quot;</span>
-<span class="c1">#    Re-balancing of supply-use tables after data changes</span>
-<span class="c1">#</span>
-<span class="c1">#    Parameters</span>
-<span class="c1">#    ----------</span>
-<span class="c1">#    V (supply) : numpy.array</span>
-<span class="c1">#</span>
-<span class="c1">#    U (use) : numpy.array</span>
-<span class="c1">#</span>
-<span class="c1">#    Y (final_demand) : numpy.array</span>
-<span class="c1">#</span>
-<span class="c1">#    W (primary_inputs) : numpy.array</span>
-<span class="c1">#</span>
-<span class="c1">#    Output</span>
-<span class="c1">#    ------</span>
-<span class="c1">#    output : dict</span>
-<span class="c1">#</span>
-<span class="c1">#    It outputs a dictionary containing a re-balanced supply-use tables system</span>
-<span class="c1">#    where:</span>
-<span class="c1">#        V = supply table</span>
-<span class="c1">#</span>
-<span class="c1">#        U = use table</span>
-<span class="c1">#</span>
-<span class="c1">#        Y = final demand</span>
-<span class="c1">#</span>
-<span class="c1">#        W = primary inputs</span>
-<span class="c1">#</span>
-<span class="c1">#    &quot;&quot;&quot;</span>
-<span class="c1"># =============================================================================</span>
 </pre></div>
 
           </div>
@@ -663,13 +558,11 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -690,7 +583,7 @@
       &copy;2019, Franco Donati.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

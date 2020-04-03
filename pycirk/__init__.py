@@ -4,6 +4,6 @@
 
 __author__ = """Franco Donati"""
 __email__ = 'f.donati@cml.leidenuniv.nl'
-__version__ = '1.5.0'
+__version__ = '1.5.5'
 
 from pycirk.pycirk import Launch

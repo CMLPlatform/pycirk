@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>pycirk.results &#8212; pycirk 1.5.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -13,6 +11,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -75,27 +74,13 @@
     
     <span class="k">return</span> <span class="n">results</span></div>
 
-
-<div class="viewcode-block" id="retrieve_specified_data"><a class="viewcode-back" href="../../pycirk.html#pycirk.results.retrieve_specified_data">[docs]</a><span class="k">def</span> <span class="nf">retrieve_specified_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">spec_row</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Separate, collect and rename results for base and scenarios according</span>
-<span class="sd">    to specifications under th sheet &quot;analysis&quot; in scenarios.xls</span>
-
-<span class="sd">    data = any IOT table</span>
-<span class="sd">    spec_row = row in the scenarios sheet specifying settings</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:,.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span>
-
-    <span class="n">M_name</span> <span class="o">=</span> <span class="n">spec_row</span><span class="o">.</span><span class="n">matrix</span>  <span class="c1"># matrix of reference</span>
-
-    <span class="k">if</span> <span class="s2">&quot;Cr&quot;</span> <span class="ow">in</span> <span class="n">M_name</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">calculate_characterized</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
+<div class="viewcode-block" id="rsd_engine"><a class="viewcode-back" href="../../pycirk.html#pycirk.results.rsd_engine">[docs]</a><span class="k">def</span> <span class="nf">rsd_engine</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">M_name</span><span class="p">,</span> <span class="n">spec_row</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+        
+    
     <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">M_name</span><span class="p">])</span>  <span class="c1"># Call specific matrix from which to select</span>
-
+    
     <span class="n">spec_labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">identify_labels</span><span class="p">(</span><span class="n">M_name</span><span class="p">)</span>
-
+    
     <span class="n">reg_labels</span> <span class="o">=</span> <span class="n">spec_labels</span><span class="p">[</span><span class="s2">&quot;reg_labels&quot;</span><span class="p">]</span>
     <span class="n">row_labels</span> <span class="o">=</span> <span class="n">spec_labels</span><span class="p">[</span><span class="s2">&quot;i_labels&quot;</span><span class="p">]</span>
     <span class="n">column_labels</span> <span class="o">=</span> <span class="n">spec_labels</span><span class="p">[</span><span class="s2">&quot;g_labels&quot;</span><span class="p">]</span>
@@ -124,14 +109,13 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The specified coordinates to retrieve results are wrong.</span><span class="se">\n</span><span class="s2">Please check that name and matrix in your scenarios.xlsx file are correct.</span><span class="se">\n</span><span class="s2">Check: {M_name, i_cat}&quot;</span><span class="p">)</span>
 
 
-    <span class="k">if</span> <span class="s2">&quot;tot&quot;</span> <span class="ow">in</span> <span class="n">M_name</span><span class="p">:</span>
-        <span class="n">select</span> <span class="o">=</span> <span class="n">df</span><span class="p">([</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()])</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">select</span> <span class="o">=</span> <span class="n">df</span><span class="p">([</span><span class="n">M</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">g</span><span class="p">)]</span><span class="o">.</span><span class="n">sum</span><span class="p">()])</span>
+
+    <span class="n">select</span> <span class="o">=</span> <span class="n">df</span><span class="p">([</span><span class="n">M</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">g</span><span class="p">)]</span><span class="o">.</span><span class="n">sum</span><span class="p">()])</span>
 
 
     <span class="n">key_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;matrix&quot;</span><span class="p">,</span> <span class="s2">&quot;i_category&quot;</span><span class="p">,</span> <span class="s2">&quot;i_region&quot;</span><span class="p">,</span> <span class="s2">&quot;g_category&quot;</span><span class="p">,</span>
-                 <span class="s2">&quot;g_region&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">]</span>
+                 <span class="s2">&quot;g_region&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">]</span> 
+        
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">unit</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row_labels</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="n">cat_o</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -141,8 +125,48 @@
     <span class="n">index_label</span> <span class="o">=</span> <span class="p">[</span><span class="n">M_name</span><span class="p">,</span> <span class="n">i_cat</span><span class="p">,</span> <span class="n">i_reg</span><span class="p">,</span> <span class="n">g_cat</span><span class="p">,</span> <span class="n">g_reg</span><span class="p">,</span> <span class="n">unit</span><span class="p">]</span>
 
     <span class="n">select</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">([</span><span class="n">index_label</span><span class="p">],</span> <span class="n">names</span><span class="o">=</span><span class="n">key_names</span><span class="p">)</span>
-
+    
     <span class="k">return</span> <span class="n">select</span></div>
+
+<div class="viewcode-block" id="retrieve_specified_data"><a class="viewcode-back" href="../../pycirk.html#pycirk.results.retrieve_specified_data">[docs]</a><span class="k">def</span> <span class="nf">retrieve_specified_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">spec_row</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Separate, collect and rename results for base and scenarios according</span>
+<span class="sd">    to specifications under th sheet &quot;analysis&quot; in scenarios.xls</span>
+
+<span class="sd">    data = any IOT table</span>
+<span class="sd">    spec_row = row in the scenarios sheet specifying settings</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:,.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span>
+
+    <span class="n">M_name</span> <span class="o">=</span> <span class="n">spec_row</span><span class="o">.</span><span class="n">matrix</span>  <span class="c1"># matrix of reference</span>
+    
+    <span class="k">if</span> <span class="s2">&quot;Cr&quot;</span> <span class="ow">in</span> <span class="n">M_name</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">calculate_characterized</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s2">&quot;tot&quot;</span> <span class="ow">in</span> <span class="n">M_name</span><span class="p">:</span>
+        <span class="n">M_name_1</span> <span class="o">=</span> <span class="n">M_name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">M_name_2</span> <span class="o">=</span> <span class="n">M_name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;Y&quot;</span>
+        
+        <span class="k">if</span> <span class="s2">&quot;Cr&quot;</span> <span class="ow">in</span> <span class="n">M_name</span><span class="p">:</span>
+            <span class="n">M_name_1</span> <span class="o">=</span> <span class="s2">&quot;Cr_&quot;</span> <span class="o">+</span> <span class="n">M_name_1</span>
+            <span class="n">M_name_2</span> <span class="o">=</span> <span class="s2">&quot;Cr_&quot;</span> <span class="o">+</span> <span class="n">M_name_2</span>                
+                
+                
+        <span class="n">output</span> <span class="o">=</span> <span class="n">rsd_engine</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">M_name_1</span><span class="p">,</span> <span class="n">spec_row</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="n">rsd_engine</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">M_name_2</span><span class="p">,</span> <span class="n">spec_row</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">index_label</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">index_label</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">M_name</span>
+        <span class="n">key_names</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">names</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">([</span><span class="n">index_label</span><span class="p">],</span> <span class="n">names</span><span class="o">=</span><span class="n">key_names</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">rsd_engine</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">M_name</span><span class="p">,</span> <span class="n">spec_row</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+                       
+    <span class="k">return</span> <span class="n">output</span></div>
+            
+            
+
+
 </pre></div>
 
           </div>
@@ -182,13 +206,11 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -209,7 +231,7 @@
       &copy;2019, Franco Donati.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
