@@ -59,6 +59,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://bitbucket.org/CML-IE/pycirk/src/master/',
-    version='1.5.0',
+    version='1.5.5',
     zip_safe=False,
 )
