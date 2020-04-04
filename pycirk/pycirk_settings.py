@@ -281,15 +281,17 @@ class Settings:
             del(SUTs)
 
             if self.aggregation in [0, None]:
-                pickle_name = "pycirk//data//mrIO_V3.3" + extension
+                pickle_name = "data//mrIO_V3.3" + extension
             elif self.aggregation == 1:
-                pickle_name = "pycirk//data//mrIO_EU_ROW_V3.3" + extension
+                pickle_name = "data//mrIO_EU_ROW_V3.3" + extension
             # saving the IO tables to avoid rebuilding them all the time
 
             IOT = organizer(IOT)
             IOT = self.lb.relabel_to_save(IOT, self.method,
                                           self.directory_labels)
-
+            
+            pickle_name = ospt.abspath(ospt.join(ospt.dirname(__file__), 
+                                                 pickle_name))
             with open(pickle_name, "wb") as w:
                 pickle.dump(IOT, w, 2)  # pickling
 
