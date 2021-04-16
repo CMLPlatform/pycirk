@@ -41,7 +41,7 @@ Once you have a copy of the source, you can install it with:
 
 You can download the biregional or multiregional database by following this link
 
-https://fdonaticml.stackstorage.com/s/OEPbzJQgdIcsAn1
+http://doi.org/10.5281/zenodo.4695823
 
 You need to place the data inside the package
 e.g. /home/UserName/.local/lib/python3.6/site-packages/pycirk/data
