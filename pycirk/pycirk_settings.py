@@ -221,7 +221,7 @@ class Settings:
                                         "or ask for a copy through " +
                                         "f.donati@cml.leidenuniv.nl " +
                                         "and add it to " +
-                                        ospt.join(ospt.dirname(__file__)))
+                                        ospt.join(ospt.dirname(__file__) + "/data/"))
 
             elif os.path.exists(io) is True:
                 data = io

@@ -1,17 +1,17 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>pycirk.results &#8212; pycirk 1.5.0 documentation</title>
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pycirk.results &#8212; pycirk 1.5.5 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -44,12 +44,12 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">df</span>
-<span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">MultiIndex</span> <span class="k">as</span> <span class="n">mi</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">df</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">MultiIndex</span> <span class="k">as</span> <span class="n">mi</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">pycirk.positions</span> <span class="k">import</span> <span class="n">make_coord_array</span> <span class="k">as</span> <span class="n">coord</span>
-<span class="kn">from</span> <span class="nn">pycirk.positions</span> <span class="k">import</span> <span class="n">single_position</span> <span class="k">as</span> <span class="n">sing_pos</span>
-<span class="kn">from</span> <span class="nn">pycirk.fundamental_operations</span> <span class="k">import</span> <span class="n">Operations</span> <span class="k">as</span> <span class="n">ops</span>
+<span class="kn">from</span> <span class="nn">pycirk.positions</span> <span class="kn">import</span> <span class="n">make_coord_array</span> <span class="k">as</span> <span class="n">coord</span>
+<span class="kn">from</span> <span class="nn">pycirk.positions</span> <span class="kn">import</span> <span class="n">single_position</span> <span class="k">as</span> <span class="n">sing_pos</span>
+<span class="kn">from</span> <span class="nn">pycirk.fundamental_operations</span> <span class="kn">import</span> <span class="n">Operations</span> <span class="k">as</span> <span class="n">ops</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
 
 
@@ -106,7 +106,7 @@
 
         <span class="n">g</span> <span class="o">=</span> <span class="n">coord</span><span class="p">(</span><span class="n">cat_d</span><span class="p">,</span> <span class="n">reg_d</span><span class="p">,</span> <span class="n">no_reg_labs</span><span class="p">,</span> <span class="n">no_col_labs</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">UnboundLocalError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The specified coordinates to retrieve results are wrong.</span><span class="se">\n</span><span class="s2">Please check that name and matrix in your scenarios.xlsx file are correct.</span><span class="se">\n</span><span class="s2">Check: {M_name, i_cat}&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The specified coordinates to retrieve results are wrong.</span><span class="se">\n</span><span class="s2">Please check that name and matrix in your scenarios.xlsx file are correct.</span><span class="se">\n</span><span class="s2">Check: </span><span class="si">{</span><span class="n">M_name</span><span class="p">,</span> <span class="n">i_cat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
 
@@ -214,7 +214,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -231,7 +231,7 @@
       &copy;2019, Franco Donati.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

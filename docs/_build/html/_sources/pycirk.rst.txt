@@ -100,7 +100,6 @@ pycirk.transformation\_methods module
    :undoc-members:
    :show-inheritance:
 
-
 Module contents
 ---------------
 

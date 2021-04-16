@@ -1,5 +1,10 @@
 pycirk/for_testing.py
-pycirk/data/mrSUT_V3.3.pkl
+*.pkl
 pycirk/make_graphs.py
 tests/output
 tests/output*
+__pycache__
+env_pycirk/
+dist
+
+pycirk.egg-info

@@ -11,15 +11,11 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['Click>=7.0',
-                'pandas>=0.24.2',
-                'numpy>=1.16.4',
-                'xlrd>=1.1.0',
-		        'munch>=2.3.2',
-		        'openpyxl>=2.6.2',
-		        'pytest>=5.0.1',
-		        'setuptools>=40.8.0']
 
+requirements = [ "appdirs==1.4.3", 
+                 "munch==2.5.0",
+                 "openpyxl==3.0.7",
+                 "pandas==1.2.4"]
 
 setup_requirements = ['pytest-runner', ]
 
@@ -36,6 +32,7 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
 	    'Programming Language :: Python :: 3.7',
+	    'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3 :: Only',
     ],
     description="A software to model Circular Economy policy and" +
@@ -59,6 +56,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://bitbucket.org/CML-IE/pycirk/src/master/',
-    version='1.5.5',
+    version='2.0',
     zip_safe=False,
 )
