@@ -152,7 +152,7 @@ def counterfactual(scen_file, scen_no, M, M_name, labels):
         raise KeyError("only integer or explicit name (scenario_x) are allowed")
 
 
-    scenario = pd.read_excel(scen_file, sheet_name=scen_no, header=1, index=None)
+    scenario = pd.read_excel(scen_file, sheet_name=scen_no, header=1)
 
     if scenario["matrix"].isnull().values.all():
         matrix = M
