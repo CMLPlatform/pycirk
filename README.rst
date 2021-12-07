@@ -230,9 +230,9 @@ Furthemore, from the analysis sheet you can set the following variables to be co
 6. Credits
 ==========
 
-Thanks to dr. Arnold Tukker, dr. Joao Dias Rodriguez for the supervision
+Thanks to dr. Arnold Tukker, dr. Joao Dias Rodrigues for the supervision
 dr. Arjan de Koning for knowledge support in exiobase
-MSc. Glenn Auguilar Hernandez for testing
+dr. Glenn Auguilar Hernandez for testing
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
