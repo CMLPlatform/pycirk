@@ -221,9 +221,8 @@ def basic_add(a, at):
     if np.isnan(at):
         at = 0
 
-    a += at
-
-    return(a)
+    # not in place: a may be the same array as an earlier intervention step
+    return a + at
 
 
 def substitution(d, s, fx_kp):
@@ -346,23 +345,11 @@ def counterfactual_engine(M, inter_sets, subs=False, copy=False):
             i1 = inter_sets["i1"]
             g1 = inter_sets["g1"]
 
-            sub = {"1": inter_sets["sk1"],
-                   "2": inter_sets["sk2"],
-                   "3": inter_sets["sk3"],
-                   "4": inter_sets["sk4"]
-                   }
-
-            for key, value in sub.items():
-                if value == "x":
-
-                    if key == "1":
-                        ref = a  # if it is the first sub then it will look
-                    # at the difference b/ the original value and 1st inter
-                    else:
-                        key = int(key) - 1
-                        ref = eval("int" + str(key))
-
-                    s = ref - eval("int" + str(key))
+            # sk<n> substitutes the change made by step n: steps[n-1] - steps[n]
+            steps = [a, int1, int2, int3, int4]
+            for n in range(1, 5):
+                if inter_sets[f"sk{n}"] == "x":
+                    s = steps[n - 1] - steps[n]
                     d = M[np.ix_(i1, g1)]
                     if np.isnan(inter_sets["swk"]):
                         raise ValueError(f"I can't substitute the values. You forgot to add the weighing factor for identifier no: {ide}")
