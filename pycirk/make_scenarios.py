@@ -14,11 +14,13 @@ import numpy as np
 from pycirk.positions import make_coord_array as coord
 from pycirk.positions import single_position as sing_pos
 from pycirk.fundamental_operations import Operations as ops
-from copy import deepcopy
+from functools import lru_cache
+from munch import Munch
+import os
 import warnings
 
 
-def make_counterfactuals(data, scen_no, scen_file, labels):
+def make_counterfactuals(data, scen_no, scen_file, labels, lu0=None):
     """
     Calculate all the counterfactual IO matrices
 
@@ -36,15 +38,23 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     labels : obj
         an object containing all labels for the IO matrices
 
+    lu0 : tuple, optional
+        LU factors of the baseline (I - A), from ops.IOT.factorize. When
+        given, the scenario output is an update of the baseline solution
+        instead of a new factorization
+
     Outputs
     -------
     An object contaning a mofified IO system
     """
     # set basic data and variables
     print(f"Scenario {scen_no} started")
-    data = deepcopy(data)
+    # shallow copy: every matrix below is replaced, never changed in place
+    data = Munch(data)
 
     inv_x_ = ops.inv(ops.IOT.x(data.Z, data.Y))
+    if lu0 is not None:
+        A0 = ops.IOT.A(data.Z, inv_x_)
     inv_yj = ops.inv(np.asarray(data.Y).sum(axis=0))
 
     w = ops.IOT.B(data.W, inv_x_)
@@ -66,7 +76,12 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
 
     data.Y = counterfactual(scen_file, scen_no, data.Y, "Y", labels)
 
-    x_new = ops.IOT.x_solve(data.A, np.asarray(data.Y).sum(axis=1))
+    y_new = np.asarray(data.Y).sum(axis=1)
+    if lu0 is None:
+        x_new = ops.IOT.x_solve(data.A, y_new)
+    else:
+        x_new = ops.IOT.x_update(data.A, y_new, A0, lu0)
+        del A0
 
     yj_new = np.asarray(data.Y).sum(axis=0)
 
@@ -144,7 +159,8 @@ def counterfactual(scen_file, scen_no, M, M_name, labels):
         raise KeyError("only integer or explicit name (scenario_x) are allowed")
 
 
-    scenario = pd.read_excel(scen_file, sheet_name=scen_no, header=1)
+    scenario = read_scenario(scen_file, scen_no,
+                             os.stat(scen_file).st_mtime_ns)
 
     if scenario["matrix"].isnull().values.all():
         matrix = M
@@ -156,6 +172,15 @@ def counterfactual(scen_file, scen_no, M, M_name, labels):
         matrix = make_new(filtered_changes, M, M_name, labels)
 
     return matrix
+
+
+@lru_cache(maxsize=16)
+def read_scenario(scen_file, sheet, mtime):
+    """
+    Reads a scenario sheet once per file version (mtime is part of the key,
+    so edits to scenarios.xlsx between runs are picked up)
+    """
+    return pd.read_excel(scen_file, sheet_name=sheet, header=1)
 
 
 def basic_mult(ide, a, kt, kp):

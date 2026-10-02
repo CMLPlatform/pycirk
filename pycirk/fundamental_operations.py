@@ -11,6 +11,7 @@ Scope: Modelling circular economy policies in EEIOA
 """
 import numpy as np
 from numpy import linalg as ln
+from scipy.linalg import lu_factor, lu_solve
 
 
 class Operations:
@@ -195,6 +196,74 @@ class Operations:
             IA = -np.asarray(A)  # I - A, built in one n x n allocation
             IA[np.diag_indices_from(IA)] += 1
             return ln.solve(IA, np.asarray(y))
+
+        def factorize(A):
+            """
+            LU factors of (I - A), to reuse across scenarios in x_update.
+            A is overwritten.
+            """
+            IA = np.negative(A, out=A)
+            IA[np.diag_indices_from(IA)] += 1
+            return lu_factor(IA, overwrite_a=True, check_finite=False)
+
+        def change_cover(D):
+            """
+            Rows R and columns C such that D is zero outside rows R and
+            columns C, keeping len(R) + len(C) small. Rows are taken from the
+            sparsest up: the k sparsest rows give C, the rest become R.
+            """
+            rows = np.flatnonzero(D.any(axis=1))
+            if len(rows) == 0:
+                return rows, rows
+            B = D[rows] != 0
+            order = np.argsort(B.sum(axis=1), kind="stable")
+            B = B[order]
+            touched = B.any(axis=0)
+            first = np.argmax(B, axis=0)[touched]  # first sorted row per col
+            n_cols = np.searchsorted(np.sort(first), np.arange(len(rows) + 1))
+            k = np.argmin(n_cols + (len(rows) - np.arange(len(rows) + 1)))
+            R = np.sort(rows[order[k:]])
+            C = np.flatnonzero(touched)[first < k]
+            return R, C
+
+        def x_update(A, y, A0, lu0, max_rank=2000):
+            """
+            x = solve((I - A), y), reusing the LU factors lu0 of (I - A0).
+            A0 is overwritten.
+
+            A scenario changes A only in some rows R and columns C, so
+            I - A = (I - A0) - U V' with U = [e_R, D[:, C] outside R],
+            V' = [D[R, :]; e_C'], and the Woodbury identity gives x from
+            len(R) + len(C) + 1 triangular solves instead of a new
+            factorization. Falls back to a full solve when the rank is large
+            or the update loses accuracy.
+            """
+            A = np.asarray(A)
+            y = np.asarray(y, dtype=float)
+            D = np.subtract(A, A0, out=A0)
+            R, C = Operations.IOT.change_cover(D)
+            z = lu_solve(lu0, y, check_finite=False)
+            if len(R) + len(C) == 0:
+                return z
+            if len(R) + len(C) > max_rank:
+                del D, A0
+                return Operations.IOT.x_solve(A, y)
+
+            U = np.zeros((len(A), len(R) + len(C)))
+            U[R, np.arange(len(R))] = 1
+            U[:, len(R):] = D[:, C]
+            U[R, len(R):] = 0  # already covered by the rows in R
+            DR = D[R]
+            del D, A0
+            MiU = lu_solve(lu0, U, overwrite_b=True, check_finite=False)
+            VMiU = np.vstack([DR @ MiU, MiU[C]])
+            Vz = np.concatenate([DR @ z, z[C]])
+            x = z + MiU @ ln.solve(np.identity(len(Vz)) - VMiU, Vz)
+
+            residual = y - (x - A @ x)
+            if np.abs(residual).max() > 1e-9 * np.abs(x).max():
+                return Operations.IOT.x_solve(A, y)
+            return x
 
         def Z(A, x):
             """
