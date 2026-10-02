@@ -9,9 +9,24 @@ Scope: Modelling circular economy policies in EEIOA
 @author:Franco Donati
 @institution:Leiden University CML
 """
+import warnings
+
 import numpy as np
 from numpy import linalg as ln
 from scipy.linalg import lu_factor, lu_solve
+
+
+def _vec(v):
+    """
+    Scaling vector for the helpers below. Earlier versions took diagonal
+    matrices, np.diag(v); those still work but raise a DeprecationWarning.
+    """
+    v = np.asarray(v)
+    if v.ndim == 2:
+        warnings.warn("pass the vector v instead of np.diag(v)",
+                      DeprecationWarning, stacklevel=3)
+        return np.diagonal(v)
+    return v
 
 
 class Operations:
@@ -20,6 +35,10 @@ class Operations:
     It contains two subclasses defining two different trasformation methods
     PxP ITA Market share and Technical Coefficient methods
     note: It should be expanded to other transformation methods in the future
+
+    Diagonal matrices are passed as vectors: in the formulas below,
+    X * diag(v) is computed as X * v (scales columns) and diag(v) * X as
+    v[:, None] * X (scales rows), which avoids building n x n matrices.
     """
     def inv(x):
         """
@@ -66,7 +85,7 @@ class Operations:
             T = inv(diag(g)) * V
             """
             # V.transpose because it's in MAKE table instead of SUPPLY
-            return np.asarray(V).transpose() * inv_g[:, None]
+            return np.asarray(V).transpose() * _vec(inv_g)[:, None]
 
         def L(U, T, inv_q):
             """
@@ -76,7 +95,7 @@ class Operations:
             Multiplier matrix
             L =  (I-A)^-1
             """
-            A = (U @ T) * inv_q  # technical coefficient matrix
+            A = (U @ T) * _vec(inv_q)  # technical coefficient matrix
             A = np.nan_to_num(A)
             IA = np.identity(len(A)) - A
             return ln.inv(IA)
@@ -86,13 +105,13 @@ class Operations:
             Calculates extension intensity
             """
             RT = R @ T
-            return RT * inv_q  # Input coefficients
+            return RT * _vec(inv_q)  # Input coefficients
 
         def R(B, q):
             """
             Calculates absolute extensions
             """
-            return np.asarray(B) * q
+            return np.asarray(B) * _vec(q)
 
         def Z(T, U):
             """
@@ -112,7 +131,7 @@ class Operations:
             Input requirements
             Z = U * inv(diag(g))
             """
-            return np.asarray(U) * inv_g
+            return np.asarray(U) * _vec(inv_g)
 
         def D(V, inv_q):
             """
@@ -120,7 +139,7 @@ class Operations:
             D = V * inv(diag(q))
             """
             # V.transpose because it's in MAKE table instead of SUPPLY
-            return np.asarray(V).transpose() * inv_q
+            return np.asarray(V).transpose() * _vec(inv_q)
 
         def A(inter_coef, D):
             """
@@ -141,20 +160,20 @@ class Operations:
             """
             Calculates extensions intensities
             """
-            return (np.asarray(R) * inv_g) @ D
+            return (np.asarray(R) * _vec(inv_g)) @ D
 
         def R(B, q):
             """
             Calculates absolute extensions
             """
-            return np.asarray(B) * q
+            return np.asarray(B) * _vec(q)
 
         def Z(inter_coef, D, q):
             """
             Intermediates
             Z = inter_coef * D * diag(q)
             """
-            return (inter_coef @ D) * q
+            return (inter_coef @ D) * _vec(q)
 
     class IOT:
         """
@@ -173,13 +192,13 @@ class Operations:
             """
             Calculates extensions intensities
             """
-            return np.asarray(R) * inv_x
+            return np.asarray(R) * _vec(inv_x)
 
         def R(B, x):
             """
             Calculates absolute extensions
             """
-            return np.asarray(B) * x
+            return np.asarray(B) * _vec(x)
 
         def x_IAy(L, y):
             """
@@ -197,25 +216,30 @@ class Operations:
             IA[np.diag_indices_from(IA)] += 1
             return ln.solve(IA, np.asarray(y))
 
-        def factorize(A):
+        def _factorize(A):
             """
-            LU factors of (I - A), to reuse across scenarios in x_update.
-            A is overwritten.
+            LU factors of (I - A), to reuse across scenarios in _x_update.
+            A is overwritten: do not use it after the call.
             """
             IA = np.negative(A, out=A)
             IA[np.diag_indices_from(IA)] += 1
             return lu_factor(IA, overwrite_a=True, check_finite=False)
 
-        def change_cover(D):
+        def _change_cover(D):
             """
             Rows R and columns C such that D is zero outside rows R and
             columns C, keeping len(R) + len(C) small. Rows are taken from the
-            sparsest up: the k sparsest rows give C, the rest become R.
+            sparsest up: the k sparsest rows give C, the rest become R. A
+            heuristic, not a minimal cover; a scenario that edits one row
+            block and one column block (e.g. steel into all sectors plus a
+            change to the construction column) gets about their sum.
             """
-            rows = np.flatnonzero(D.any(axis=1))
+            nonzero = D != 0
+            rows = np.flatnonzero(nonzero.any(axis=1))
             if len(rows) == 0:
                 return rows, rows
-            B = D[rows] != 0
+            B = nonzero[rows]
+            del nonzero
             order = np.argsort(B.sum(axis=1), kind="stable")
             B = B[order]
             touched = B.any(axis=0)
@@ -226,22 +250,25 @@ class Operations:
             C = np.flatnonzero(touched)[first < k]
             return R, C
 
-        def x_update(A, y, A0, lu0, max_rank=2000):
+        def _x_update(A, y, A0, lu0, max_rank=2000):
             """
             x = solve((I - A), y), reusing the LU factors lu0 of (I - A0).
-            A0 is overwritten.
+            A0 is overwritten: do not use it after the call.
 
-            A scenario changes A only in some rows R and columns C, so
-            I - A = (I - A0) - U V' with U = [e_R, D[:, C] outside R],
-            V' = [D[R, :]; e_C'], and the Woodbury identity gives x from
-            len(R) + len(C) + 1 triangular solves instead of a new
-            factorization. Falls back to a full solve when the rank is large
-            or the update loses accuracy.
+            D = A - A0 is the scenario's change to the technical coefficients,
+            and R and C are the rows and columns where it is non-zero (see
+            _change_cover). Then I - A = (I - A0) - U V' with
+            U = [e_R, D[:, C] outside rows R] and V' = [D[R, :]; e_C'], where
+            e_R are unit columns, and the Woodbury identity gives x from
+            len(R) + len(C) solves with the baseline factors, plus one for
+            the baseline z, instead of a new factorization. Falls back to a
+            full solve when the rank exceeds max_rank or the update loses
+            accuracy.
             """
             A = np.asarray(A)
             y = np.asarray(y, dtype=float)
             D = np.subtract(A, A0, out=A0)
-            R, C = Operations.IOT.change_cover(D)
+            R, C = Operations.IOT._change_cover(D)
             z = lu_solve(lu0, y, check_finite=False)
             if len(R) + len(C) == 0:
                 return z
@@ -261,7 +288,7 @@ class Operations:
             x = z + MiU @ ln.solve(np.identity(len(Vz)) - VMiU, Vz)
 
             residual = y - (x - A @ x)
-            if np.abs(residual).max() > 1e-9 * np.abs(x).max():
+            if not np.all(np.abs(residual) <= 1e-9 * np.abs(x).max()):
                 return Operations.IOT.x_solve(A, y)
             return x
 
@@ -270,14 +297,14 @@ class Operations:
             Total product ouput
             Z = A * diag_x
             """
-            return np.asarray(A) * x
+            return np.asarray(A) * _vec(x)
 
         def A(Z, inv_x):
             """
             Technical coefficient matrix
             A = Z * inv(diag(x))
             """
-            return np.asarray(Z) * inv_x
+            return np.asarray(Z) * _vec(inv_x)
 
         def L(A):
             """
@@ -293,13 +320,13 @@ class Operations:
             Method for transformation matrix of bY
             (e.g. final demand emissions)
             """
-            return np.asarray(RY) * inv_yj
+            return np.asarray(RY) * _vec(inv_yj)
 
         def RY(bY, yj):
             """
             Caclculates absolute extensions in final demand
             """
-            return np.asarray(bY) * yj
+            return np.asarray(bY) * _vec(yj)
 
         # is this function really needed?
         def IOT(Z, Y, W, E, R, M):

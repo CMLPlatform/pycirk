@@ -137,7 +137,7 @@ class Launch:
             if self._lu0 is None:
                 Z, Y = self.baseline.Z, self.baseline.Y
                 A0 = ops.IOT.A(Z, ops.inv(ops.IOT.x(Z, Y)))
-                self._lu0 = ops.IOT.factorize(A0)
+                self._lu0 = ops.IOT._factorize(A0)
                 del A0
             IO = mcf(self.baseline, scen_no, self.scen_file, self.labels,
                      self._lu0)
