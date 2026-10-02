@@ -92,10 +92,10 @@ class Settings:
         the output files
         """
         if int(self.method) == 0:
-            method = "(0) IOTpxpSTA_MSCm"
+            method = "(0) IOTpxpSTA_TCm"
 
         elif int(self.method) == 1:
-            method = "(1) IOTpxpSTA_TCm"
+            method = "(1) IOTpxpSTA_MSCm"
 
         if test is True:  # test-path with test scenarios
             print("Running in test mode")
