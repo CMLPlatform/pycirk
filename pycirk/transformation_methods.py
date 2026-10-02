@@ -43,17 +43,10 @@ class Transform:
         self.q = np.sum(self.V, axis=1)  # total product output
         self.g = np.sum(self.V, axis=0)  # total industry output
 
-        # bv diagonals
-        self.diag_q = np.diag(self.q)  # diagonal of q
-        self.diag_g = np.diag(self.g)  # diagonal of g
-        self.diag_yi = np.diag(self.yi)  # diagonal of yi
-        self.diag_yj = np.diag(self.yj)  # diagonal of yj
-
-        # bv inverses
-        self.inv_diag_yi = ops.inv(self.diag_yi)
-        self.inv_diag_yj = ops.inv(self.diag_yj)
-        self.inv_diag_q = ops.inv(self.diag_q)
-        self.inv_diag_g = ops.inv(self.diag_g)
+        # bv inverses, kept as vectors: multiplying by a diagonal matrix is
+        # an element-wise scaling, so the n x n diagonals are never built
+        self.inv_q = ops.inv(self.q)
+        self.inv_g = ops.inv(self.g)
 
         del(SUTs)
 
@@ -64,35 +57,32 @@ class Transform:
         """
         met = ops.PxP_ITA_TC
 
-        T = met.T(self.V, self.inv_diag_g)  # transformation matrix
-        L = met.L(self.U, T, self.inv_diag_q)  # leontief inverse
+        T = met.T(self.V, self.inv_g)  # transformation matrix
 
-        w = met.B(self.W, T, self.inv_diag_q)  # primary inp. coef matrix
+        w = met.B(self.W, T, self.inv_q)  # primary inp. coef matrix
 
         Z = met.Z(T, self.U)  # intermediates
-        x = ops.IOT.x_IAy(L, self.yi)
-        W = ops.IOT.R(w, np.diag(x))
+        A = ops.IOT.A(Z, self.inv_q)
+        x = ops.IOT.x_solve(np.nan_to_num(A, copy=False), self.yi)
+        W = ops.IOT.R(w, x)
         ver_base = ops.verifyIOT(Z, self.Y, W)
         del(self.V)
         del(self.U)
         del(self.W)
 
-        e = met.B(self.E, T, self.inv_diag_q)  # emis coef. matrix
+        e = met.B(self.E, T, self.inv_q)  # emis coef. matrix
         del(self.E)
-        E = met.R(e, np.diag(x))
+        E = met.R(e, x)
 
-        r = met.B(self.R, T, self.inv_diag_q)  # resour coef. matrix
+        r = met.B(self.R, T, self.inv_q)  # resour coef. matrix
         del(self.R)
-        R = met.R(r, np.diag(x))
+        R = met.R(r, x)
 
-        m = met.B(self.M, T, self.inv_diag_q)  # mater coef. matrix
+        m = met.B(self.M, T, self.inv_q)  # mater coef. matrix
         del(self.M)
-        M = met.R(m, np.diag(x))
-
-        A = ops.IOT.A(Z, self.inv_diag_q)
+        M = met.R(m, x)
 
         return {"Y": self.Y,
-                "L": L,
                 "Z": Z,
                 "A": A,
                 "W": W,
@@ -116,34 +106,32 @@ class Transform:
         """
         met = ops.PxP_ITA_MSC
 
-        S = met.S(self.U, self.inv_diag_g)  # ind. interm. coef. => in EUROSTAT manual shown as S
-        D = met.D(self.V, self.inv_diag_q)  # Market shares
+        S = met.S(self.U, self.inv_g)  # ind. interm. coef. => in EUROSTAT manual shown as S
+        D = met.D(self.V, self.inv_q)  # Market shares
         A = met.A(S, D)  # technical coefficient matrix
-        
-        L = met.L(A)  # leontief inverse
-        w = met.B(self.W, D, self.inv_diag_g)  # primary inputs
-        x = ops.IOT.x_IAy(L, self.yi)
-        W = ops.IOT.R(w, np.diag(x))
-        Z = met.Z(S, D, np.diag(x))  # intermediates
+
+        w = met.B(self.W, D, self.inv_g)  # primary inputs
+        x = ops.IOT.x_solve(A, self.yi)
+        W = ops.IOT.R(w, x)
+        Z = ops.IOT.Z(A, x)  # intermediates
         ver_base = ops.verifyIOT(Z, self.Y, W)
         del(self.V)
         del(self.U)
         del(self.W)
 
-        e = met.B(self.E, D, self.inv_diag_g)  # emis coef. matrix
+        e = met.B(self.E, D, self.inv_g)  # emis coef. matrix
         del(self.E)
-        E = met.R(e, np.diag(x))
+        E = met.R(e, x)
 
-        r = met.B(self.R, D, self.inv_diag_g)  # resour coef. matrix
+        r = met.B(self.R, D, self.inv_g)  # resour coef. matrix
         del(self.R)
-        R = met.R(r, np.diag(x))
+        R = met.R(r, x)
 
-        m = met.B(self.M, D, self.inv_diag_g)  # mater coef. matrix
+        m = met.B(self.M, D, self.inv_g)  # mater coef. matrix
         del(self.M)
-        M = met.R(m, np.diag(x))
+        M = met.R(m, x)
 
         return {"Y": self.Y,
-                "L": L,
                 "Z": Z,
                 "A": A,
                 "W": W,

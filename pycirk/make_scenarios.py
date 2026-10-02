@@ -44,39 +44,31 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     print(f"Scenario {scen_no} started")
     data = deepcopy(data)
 
-    x_ = ops.IOT.x(data.Z, data.Y)
-    diag_x_ = np.diag(x_)
-    inv_diag_x_ = ops.inv(diag_x_)
+    inv_x_ = ops.inv(ops.IOT.x(data.Z, data.Y))
+    inv_yj = ops.inv(np.asarray(data.Y).sum(axis=0))
 
-    diag_yj = np.diag(data.Y.sum(axis=0))
-    inv_diag_yj = ops.inv(diag_yj)
+    w = ops.IOT.B(data.W, inv_x_)
+    e = ops.IOT.B(data.E, inv_x_)
+    r = ops.IOT.B(data.R, inv_x_)
+    m = ops.IOT.B(data.M, inv_x_)
 
-    w = ops.IOT.B(data.W, inv_diag_x_)
-    e = ops.IOT.B(data.E, inv_diag_x_)
-    r = ops.IOT.B(data.R, inv_diag_x_)
-    m = ops.IOT.B(data.M, inv_diag_x_)
-
-    eY = ops.IOT.bY(data.EY, inv_diag_yj)
-    rY = ops.IOT.bY(data.RY, inv_diag_yj)
-    mY = ops.IOT.bY(data.MY, inv_diag_yj)
+    eY = ops.IOT.bY(data.EY, inv_yj)
+    rY = ops.IOT.bY(data.RY, inv_yj)
+    mY = ops.IOT.bY(data.MY, inv_yj)
 
     # Apply policy to economic matrices
     data.Z = counterfactual(scen_file, scen_no, data.Z, "Z", labels)
-    inv_diag_x_int = np.diag(ops.inv(ops.IOT.x(data.Z, data.Y)))
+    inv_x_int = ops.inv(ops.IOT.x(data.Z, data.Y))
 
-    A = ops.IOT.A(data.Z, inv_diag_x_int)
+    A = ops.IOT.A(data.Z, inv_x_int)
 
     data.A = counterfactual(scen_file, scen_no, A, "A", labels)
 
     data.Y = counterfactual(scen_file, scen_no, data.Y, "Y", labels)
 
-    L = ops.IOT.L(data.A)
+    x_new = ops.IOT.x_solve(data.A, np.asarray(data.Y).sum(axis=1))
 
-    x_new = ops.IOT.x_IAy(L, data.Y.sum(1))
-    
-    diag_x_new = np.diag(x_new)
-
-    diag_yj_new = np.diag(data.Y.sum(axis=0))
+    yj_new = np.asarray(data.Y).sum(axis=0)
 
     # Apply policy to intermediate extension intensities
     data.w = counterfactual(scen_file, scen_no, w, "w", labels)
@@ -90,18 +82,18 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     data.rY = counterfactual(scen_file, scen_no, rY, "rY", labels)
     data.mY = counterfactual(scen_file, scen_no, mY, "mY", labels)
 
-    data.Z = ops.IOT.Z(data.A, diag_x_new)
+    data.Z = ops.IOT.Z(data.A, x_new)
 
-    data.W = ops.IOT.R(data.w, diag_x_new)  # primary inputs coef
+    data.W = ops.IOT.R(data.w, x_new)  # primary inputs coef
 
-    data.E = ops.IOT.R(data.e, diag_x_new)  # emissions ext coef
+    data.E = ops.IOT.R(data.e, x_new)  # emissions ext coef
 
-    data.R = ops.IOT.R(data.r, diag_x_new)  # resource ext coef
-    data.M = ops.IOT.R(data.m, diag_x_new)  # material ext coef
+    data.R = ops.IOT.R(data.r, x_new)  # resource ext coef
+    data.M = ops.IOT.R(data.m, x_new)  # material ext coef
 
-    data.EY = ops.IOT.RY(data.eY, diag_yj_new)  # emissions ext FD coef
-    data.RY = ops.IOT.RY(data.rY, diag_yj_new)  # resource ext FD coef
-    data.MY = ops.IOT.RY(data.mY, diag_yj_new)  # material ext FD coef
+    data.EY = ops.IOT.RY(data.eY, yj_new)  # emissions ext FD coef
+    data.RY = ops.IOT.RY(data.rY, yj_new)  # resource ext FD coef
+    data.MY = ops.IOT.RY(data.mY, yj_new)  # material ext FD coef
 
     data.W = counterfactual(scen_file, scen_no, data.W, "W", labels)
 
