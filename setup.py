@@ -15,7 +15,8 @@ with open('HISTORY.rst') as history_file:
 requirements = [ "appdirs==1.4.3", 
                  "munch==2.5.0",
                  "openpyxl==3.0.7",
-                 "pandas==1.2.4"]
+                 "pandas==1.2.4",
+                 "scipy>=1.5"]
 
 setup_requirements = ['pytest-runner', ]
 

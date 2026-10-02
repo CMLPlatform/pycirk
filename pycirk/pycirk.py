@@ -14,6 +14,7 @@ from pycirk.save_utils import save_outputs
 from pycirk import results
 from pycirk.pycirk_settings import Settings
 from pycirk.make_scenarios import make_counterfactuals as mcf
+from pycirk.fundamental_operations import Operations as ops
 import os, glob
 
 
@@ -103,6 +104,8 @@ class Launch:
 
         self.method = method
 
+        self._lu0 = None  # LU factors of the baseline (I - A), built lazily
+
         if test is False:
             self.specs = None
         else:
@@ -131,7 +134,13 @@ class Launch:
             scen_no = "baseline"
             IO = self.baseline
         else:
-            IO = mcf(self.baseline, scen_no, self.scen_file, self.labels)
+            if self._lu0 is None:
+                Z, Y = self.baseline.Z, self.baseline.Y
+                A0 = ops.IOT.A(Z, ops.inv(ops.IOT.x(Z, Y)))
+                self._lu0 = ops.IOT._factorize(A0)
+                del A0
+            IO = mcf(self.baseline, scen_no, self.scen_file, self.labels,
+                     self._lu0)
 
         output = results.iter_thru_for_results(IO, self.analysis_specs,
                                                scen_no, self.labels)
@@ -222,5 +231,6 @@ class Launch:
         Call this method if you want to elinate all previous 
         IO databases created by pycirk. SUTs database is not affected.
         """
-        for filename in glob.glob("pycirk//data//mrIO*"):
+        data_dir = os.path.join(os.path.dirname(__file__), "data")
+        for filename in glob.glob(os.path.join(data_dir, "mrIO*")):
             os.remove(filename) 

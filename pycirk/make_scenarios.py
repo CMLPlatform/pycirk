@@ -14,11 +14,11 @@ import numpy as np
 from pycirk.positions import make_coord_array as coord
 from pycirk.positions import single_position as sing_pos
 from pycirk.fundamental_operations import Operations as ops
-from copy import deepcopy
+from munch import Munch
 import warnings
 
 
-def make_counterfactuals(data, scen_no, scen_file, labels):
+def make_counterfactuals(data, scen_no, scen_file, labels, lu0=None):
     """
     Calculate all the counterfactual IO matrices
 
@@ -36,83 +36,89 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     labels : obj
         an object containing all labels for the IO matrices
 
+    lu0 : tuple, optional
+        LU factors of the baseline (I - A), from ops.IOT._factorize. When
+        given, the scenario output is an update of the baseline solution
+        instead of a new factorization
+
     Outputs
     -------
     An object contaning a mofified IO system
     """
     # set basic data and variables
     print(f"Scenario {scen_no} started")
-    data = deepcopy(data)
+    # shallow copy: every matrix below is replaced, never changed in place
+    data = Munch(data)
+    scenario = read_scenario(scen_file, scen_no)  # once, not per matrix
 
-    x_ = ops.IOT.x(data.Z, data.Y)
-    diag_x_ = np.diag(x_)
-    inv_diag_x_ = ops.inv(diag_x_)
+    inv_x_ = ops.inv(ops.IOT.x(data.Z, data.Y))
+    if lu0 is not None:
+        A0 = ops.IOT.A(data.Z, inv_x_)
+    inv_yj = ops.inv(np.asarray(data.Y).sum(axis=0))
 
-    diag_yj = np.diag(data.Y.sum(axis=0))
-    inv_diag_yj = ops.inv(diag_yj)
+    w = ops.IOT.B(data.W, inv_x_)
+    e = ops.IOT.B(data.E, inv_x_)
+    r = ops.IOT.B(data.R, inv_x_)
+    m = ops.IOT.B(data.M, inv_x_)
 
-    w = ops.IOT.B(data.W, inv_diag_x_)
-    e = ops.IOT.B(data.E, inv_diag_x_)
-    r = ops.IOT.B(data.R, inv_diag_x_)
-    m = ops.IOT.B(data.M, inv_diag_x_)
-
-    eY = ops.IOT.bY(data.EY, inv_diag_yj)
-    rY = ops.IOT.bY(data.RY, inv_diag_yj)
-    mY = ops.IOT.bY(data.MY, inv_diag_yj)
+    eY = ops.IOT.bY(data.EY, inv_yj)
+    rY = ops.IOT.bY(data.RY, inv_yj)
+    mY = ops.IOT.bY(data.MY, inv_yj)
 
     # Apply policy to economic matrices
-    data.Z = counterfactual(scen_file, scen_no, data.Z, "Z", labels)
-    inv_diag_x_int = np.diag(ops.inv(ops.IOT.x(data.Z, data.Y)))
+    data.Z = counterfactual(scen_file, scen_no, data.Z, "Z", labels, scenario)
+    inv_x_int = ops.inv(ops.IOT.x(data.Z, data.Y))
 
-    A = ops.IOT.A(data.Z, inv_diag_x_int)
+    A = ops.IOT.A(data.Z, inv_x_int)
 
-    data.A = counterfactual(scen_file, scen_no, A, "A", labels)
+    data.A = counterfactual(scen_file, scen_no, A, "A", labels, scenario)
 
-    data.Y = counterfactual(scen_file, scen_no, data.Y, "Y", labels)
+    data.Y = counterfactual(scen_file, scen_no, data.Y, "Y", labels, scenario)
 
-    L = ops.IOT.L(data.A)
+    y_new = np.asarray(data.Y).sum(axis=1)
+    if lu0 is None:
+        x_new = ops.IOT.x_solve(data.A, y_new)
+    else:
+        x_new = ops.IOT._x_update(data.A, y_new, A0, lu0)
+        del A0
 
-    x_new = ops.IOT.x_IAy(L, data.Y.sum(1))
-    
-    diag_x_new = np.diag(x_new)
-
-    diag_yj_new = np.diag(data.Y.sum(axis=0))
+    yj_new = np.asarray(data.Y).sum(axis=0)
 
     # Apply policy to intermediate extension intensities
-    data.w = counterfactual(scen_file, scen_no, w, "w", labels)
-    data.e = counterfactual(scen_file, scen_no, e, "e", labels)
-    data.r = counterfactual(scen_file, scen_no, r, "r", labels)
-    data.m = counterfactual(scen_file, scen_no, m, "m", labels)
+    data.w = counterfactual(scen_file, scen_no, w, "w", labels, scenario)
+    data.e = counterfactual(scen_file, scen_no, e, "e", labels, scenario)
+    data.r = counterfactual(scen_file, scen_no, r, "r", labels, scenario)
+    data.m = counterfactual(scen_file, scen_no, m, "m", labels, scenario)
 
     # Apply policy to final demand extension intensities
 
-    data.eY = counterfactual(scen_file, scen_no, eY, "eY", labels)
-    data.rY = counterfactual(scen_file, scen_no, rY, "rY", labels)
-    data.mY = counterfactual(scen_file, scen_no, mY, "mY", labels)
+    data.eY = counterfactual(scen_file, scen_no, eY, "eY", labels, scenario)
+    data.rY = counterfactual(scen_file, scen_no, rY, "rY", labels, scenario)
+    data.mY = counterfactual(scen_file, scen_no, mY, "mY", labels, scenario)
 
-    data.Z = ops.IOT.Z(data.A, diag_x_new)
+    data.Z = ops.IOT.Z(data.A, x_new)
 
-    data.W = ops.IOT.R(data.w, diag_x_new)  # primary inputs coef
+    data.W = ops.IOT.R(data.w, x_new)  # primary inputs coef
 
-    data.E = ops.IOT.R(data.e, diag_x_new)  # emissions ext coef
+    data.E = ops.IOT.R(data.e, x_new)  # emissions ext coef
 
-    data.R = ops.IOT.R(data.r, diag_x_new)  # resource ext coef
-    data.M = ops.IOT.R(data.m, diag_x_new)  # material ext coef
+    data.R = ops.IOT.R(data.r, x_new)  # resource ext coef
+    data.M = ops.IOT.R(data.m, x_new)  # material ext coef
 
-    data.EY = ops.IOT.RY(data.eY, diag_yj_new)  # emissions ext FD coef
-    data.RY = ops.IOT.RY(data.rY, diag_yj_new)  # resource ext FD coef
-    data.MY = ops.IOT.RY(data.mY, diag_yj_new)  # material ext FD coef
+    data.EY = ops.IOT.RY(data.eY, yj_new)  # emissions ext FD coef
+    data.RY = ops.IOT.RY(data.rY, yj_new)  # resource ext FD coef
+    data.MY = ops.IOT.RY(data.mY, yj_new)  # material ext FD coef
 
-    data.W = counterfactual(scen_file, scen_no, data.W, "W", labels)
+    data.W = counterfactual(scen_file, scen_no, data.W, "W", labels, scenario)
 
     # Apply policy to intermediate extension coefficient matrices
-    data.E = counterfactual(scen_file, scen_no, data.E, "E", labels)
-    data.R = counterfactual(scen_file, scen_no, data.R, "R", labels)
-    data.M = counterfactual(scen_file, scen_no, data.M, "M", labels)
+    data.E = counterfactual(scen_file, scen_no, data.E, "E", labels, scenario)
+    data.R = counterfactual(scen_file, scen_no, data.R, "R", labels, scenario)
+    data.M = counterfactual(scen_file, scen_no, data.M, "M", labels, scenario)
     # Apply policy to  final demand extension coefficient matrices
-    data.EY = counterfactual(scen_file, scen_no, data.EY, "EY", labels)
-    data.RY = counterfactual(scen_file, scen_no, data.RY, "RY", labels)
-    data.MY = counterfactual(scen_file, scen_no, data.MY, "MY", labels)
+    data.EY = counterfactual(scen_file, scen_no, data.EY, "EY", labels, scenario)
+    data.RY = counterfactual(scen_file, scen_no, data.RY, "RY", labels, scenario)
+    data.MY = counterfactual(scen_file, scen_no, data.MY, "MY", labels, scenario)
 
     #print((1-np.sum(x_)/np.sum(x_new))*100)
     print(f"Scenario {scen_no} completed")
@@ -120,7 +126,7 @@ def make_counterfactuals(data, scen_no, scen_file, labels):
     return data
 
 
-def counterfactual(scen_file, scen_no, M, M_name, labels):
+def counterfactual(scen_file, scen_no, M, M_name, labels, scenario=None):
     """
     Separates changes by matrix subject to intervention and apply them on a
     specific matrix
@@ -137,22 +143,16 @@ def counterfactual(scen_file, scen_no, M, M_name, labels):
             matrix name as diplayed under sheet_name["matrix"]
         labels : obj
             matrix labels
+        scenario : pandas.DataFrame, optional
+            the scenario sheet, if already read with read_scenario
     Output
     ------
     A numpy array modified according to the specified changes in the scenario file
 
     """
 
-    if type(scen_no) is int:
-        scen_no = "scenario_" + str(scen_no)
-
-    elif scen_no.startswith("scenario_"):
-        pass
-    else:
-        raise KeyError("only integer or explicit name (scenario_x) are allowed")
-
-
-    scenario = pd.read_excel(scen_file, sheet_name=scen_no, header=1)
+    if scenario is None:
+        scenario = read_scenario(scen_file, scen_no)
 
     if scenario["matrix"].isnull().values.all():
         matrix = M
@@ -164,6 +164,18 @@ def counterfactual(scen_file, scen_no, M, M_name, labels):
         matrix = make_new(filtered_changes, M, M_name, labels)
 
     return matrix
+
+
+def read_scenario(scen_file, scen_no):
+    """
+    Reads the sheet of scenario scen_no (e.g. 1 or "scenario_1")
+    """
+    if type(scen_no) is int:
+        scen_no = f"scenario_{scen_no}"
+    if not scen_no.startswith("scenario_"):
+        raise KeyError("only integer or explicit name (scenario_x) are allowed")
+
+    return pd.read_excel(scen_file, sheet_name=scen_no, header=1)
 
 
 def basic_mult(ide, a, kt, kp):
@@ -221,9 +233,8 @@ def basic_add(a, at):
     if np.isnan(at):
         at = 0
 
-    a += at
-
-    return(a)
+    # not in place: a may be the same array as an earlier intervention step
+    return a + at
 
 
 def substitution(d, s, fx_kp):
@@ -346,23 +357,11 @@ def counterfactual_engine(M, inter_sets, subs=False, copy=False):
             i1 = inter_sets["i1"]
             g1 = inter_sets["g1"]
 
-            sub = {"1": inter_sets["sk1"],
-                   "2": inter_sets["sk2"],
-                   "3": inter_sets["sk3"],
-                   "4": inter_sets["sk4"]
-                   }
-
-            for key, value in sub.items():
-                if value == "x":
-
-                    if key == "1":
-                        ref = a  # if it is the first sub then it will look
-                    # at the difference b/ the original value and 1st inter
-                    else:
-                        key = int(key) - 1
-                        ref = eval("int" + str(key))
-
-                    s = ref - eval("int" + str(key))
+            # sk<n> substitutes the change made by step n: steps[n-1] - steps[n]
+            steps = [a, int1, int2, int3, int4]
+            for n in range(1, 5):
+                if inter_sets[f"sk{n}"] == "x":
+                    s = steps[n - 1] - steps[n]
                     d = M[np.ix_(i1, g1)]
                     if np.isnan(inter_sets["swk"]):
                         raise ValueError(f"I can't substitute the values. You forgot to add the weighing factor for identifier no: {ide}")
@@ -404,8 +403,6 @@ def make_new(filtered_changes, M, M_name, labels):
 
     """
 
-    M = np.array(M)
-
     spec_labels = labels.identify_labels(M_name)
 
     reg_labels = spec_labels["reg_labels"]
@@ -416,8 +413,11 @@ def make_new(filtered_changes, M, M_name, labels):
     no_reg_labs = spec_labels["no_reg"]
 
     if len(filtered_changes) == 0:
-        return (M)
+        return np.asarray(M)
     else:
+        # NOTE: this copy is load-bearing: make_counterfactuals shallow-copies
+        # the baseline, so editing M in place would change the baseline
+        M = np.array(M)
         for l, entry in filtered_changes.iterrows():
             try:
                 change_type = entry.change_type
