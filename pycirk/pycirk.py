@@ -222,5 +222,6 @@ class Launch:
         Call this method if you want to elinate all previous 
         IO databases created by pycirk. SUTs database is not affected.
         """
-        for filename in glob.glob("pycirk//data//mrIO*"):
+        data_dir = os.path.join(os.path.dirname(__file__), "data")
+        for filename in glob.glob(os.path.join(data_dir, "mrIO*")):
             os.remove(filename) 

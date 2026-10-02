@@ -22,6 +22,10 @@ from pycirk.make_scenarios import make_counterfactuals
 from pycirk.labels import Labels
 from pycirk.organize_io import organizer
 
+# bumped whenever the SUT to IO transformation changes, so old caches are
+# ignored (2: make_secondary now splits final demand)
+IO_CACHE_VERSION = 2
+
 
 class Settings:
     """
@@ -197,20 +201,12 @@ class Settings:
 
         if self.file is None:
 
-            if self.method in [0, 1]:
-                io_file_bi = "data//mrIO_EU_ROW_V3.3.pkl"
-                io_file_all = "data//mrIO_V3.3.pkl"
-
-            if self.make_secondary is True:
-                io_file_bi = "data//mrIO_EU_ROW_V3.3.sm.pkl"
-                io_file_all = "data//mrIO_V3.3.sm.pkl"
+            io = self.io_cache_file()
 
             if self.aggregation == 1:
-                io = io_file_bi
                 sut = "data//mrSUT_EU_ROW_V3.3.pkl"
 
             elif self.aggregation == 0:
-                io = io_file_all
                 sut = "data//mrSUT_V3.3.pkl"
 
             io = ospt.abspath(ospt.join(ospt.dirname(__file__), io))
@@ -231,6 +227,20 @@ class Settings:
                 typ = "sut"
 
             return {"loc": data, "type": typ}
+
+    def io_cache_file(self):
+        """
+        Location of the cached IO tables, relative to the package directory
+
+        The name carries the transformation method, the secondary-material
+        option and a cache version (bump IO_CACHE_VERSION when the SUT to IO
+        transformation changes), so a cache built with other settings or by
+        older code is never loaded.
+        """
+        region = "EU_ROW_" if self.aggregation == 1 else ""
+        secondary = ".sm" if self.make_secondary is True else ""
+        return (f"data//mrIO_{region}V3.3.m{self.method}{secondary}"
+                f".c{IO_CACHE_VERSION}.pkl")
 
     def transform_to_io(self):
         """
@@ -265,9 +275,6 @@ class Settings:
         if typ == "sut":
             if self.make_secondary is True:
                 data = ms(data)
-                extension = ".sm.pkl"
-            else:
-                extension = ".pkl"
 
             SUTs = Transform(data)
             self.lb.save_labels(data, self.directory_labels)
@@ -280,11 +287,8 @@ class Settings:
 
             del(SUTs)
 
-            if self.aggregation in [0, None]:
-                pickle_name = "data//mrIO_V3.3" + extension
-            elif self.aggregation == 1:
-                pickle_name = "data//mrIO_EU_ROW_V3.3" + extension
             # saving the IO tables to avoid rebuilding them all the time
+            pickle_name = self.io_cache_file()
 
             IOT = organizer(IOT)
             IOT = self.lb.relabel_to_save(IOT, self.method,

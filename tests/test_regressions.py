@@ -36,7 +36,7 @@ def run(**kw):
     return counterfactual_engine(M, intervention(**kw), subs=True).ravel()
 
 
-def test_substitution_of_first_step():
+def test_substitution_of_first_step_still_works():
     out = run(kt1={"kt": -50.0, "kp": 100.0}, sk1="x")
     assert np.allclose(out, [5, 5])
 
@@ -74,3 +74,15 @@ def test_make_secondary_keeps_product_balance():
 def test_method_label_matches_transformation():
     assert "TCm" in Settings(method=0).project_specs(test=True)["Method"]
     assert "MSCm" in Settings(method=1).project_specs(test=True)["Method"]
+
+
+def test_io_cache_name_depends_on_settings():
+    names = {
+        Settings(method=m, make_secondary=s, aggregation=a).io_cache_file()
+        for m in (0, 1)
+        for s in (False, True)
+        for a in (0, 1)
+    }
+    assert len(names) == 8
+    # caches written before the make_secondary fix must not be picked up
+    assert "data//mrIO_V3.3.sm.pkl" not in names
